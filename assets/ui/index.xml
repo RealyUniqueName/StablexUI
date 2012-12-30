@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Root element of our UI. We can use Main in markup since it extends ru.stablex.ui.widgets.Widget -->
+<Main
+    id   = "'root'"
+    x    = "10"
+    y    = "10"
+    w    = "$Lib.current.stage.stageWidth - 20"
+    h    = "$Lib.current.stage.stageHeight - 20"
+    skin = "'winxp'"
+>
+    <!-- panel with NME logo -->
+    <Box id="'box'" rightPt="5" bottom="10" widthPt="90" heightPt="50"  bgColor="0x005500" border="8" borderColor="0x00FF00" on-mouseDown="
+        #nme.tween(
+            1,
+            {x:$this.mouseX - #nme.width / 2, y:$this.mouseY - #nme.height / 2},
+            'Quad.easeOut'
+        );
+    ">
+        <Box id="'nme'" w="80" h="80" skin="'win7'">
+            <Bmp smooth="true" src="'assets/img/nme.png'"/>
+        </Box>
+        <Text text="'Click anywhere in this box'" format-size="20"/>
+    </Box>
+
+    <!-- Buttons -->
+    <HBox id="'buttons'" top="35" widthPt="100" h="40" childPadding="10" align="'center,middle'">
+        <Button skin="'btnxp'" w="100" h="40" label-text="'Move nme logo'" on-click="
+            #nme.tween(
+                1,
+                {x:#box.w * Math.random(), y:#box.h * Math.random()},
+                'Quad.easeIn'
+            );
+        "/>
+
+        <Button skin="'btnxp'" w="100" h="40" label-text="'Make it red'" on-click="
+            var box : $Box = cast(#box, $Box);
+            if( box.bgColor == 0x005500 ){
+                box.bgColor      = 0x550000;
+                box.borderColor  = 0xFF0000;
+                $this.label.text = 'Make it green';
+            }else{
+                box.bgColor      = 0x005500;
+                box.borderColor  = 0x00ff00;
+                $this.label.text = 'Make it red';
+            }
+            box.refresh();
+        "/>
+
+        <Button skin="'btnxp'" w="100" h="40" label-text="'Make it Ubuntu'" on-click="
+            var root : $Panel = cast(#root, $Panel);
+            if( root.skin == 'winxp' ){
+                root.skin        = 'winubuntu';
+                $this.label.text = 'Make it WinXP';
+            }else{
+                root.skin        = 'winxp';
+                $this.label.text = 'Make it Ubuntu';
+            }
+            root.refresh();
+
+            for(i in 0...#buttons.numChildren){
+                if( Std.is(#buttons.getChildAt(i), $Button) ){
+                    cast(#buttons.getChildAt(i), $Button).skin = (root.skin == 'winubuntu' ? 'btnubuntu' : 'btnxp');
+                    cast(#buttons.getChildAt(i), $Button).refresh();
+                }
+            }
+        "/>
+
+        <Button skin="'btnxp'" w="100" h="40" label-text="'Random resize'" on-click="
+            #root.resize(500 + Std.random(291), 400 + Std.random(191));
+        "/>
+    </HBox>
+
+</Main>
