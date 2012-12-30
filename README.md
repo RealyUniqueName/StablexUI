@@ -4,7 +4,7 @@ StablexUI
 Macro driven ui engine
 
 
-Killer-features (i hope so):
+Features:
 ---------------
 * No xml parsing at runtime. All xmls are preprocessed at compile time, so your app is loading faster. Also everything is still strictly typed ;)
 * Writing handlers (plain haxe code) right in xml;
