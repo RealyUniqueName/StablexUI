@@ -1,5 +1,6 @@
 package ru.stablex.ui.widgets;
 
+import nme.display.DisplayObject;
 import ru.stablex.Err;
 
 
@@ -88,13 +89,13 @@ class Box extends Panel{
         //vertical box
         if( this.vertical ){
             var lastY : Float = this.paddingTop;
-            var child : Widget;
+            var child : DisplayObject;
 
             for(i in 0...this.numChildren){
-                child   = cast(this.getChildAt(i), Widget);
+                child   = this.getChildAt(i);
                 if( !child.visible ) continue;
                 child.y = lastY;
-                lastY   += child.h + this.childPadding;
+                lastY   += (Std.is(child, Widget) ? cast(child, Widget).h : child.height) + this.childPadding;
             }
 
         //horizontal box
@@ -115,14 +116,14 @@ class Box extends Panel{
         if(this.vertical){
             //count sum children height
             var height          : Float = 0;
-            var child           : Widget;
+            var child           : DisplayObject;
             var visibleChildren : Int = 0;
 
             for(i in 0...this.numChildren){
-                child = cast(this.getChildAt(i), Widget);
+                child = this.getChildAt(i);
                 if( !child.visible ) continue;
                 visibleChildren ++;
-                height += child.h;
+                height += (Std.is(child, Widget) ? cast(child, Widget).h : child.height);
             }
 
             //add padding
@@ -132,18 +133,18 @@ class Box extends Panel{
             var lastY : Float = (this.h - height) / 2;
 
             for(i in 0...this.numChildren){
-                child   = cast(this.getChildAt(i), Widget);
+                child   = this.getChildAt(i);
                 if( !child.visible ) continue;
                 child.y = lastY;
-                lastY   += child.h + this.childPadding;
+                lastY   += (Std.is(child, Widget) ? cast(child, Widget).h : child.height) + this.childPadding;
             }
 
         //horizontal box
         }else{
-            var child : Widget;
+            var child : DisplayObject;
             for(i in 0...this.numChildren){
-                child   = cast(this.getChildAt(i), Widget);
-                child.y = (this.h - child.h) / 2;
+                child   = this.getChildAt(i);
+                child.y = (this.h - (Std.is(child, Widget) ? cast(child, Widget).h : child.height)) / 2;
             }
         }
     }//function _vAlignMiddle()
@@ -157,21 +158,21 @@ class Box extends Panel{
         //vertical box
         if( this.vertical ){
             var lastY : Float = this.h - this.paddingBottom;
-            var child : Widget;
+            var child : DisplayObject;
 
             for(i in 0...this.numChildren){
-                child   = cast(this.getChildAt(this.numChildren - 1 - i), Widget);
+                child   = this.getChildAt(this.numChildren - 1 - i);
                 if( !child.visible ) continue;
-                child.y = lastY - child.h;
+                child.y = lastY - (Std.is(child, Widget) ? cast(child, Widget).h : child.height);
                 lastY   = child.y - this.childPadding;
             }
 
         //horizontal box
         }else{
-            var child : Widget;
+            var child : DisplayObject;
             for(i in 0...this.numChildren){
-                child = cast(this.getChildAt(i), Widget);
-                child.y = this.h - this.paddingBottom - child.h;
+                child = this.getChildAt(i);
+                child.y = this.h - this.paddingBottom - (Std.is(child, Widget) ? cast(child, Widget).h : child.height);
             }
         }
     }//function _vAlignBottom()
@@ -191,13 +192,13 @@ class Box extends Panel{
         //horizontal box
         }else{
             var lastX : Float = this.paddingLeft;
-            var child : Widget;
+            var child : DisplayObject;
 
             for(i in 0...this.numChildren){
-                child   = cast(this.getChildAt(i), Widget);
+                child   = this.getChildAt(i);
                 if( !child.visible ) continue;
                 child.x = lastX;
-                lastX   += child.w + this.childPadding;
+                lastX   += (Std.is(child, Widget) ? cast(child, Widget).w : child.width) + this.childPadding;
             }
         }
     }//function _hAlignLeft()
@@ -210,21 +211,21 @@ class Box extends Panel{
     private function _hAlignRight () : Void {
         //vertical box
         if(this.vertical){
-            var child : Widget;
+            var child : DisplayObject;
             for(i in 0...this.numChildren){
-                child = cast(this.getChildAt(i), Widget);
-                child.x = this.w - this.paddingRight - child.w;
+                child = this.getChildAt(i);
+                child.x = this.w - this.paddingRight - (Std.is(child, Widget) ? cast(child, Widget).w : child.width);
             }
 
         //horizontal box
         }else{
             var lastX : Float = this.w - this.paddingRight;
-            var child : Widget;
+            var child : DisplayObject;
 
             for(i in 0...this.numChildren){
-                child = cast(this.getChildAt(this.numChildren - 1 - i), Widget);
+                child = this.getChildAt(this.numChildren - 1 - i);
                 if( !child.visible ) continue;
-                child.x = lastX - child.w;
+                child.x = lastX - (Std.is(child, Widget) ? cast(child, Widget).w : child.width);
                 lastX = child.x - this.childPadding;
             }
         }
@@ -238,24 +239,24 @@ class Box extends Panel{
     private function _hAlignCenter () : Void {
         //vertical box
         if(this.vertical){
-            var child : Widget;
+            var child : DisplayObject;
             for(i in 0...this.numChildren){
-                child   = cast(this.getChildAt(i), Widget);
-                child.x = (this.w - child.w) / 2;
+                child   = this.getChildAt(i);
+                child.x = (this.w - (Std.is(child, Widget) ? cast(child, Widget).w : child.width)) / 2;
             }
 
         //horizontal box
         }else{
             //sum children width
-            var child           : Widget;
+            var child           : DisplayObject;
             var width           : Float = 0;
             var visibleChildren : Int = 0;
 
             for(i in 0...this.numChildren){
-                child = cast(this.getChildAt(i), Widget);
+                child = this.getChildAt(i);
                 if( !child.visible ) continue;
                 visibleChildren ++;
-                width += child.w;
+                width += (Std.is(child, Widget) ? cast(child, Widget).w : child.width);
             }
 
             //add padding
@@ -265,10 +266,10 @@ class Box extends Panel{
             var lastX : Float = (this.w - width) / 2;
 
             for(i in 0...this.numChildren){
-                child   = cast(this.getChildAt(i), Widget);
+                child   = this.getChildAt(i);
                 if( !child.visible ) continue;
                 child.x = lastX;
-                lastX   += child.w + this.childPadding;
+                lastX   += (Std.is(child, Widget) ? cast(child, Widget).w : child.width) + this.childPadding;
             }
         }
     }//function _hAlignCenter()

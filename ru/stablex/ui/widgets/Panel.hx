@@ -144,7 +144,20 @@ class Panel extends Widget{
                 mx.identity();
                 mx.translate(w, h);
 
-                this.graphics.beginBitmapFill(bmp, mx, true, true);
+                #if html5
+                    if( h + bmp.height > this.h || w + bmp.width > this.w ){
+                        var h1 : Float = (h + bmp.height > this.h ? this.h - h : bmp.height);
+                        var w1 : Float = (w + bmp.width > this.w ? this.w - w : bmp.width);
+                        trace({h:h1,w:w1});
+                        var bmp1 : BitmapData = new BitmapData(Std.int(w1), Std.int(h1), true, 0x00FFFFFF);
+                        bmp1.copyPixels(bmp, new Rectangle(0, 0, w1, h1), new Point());
+                        this.graphics.beginBitmapFill(bmp1, mx, true, true);
+                    }else{
+                        this.graphics.beginBitmapFill(bmp, mx, true, true);
+                    }
+                #else
+                    this.graphics.beginBitmapFill(bmp, mx, true, true);
+                #end
                 this.graphics.drawRect(
                     w,
                     h,

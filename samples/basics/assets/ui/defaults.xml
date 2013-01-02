@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Default widgets settings -->
+<Defaults>
+    <Button>
+        <Default
+            w="700"
+            h="120"
+            bgColor="0x00FF00"
+            bgAlpha="0.5"
+            border="8"
+            borderColor="0x00FF00"
+            label-format-size="14"
+            label-format-color="0xff0000"
+            label-format-bold="true"
+        />
+        <Red
+            w="400"
+            h="60"
+            bgColor="0xFF0000"
+            border="4"
+            borderColor="0x00FF00"
+            label-format-size="12"
+            label-format-color="0x0000FF"
+        />
+    </Button>
+    <Text>
+        <Title
+            format-size="30"
+            label-filters="[new nme.filters.DropShadowFilter()]"
+            label-selectable="false"
+            label-mouseEnabled="false"
+            label-autoSize="nme.text.TextFieldAutoSize.LEFT"
+            format-size="14"
+            format-color="0xffffff"
+            format-bold="true"
+        />
+    </Text>
+</Defaults>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Root element of our UI. We can use Main in markup since it extends ru.stablex.ui.widgets.Widget -->
+<Main
+    id   = "'root'"
+    x    = "10"
+    y    = "10"
+    w    = "$Lib.current.stage.stageWidth - 20"
+    h    = "$Lib.current.stage.stageHeight - 20"
+    skin = "'winxp'"
+>
+    <Panel skin="'btnubuntu'" left="100" top="100" w="400" h="400" on-click="
+        #panel.tween(0.5, {top:$this.mouseY - #panel.h / 2, left:$this.mouseX - #panel.w / 2});
+    ">
+        <Mask widthPt="100" heightPt="100">
+            <Panel id="'panel'" texture="'assets/img/nme.png'" w="300" h="300" left="-20" top="-20" border="4">
+                <Text text="'Click to move panel'" right="5" bottom="5" format-size="20"/>
+            </Panel>
+        </Mask>
+    </Panel>
+</Main>
