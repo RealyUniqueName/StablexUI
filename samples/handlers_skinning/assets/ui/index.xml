@@ -25,7 +25,7 @@
 
     <!-- Buttons -->
     <HBox id="'buttons'" top="35" widthPt="100" h="40" childPadding="10" align="'center,middle'">
-        <Button skin="'btnxp'" w="100" h="40" label-text="'Move nme logo'" on-click="
+        <Button skin="'btnxp'" w="100" h="40" text="'Move nme logo'" on-click="
             #nme.tween(
                 1,
                 {x:#box.w * Math.random(), y:#box.h * Math.random()},
@@ -33,28 +33,28 @@
             );
         "/>
 
-        <Button skin="'btnxp'" w="100" h="40" label-text="'Make it red'" on-click="
+        <Button skin="'btnxp'" w="100" h="40" text="'Make it red'" on-click="
             var box : $Box = cast(#box, $Box);
             if( box.bgColor == 0x005500 ){
-                box.bgColor      = 0x550000;
-                box.borderColor  = 0xFF0000;
-                $this.label.text = 'Make it green';
+                box.bgColor     = 0x550000;
+                box.borderColor = 0xFF0000;
+                $this.text      = 'Make it green';
             }else{
-                box.bgColor      = 0x005500;
-                box.borderColor  = 0x00ff00;
-                $this.label.text = 'Make it red';
+                box.bgColor     = 0x005500;
+                box.borderColor = 0x00ff00;
+                $this.text      = 'Make it red';
             }
             box.refresh();
         "/>
 
-        <Button skin="'btnxp'" w="100" h="40" label-text="'Make it Ubuntu'" on-click="
+        <Button skin="'btnxp'" w="100" h="40" text="'Make it Ubuntu'" on-click="
             var root : $Panel = cast(#root, $Panel);
             if( root.skin == 'winxp' ){
-                root.skin        = 'winubuntu';
-                $this.label.text = 'Make it WinXP';
+                root.skin  = 'winubuntu';
+                $this.text = 'Make it WinXP';
             }else{
-                root.skin        = 'winxp';
-                $this.label.text = 'Make it Ubuntu';
+                root.skin  = 'winxp';
+                $this.text = 'Make it Ubuntu';
             }
             root.refresh();
 
@@ -66,7 +66,7 @@
             }
         "/>
 
-        <Button skin="'btnxp'" w="100" h="40" label-text="'Random resize'" on-click="
+        <Button skin="'btnxp'" w="100" h="40" text="'Random resize'" on-click="
             #root.resize(500 + Std.random(291), 400 + Std.random(191));
         "/>
     </HBox>

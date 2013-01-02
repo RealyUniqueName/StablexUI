@@ -8,14 +8,12 @@ import nme.events.MouseEvent;
 /**
 * Simple button
 */
-class Button extends Box{
+class Button extends Text{
 
     //wether button is currently pressed
     public var pressed (default,null) : Bool = false;
     //Wether mouse pointer is currently over this button
     public var hovered (default,null) : Bool = false;
-    //button label
-    public var label : Text;
 
 
     /**
@@ -69,6 +67,9 @@ class Button extends Box{
     public function new () : Void{
         super();
 
+        this.autoSize         = false;
+        this.label.selectable = false;
+
         this.buttonMode    = true;
         this.mouseChildren = false;
 
@@ -82,20 +83,8 @@ class Button extends Box{
         this.pressed = false;
         this.hovered = false;
 
-        this.label = cast(this.addChild(UIBuilder.create(Text)), Text);
-
         this.align = "center,middle";
     }//function new()
-
-
-    /**
-    * Refresh widget. Also refreshes button label
-    *
-    */
-    override public function refresh () : Void {
-        this.label.refresh();
-        super.refresh();
-    }//function refresh()
 
 
     /**

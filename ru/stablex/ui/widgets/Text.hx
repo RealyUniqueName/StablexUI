@@ -51,23 +51,9 @@ class Text extends Box{
                 if( this.label.text.length > 0 ) { this.h = this.label.textHeight; }else{ this.h = 0; }
             #end
         }
-        // }else{
-        //     //align text
-        //     this.updateAlign();
-        // }
 
         super.refresh();
     }//function refresh()
-
-
-    // /**
-    // * on resize
-    // *
-    // */
-    // override public function onResize() : Void {
-    //     super.onResize();
-    //     this.updateAlign();
-    // }//function onResize()
 
 
     /**
@@ -85,7 +71,11 @@ class Text extends Box{
     */
     private function _setText(txt:String) : String {
         this.label.text = txt;
-        this.refresh();
+        if( this.autoSize ){
+            this.refresh();
+        }else{
+            this.alignElements();
+        }
         return txt;
     }//function _setText()
 
