@@ -16,6 +16,14 @@ class Main extends ru.stablex.ui.widgets.Panel{
     *
     */
     static public function main () : Void{
+
+/*************************
+*
+* DOES NOT WORK FOR HTML5
+*
+*************************/
+trace('DOES NOT WORK FOR HTML5');
+
         Lib.current.stage.align     = StageAlign.TOP_LEFT;
         Lib.current.stage.scaleMode = StageScaleMode.NO_SCALE;
 

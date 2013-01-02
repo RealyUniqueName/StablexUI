@@ -4,10 +4,6 @@ import nme.display.DisplayObjectContainer;
 import nme.display.DisplayObject;
 import nme.display.Shape;
 
-#if html5
-import browser.Html5Dom;
-#end
-
 
 /**
 *   classname:  Mask
