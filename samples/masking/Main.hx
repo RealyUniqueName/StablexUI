@@ -19,19 +19,15 @@ class Main extends ru.stablex.ui.widgets.Panel{
 
 /*************************
 *
-* DOES NOT WORK FOR HTML5
+* MASKING DOES NOT WORK FOR HTML5
 *
 *************************/
-trace('DOES NOT WORK FOR HTML5');
 
         Lib.current.stage.align     = StageAlign.TOP_LEFT;
         Lib.current.stage.scaleMode = StageScaleMode.NO_SCALE;
 
         //register Main so we can use it in xml.
         UIBuilder.regClass("Main");
-
-//register Mask widget. In later releases it will be registered by default in UIBuilder.init()
-UIBuilder.regClass("ru.stablex.ui.widgets.Mask");
 
         //initialize StablexUI
         UIBuilder.init();

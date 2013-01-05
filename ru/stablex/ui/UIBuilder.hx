@@ -70,6 +70,7 @@ class UIBuilder {
             //registering frequently used classes
             UIBuilder.regClass('ru.stablex.ui.widgets.Bar');
             UIBuilder.regClass('ru.stablex.ui.widgets.Text');
+            UIBuilder.regClass('ru.stablex.ui.widgets.InputText');
             UIBuilder.regClass('ru.stablex.ui.widgets.Panel');
             UIBuilder.regClass('ru.stablex.ui.widgets.Widget');
             UIBuilder.regClass('ru.stablex.ui.widgets.Bmp');
@@ -78,12 +79,14 @@ class UIBuilder {
             UIBuilder.regClass('ru.stablex.ui.widgets.VBox');
             UIBuilder.regClass('ru.stablex.ui.widgets.HBox');
             UIBuilder.regClass('ru.stablex.ui.widgets.ViewStack');
-            UIBuilder.regClass('ru.stablex.ui.widgets.Grid');
+            UIBuilder.regClass("ru.stablex.ui.widgets.Mask");
             UIBuilder.regClass('ru.stablex.ui.events.WidgetEvent');
             UIBuilder.regClass('ru.stablex.TweenSprite');
             UIBuilder.regClass('ru.stablex.ui.UIBuilder');
             UIBuilder.regClass('nme.Lib');
             UIBuilder.regClass('ru.stablex.Assets');
+            UIBuilder.regClass('nme.events.Event');
+            UIBuilder.regClass('nme.events.MouseEvent');
 
             //If provided with file for defaults, generate closures for applying defaults to widgets
             if( defaultsXmlFile != null ){
@@ -168,7 +171,7 @@ class UIBuilder {
                 //required code replacements
                 value = UIBuilder._fillCodeShortcuts('__ui__widget' + n, value);
 
-                code += '\n__ui__widget' + n + '.addEventListener('+ cls +', function(e:nme.events.Event){' + value + '});';
+                code += '\n__ui__widget' + n + '.addEventListener('+ cls +', function(event:nme.events.Event){' + value + '});';
 
             //just apply attribute value to appropriate widget property
             }else{

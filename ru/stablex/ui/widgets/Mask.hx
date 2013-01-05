@@ -1,16 +1,16 @@
 package ru.stablex.ui.widgets;
 
-import nme.display.DisplayObjectContainer;
-import nme.display.DisplayObject;
-import nme.display.Shape;
+import nme.geom.Rectangle;
+
 
 
 /**
 *   classname:  Mask
 *
-* Hide everything that overflows this widget's borders
+* Hide everything that overflows this widget's size
 */
-class Mask extends Panel{
+class Mask extends Widget{
+
 
     /**
     * Update scrollRect on resize
@@ -18,6 +18,7 @@ class Mask extends Panel{
     */
     override public function onResize () : Void {
         super.onResize();
-        this.scrollRect = new nme.geom.Rectangle(0, 0, this.w, this.h);
+
+        this.scrollRect = new Rectangle(0, 0, this.w, this.h);
     }//function onResize()
 }//class Mask
