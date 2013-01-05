@@ -24,6 +24,19 @@ class Box extends Panel{
     * Vertical: left, right, center. Horizontal: top, bottom, middle.
     */
     public var align : String = 'center,middle';
+    //set size depending on content size
+    public var autoSize (never,_setAutoSize) : Bool;
+    public var autoWidth                     : Bool = false;
+    public var autoHeight                    : Bool = false;
+
+
+    /**
+    * Setter for autoSize
+    *
+    */
+    private function _setAutoSize (as:Bool) : Bool {
+        return this.autoWidth = this.autoHeight = as;
+    }//function _setAutoSize()
 
 
     /**
@@ -41,6 +54,9 @@ class Box extends Panel{
     *
     */
     override public function refresh() : Void {
+        if( this.autoWidth ) this._calcWidth();
+        if( this.autoHeight ) this._calcHeight();
+
         super.refresh();
         this.alignElements();
     }//function refresh()
@@ -54,6 +70,89 @@ class Box extends Panel{
         super.onResize();
         this.alignElements();
     }//function onResize()
+
+
+    /**
+    * Set width based on content width
+    *
+    */
+    private function _calcWidth () : Void {
+        //if this is vertical box, set width = max child width
+        if( this.vertical ){
+
+            var w : Float = 0;
+            var child : DisplayObject;
+
+            for(i in 0...this.numChildren){
+                child = this.getChildAt(i);
+                if( Std.is(child, Widget) && cast(child, Widget)._width > w ){
+                    w = cast(child, Widget)._width;
+                }else if( child.width > w ){
+                    w = child.width;
+                }
+            }
+
+            this._width = w + this.paddingLeft + this.paddingRight;
+        //if this is horizontal box set width = sum children width
+        }else{
+
+            var w : Float = this.paddingLeft + this.paddingRight + (this.numChildren - 1) * this.childPadding;
+            var child : DisplayObject;
+
+            for(i in 0...this.numChildren){
+                child = this.getChildAt(i);
+                if( Std.is(child, Widget) ){
+                    w += cast(child, Widget)._width;
+                }else if( child.width > w ){
+                    w = child.width;
+                }
+            }
+
+            this._width = w;
+        }
+    }//function _calcWidth()
+
+
+    /**
+    * Set width based on content width
+    *
+    */
+    private function _calcHeight () : Void {
+        //if this is vertical box, set height = sum children height
+        if( this.vertical ){
+
+            var h : Float = this.paddingTop + this.paddingBottom + (this.numChildren - 1) * this.childPadding;
+            var child : DisplayObject;
+
+            for(i in 0...this.numChildren){
+                child = this.getChildAt(i);
+                if( Std.is(child, Widget) ){
+                    h += cast(child, Widget)._height;
+                }else if( child.height > h ){
+                    h = child.height;
+                }
+            }
+
+            this._height = h;
+
+        //if this is horizontal box set height = sum children height
+        }else{
+
+            var h : Float = 0;
+            var child : DisplayObject;
+
+            for(i in 0...this.numChildren){
+                child = this.getChildAt(i);
+                if( Std.is(child, Widget) && cast(child, Widget)._height > h ){
+                    h = cast(child, Widget)._height;
+                }else if( child.height > h ){
+                    h = child.height;
+                }
+            }
+
+            this._height = h + this.paddingTop + this.paddingBottom;
+        }
+    }//function _calcHeight()
 
 
     /**

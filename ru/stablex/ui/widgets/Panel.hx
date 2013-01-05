@@ -25,8 +25,6 @@ class Panel extends Widget{
     * Four - 9 slice scalign. Integers: vertical left, vertical right, horizontal top, horizontal bottom
     */
     public var skinSlices : Array<Int>;
-    //Should we use skin or texture bitmap size to set this.h and this.w ? Default - false
-    public var skinMetrics : Bool = false;
     //Should we stretch skin height to fit this.h when using 3 slice scaling? Default - true
     public var skinStretch : Bool = true;
     //Assets ID or path to bitmapData for tiling
@@ -84,36 +82,36 @@ class Panel extends Widget{
     *
     */
     public function reskin() : Void {
-        //should we use skin ?
-        if( this.skinBmp != null ){
-            var bmp : BitmapData = Assets.getBitmapData(this.skinBmp);
-            //рисуем картинку на объекте
-            if( bmp != null ){
-                if( this.skinMetrics || this.w == 0 ) this.w = bmp.width;
-                if( this.skinMetrics || this.h == 0 ) this.h = bmp.height;
-
-                this._skin(bmp, this.border, this.borderColor);
-            }else{
-                Err.trigger('Skin bitmap not found: ' + this.skinBmp);
-            }
-
-        //or fill with bitmap ?
-        }else if( this.texture != null ){
-            var bmp : BitmapData = Assets.getBitmapData(this.texture);
-            //рисуем картинку на объекте
-            if( bmp != null ){
-                if( this.skinMetrics || this.w == 0 ) this.w = bmp.width;
-                if( this.skinMetrics || this.h == 0 ) this.h = bmp.height;
-
-                this._fillWithBitmap(bmp, this.border, this.borderColor);
-
-            }else{
-                Err.trigger('Texture bitmap not found: ' + this.texture);
-            }
-
-        //or just fill with color?
+        //zero size
+        if( this._width == 0 || this._height == 0 ){
+            this.graphics.clear();
         }else{
-            this._fillWithColor(this.bgColor, this.border, this.borderColor, this.bgAlpha);
+
+            //should we use skin ?
+            if( this.skinBmp != null ){
+                var bmp : BitmapData = Assets.getBitmapData(this.skinBmp);
+                //рисуем картинку на объекте
+                if( bmp != null ){
+                    this._skin(bmp, this.border, this.borderColor);
+                }else{
+                    Err.trigger('Skin bitmap not found: ' + this.skinBmp);
+                }
+
+            //or fill with bitmap ?
+            }else if( this.texture != null ){
+                var bmp : BitmapData = Assets.getBitmapData(this.texture);
+                //рисуем картинку на объекте
+                if( bmp != null ){
+                    this._fillWithBitmap(bmp, this.border, this.borderColor);
+
+                }else{
+                    Err.trigger('Texture bitmap not found: ' + this.texture);
+                }
+
+            //or just fill with color?
+            }else{
+                this._fillWithColor(this.bgColor, this.border, this.borderColor, this.bgAlpha);
+            }
         }
     }//function reskin()
 
@@ -148,9 +146,10 @@ class Panel extends Widget{
                     if( h + bmp.height > this.h || w + bmp.width > this.w ){
                         var h1 : Float = (h + bmp.height > this.h ? this.h - h : bmp.height);
                         var w1 : Float = (w + bmp.width > this.w ? this.w - w : bmp.width);
-                        trace({h:h1,w:w1});
+
                         var bmp1 : BitmapData = new BitmapData(Std.int(w1), Std.int(h1), true, 0x00FFFFFF);
                         bmp1.copyPixels(bmp, new Rectangle(0, 0, w1, h1), new Point());
+
                         this.graphics.beginBitmapFill(bmp1, mx, true, true);
                     }else{
                         this.graphics.beginBitmapFill(bmp, mx, true, true);

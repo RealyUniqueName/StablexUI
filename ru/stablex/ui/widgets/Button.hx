@@ -70,7 +70,7 @@ class Button extends Text{
         this.autoSize         = false;
         this.label.selectable = false;
 
-        this.buttonMode    = true;
+        this.buttonMode    = this.useHandCursor = true;
         this.mouseChildren = false;
 
         //process interactions with mouse pointer

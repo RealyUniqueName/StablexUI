@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Panel
+    id   = "'root'"
+    x    = "10"
+    y    = "10"
+    w    = "$Lib.current.stage.stageWidth - 20"
+    h    = "$Lib.current.stage.stageHeight - 20"
+    skin = "'winxp'"
+>
+    <Box left="100" top="100" border="2" autoSize="true" padding="10" childPadding="5">
+        <Panel texture="'assets/img/nme.png'" w="100" h="50"/>
+        <Button skin="'btnubuntu'" autoWidth="true" h="30" text="'Hello, world!'" padding="5"/>
+        <InputText id="'txt'" text="'Some random text'" on-display="trace({w: $this.label.width, h:$this.label.height});"/>
+    </Box>
+
+</Panel>

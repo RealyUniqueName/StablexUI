@@ -14,8 +14,8 @@ class Text extends Box{
     public var label  : TextField;
     //Text format wich will be aplied to label on refresh
     public var format : TextFormat;
-    //Should we set widget .w and .h according to label .width and .height?
-    public var autoSize : Bool = true;
+    // //Should we set widget .w and .h according to label .width and .height?
+    // public var autoSize : Bool = true;
     //Getter-setter for text.
     public var text (_getText,_setText) : String;
 
@@ -31,6 +31,8 @@ class Text extends Box{
         this.label.autoSize = nme.text.TextFieldAutoSize.LEFT;
 
         this.format = this.label.defaultTextFormat;
+
+        this.autoSize = true;
     }//function new()
 
 
@@ -41,16 +43,6 @@ class Text extends Box{
     override public function refresh() : Void {
         this.label.defaultTextFormat = this.format;
         this.label.setTextFormat(this.format);
-
-        if( this.autoSize ){
-            #if html5
-                if( this.label.text.length > 0 ) { this.w = this.width; }else{ this.w = 0; }
-                if( this.label.text.length > 0 ) { this.h = this.height; }else{ this.h = 0; }
-            #else
-                if( this.label.text.length > 0 ) { this.w = this.label.textWidth; }else{ this.w = 0; }
-                if( this.label.text.length > 0 ) { this.h = this.label.textHeight; }else{ this.h = 0; }
-            #end
-        }
 
         super.refresh();
     }//function refresh()
@@ -71,36 +63,12 @@ class Text extends Box{
     */
     private function _setText(txt:String) : String {
         this.label.text = txt;
-        if( this.autoSize ){
+        if( this.autoWidth || this.autoHeight ){
             this.refresh();
         }else{
             this.alignElements();
         }
         return txt;
     }//function _setText()
-
-
-    // /**
-    // * Text align
-    // *
-    // */
-    // public function updateAlign() : Void {
-    //     if( this.align != null ){
-    //         var alignments : Array<String> = this.align.split(',');
-
-    //         for(align in alignments){
-    //             switch(align){
-    //                 case 'top'    : this.label.y = 0;
-    //                 case 'middle' : this.label.y = (this.h - this.label.height) / 2;
-    //                 case 'bottom' : this.label.y = this.h - this.label.height;
-    //                 case 'left'   : this.label.x = 0;
-    //                 case 'center' : this.label.x = (this.w - this.label.width) / 2;
-    //                 case 'right'  : this.label.x = this.w - this.label.width;
-    //                 default : Err.trigger('Unknown text alignment: ' + align);
-    //             }
-    //         }
-    //     }
-    // }//function updateAlign()
-
 
 }//class Text
