@@ -116,7 +116,7 @@ class UIBuilder {
     *   #widgetId - replaced with UIBuilder.get('widgetId');
     *   @someParam - replaced with arguments.someParam. Arguments can be passed like this: UIBuilder.buildFn(xmlFile)({someParam:'some value', someParam2: 3.14});
     *
-    * @return Root_Xml_Element_Class->Widget
+    * @return Dynamic->Root_Xml_Element_Class<Widget>
     */
     @:macro static public function buildFn (xmlFile:String) : Expr{
         if( !UIBuilder._initialized ) Err.trigger('Call UIBuilder.init()');
