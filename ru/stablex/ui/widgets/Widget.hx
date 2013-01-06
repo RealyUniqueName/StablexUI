@@ -499,13 +499,10 @@ class Widget extends TweenSprite{
 
 
     /**
-    * Refresh widget
+    * Refresh widget. This method is called at least once for every widget (on creation)
     *
     */
     public function refresh() : Void {
-        // // //if widget size is not defined set it by content size
-        // if( this._width  == 0 ) this.w = this.width;
-        // if( this._height == 0 ) this.h = this.height;
     }//function refresh()
 
 
