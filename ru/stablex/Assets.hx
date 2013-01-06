@@ -63,7 +63,7 @@ class Assets{
 #end
 
     /**
-    * Embed file content "as is" at compile time. This content can be any valid haxe code
+    * Embed file content "as is" at compile time. This content can be any valid haxe code.
     *
     */
     @:macro static public function embed (file:String) : Expr{
@@ -72,8 +72,9 @@ class Assets{
 
 
     /**
-    * Embed file content as String at compile time
+    * Embed file content as String at compile time.
     *
+    * @return String - content of specified file
     */
     @:macro static public function embedStr (fname:String) : Expr{
         return Context.makeExpr(File.getContent(fname), Context.currentPos());
