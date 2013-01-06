@@ -5,8 +5,6 @@ import nme.geom.Rectangle;
 
 
 /**
-*   classname:  Mask
-*
 * Hide everything that overflows this widget's size
 */
 class Mask extends Widget{

@@ -68,7 +68,6 @@ class UIBuilder {
             UIBuilder.regEvent('resize',    'ru.stablex.ui.events.WidgetEvent.RESIZE');
 
             //registering frequently used classes
-            UIBuilder.regClass('ru.stablex.ui.widgets.Bar');
             UIBuilder.regClass('ru.stablex.ui.widgets.Text');
             UIBuilder.regClass('ru.stablex.ui.widgets.InputText');
             UIBuilder.regClass('ru.stablex.ui.widgets.Panel');
@@ -79,7 +78,7 @@ class UIBuilder {
             UIBuilder.regClass('ru.stablex.ui.widgets.VBox');
             UIBuilder.regClass('ru.stablex.ui.widgets.HBox');
             UIBuilder.regClass('ru.stablex.ui.widgets.ViewStack');
-            UIBuilder.regClass("ru.stablex.ui.widgets.Mask");
+            UIBuilder.regClass('ru.stablex.ui.widgets.Mask');
             UIBuilder.regClass('ru.stablex.ui.events.WidgetEvent');
             UIBuilder.regClass('ru.stablex.TweenSprite');
             UIBuilder.regClass('ru.stablex.ui.UIBuilder');

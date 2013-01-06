@@ -1,0 +1,93 @@
+<dic class="classContainer"><div class="classDef"> <span class="class">class</span> <span class="className">Widget</span> <span class="extends">extends</span> <span class="type" data-url="ru/stablex/TweenSprite.html">TweenSprite</span>
+</div>
+<div class="comment"> Basic widget
+</div>
+<div class="definition">    <span class="public">public</span> <span class="var">var</span> <span class="definitionName">defaults</span> : <span class="type" data-url="http://haxe.org/api/String">String</span> = 'Default'
+</div>
+<div class="comment">Name of section in default settings for this type of widgets
+</div>
+<div class="definition">    <span class="public">public</span> <span class="var">var</span> <span class="definitionName">created</span> : <span class="type" data-url="http://haxe.org/api/Bool">Bool</span> = false
+</div>
+<div class="comment">Wether this widget creation by UIBuilder is finished
+</div>
+<div class="definition">    <span class="public">public</span> <span class="var">var</span> <span class="definitionName">w</span> (_getWidth,_setWidth)   : <span class="type" data-url="http://haxe.org/api/Float">Float</span>
+</div>
+<div class="comment">Widget width
+</div>
+<div class="definition">    <span class="public">public</span> <span class="var">var</span> <span class="definitionName">h</span> (_getHeight,_setHeight)  : <span class="type" data-url="http://haxe.org/api/Float">Float</span>
+</div>
+<div class="comment">Widget height
+</div>
+<div class="definition">    <span class="public">public</span> <span class="var">var</span> <span class="definitionName">id</span> (default, _setId) : <span class="type" data-url="http://haxe.org/api/String">String</span>
+</div>
+<div class="comment">Widget id (unique)
+</div>
+<div class="definition">    <span class="public">public</span> <span class="var">var</span> <span class="definitionName">left</span> (_getLeft,_setLeft) : <span class="type" data-url="http://haxe.org/api/Float">Float</span>
+</div>
+<div class="comment">position this widget by left border
+</div>
+<div class="definition">    <span class="public">public</span> <span class="var">var</span> <span class="definitionName">right</span> (_getRight,_setRight) : <span class="type" data-url="http://haxe.org/api/Float">Float</span>
+</div>
+<div class="comment">position this widget by right border
+</div>
+<div class="definition">    <span class="public">public</span> <span class="var">var</span> <span class="definitionName">wparent</span> (_getParentWidget,never) : <span class="type" data-url="ru/stablex/ui/widgets/Widget/hx.html">Widget</span>
+</div>
+<div class="comment">Get parent if it is widget
+</div>
+<div class="definition">    <span class="public">public</span> <span class="var">var</span> <span class="definitionName">top</span> (_getTop,_setTop)   : <span class="type" data-url="http://haxe.org/api/Float">Float</span>
+</div>
+<div class="comment">position this widget by top border
+</div>
+<div class="definition">    <span class="public">public</span> <span class="var">var</span> <span class="definitionName">bottom</span> (_getBottom,_setBottom) : <span class="type" data-url="http://haxe.org/api/Float">Float</span>
+</div>
+<div class="comment">position this widget by bottom border
+</div>
+<div class="definition">    <span class="public">public</span> <span class="function">function</span> <span class="definitionName">new</span>() : <span class="type" data-url="http://haxe.org/api/Void">Void</span> 
+</div>
+<div class="comment"> Constructor
+</div>
+<div class="definition">    <span class="public">public</span> <span class="function">function</span> <span class="definitionName">onCreate</span> () : <span class="type" data-url="http://haxe.org/api/Void">Void</span>
+</div>
+<div class="comment"> This method is called automatically after widget was created by UIBuilder.buildFn() or UIBuilder.create()
+</div>
+<div class="definition">    <span class="override">override</span> <span class="public">public</span> <span class="function">function</span> <span class="definitionName">free</span> (recursive:<span class="type" data-url="http://haxe.org/api/Bool">Bool</span> = true) : <span class="type" data-url="http://haxe.org/api/Void">Void</span>
+</div>
+<div class="comment"> Free (destroy) widget
+</div>
+<div class="definition">    <span class="public">public</span> <span class="function">function</span> <span class="definitionName">refresh</span>() : <span class="type" data-url="http://haxe.org/api/Void">Void</span> 
+</div>
+<div class="comment"> Refresh widget
+</div>
+<div class="definition">    <span class="public">public</span> <span class="function">function</span> <span class="definitionName">onNewParent</span>(newParent:<span class="type" data-url="ru/stablex/ui/widgets/Widget/hx.html">Widget</span>) : <span class="type" data-url="http://haxe.org/api/Void">Void</span> 
+</div>
+<div class="comment"> Called before adding to new widget display list
+</div>
+<div class="definition">    <span class="public">public</span> <span class="function">function</span> <span class="definitionName">resize</span>(width:<span class="type" data-url="http://haxe.org/api/Float">Float</span>, height:<span class="type" data-url="http://haxe.org/api/Float">Float</span>, keepPercentage:<span class="type" data-url="http://haxe.org/api/Bool">Bool</span> = false) : <span class="type" data-url="http://haxe.org/api/Void">Void</span> 
+</div>
+<div class="comment"> Resize width and height simultaniously. Only one WidgetEvent.RESIZE will be dispatched
+</div>
+<div class="definition">    <span class="public">public</span> <span class="function">function</span> <span class="definitionName">onResize</span>() : <span class="type" data-url="http://haxe.org/api/Void">Void</span> 
+</div>
+<div class="comment"> Called every time this object is resized
+</div>
+<div class="definition">    <span class="override">override</span> <span class="public">public</span> <span class="function">function</span> <span class="definitionName">addChild</span>(child:<span class="type" data-url="http://nme.io/api/types/nme/display/DisplayObject.html">DisplayObject</span>) : <span class="type" data-url="http://nme.io/api/types/nme/display/DisplayObject.html">DisplayObject</span> 
+</div>
+<div class="comment"> Add child to display list. If child is Widget child.onNewParent() is called
+</div>
+<div class="definition">    <span class="override">override</span> <span class="public">public</span> <span class="function">function</span> <span class="definitionName">addChildAt</span>(child:<span class="type" data-url="http://nme.io/api/types/nme/display/DisplayObject.html">DisplayObject</span>, idx:<span class="type" data-url="http://haxe.org/api/Int">Int</span>) : <span class="type" data-url="http://nme.io/api/types/nme/display/DisplayObject.html">DisplayObject</span> 
+</div>
+<div class="comment"> Add child to display list at specified index. If child is Widget child.onNewParent() is called
+</div>
+<div class="definition">    <span class="override">override</span> <span class="public">public</span> <span class="function">function</span> <span class="definitionName">removeChild</span>(child:<span class="type" data-url="http://nme.io/api/types/nme/display/DisplayObject.html">DisplayObject</span>) : <span class="type" data-url="http://nme.io/api/types/nme/display/DisplayObject.html">DisplayObject</span> 
+</div>
+<div class="comment"> Remove child from display list
+</div>
+<div class="definition">    <span class="override">override</span> <span class="public">public</span> <span class="function">function</span> <span class="definitionName">removeChildAt</span>(idx:<span class="type" data-url="http://haxe.org/api/Int">Int</span>) : <span class="type" data-url="http://nme.io/api/types/nme/display/DisplayObject.html">DisplayObject</span> 
+</div>
+<div class="comment"> Remove child at specified index from display list
+</div>
+<div class="definition">    <span class="override">override</span> <span class="public">public</span> <span class="function">function</span> <span class="definitionName">getChildByName</span>(name:<span class="type" data-url="http://haxe.org/api/String">String</span>) : <span class="type" data-url="http://nme.io/api/types/nme/display/DisplayObject.html">DisplayObject</span> 
+</div>
+<div class="comment"> Recursively looks for child with specified name
+</div>
+</div>

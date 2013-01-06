@@ -1,0 +1,51 @@
+<dic class="classContainer"><div class="classDef"> <span class="class">class</span> <span class="className">Panel</span> <span class="extends">extends</span> <span class="type" data-url="http://haxe.org/api/Widget">Widget</span>
+</div>
+<div class="comment"> Just panel wich can be tiled with texture, skinned with TSkin or colored with .graphics.beginFill()
+ Prioritty: skin -> texture -> coloring
+</div>
+<div class="definition">    <span class="public">public</span> <span class="var">var</span> <span class="definitionName">skin</span> (default,_setSkin) : <span class="type" data-url="http://haxe.org/api/String">String</span>
+</div>
+<div class="comment">Skin name to use. One of UIBuilder.skins
+</div>
+<div class="definition">    <span class="public">public</span> <span class="var">var</span> <span class="definitionName">skinBmp</span> : <span class="type" data-url="http://haxe.org/api/String">String</span>
+</div>
+<div class="comment">Assets ID or path to bitmapData for skinning
+</div>
+<div class="definition">    <span class="public">public</span> <span class="var">var</span> <span class="definitionName">skinStretch</span> : <span class="type" data-url="http://haxe.org/api/Bool">Bool</span> = true
+</div>
+<div class="comment">Should we stretch skin height to fit this.h when using 3 slice scaling? Default - true
+</div>
+<div class="definition">    <span class="public">public</span> <span class="var">var</span> <span class="definitionName">texture</span> : <span class="type" data-url="http://haxe.org/api/String">String</span>
+</div>
+<div class="comment">Assets ID or path to bitmapData for tiling
+</div>
+<div class="definition">    <span class="public">public</span> <span class="var">var</span> <span class="definitionName">border</span> : <span class="type" data-url="http://haxe.org/api/Float">Float</span> = 0
+</div>
+<div class="comment">Border width
+</div>
+<div class="definition">    <span class="public">public</span> <span class="var">var</span> <span class="definitionName">borderColor</span> : <span class="type" data-url="http://haxe.org/api/Int">Int</span> = 0x000000
+</div>
+<div class="comment">Border color
+</div>
+<div class="definition">    <span class="public">public</span> <span class="var">var</span> <span class="definitionName">bgColor</span> (default,_setBgColor) : <span class="type" data-url="http://haxe.org/api/Int">Int</span> = 0x000000
+</div>
+<div class="comment">Background color
+</div>
+<div class="definition">    <span class="public">public</span> <span class="var">var</span> <span class="definitionName">bgAlpha</span> : <span class="type" data-url="http://haxe.org/api/Float">Float</span> = 0
+</div>
+<div class="comment"> Background alpha for coloring. Default - 0.
+ If bgAlpha = 0, background won't be colored at all.
+</div>
+<div class="definition">    <span class="override">override</span> <span class="public">public</span> <span class="function">function</span> <span class="definitionName">refresh</span>() : <span class="type" data-url="http://haxe.org/api/Void">Void</span> 
+</div>
+<div class="comment"> Refresh widget
+</div>
+<div class="definition">    <span class="public">public</span> <span class="function">function</span> <span class="definitionName">reskin</span>() : <span class="type" data-url="http://haxe.org/api/Void">Void</span> 
+</div>
+<div class="comment"> apply skin settings
+</div>
+<div class="definition">    <span class="override">override</span> <span class="public">public</span> <span class="function">function</span> <span class="definitionName">onResize</span>() : <span class="type" data-url="http://haxe.org/api/Void">Void</span> 
+</div>
+<div class="comment"> on resize refresh widget
+</div>
+</div>

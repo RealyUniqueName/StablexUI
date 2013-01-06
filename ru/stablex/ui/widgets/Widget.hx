@@ -24,7 +24,7 @@ class Widget extends TweenSprite{
     static private inline var _Y_USE_BOTTOM_PERCENT = 8;
 
 
-    //Default settings for this type of widgets
+    //Name of section in default settings for this type of widgets
     public var defaults : String = 'Default';
 
     //Wether this widget creation by UIBuilder is finished
@@ -66,13 +66,13 @@ class Widget extends TweenSprite{
     //Get parent if it is widget
     public var wparent (_getParentWidget,never) : Widget;
 
-    //position this widget by left border
+    //position this widget by top border
     public var top (_getTop,_setTop)   : Float;
     public var topPt (_getTpt,_setTpt) : Float;
     private var _top                   : Float = 0;
     private var _topPercent            : Float = 0;
 
-    //position this widget by right border
+    //position this widget by bottom border
     public var bottom (_getBottom,_setBottom) : Float;
     public var bottomPt (_getBpt,_setBpt)     : Float;
     private var _bottom                       : Float = 0;

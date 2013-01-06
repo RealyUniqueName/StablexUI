@@ -1,0 +1,38 @@
+<dic class="classContainer"><div class="classDef"> <span class="class">class</span> <span class="className">Box</span> <span class="extends">extends</span> <span class="type" data-url="http://haxe.org/api/Panel">Panel</span>
+</div>
+<div class="comment"> Children of this box are aligned relative to box bounds
+</div>
+<div class="definition">    <span class="public">public</span> <span class="var">var</span> <span class="definitionName">vertical</span> : <span class="type" data-url="http://haxe.org/api/Bool">Bool</span> = true
+</div>
+<div class="comment">Should we arrange children vertically (true) or horizontally (false). True by default.
+</div>
+<div class="definition">    <span class="public">public</span> <span class="var">var</span> <span class="definitionName">padding</span> (never,_setPadding) : <span class="type" data-url="http://haxe.org/api/Float">Float</span>
+</div>
+<div class="comment">Setter for padding left, right, top, bottom.
+</div>
+<div class="definition">    <span class="public">public</span> <span class="var">var</span> <span class="definitionName">childPadding</span> : <span class="type" data-url="http://haxe.org/api/Float">Float</span> = 0
+</div>
+<div class="comment">Distance between children
+</div>
+<div class="definition">    <span class="public">public</span> <span class="var">var</span> <span class="definitionName">align</span> : <span class="type" data-url="http://haxe.org/api/String">String</span> = 'center,middle'
+</div>
+<div class="comment"> This should be like 'left,top' or 'bottom' or 'center,middle' etc.
+ Vertical: left, right, center. Horizontal: top, bottom, middle.
+</div>
+<div class="definition">    <span class="public">public</span> <span class="var">var</span> <span class="definitionName">autoSize</span> (never,_setAutoSize) : <span class="type" data-url="http://haxe.org/api/Bool">Bool</span>
+</div>
+<div class="comment">set size depending on content size
+</div>
+<div class="definition">    <span class="override">override</span> <span class="public">public</span> <span class="function">function</span> <span class="definitionName">refresh</span>() : <span class="type" data-url="http://haxe.org/api/Void">Void</span> 
+</div>
+<div class="comment"> Refresh widgets. Realigns children
+</div>
+<div class="definition">    <span class="override">override</span> <span class="public">public</span> <span class="function">function</span> <span class="definitionName">onResize</span>() : <span class="type" data-url="http://haxe.org/api/Void">Void</span> 
+</div>
+<div class="comment"> on resize refresh widget
+</div>
+<div class="definition">    <span class="public">public</span> <span class="function">function</span> <span class="definitionName">alignElements</span> () : <span class="type" data-url="http://haxe.org/api/Void">Void</span> 
+</div>
+<div class="comment"> Align elements according to this.align
+</div>
+</div>

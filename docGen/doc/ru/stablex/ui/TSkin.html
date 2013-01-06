@@ -1,0 +1,18 @@
+<div class="classContainer"><div class="comment"> Structure to describe skins
+</div>
+<div class="classDef"><span class="typedef">typedef</span> <span class="className">TSkin</span> =  
+</div>
+<div class="typedefBody">{
+<div class="definition">    //Asset ID of bitmapData. Will be used with Assets.getBitmapData(here)
+    bmp    : <span class="type" data-url="http://haxe.org/api/String">String</span>,
+    /**
+    * Describes skinning method. This array should contain zero, one, two or four integers.
+    * Zero - 3 slice scaling (horizontal). Bitmap is divided into two equal sized bitmaps. Middle part is filled with central column of pixels.
+    * One - 3 slice scaling (horizontal). Bitmap is divided into two bitmaps. Middle part is filled with column of pixels with x = specified integer.
+    * Two - 3 slice scaling (horizontal). Integers: <span class="type" data-url="http://haxe.org/api/left">left</span> and right guidelines for slicing
+    * Four - 9 slice scalign. Integers: <span class="type" data-url="http://haxe.org/api/vertical">vertical</span> left, vertical right, horizontal top, horizontal bottom
+    */
+    slices : <span class="type" data-url="http://haxe.org/api/Array">Array</span>&lt;<span class="type" data-url="http://haxe.org/api/Int">Int</span>&gt;
+}</div>
+</div>
+</div>
