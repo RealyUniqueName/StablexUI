@@ -110,6 +110,11 @@ class UIBuilder {
 
     /**
     * Generates closure for widget creation. xmlFile - path to xml file with markup.
+    * In xml you can use these placeholders:
+    *   $this - replaced with current widget;
+    *   $SomeClass - replaced with com.some.package.SomeClass. If registered with UIBuilder.regClass('com.some.package.SomeClass');
+    *   #widgetId - replaced with UIBuilder.get('widgetId');
+    *   @someParam - replaced with arguments.someParam. Arguments can be passed like this: UIBuilder.buildFn(xmlFile)({someParam:'some value', someParam2: 3.14});
     *
     * @return Root_Xml_Element_Class->Widget
     */

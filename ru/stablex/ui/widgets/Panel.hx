@@ -68,7 +68,7 @@ class Panel extends Widget{
 
 
     /**
-    * Refresh widget
+    * Refresh widget. Re-apply skin
     *
     */
     override public function refresh() : Void {

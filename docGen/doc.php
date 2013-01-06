@@ -7,7 +7,7 @@ $urls = array(
     'default' => 'http://haxe.org/api/#type#'
 );
 
-file_put_contents('doc/menu.html', "<ul>\n<li class=\"package\"><a class=\"package\">ru</a>\n<ul>\n". generate('../ru/', 'doc/ru/') ."\n</ul>\n</li></ul>\n");
+file_put_contents('doc/menu.html', "<ul>\n<li class=\"package\"><span class=\"package\">ru</span>\n<ul>\n". generate('../ru/', 'doc/ru/') ."\n</ul>\n</li></ul>\n");
 
 define('DOC_BASE_URL', 'ui/api/');
 
@@ -16,14 +16,23 @@ function generate($srcPath, $dstPath = 'doc/', $imports = array()){
 
     $menu = "";
 
+    #collect imports
+    foreach (glob($srcPath . "*.hx") as $fname) {
+        $import = preg_replace('/(\.\/)|(\.\/)/', '', $fname);
+        $import = preg_replace('/\//', '.', $import);
+        $import = preg_replace('/^([^a-zA-Z]*)/', '', $import);
+        $import = preg_replace('/\.hx$/', '', $import);
+        $imports[ basename($fname, '.hx') ] = $import;
+    }
+
     #process files
     foreach (glob($srcPath . "*.hx") as $fname) {
         $import = preg_replace('/(\.\/)|(\.\/)/', '', $fname);
         $import = preg_replace('/\//', '.', $import);
         $import = preg_replace('/^([^a-zA-Z]*)/', '', $import);
-        $imports[ basename($fname, '.hx') ] = $import;
+        $import = preg_replace('/\.hx$/', '', $import);
 
-        $menu .= "<li class=\"class\" data-url=\"". url(preg_replace('/\.hx$/', '', $import)) ."\"><a class=\"class\">". basename($fname, '.hx') ."</a></li>\n";
+        $menu .= "<li class=\"class\" data-url=\"". url($import) ."\"><span class=\"class\">". basename($fname, '.hx') ."</span></li>\n";
 
         $doc = genDoc($fname, $imports);
         file_put_contents($dstPath . basename($fname, '.hx') .'.html', $doc);
@@ -31,7 +40,7 @@ function generate($srcPath, $dstPath = 'doc/', $imports = array()){
 
     #process dirs
     foreach (glob($srcPath."*", GLOB_ONLYDIR) as $dirName) {
-        $menu = "<li class=\"package\"><a class=\"package\">". basename($dirName) ."</a>\n<ul>\n". generate($dirName.'/', $dstPath . basename($dirName) .'/', $imports) ."</ul>\n</li>\n". $menu;
+        $menu = "<li class=\"package\"><span class=\"package\">". basename($dirName) ."</span>\n<ul>\n". generate($dirName.'/', $dstPath . basename($dirName) .'/', $imports) ."</ul>\n</li>\n". $menu;
     }
 
     return $menu;
@@ -152,7 +161,7 @@ function definition($str, $imports = array()){
     $str = preg_replace('/(override|dynamic|static|public|private|inline|var|function)/', '<span class="\\1">\\1</span>', $str);
     $str = preg_replace('/(@\:[a-zA-Z0-9_]+)/', '<span class="macro">\\1</span>', $str);
     $str = preg_replace('/(?<!@)\:(\s*)([.a-zA-Z0-9_]+)/', ':\\1<span class="type">\\2</span>', $str);
-    $str = preg_replace('/(&lt;\s*)([.a-zA-Z0-9_]+)(\s*(&lt;|&gt;))/', '\\1<span class="type">\\2</span>\\3', $str);
+    $str = preg_replace('/((&lt;|&gt;)\s*)([.a-zA-Z0-9_]+)([^.a-zA-Z0-9_])/', '\\1<span class="type">\\3</span>\\4', $str);
 
     return "<div class=\"definition\">". imports($str, $imports) ."</div>\n";
 }
@@ -179,11 +188,13 @@ function imports($str, $imports = array()){
         for($i = 0; $i < count($types); $i++){
             if( isset($imports[ $types[$i] ]) ){
                 $url = url($imports[$types[$i]]);
+                $tip = $imports[$types[$i]];
             }else{
                 $url = url($types[$i]);
+                $tip = $types[$i];
             }
 
-            $str = preg_replace('/\<span class="type"\>'.$types[$i].'\<\/span\>/', '<span class="type" data-url="'. $url .'">'.$types[$i].'</span>', $str);
+            $str = preg_replace('/\<span class="type"\>'.$types[$i].'\<\/span\>/', '<span class="type" data-url="'. $url .'" title="'. $tip .'">'.$types[$i].'</span>', $str);
         }
     }
 
@@ -198,7 +209,7 @@ function url($classpath){
     $url = implode('/', $parts);
 
     #hack for actuate
-    if( strpos($classpath, 'com.eclecticdesignstudio.motion') ){
+    if( strpos($classpath, 'com.eclecticdesignstudio.motion') !== false ){
         $url = 'http://haxe.org/com/libs/actuate';
 
     }elseif( isset($urls[ $parts[0] ]) ){

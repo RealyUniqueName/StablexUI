@@ -1,0 +1,1 @@
+online docs: http://stablex.ru/ui/api

@@ -5,6 +5,7 @@ import nme.display.DisplayObject;
 
 /**
 * There can be only one child element visible in ViewStack
+* By default visible child is one with childIndex = 0
 */
 class ViewStack extends Widget{
 
@@ -28,7 +29,7 @@ class ViewStack extends Widget{
 
 
     /**
-    * Refresh widget.
+    * Refresh widget. On refresh show currently active child
     *
     */
     override public function refresh () : Void{

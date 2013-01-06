@@ -1,30 +1,60 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <title>StablexUI API</title>
         <script src="jquery.js" type="text/javascript"></script>
 
         <script type="text/javascript">
             $(function(){
                 $.get('menu.html', function(data) {
-                    $('.menu').html("<h1>Classes</h1><hr/>" + data);
+                    $('.menu').html("<h1>StablexUI classes</h1><hr/>" + data);
                     process('.menu');
+                });
+
+                $('.external').height($(window).height());
+                $(window).resize(function(){
+                    $('.external').height($(window).height());
                 });
             });
 
 
             function process(el){
-                $(el + ' a').attr('href', '#');
                 $(el + ' ul:first').show();
-                $(el + ' a.package').click(function(){
+                $(el + ' span.package').click(function(){
                     $(this).parent().children('ul:first').toggle();
                 });
 
-                $(el + ' a.class').click(function(){
+                $(el + ' span.class').click(function(){
                     var url = $(this).parent().data('url');
-                    console.log(url);
-                    $.get(url, function(data) {
-                        $('.content').html("<h1>" + url.replace(/\//g, '.').replace('.html', '') + "</h1>" + data);
-                    });
+                    if( url != undefined ){
+                        $('.external').hide();
+                        $('.content').show();
+                        $.get(url, function(data) {
+                            $('.content').html("<h1>" + url.replace(/\//g, '.').replace('.html', '') + "</h1>" + data);
+                            process('.content');
+                            $('html, body').animate({scrollTop:0}, 'fast');
+                        });
+                    }
+                });
+
+                $(el + ' span.type').click(function(){
+                    var url = $(this).data('url');
+                    if( url != undefined ){
+                        if( url.indexOf('http') == 0 ){
+                            document.getElementById('external').src = url;
+                            $('.external').show();
+                            $('.content').hide();
+                            $('html, body').animate({scrollTop:0}, 'fast');
+                        }else{
+                            $('.external').hide();
+                            $('.content').show();
+                            $.get(url, function(data) {
+                                $('.content').html("<h1>" + url.replace(/\//g, '.').replace('.html', '') + "</h1>" + data);
+                                process('.content');
+                                $('html, body').animate({scrollTop:0}, 'fast');
+                            });
+                        }
+                    }
                 });
             }
 
@@ -72,14 +102,16 @@
                 list-style-type : disc;
             }
 
-            .menu a.package{
-                font-weight: bold;
-                color:black;
+            .menu span.package{
+                font-weight : bold;
+                color       : black;
+                cursor      : pointer;
             }
 
-            .menu a.class{
-                color : #678007;
-                font-weight:bold;
+            .menu span.class{
+                color       : #678007;
+                font-weight : bold;
+                cursor      : pointer;
             }
 
             div.content{
@@ -141,14 +173,27 @@
             .content .type{
                 color: #476103;
                 font-weight:bold;
+                cursor: pointer;
+                border-bottom: 1px dotted #476103;
             }
 
+            .external{
+                display:none;
+                margin-left:250px;
+            }
+            #external{
+                width:100%;
+                height:100%;
+            }
         </style>
     </head>
     <body>
         <div class="menu">
         </div>
         <div class="content">
+        </div>
+        <div class="external">
+            <iframe id="external" src="about:blank"></iframe>
         </div>
     </body>
 </html>

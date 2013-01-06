@@ -14,8 +14,6 @@ class Text extends Box{
     public var label  : TextField;
     //Text format wich will be aplied to label on refresh
     public var format : TextFormat;
-    // //Should we set widget .w and .h according to label .width and .height?
-    // public var autoSize : Bool = true;
     //Getter-setter for text.
     public var text (_getText,_setText) : String;
 
@@ -37,7 +35,7 @@ class Text extends Box{
 
 
     /**
-    * Refresh widget. Apply format to text and update text alignment
+    * Refresh widget. Apply format to text, update text alignment and re-apply skin
     *
     */
     override public function refresh() : Void {

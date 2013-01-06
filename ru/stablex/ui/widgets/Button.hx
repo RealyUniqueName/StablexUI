@@ -88,7 +88,7 @@ class Button extends Text{
 
 
     /**
-    * Process pressing
+    * Process pressing. By defualt moves widget by 1px down
     *
     */
     public dynamic function onPress (e:MouseEvent) : Void {
@@ -104,7 +104,7 @@ class Button extends Text{
 
 
     /**
-    * Process releasing
+    * Process releasing. By defualt moves widget by 1px up
     *
     */
     public dynamic function onRelease (e:MouseEvent) : Void {
@@ -119,7 +119,7 @@ class Button extends Text{
 
 
     /**
-    * Process hover
+    * Process hover. By default does nothing
     *
     */
     public dynamic function onHover (e:MouseEvent) : Void {
@@ -128,7 +128,7 @@ class Button extends Text{
 
 
     /**
-    * Process hout
+    * Process hout. By default does nothing
     *
     */
     public dynamic function onHout (e:MouseEvent) : Void {

@@ -13,9 +13,13 @@ class Box extends Panel{
     public var vertical : Bool = true;
     //Setter for padding left, right, top, bottom.
     public var padding (never,_setPadding) : Float;
+    //padding left
     public var paddingLeft   : Float = 0;
+    //padding right
     public var paddingRight  : Float = 0;
+    //padding top
     public var paddingTop    : Float = 0;
+    //padding bottom
     public var paddingBottom : Float = 0;
     //Distance between children
     public var childPadding : Float = 0;
@@ -26,7 +30,9 @@ class Box extends Panel{
     public var align : String = 'center,middle';
     //set size depending on content size
     public var autoSize (never,_setAutoSize) : Bool;
+    //set width depending on content width
     public var autoWidth                     : Bool = false;
+    //set height depending on content height
     public var autoHeight                    : Bool = false;
 
 
@@ -50,7 +56,7 @@ class Box extends Panel{
 
 
     /**
-    * Refresh widgets. Realigns children
+    * Refresh widgets. Re-apply skin box and realigns children
     *
     */
     override public function refresh() : Void {
