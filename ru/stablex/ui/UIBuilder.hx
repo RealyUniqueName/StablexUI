@@ -301,7 +301,7 @@ class UIBuilder {
 
     /**
     * Creates unique id for widgets
-    *
+    * @private
     */
     static public inline function createId() : String {
         return '__widget__' + Std.string( UIBuilder._nextId ++ );
@@ -354,7 +354,7 @@ class UIBuilder {
 
     /**
     * Associate widget with its id, so it can be acquired by UIBuilder.get()
-    *
+    * @private
     */
     static public inline function save (obj:Widget) : Void{
         if( UIBuilder._objects.exists(obj.id) ){
@@ -367,7 +367,7 @@ class UIBuilder {
 
     /**
     * "Forget" widget. Free its id for using in other widgets
-    *
+    * @private
     */
     static public inline function forget (id:String) : Void{
         UIBuilder._objects.remove(id);

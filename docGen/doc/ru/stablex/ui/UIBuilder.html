@@ -13,7 +13,7 @@
 <div class="definition">    <span class="macro">@:macro</span> <span class="static">static</span> <span class="public">public</span> <span class="function">function</span> <span class="definitionName">init</span>(defaultsXmlFile:<span class="type" data-url="http://haxe.org/api/String" title="String">String</span> = null) : <span class="type" data-url="http://haxe.org/api/haxe/macro/Expr" title="haxe.macro.Expr">Expr</span> 
 </div>
 <div class="comment"> Initializing UIBuilder. Should be called before using any other UIBuilder methods except .reg* methods
- @param defaultsXmlFile - null (default) or path to xml file with default settings for widgets
+ <span class="tag param">@param</span> defaultsXmlFile - null (default) or path to xml file with default settings for widgets
 </div>
 <div class="definition">    <span class="macro">@:macro</span> <span class="static">static</span> <span class="public">public</span> <span class="function">function</span> <span class="definitionName">buildFn</span> (xmlFile:<span class="type" data-url="http://haxe.org/api/String" title="String">String</span>) : <span class="type" data-url="http://haxe.org/api/haxe/macro/Expr" title="haxe.macro.Expr">Expr</span>
 </div>
@@ -23,7 +23,7 @@
    $SomeClass - replaced with com.some.package.SomeClass. If registered with UIBuilder.regClass('com.some.package.SomeClass');
    #widgetId - replaced with UIBuilder.get('widgetId');
    @someParam - replaced with arguments.someParam. Arguments can be passed like this: UIBuilder.buildFn(xmlFile)({someParam:'some value', someParam2: 3.14});
- @return Dynamic->Root_Xml_Element_Class<Widget>
+ <span class="tag return">@return</span> Dynamic->Root_Xml_Element_Class<Widget>
 </div>
 <div class="definition">    <span class="macro">@:macro</span> <span class="static">static</span> <span class="public">public</span> <span class="function">function</span> <span class="definitionName">regEvent</span> (shortcut:<span class="type" data-url="http://haxe.org/api/String" title="String">String</span>, eventType:<span class="type" data-url="http://haxe.org/api/String" title="String">String</span>) : <span class="type" data-url="http://haxe.org/api/haxe/macro/Expr" title="haxe.macro.Expr">Expr</span>
 </div>
@@ -38,10 +38,6 @@
 </div>
 <div class="comment"> Register skin list
 </div>
-<div class="definition">    <span class="static">static</span> <span class="public">public</span> <span class="inline">inline</span> <span class="function">function</span> <span class="definitionName">createId</span>() : <span class="type" data-url="http://haxe.org/api/String" title="String">String</span> 
-</div>
-<div class="comment"> Creates unique id for widgets
-</div>
 <div class="definition">    <span class="static">static</span> <span class="public">public</span> <span class="function">function</span> <span class="definitionName">create</span> (cls:<span class="type" data-url="http://haxe.org/api/Class" title="Class">Class</span>&lt;<span class="type" data-url="ru/stablex/ui/widgets/Widget.html" title="ru.stablex.ui.widgets.Widget">Widget</span>&gt;, properties:<span class="type" data-url="http://haxe.org/api/Dynamic" title="Dynamic">Dynamic</span> = null) : <span class="type" data-url="ru/stablex/ui/widgets/Widget.html" title="ru.stablex.ui.widgets.Widget">Widget</span>
 </div>
 <div class="comment"> Creates widgets at runtime
@@ -49,13 +45,5 @@
 <div class="definition">    <span class="static">static</span> <span class="public">public</span> <span class="inline">inline</span> <span class="function">function</span> <span class="definitionName">get</span>(id:<span class="type" data-url="http://haxe.org/api/String" title="String">String</span>) : <span class="type" data-url="ru/stablex/ui/widgets/Widget.html" title="ru.stablex.ui.widgets.Widget">Widget</span> 
 </div>
 <div class="comment"> Get widget object by its id
-</div>
-<div class="definition">    <span class="static">static</span> <span class="public">public</span> <span class="inline">inline</span> <span class="function">function</span> <span class="definitionName">save</span> (obj:<span class="type" data-url="ru/stablex/ui/widgets/Widget.html" title="ru.stablex.ui.widgets.Widget">Widget</span>) : <span class="type" data-url="http://haxe.org/api/Void" title="Void">Void</span>
-</div>
-<div class="comment"> Associate widget with its id, so it can be acquired by UIBuilder.get()
-</div>
-<div class="definition">    <span class="static">static</span> <span class="public">public</span> <span class="inline">inline</span> <span class="function">function</span> <span class="definitionName">forget</span> (id:<span class="type" data-url="http://haxe.org/api/String" title="String">String</span>) : <span class="type" data-url="http://haxe.org/api/Void" title="Void">Void</span>
-</div>
-<div class="comment"> "Forget" widget. Free its id for using in other widgets
 </div>
 </div>

@@ -6,7 +6,7 @@
 
         <script type="text/javascript">
             $(function(){
-                $.get('menu.html', function(data) {
+                $.get('menu.html?' + Math.random(), function(data) {
                     $('.menu').html("<h1>StablexUI classes</h1><hr/>" + data);
                     process('.menu');
                 });
@@ -29,7 +29,7 @@
                     if( url != undefined ){
                         $('.external').hide();
                         $('.content').show();
-                        $.get(url, function(data) {
+                        $.get(url + '?' + Math.random(), function(data) {
                             $('.content').html("<h1>" + url.replace(/\//g, '.').replace('.html', '') + "</h1>" + data);
                             process('.content');
                             $('html, body').animate({scrollTop:0}, 'fast');
@@ -41,6 +41,7 @@
                     var url = $(this).data('url');
                     if( url != undefined ){
                         if( url.indexOf('http') == 0 ){
+                            document.getElementById('external').src = 'about:blank';
                             document.getElementById('external').src = url;
                             $('.external').show();
                             $('.content').hide();
@@ -48,7 +49,7 @@
                         }else{
                             $('.external').hide();
                             $('.content').show();
-                            $.get(url, function(data) {
+                            $.get(url + '?' + Math.random(), function(data) {
                                 $('.content').html("<h1>" + url.replace(/\//g, '.').replace('.html', '') + "</h1>" + data);
                                 process('.content');
                                 $('html, body').animate({scrollTop:0}, 'fast');
@@ -153,7 +154,7 @@
             .content .var,
             .content .override,
             .content .dynamic{
-                color: #618909;
+                color: #3b5c0b;
             }
 
             .content .class,
@@ -162,7 +163,7 @@
             .content .function,
             .content .var{
                 color : #448005;
-                font-weight : bold;
+                /* font-weight : bold; */
             }
 
             .content .definitionName,
@@ -175,6 +176,10 @@
                 font-weight:bold;
                 cursor: pointer;
                 border-bottom: 1px dotted #476103;
+            }
+
+            .comment .tag{
+                color: #859900;
             }
 
             .external{

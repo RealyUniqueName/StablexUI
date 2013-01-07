@@ -73,10 +73,18 @@ function genDoc($fname, $imports = array()){
         #comment
         if( preg_match('/^\s*\/\*\*/', $ln) ){
             $comment .= $ln;
+            $skip = false;
             while( !preg_match('/\*\//', $ln) ){
                 $i ++;
                 $ln = $lines[$i];
+                if( preg_match('/\@private/', $ln) ){
+                    $skip = true;
+                    break;
+                }
                 $comment .= $ln;
+            }
+            if($skip){
+                $comment = '';
             }
         }elseif( preg_match('/^\s*\/\//', $ln) ){
             $comment .= $ln;
@@ -143,6 +151,7 @@ function comment($str){
         $ln = preg_replace('/^\s*\*\//', '', $ln); # */
         $ln = preg_replace('/^\s*\*/', '', $ln); # *
         $ln = preg_replace('/^\s*\/\//', '', $ln); # //
+        $ln = preg_replace('/^(\s*)\@(param|result|return|author|throws|exception)/', '\\1<span class="tag \\2">@\\2</span>', $ln); # @tags
 
         if( trim($ln) ){
             $str .= $ln . "\n";
