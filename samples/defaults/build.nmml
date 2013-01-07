@@ -6,7 +6,7 @@
 
     <window width="800" height="600" background="0xFFFFFF" fps="60"/>
 
-    <source name="../../" />
+    <source name="../../src/" />
 
     <haxelib name="nme" />
     <haxelib name="actuate" />

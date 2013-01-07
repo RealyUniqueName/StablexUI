@@ -9,7 +9,7 @@
 
     <assets path="assets/img" include="*" />
 
-    <source name="../../" />
+    <source name="../../src/" />
 
     <haxelib name="nme" />
     <haxelib name="actuate" />

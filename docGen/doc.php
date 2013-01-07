@@ -7,18 +7,23 @@ $urls = array(
     'default' => 'http://haxe.org/api/#type#'
 );
 
-file_put_contents('doc/menu.html', "<ul>\n<li class=\"package\"><span class=\"package\">ru</span>\n<ul>\n". generate('../ru/', 'doc/ru/') ."\n</ul>\n</li></ul>\n");
-
+define('SRC_ROOT', '../src/');
 define('DOC_BASE_URL', 'ui/api/');
 
+file_put_contents('doc/menu.html', "<ul>\n". generate(SRC_ROOT, 'doc/') ."</ul>\n");
+
+
 function generate($srcPath, $dstPath = 'doc/', $imports = array()){
-    mkdir($dstPath, 0777, true);
+    if( !file_exists($dstPath) ){
+        mkdir($dstPath, 0777, true);
+    }
 
     $menu = "";
 
     #collect imports
     foreach (glob($srcPath . "*.hx") as $fname) {
-        $import = preg_replace('/(\.\/)|(\.\/)/', '', $fname);
+        $import = str_replace(SRC_ROOT, '', $fname);
+        $import = preg_replace('/(\.\/)|(\.\/)/', '', $import);
         $import = preg_replace('/\//', '.', $import);
         $import = preg_replace('/^([^a-zA-Z]*)/', '', $import);
         $import = preg_replace('/\.hx$/', '', $import);
@@ -27,7 +32,8 @@ function generate($srcPath, $dstPath = 'doc/', $imports = array()){
 
     #process files
     foreach (glob($srcPath . "*.hx") as $fname) {
-        $import = preg_replace('/(\.\/)|(\.\/)/', '', $fname);
+        $import = str_replace(SRC_ROOT, '', $fname);
+        $import = preg_replace('/(\.\/)|(\.\/)/', '', $import);
         $import = preg_replace('/\//', '.', $import);
         $import = preg_replace('/^([^a-zA-Z]*)/', '', $import);
         $import = preg_replace('/\.hx$/', '', $import);
