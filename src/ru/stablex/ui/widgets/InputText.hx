@@ -7,7 +7,7 @@ import nme.events.Event;
 
 
 /**
-* Text with type = nme.text.TextFieldType.INPUT
+* Text with type = <type>nme.text.TextFieldType</type>.INPUT
 */
 class InputText extends Text{
 

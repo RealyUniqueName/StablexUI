@@ -10,8 +10,8 @@
 >
     <Box left="100" top="100" border="2" autoSize="true" padding="10" childPadding="5">
         <Panel texture="'assets/img/nme.png'" w="100" h="50"/>
-        <Button skin="'btnubuntu'" autoWidth="true" h="30" text="'Hello, world!'" padding="5"/>
-        <InputText id="'txt'" text="'Some random text'" on-display="trace({w: $this.label.width, h:$this.label.height});"/>
+        <Button skin="'btnubuntu'" autoWidth="true" h="30" text="'Hello, world!'" padding="5" onHover="function(e:$MouseEvent){ trace($this.hovered); }"  onHout="function(e:$MouseEvent){ trace($this.hovered); }"/>
+        <InputText id="'txt'" text="'Some random text'"/>
     </Box>
 
 </Panel>

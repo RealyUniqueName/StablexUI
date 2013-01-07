@@ -27,23 +27,23 @@ class Widget extends TweenSprite{
     //Name of section in default settings for this type of widgets
     public var defaults : String = 'Default';
 
-    //Wether this widget creation by UIBuilder is finished
+    //Wether this widget creation by <type>UIBuilder</type> is finished
     public var created : Bool = false;
 
     //Widget width in pixels
     public var w (_getWidth,_setWidth)   : Float;
     //Widget width in % of parent's width
-    public var widthPt (_getWpt,_setWpt) : Float = 0;
-    private var _width                   : Float = 0;
-    private var _widthPercent            : Float = 0;
+    public var widthPt (_getWpt,_setWpt) : Float;
+    private var _width                   : Float;
+    private var _widthPercent            : Float;
     private var _widthUsePercent         : Bool = false;
 
     //Widget height height in pixels
     public var h (_getHeight,_setHeight)  : Float;
     //Widget height in % of parent's height
-    public var heightPt (_getHpt,_setHpt) : Float = 0;
-    private var _height                   : Float = 0;
-    private var _heightPercent            : Float = 0;
+    public var heightPt (_getHpt,_setHpt) : Float;
+    private var _height                   : Float;
+    private var _heightPercent            : Float;
     private var _heightUsePercent         : Bool = false;
 
     //Widget id (unique)
@@ -53,15 +53,15 @@ class Widget extends TweenSprite{
     public var left (_getLeft,_setLeft) : Float;
     //position this widget by left border in % of parent's width
     public var leftPt (_getLpt,_setLpt) : Float;
-    private var _left                   : Float = 0;
-    private var _leftPercent            : Float = 0;
+    private var _left                   : Float;
+    private var _leftPercent            : Float;
 
     //position this widget by right border in pixels
     public var right (_getRight,_setRight) : Float;
     //position this widget by right border in % of parent's width
     public var rightPt (_getRpt,_setRpt)   : Float;
-    private var _right                     : Float = 0;
-    private var _rightPercent              : Float = 0;
+    private var _right                     : Float;
+    private var _rightPercent              : Float;
 
     //Wich one to use: left, right, leftPercent or rightPercent
     private var _xUse : Int = _X_USE_LEFT;
@@ -74,15 +74,15 @@ class Widget extends TweenSprite{
     public var top (_getTop,_setTop)   : Float;
     //position this widget by top border in % of parent's height
     public var topPt (_getTpt,_setTpt) : Float;
-    private var _top                   : Float = 0;
-    private var _topPercent            : Float = 0;
+    private var _top                   : Float;
+    private var _topPercent            : Float;
 
     //position this widget by bottom border in pixels
     public var bottom (_getBottom,_setBottom) : Float;
     //position this widget by bottom border in % of parent's height
     public var bottomPt (_getBpt,_setBpt)     : Float;
-    private var _bottom                       : Float = 0;
-    private var _bottomPercent                : Float = 0;
+    private var _bottom                       : Float;
+    private var _bottomPercent                : Float;
 
 
     /**
@@ -471,7 +471,8 @@ class Widget extends TweenSprite{
 
 
     /**
-    * This method is called automatically after widget was created by UIBuilder.buildFn() or UIBuilder.create()
+    * This method is called automatically after widget was created
+    * by <type>UIBuilder</type>.buildFn() or <type>UIBuilder</type>.create()
     *
     */
     public function onCreate () : Void{
@@ -590,7 +591,7 @@ class Widget extends TweenSprite{
 
 
     /**
-    * Resize width and height simultaniously. Only one WidgetEvent.RESIZE will be dispatched
+    * Resize width and height simultaniously. Only one <type>ru.stablex.ui.events.WidgetEvent</type>.RESIZE will be dispatched
     *
     */
     public function resize(width:Float, height:Float, keepPercentage:Bool = false) : Void {

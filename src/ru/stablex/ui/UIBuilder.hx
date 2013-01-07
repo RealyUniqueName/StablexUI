@@ -116,7 +116,10 @@ class UIBuilder {
     *   #widgetId - replaced with UIBuilder.get('widgetId');
     *   @someParam - replaced with arguments.someParam. Arguments can be passed like this: UIBuilder.buildFn(xmlFile)({someParam:'some value', someParam2: 3.14});
     *
-    * @return Dynamic->Root_Xml_Element_Class<Widget>
+    * @throw <type>String</type> if .init() was not called before
+    * @throw <type>String</type> if one of used in xml widgets, classes or events was not registered by .regClass() or .regEvent()
+    *
+    * @return <type>Dynamic</type>->Root_Xml_Element_Class<Widget>
     */
     @:macro static public function buildFn (xmlFile:String) : Expr{
         if( !UIBuilder._initialized ) Err.trigger('Call UIBuilder.init()');
@@ -135,6 +138,7 @@ class UIBuilder {
     /**
     * Generates code based on Xml object.
     *
+    * @throw <type>String</type> if one of used in xml widgets, classes or events was not registered by .regClass() or .regEvent()
     */
     static private function construct (element:Xml, n:Int = 1, zeroElementCls:String = null) : String{
         //get class for widget
@@ -208,8 +212,9 @@ class UIBuilder {
 
 
     /**
-    * Register event type to declare event listeners in xml (attributes prefixed with on-<shortcut>).
+    * Register event type to declare event listeners in xml (attributes prefixed with `on-[shortcut]`).
     *
+    * @throw <type>String</type> if this shortcut is already used
     */
     @:macro static public function regEvent (shortcut:String, eventType:String) : Expr{
         if( UIBuilder._events.exists(shortcut) ) Err.trigger('Event is already registered: ' + shortcut);
@@ -222,6 +227,10 @@ class UIBuilder {
     * Register class to use it in xml code.
     * For example 'com.pack.SomeClass' can be referenced in xml like this: $SomeClass
     *
+    * @throw <type>String</type> if fullyQualifiedName is wrong (does not match `com.package.ClassName` notation)
+    * @throw <type>String</type> if class is already registered. E.g. com.pack1.MyClass and org.pack2.MyClass
+    * can not be registered simultaniousely, because both will be shortened to $MyClass for usage in xml.
+    * You still can register one of them and use another one by it's full classpath in xml
     */
     @:macro static public function regClass (fullyQualifiedName:String) : Expr{
         var cls : String;
@@ -311,6 +320,7 @@ class UIBuilder {
     /**
     * Creates widgets at runtime
     *
+    * @throw <type>Dynamic</type> if requested widget class does not have one of the provided properties
     */
     static public function create (cls:Class<Widget>, properties:Dynamic = null) : Widget{
         //create widget instance

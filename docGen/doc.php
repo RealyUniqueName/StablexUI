@@ -105,20 +105,20 @@ function genDoc($fname, $imports = array()){
             #vars & functions
             if( $comment && $i + 1 < $cLines && preg_match('/public/', $lines[$i + 1]) ){
                 $definition = preg_replace('/\{|;/', '', $lines[$i + 1]);
-                $doc .= definition($definition, $imports) . comment($comment);
+                $doc .= definition($definition, $imports) . comment($comment, $imports);
             #classes
             }elseif( $comment && $i + 1 < $cLines && preg_match('/class|interface/', $lines[$i + 1]) ){
                 if( $classOpened ) $doc .="</div>\n";
 
                 $definition = preg_replace('/\{|;/', '', $lines[$i + 1]);
-                $doc .= "<dic class=\"classContainer\">" . classDef($definition, $imports) . comment($comment);
+                $doc .= "<dic class=\"classContainer\">" . classDef($definition, $imports) . comment($comment, $imports);
                 $classOpened = true;
 
             #typedefs
             }elseif( $comment && $i + 1 < $cLines && preg_match('/typedef/', $lines[$i + 1]) ){
                 $definition = preg_replace('/\{|;/', ' ', $lines[$i + 1]);
                 $doc .= "<div class=\"classContainer\">"
-                        . comment($comment) . classDef($definition, $imports);
+                        . comment($comment, $imports) . classDef($definition, $imports);
 
                 $body = '';
                 $i++;
@@ -148,7 +148,7 @@ function genDoc($fname, $imports = array()){
 
 
 
-function comment($str){
+function comment($str, $imports = array()){
     $lines = explode("\n", $str);
     $str   = '';
 
@@ -157,14 +157,14 @@ function comment($str){
         $ln = preg_replace('/^\s*\*\//', '', $ln); # */
         $ln = preg_replace('/^\s*\*/', '', $ln); # *
         $ln = preg_replace('/^\s*\/\//', '', $ln); # //
-        $ln = preg_replace('/^(\s*)\@(param|result|return|author|throws|exception)/', '\\1<span class="tag \\2">@\\2</span>', $ln); # @tags
+        $ln = preg_replace('/^(\s*)\@(param|result|return|author|throws|throw|exception)/', '\\1<span class="tag \\2">@\\2</span>', $ln); # @tags
 
         if( trim($ln) ){
             $str .= $ln . "\n";
         }
     }
 
-    return "<div class=\"comment\">" .$str . "</div>\n";
+    return "<div class=\"comment\">". imports($str, $imports) . "</div>\n";
 }
 
 
@@ -198,9 +198,10 @@ function classDef($str, $imports = array()){
 
 function imports($str, $imports = array()){
     $types = array();
-    if( preg_match_all('/\<span class="type"\>([.a-zA-Z0-9_]+)\<\/span\>/', $str, $types) ){
-        $types = $types[1];
+    if( preg_match_all('/((\<span class="type"\>)|(\<type\>))([.a-zA-Z0-9_]+)\<\/(span|type)\>/', $str, $types) ){
+        $types = $types[4];
         for($i = 0; $i < count($types); $i++){
+
             if( isset($imports[ $types[$i] ]) ){
                 $url = url($imports[$types[$i]]);
                 $tip = $imports[$types[$i]];
@@ -208,8 +209,10 @@ function imports($str, $imports = array()){
                 $url = url($types[$i]);
                 $tip = $types[$i];
             }
+            $parts = explode('.', $types[$i]);
+            $shortcut = $parts[ count($parts) - 1 ];
 
-            $str = preg_replace('/\<span class="type"\>'.$types[$i].'\<\/span\>/', '<span class="type" data-url="'. $url .'" title="'. $tip .'">'.$types[$i].'</span>', $str);
+            $str = preg_replace('/((\<span class="type"\>)|(\<type\>))'. $types[$i] .'\<\/(span|type)\>/', '<span class="type" data-url="'. $url .'" title="'. $tip .'">'. $shortcut .'</span>', $str);
         }
     }
 

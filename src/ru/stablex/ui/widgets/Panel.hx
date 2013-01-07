@@ -8,7 +8,7 @@ import ru.stablex.Err;
 
 
 /**
-* Just panel wich can be tiled with texture, skinned with TSkin or colored with .graphics.beginFill()
+* Just panel wich can be tiled with texture, skinned with <type>TSkin</type> or colored with .graphics.beginFill()
 * Prioritty: skin -> texture -> coloring
 */
 class Panel extends Widget{

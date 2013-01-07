@@ -11,6 +11,7 @@ class Err {
     /**
     * Throws an exception and (if -debug) traces message
     *
+    * @throw <type>String</type>
     */
     static inline public function trigger(msg:String) : Void {
         #if debug

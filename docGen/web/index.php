@@ -15,7 +15,40 @@
                 $(window).resize(function(){
                     $('.external').height($(window).height());
                 });
+
+                setInterval(checkUrl, 100);
             });
+
+
+            var currentUrl = '';
+            function checkUrl(){
+                var url = location.hash.replace('#', '');
+
+                if( url != currentUrl ){
+                    if( url == '' ){
+                        document.getElementById('external').src = 'about:blank';
+                        $('.external').hide();
+                        $('.content').show();
+                        $('.content').html('');
+                    }else if( url.indexOf('http') == 0 ){
+                        document.getElementById('external').src = 'about:blank';
+                        document.getElementById('external').src = url;
+                        $('.external').show();
+                        $('.content').hide();
+                        $('html, body').animate({scrollTop:0}, 'fast');
+                    }else{
+                        $('.external').hide();
+                        $('.content').show();
+                        $.get(url + '?' + Math.random(), function(data) {
+                            $('.content').html("<h1>" + url.replace(/\//g, '.').replace('.html', '') + "</h1>" + data);
+                            process('.content');
+                            $('html, body').animate({scrollTop:0}, 'fast');
+                        });
+                    }
+
+                    currentUrl = url;
+                }
+            }
 
 
             function process(el){
@@ -27,34 +60,14 @@
                 $(el + ' span.class').click(function(){
                     var url = $(this).parent().data('url');
                     if( url != undefined ){
-                        $('.external').hide();
-                        $('.content').show();
-                        $.get(url + '?' + Math.random(), function(data) {
-                            $('.content').html("<h1>" + url.replace(/\//g, '.').replace('.html', '') + "</h1>" + data);
-                            process('.content');
-                            $('html, body').animate({scrollTop:0}, 'fast');
-                        });
+                        location.hash = '#' + url;
                     }
                 });
 
                 $(el + ' span.type').click(function(){
                     var url = $(this).data('url');
                     if( url != undefined ){
-                        if( url.indexOf('http') == 0 ){
-                            document.getElementById('external').src = 'about:blank';
-                            document.getElementById('external').src = url;
-                            $('.external').show();
-                            $('.content').hide();
-                            $('html, body').animate({scrollTop:0}, 'fast');
-                        }else{
-                            $('.external').hide();
-                            $('.content').show();
-                            $.get(url + '?' + Math.random(), function(data) {
-                                $('.content').html("<h1>" + url.replace(/\//g, '.').replace('.html', '') + "</h1>" + data);
-                                process('.content');
-                                $('html, body').animate({scrollTop:0}, 'fast');
-                            });
-                        }
+                        location.hash = '#' + url;
                     }
                 });
             }
@@ -196,6 +209,22 @@
         <div class="menu">
         </div>
         <div class="content">
+            <!-- DISQUS -->
+                <!-- <div id="disqus_thread" style="display:none"></div>
+                <script type="text/javascript">
+                    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+                    var disqus_shortname = 'stablexui'; // required: replace example with your forum shortname
+
+                    /* * * DON'T EDIT BELOW THIS LINE * * */
+                    (function() {
+                        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+                        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                    })();
+                </script>
+                <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a> -->
+            <!-- /DISQUS -->
         </div>
         <div class="external">
             <iframe id="external" src="about:blank"></iframe>

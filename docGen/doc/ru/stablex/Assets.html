@@ -4,20 +4,20 @@
  Its methods are dynamic so you can override them to implement
  different types of resource loading
 </div>
-<div class="definition">    <span class="static">static</span> <span class="dynamic">dynamic</span> <span class="public">public</span> <span class="function">function</span> <span class="definitionName">getBitmapData</span>(src:<span class="type" data-url="http://haxe.org/api/String" title="String">String</span>, useCache:<span class="type" data-url="http://haxe.org/api/Bool" title="Bool">Bool</span> = true) : <span class="type" data-url="http://nme.io/api/types/nme/display/BitmapData.html" title="nme.display.BitmapData">nme.display.BitmapData</span> 
+<div class="definition">    <span class="static">static</span> <span class="dynamic">dynamic</span> <span class="public">public</span> <span class="function">function</span> <span class="definitionName">getBitmapData</span>(src:<span class="type" data-url="http://haxe.org/api/String" title="String">String</span>, useCache:<span class="type" data-url="http://haxe.org/api/Bool" title="Bool">Bool</span> = true) : <span class="type" data-url="http://nme.io/api/types/nme/display/BitmapData.html" title="nme.display.BitmapData">BitmapData</span> 
 </div>
 <div class="comment"> By default it is equal to nme.Assets.getBitmapData
 </div>
-<div class="definition">    <span class="static">static</span> <span class="dynamic">dynamic</span> <span class="public">public</span> <span class="function">function</span> <span class="definitionName">getBytes</span>(src:<span class="type" data-url="http://haxe.org/api/String" title="String">String</span>) : <span class="type" data-url="http://nme.io/api/types/nme/utils/ByteArray.html" title="nme.utils.ByteArray">nme.utils.ByteArray</span> 
+<div class="definition">    <span class="static">static</span> <span class="dynamic">dynamic</span> <span class="public">public</span> <span class="function">function</span> <span class="definitionName">getBytes</span>(src:<span class="type" data-url="http://haxe.org/api/String" title="String">String</span>) : <span class="type" data-url="http://nme.io/api/types/nme/utils/ByteArray.html" title="nme.utils.ByteArray">ByteArray</span> 
 </div>
 <div class="comment"> By default it is equal to nme.Assets.getBytes
 </div>
-<div class="definition">    <span class="static">static</span> <span class="public">public</span> <span class="inline">inline</span> <span class="function">function</span> <span class="definitionName">getFont</span>(src:<span class="type" data-url="http://haxe.org/api/String" title="String">String</span>) : <span class="type" data-url="http://nme.io/api/types/nme/text/Font.html" title="nme.text.Font">nme.text.Font</span> 
+<div class="definition">    <span class="static">static</span> <span class="public">public</span> <span class="inline">inline</span> <span class="function">function</span> <span class="definitionName">getFont</span>(src:<span class="type" data-url="http://haxe.org/api/String" title="String">String</span>) : <span class="type" data-url="http://nme.io/api/types/nme/text/Font.html" title="nme.text.Font">Font</span> 
 </div>
 <div class="comment"> It is equal to nme.Assets.getFont and can not be overriden due to some strange bug:
  if this method is declared as dynamic, cpp fails to compile (hxcpp 2.10.2)
 </div>
-<div class="definition">    <span class="static">static</span> <span class="dynamic">dynamic</span> <span class="public">public</span> <span class="function">function</span> <span class="definitionName">getSound</span>(src:<span class="type" data-url="http://haxe.org/api/String" title="String">String</span>) : <span class="type" data-url="http://nme.io/api/types/nme/media/Sound.html" title="nme.media.Sound">nme.media.Sound</span> 
+<div class="definition">    <span class="static">static</span> <span class="dynamic">dynamic</span> <span class="public">public</span> <span class="function">function</span> <span class="definitionName">getSound</span>(src:<span class="type" data-url="http://haxe.org/api/String" title="String">String</span>) : <span class="type" data-url="http://nme.io/api/types/nme/media/Sound.html" title="nme.media.Sound">Sound</span> 
 </div>
 <div class="comment"> By default it is equal to nme.Assets.getSound
 </div>

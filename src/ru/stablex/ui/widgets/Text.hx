@@ -10,7 +10,7 @@ import ru.stablex.ui.UIBuilder;
 * Text field
 */
 class Text extends Box{
-    //nme.display.TextField used to render text
+    //<type>nme.display.TextField</type> used to render text
     public var label  : TextField;
     //Text format wich will be aplied to label on refresh
     public var format : TextFormat;

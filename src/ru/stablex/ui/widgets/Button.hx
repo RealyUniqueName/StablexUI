@@ -26,7 +26,13 @@ class Button extends Text{
         *
         */
         static private function _onHover (e:MouseEvent) : Void {
-            cast(e.currentTarget, Button).onHover(e);
+            var btn : Button = cast(e.currentTarget, Button);
+
+            //if button is already hovered, do nothing
+            if( btn.hovered ) return;
+
+            btn.hovered = true;
+            btn.onHover(e);
         }//function _onHover()
 
 
@@ -35,7 +41,13 @@ class Button extends Text{
         *
         */
         static private function _onHout (e:MouseEvent) : Void {
-            cast(e.currentTarget, Button).onHout(e);
+            var btn : Button = cast(e.currentTarget, Button);
+
+            //if button is not hovered, do nothing
+            if( !btn.hovered ) return;
+
+            btn.hovered = false;
+            btn.onHout(e);
         }//function _onHout()
 
 
@@ -44,7 +56,13 @@ class Button extends Text{
         *
         */
         static private function _onPress (e:MouseEvent) : Void {
-            cast(e.currentTarget, Button).onPress(e);
+            var btn : Button = cast(e.currentTarget, Button);
+
+            //if button is already pressed, do nothing
+            if( btn.pressed ) return;
+
+            btn.pressed = true;
+            btn.onPress(e);
         }//function _onPress()
 
 
@@ -53,7 +71,13 @@ class Button extends Text{
         *
         */
         static private function _onRelease (e:MouseEvent) : Void {
-            cast(e.currentTarget, Button).onRelease(e);
+            var btn : Button = cast(e.currentTarget, Button);
+
+            //if button is not pressed, do nothing
+            if( !btn.pressed ) return;
+
+            btn.pressed = false;
+            btn.onRelease(e);
         }//function _onRelease()
     /*
     * } wrappers
@@ -94,12 +118,7 @@ class Button extends Text{
     public dynamic function onPress (e:MouseEvent) : Void {
         var btn : Button = cast(e.currentTarget, Button);
 
-        //if button is already pressed, do nothing
-        if( btn.pressed ) return;
-
         btn.y ++;
-
-        btn.pressed = true;
     }//function onPress()
 
 
@@ -110,11 +129,7 @@ class Button extends Text{
     public dynamic function onRelease (e:MouseEvent) : Void {
         var btn : Button = cast(e.currentTarget, Button);
 
-        //if button is pressed
-        if( btn.pressed ){
-            btn.y --;
-            btn.pressed = false;
-        }
+        btn.y --;
     }//function onRelease()
 
 
