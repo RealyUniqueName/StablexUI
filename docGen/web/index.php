@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>StablexUI API</title>
+        <title>StablexUI Documentation</title>
         <script src="jquery.js" type="text/javascript"></script>
 
         <script type="text/javascript">
             $(function(){
                 $.get('menu.html?' + Math.random(), function(data) {
-                    $('.menu').html("<h1>StablexUI classes</h1><hr/>" + data);
+                    $('.menu').html("<h1>StablexUI Docs</h1><hr/>" + data);
                     process('.menu');
+
+                    $('.menu').children('ul').children('li').children('ul').hide();
                 });
 
                 $('.external').height($(window).height());
@@ -52,9 +54,8 @@
 
 
             function process(el){
-                $(el + ' ul:first').show();
                 $(el + ' span.package').click(function(){
-                    $(this).parent().children('ul:first').toggle();
+                    $(this).parent().children('ul:first').toggle('fast');
                 });
 
                 $(el + ' span.class').click(function(){
@@ -202,6 +203,32 @@
             #external{
                 width:100%;
                 height:100%;
+            }
+
+            .content .manual{
+                border-bottom: 1px dotted #233d44;
+                color : #486d6e;
+            }
+
+            .content .manual h2{
+                font-size: 16px;
+                color : #448005;
+            }
+
+            .content .manual .xml{
+                border-left: 1px dashed #233d44;
+                margin-left: 20px;
+                padding-left: 20px;
+                background-color: #052630;
+            }
+
+            .content .manual .xml .tag{
+                color: #1f8ac3;
+            }
+
+            .content .manual .xml .attr,
+            .content .manual .xml .quotes{
+                color: #93a1a1;
             }
         </style>
     </head>

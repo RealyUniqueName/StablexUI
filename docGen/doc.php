@@ -2,15 +2,27 @@
 <?php
 
 $urls = array(
+    'manual'  => '#type#.html',
     'ru'      => '#type#.html',
     'nme'     => 'http://nme.io/api/types/#type#.html',
     'default' => 'http://haxe.org/api/#type#'
 );
 
 define('SRC_ROOT', '../src/');
+define('DOC_ROOT', 'src/');
 define('DOC_BASE_URL', 'ui/api/');
 
-file_put_contents('doc/menu.html', "<ul>\n". generate(SRC_ROOT, 'doc/') ."</ul>\n");
+file_put_contents(
+    'doc/menu.html',
+    "<ul>\n"
+        . generate(DOC_ROOT, 'doc/')
+        ."<li class=\"package\"><span class=\"package\">API</span>\n"
+            ."<ul>\n"
+                . generate(SRC_ROOT, 'doc/')
+            ."</ul>\n"
+        ."</li>\n"
+    ."</ul>\n"
+);
 
 
 function generate($srcPath, $dstPath = 'doc/', $imports = array()){
@@ -23,6 +35,7 @@ function generate($srcPath, $dstPath = 'doc/', $imports = array()){
     #collect imports
     foreach (glob($srcPath . "*.hx") as $fname) {
         $import = str_replace(SRC_ROOT, '', $fname);
+        $import = str_replace(DOC_ROOT, '', $fname);
         $import = preg_replace('/(\.\/)|(\.\/)/', '', $import);
         $import = preg_replace('/\//', '.', $import);
         $import = preg_replace('/^([^a-zA-Z]*)/', '', $import);
@@ -33,6 +46,7 @@ function generate($srcPath, $dstPath = 'doc/', $imports = array()){
     #process files
     foreach (glob($srcPath . "*.hx") as $fname) {
         $import = str_replace(SRC_ROOT, '', $fname);
+        $import = str_replace(DOC_ROOT, '', $fname);
         $import = preg_replace('/(\.\/)|(\.\/)/', '', $import);
         $import = preg_replace('/\//', '.', $import);
         $import = preg_replace('/^([^a-zA-Z]*)/', '', $import);
@@ -102,8 +116,11 @@ function genDoc($fname, $imports = array()){
         }
 
         #found comment. Search for definitions{
+            #manual section
+            if( preg_match('/@manual/', $comment) ){
+                $doc .= "<div class=\"manual\">". manual($comment) ."</div>\n";
             #vars & functions
-            if( $comment && $i + 1 < $cLines && preg_match('/public/', $lines[$i + 1]) ){
+            }elseif( $comment && $i + 1 < $cLines && preg_match('/public/', $lines[$i + 1]) ){
                 $definition = preg_replace('/\{|;/', '', $lines[$i + 1]);
                 $doc .= definition($definition, $imports) . comment($comment, $imports);
             #classes
@@ -237,4 +254,48 @@ function url($classpath){
     }
 
     return $url;
+}
+
+
+function manual($str, $imports = array()){
+    $lines  = explode("\n", $str);
+    $str    = '';
+    $cLines = count($lines);
+
+    for($i = 0; $i < $cLines; $i ++){
+        $ln = $lines[$i];
+
+        $ln = preg_replace('/^\s*\/\*\*/', '', $ln); # /**
+        $ln = preg_replace('/^\s*\*\//', '', $ln); # */
+        $ln = preg_replace('/@manual (.*)/', '<h2>\\1</h2>', $ln); # @tags
+
+        if( preg_match('/\<xml\>/', $ln) ){
+            $xml = '';
+            $i ++;
+            $ln = $lines[$i];
+            while( !preg_match('/\<\/xml\>/', $ln) && $i < $cLines ){
+                $ln = preg_replace('/\</', '&lt;', $ln);
+                $ln = preg_replace('/\>/', '&gt;', $ln);
+                $ln = preg_replace('/&lt;([-a-zA-Z0-9_]+)(\s)/', '&lt;<tag>\\1</tag>\\2', $ln);
+                $ln = preg_replace('/&lt;\/(\s*)([-a-zA-Z0-9_]+)(\s*)&gt;/', '&lt;/\\1<tag>\\2</tag>\\3&gt;', $ln);
+                $ln = preg_replace('/([-a-zA-Z0-9_]+)(\s*=\s*")/', '<attr>\\1</attr>\\2', $ln);
+                $ln = preg_replace('/"/', '<span class="quotes">"</span>', $ln);
+                $ln = preg_replace('/\<tag\>/', '<span class="tag">', $ln);
+                $ln = preg_replace('/\<\/tag\>/', '</span>', $ln);
+                $ln = preg_replace('/\<attr\>/', '<span class="attr">', $ln);
+                $ln = preg_replace('/\<\/attr\>/', '</span>', $ln);
+
+                $xml .= $ln . "\n";
+
+                $i ++;
+                $ln = $lines[$i];
+            }
+            $ln = "<div class=\"xml\">\n". $xml ."\n</div>";
+        }
+
+
+        $str .= $ln . "\n";
+    }
+
+    return imports($str, $imports);
 }
