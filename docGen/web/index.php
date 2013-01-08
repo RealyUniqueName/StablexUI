@@ -58,19 +58,19 @@
                     $(this).parent().children('ul:first').toggle('fast');
                 });
 
-                $(el + ' span.class').click(function(){
-                    var url = $(this).parent().data('url');
-                    if( url != undefined ){
-                        location.hash = '#' + url;
-                    }
-                });
+                // $(el + ' span.class').click(function(){
+                //     var url = $(this).parent().data('url');
+                //     if( url != undefined ){
+                //         location.hash = '#' + url;
+                //     }
+                // });
 
-                $(el + ' span.type').click(function(){
-                    var url = $(this).data('url');
-                    if( url != undefined ){
-                        location.hash = '#' + url;
-                    }
-                });
+                // $(el + ' span.type').click(function(){
+                //     var url = $(this).data('url');
+                //     if( url != undefined ){
+                //         location.hash = '#' + url;
+                //     }
+                // });
             }
 
         </script>
@@ -123,7 +123,7 @@
                 cursor      : pointer;
             }
 
-            .menu span.class{
+            .menu .class{
                 color       : #678007;
                 font-weight : bold;
                 cursor      : pointer;
@@ -175,13 +175,21 @@
             .content .interface,
             .content .typedef,
             .content .function,
-            .content .var{
+            .content .var,
+            .content .if,
+            .content .null,
+            .content .true,
+            .content .false,
+            .content .return,
+            .content .operator{
                 color : #448005;
                 /* font-weight : bold; */
             }
 
             .content .definitionName,
-            .content .className{
+            .content .className,
+            .content .this,
+            .content .super{
                 color: #1f8ac3;
             }
 
@@ -213,6 +221,9 @@
             .content .manual h2{
                 font-size: 16px;
                 color : #448005;
+                padding: 0px;
+                margin:0px;
+                display:inline;
             }
 
             .content .manual .xml{
@@ -222,13 +233,57 @@
                 background-color: #052630;
             }
 
-            .content .manual .xml .tag{
+            .content .manual .xml .tag,
+            .content .manual .xml .tag .type{
+                font-weight:normal;
                 color: #1f8ac3;
             }
 
             .content .manual .xml .attr,
             .content .manual .xml .quotes{
-                color: #93a1a1;
+                color: #839496;
+            }
+
+            .content .manual .xml i{
+                /* color:#0b5166; */
+            }
+
+            .content .manual .haxe{
+                border-left: 1px dashed #233d44;
+                margin-left: 20px;
+                padding-left: 20px;
+                background-color: #052630;
+                color: #839496;
+            }
+
+            .content .manual .haxe .tag{
+                color: #859900;
+            }
+
+            .content .manual .haxe i,
+            .content .manual .haxe i .this,
+            .content .manual .haxe i .super,
+            .content .manual .haxe i .var,
+            .content .manual .haxe i .class,
+            .content .manual .haxe i .public,
+            .content .manual .haxe i .private,
+            .content .manual .haxe i .inline,
+            .content .manual .haxe i .static,
+            .content .manual .haxe i .dynamic,
+            .content .manual .haxe i .function {
+                color : #486d6e;
+            }
+
+            .content .manual .haxe div.classDef,
+            .content .manual .haxe div.definition{
+                padding: 0px;
+                display: inline;
+                background: transparent;
+            }
+
+            .content .manual .haxe .this,
+            .content .manual .haxe .super{
+                color: #1f8ac3;
             }
         </style>
     </head>

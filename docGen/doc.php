@@ -324,6 +324,8 @@ function haxe($str){
     $str   = '';
 
     foreach($lines as $ln){
+        $ln = preg_replace('/(\!\=|\>\=|\<\=|\|\||\=\=|\&\&)/', '<span class="operator">\\1</span>', $ln);
+
         if( preg_match('/^\s*(class )|(interface )/', $ln) ){
             $ln = classDef($ln);
 
@@ -334,12 +336,12 @@ function haxe($str){
             $ln = preg_replace('/\@(param|result|return|author|throws|throw|exception)/', '<span class="tag \\1">@\\1</span>', $ln) . "\n"; # @tags
         }
 
+        $ln = preg_replace('/^(\s*(\*|\/\*).*)$/', '<i>\\1</i>', $ln);
+            $ln = preg_replace('/^(\s*\*\/)/', '<i>\\1</i>', $ln);
         $ln = preg_replace('/(?<!\:)(\/\/.*)$/', '<i>\\1</i>', $ln);
         $ln = preg_replace('/(\s)(([a-z0-9_]+\.)+[A-Z][a-zA-Z0-9_]*)/', '\\1<type>\\2</type>', $ln);
         $ln = preg_replace('/([^a-zA-Z0-9_])(this|super)([^a-zA-Z0-9_])/', '\\1<span class="\\2">\\2</span>\\3', $ln);
-        $ln = preg_replace('/([^a-zA-Z0-9_])(null|false|true)([^a-zA-Z0-9_])/', '\\1<span class="\\2">\\2</span>\\3', $ln);
-
-        $ln = preg_replace('/([^a-zA-Z0-9_])(this|super)([^a-zA-Z0-9_])/', '\\1<span class="\\2">\\2</span>\\3', $ln);
+        $ln = preg_replace('/([^a-zA-Z0-9_])(null|false|true|return)([^a-zA-Z0-9_])/', '\\1<span class="\\2">\\2</span>\\3', $ln);
 
         $ln = preg_replace('/([^a-zA-Z-0-9_])if(\s*)\(/', '\\1<span class="if">if</span>\\3(', $ln);
 
