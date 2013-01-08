@@ -311,7 +311,7 @@ function manual($str, $imports = array()){
         }
 
 
-        $str .= $ln ."\n";
+        $str .= $ln . (preg_match('/\<\/(div|pre)\>\s*$/', $ln) ? '' : "\n");
     }
 
     return imports($str, $imports);

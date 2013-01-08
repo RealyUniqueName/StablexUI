@@ -1,1 +1,1 @@
-online docs: http://stablex.ru/ui/api
+online docs: http://stablex.ru/ui/doc

@@ -1,0 +1,47 @@
+<div class="manual">
+<h2>Setup StablexUI</h2>
+
+First of all you'll need the library sources.
+
+<pre>
+    <a href="https://github.com/RealyUniqueName/StablexUI" target="_blank">Get the latest version on GitHub</a>
+</pre>
+Take content of src/ folder to your project.
+Then install Actuate if you still didn't installed it. Run in command line:
+
+<pre>
+    haxelib install actuate
+</pre>
+Now you need to add Actuate to .nmml file:
+
+<pre>
+    &lt;haxelib name="actuate" /&gt;
+</pre>
+At last, you need to initialize StablexUI before using it.
+Here is a sample main class with StablexUI initialization:
+(roll mouse pointer over underlined type to see full classpath, click to go to it's API)
+
+<div class="haxe">
+<i>/**</i>
+<i>* Main class of an application</i>
+<i>*/</i>
+<div class="classDef"> <span class="class">class</span> <span class="className">Test</span> <span class="extends">extends</span> <a class="type" href="/ui/doc/#http://nme.io/api/types/nme/display/Sprite.html" title="nme.display.Sprite">Sprite</a>{</div>
+
+<i>    /**</i>
+<i>    * Enrty point</i>
+<i>    *</i>
+<i>    */</i>
+<div class="definition">    <span class="static">static</span> <span class="public">public</span> <span class="function">function</span> <span class="definitionName">main</span> () : <a class="type" href="/ui/doc/#http://haxe.org/api/Void" title="Void">Void</a>{</div>
+        <i>//initialize StablexUI</i>
+        <a class="type" href="/ui/doc/#ru/stablex/ui/UIBuilder.html" title="ru.stablex.ui.UIBuilder">UIBuilder</a>.init();
+
+        <i>//Congratulations! You can use StablexUI!</i>
+
+    }<i>//function main()</i>
+}<i>//class Test</i>
+
+</div>
+Go nuts with StablexUI now :)
+Or read next manual: <a class="type" href="/ui/doc/#manual/02_Basics.html" title="manual.02_Basics">02_Basics</a>
+
+</div>

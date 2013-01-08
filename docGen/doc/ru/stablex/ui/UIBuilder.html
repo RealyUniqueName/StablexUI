@@ -13,7 +13,7 @@
 <div class="definition">    <span class="macro">@:macro</span> <span class="static">static</span> <span class="public">public</span> <span class="function">function</span> <span class="definitionName">init</span>(defaultsXmlFile:<a class="type" href="/ui/doc/#http://haxe.org/api/String" title="String">String</a> = null) : <a class="type" href="/ui/doc/#http://haxe.org/api/haxe/macro/Expr" title="haxe.macro.Expr">Expr</a> 
 </div>
 <div class="comment"> Initializing UIBuilder. Should be called before using any other UIBuilder methods except .reg* methods
- <span class="tag param">@param</span> defaultsXmlFile - null (default) or path to xml file with default settings for widgets
+ <span class="tag param">@param</span> defaultsXmlFile - path to xml file with default settings for widgets
 </div>
 <div class="definition">    <span class="macro">@:macro</span> <span class="static">static</span> <span class="public">public</span> <span class="function">function</span> <span class="definitionName">buildFn</span> (xmlFile:<a class="type" href="/ui/doc/#http://haxe.org/api/String" title="String">String</a>) : <a class="type" href="/ui/doc/#http://haxe.org/api/haxe/macro/Expr" title="haxe.macro.Expr">Expr</a>
 </div>
@@ -38,7 +38,7 @@
  For example 'com.pack.SomeClass' can be referenced in xml like this: $SomeClass
  <span class="tag throw">@throw</span> <a class="type" href="/ui/doc/#http://haxe.org/api/String" title="String">String</a> if fullyQualifiedName is wrong (does not match `com.package.ClassName` notation)
  <span class="tag throw">@throw</span> <a class="type" href="/ui/doc/#http://haxe.org/api/String" title="String">String</a> if class is already registered. E.g. com.pack1.MyClass and org.pack2.MyClass
- can not be registered simultaniousely, because both will be shortened to $MyClass for usage in xml.
+ can not be registered simultaneously, because both will be shortened to $MyClass for usage in xml.
  You still can register one of them and use another one by it's full classpath in xml
 </div>
 <div class="definition">    <span class="static">static</span> <span class="inline">inline</span> <span class="public">public</span> <span class="function">function</span> <span class="definitionName">regSkins</span>(skinList:<a class="type" href="/ui/doc/#http://haxe.org/api/Dynamic" title="Dynamic">Dynamic</a>&lt;<a class="type" href="/ui/doc/#ru/stablex/ui/TSkin.html" title="ru.stablex.ui.TSkin">TSkin</a>&gt;) : <a class="type" href="/ui/doc/#http://haxe.org/api/Void" title="Void">Void</a> 

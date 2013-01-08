@@ -5,7 +5,7 @@ Macro driven ui engine for Haxe NME.
 
 Supported targets: cpp (iOS, Android, Blackberry, webOS, Windows, Linux, MacOS), flash, html5
 
-online api docs: http://stablex.ru/ui/api
+online docs: http://stablex.ru/ui/doc
 
 Features:
 ---------------

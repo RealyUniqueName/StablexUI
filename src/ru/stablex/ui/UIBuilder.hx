@@ -49,7 +49,7 @@ class UIBuilder {
 
     /**
     * Initializing UIBuilder. Should be called before using any other UIBuilder methods except .reg* methods
-    * @param defaultsXmlFile - null (default) or path to xml file with default settings for widgets
+    * @param defaultsXmlFile - path to xml file with default settings for widgets
     */
     @:macro static public function init(defaultsXmlFile:String = null) : Expr {
         var code : String = 'true';
@@ -229,7 +229,7 @@ class UIBuilder {
     *
     * @throw <type>String</type> if fullyQualifiedName is wrong (does not match `com.package.ClassName` notation)
     * @throw <type>String</type> if class is already registered. E.g. com.pack1.MyClass and org.pack2.MyClass
-    * can not be registered simultaniousely, because both will be shortened to $MyClass for usage in xml.
+    * can not be registered simultaneously, because both will be shortened to $MyClass for usage in xml.
     * You still can register one of them and use another one by it's full classpath in xml
     */
     @:macro static public function regClass (fullyQualifiedName:String) : Expr{

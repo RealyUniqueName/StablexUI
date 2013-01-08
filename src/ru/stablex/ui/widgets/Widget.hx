@@ -591,7 +591,7 @@ class Widget extends TweenSprite{
 
 
     /**
-    * Resize width and height simultaniously. Only one <type>ru.stablex.ui.events.WidgetEvent</type>.RESIZE will be dispatched
+    * Resize width and height simultaneously. Only one <type>ru.stablex.ui.events.WidgetEvent</type>.RESIZE will be dispatched
     *
     */
     public function resize(width:Float, height:Float, keepPercentage:Bool = false) : Void {

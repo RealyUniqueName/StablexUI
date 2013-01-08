@@ -9,7 +9,7 @@ import ru.stablex.Err;
 */
 
 class Bmp extends Widget{
-    //Asset ID or path to BitmapData
+    //Asset ID or path to bitmap
     public var src : String;
     //Should we use smoothing? False by default
     public var smooth : Bool = false;
@@ -18,6 +18,7 @@ class Bmp extends Widget{
     /**
     * Refresh widget. Draw bitmap on this.graphics
     *
+    * @throw <type>String</type> if asset for bitmap was not found
     */
     override public function refresh() : Void {
         this._load();
@@ -29,12 +30,18 @@ class Bmp extends Widget{
     /**
     * Load and display bitmapdata specified by this.src
     *
+    * @throw <type>String</type> if asset for bitmap was not found
     */
     private function _load() : Void {
-        var bmp : BitmapData = Assets.getBitmapData(this.src);
+        var bmp : BitmapData = null;
 
-        //draw picture on graphics
-        if( bmp != null ){
+        if( this.src != null ){
+            bmp = Assets.getBitmapData(this.src);
+            if( bmp == null ){
+                Err.trigger('Bitmap not found: ' + this.src);
+            }
+
+            //draw picture on graphics
             this.graphics.clear();
             this.graphics.beginBitmapFill(bmp, null, false, this.smooth);
             this.graphics.drawRect(0, 0, bmp.width, bmp.height);
