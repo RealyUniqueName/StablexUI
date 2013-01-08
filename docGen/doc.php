@@ -1,16 +1,16 @@
 #!/usr/bin/php
 <?php
 
-$urls = array(
-    'manual'  => '#type#.html',
-    'ru'      => '#type#.html',
-    'nme'     => 'http://nme.io/api/types/#type#.html',
-    'default' => 'http://haxe.org/api/#type#'
-);
-
 define('SRC_ROOT', '../src/');
 define('DOC_ROOT', 'src/');
-define('DOC_BASE_URL', 'ui/api/');
+define('DOC_BASE_URL', '/ui/doc/');
+
+$urls = array(
+    'manual'  => DOC_BASE_URL.'##type#.html',
+    'ru'      => DOC_BASE_URL.'##type#.html',
+    'nme'     => DOC_BASE_URL.'#http://nme.io/api/types/#type#.html',
+    'default' => DOC_BASE_URL.'#http://haxe.org/api/#type#'
+);
 
 file_put_contents(
     'doc/menu.html',
@@ -52,7 +52,7 @@ function generate($srcPath, $dstPath = 'doc/', $imports = array()){
         $import = preg_replace('/^([^a-zA-Z]*)/', '', $import);
         $import = preg_replace('/\.hx$/', '', $import);
 
-        $menu .= "<li class=\"class\" data-url=\"". url($import) ."\"><span class=\"class\">". basename($fname, '.hx') ."</span></li>\n";
+        $menu .= "<li class=\"class\"><a href=\"". url($import) ."\" class=\"class\">". basename($fname, '.hx') ."</a></li>\n";
 
         $doc = genDoc($fname, $imports);
         file_put_contents($dstPath . basename($fname, '.hx') .'.html', $doc);
@@ -93,15 +93,17 @@ function genDoc($fname, $imports = array()){
         #comment
         if( preg_match('/^\s*\/\*\*/', $ln) ){
             $comment .= $ln;
-            $skip = false;
-            while( !preg_match('/\*\//', $ln) ){
+            $skip    = false;
+            $cnt     = 1;
+            while( $cnt > 0 ){
                 $i ++;
                 $ln = $lines[$i];
                 if( preg_match('/\@private/', $ln) ){
                     $skip = true;
-                    break;
                 }
                 $comment .= $ln;
+                if( preg_match('/\*\//', $ln) ) $cnt --;
+                if( preg_match('/^\s*\/\*/', $ln) ) $cnt ++;
             }
             if($skip){
                 $comment = '';
@@ -229,7 +231,7 @@ function imports($str, $imports = array()){
             $parts = explode('.', $types[$i]);
             $shortcut = $parts[ count($parts) - 1 ];
 
-            $str = preg_replace('/((\<span class="type"\>)|(\<type\>))'. $types[$i] .'\<\/(span|type)\>/', '<span class="type" data-url="'. $url .'" title="'. $tip .'">'. $shortcut .'</span>', $str);
+            $str = preg_replace('/((\<(a|span) class="type"\>)|(\<type\>))'. $types[$i] .'\<\/(span|type|a)\>/', '<a class="type" href="'. $url .'" title="'. $tip .'">'. $shortcut .'</a>', $str);
         }
     }
 
@@ -269,19 +271,20 @@ function manual($str, $imports = array()){
         $ln = preg_replace('/^\s*\*\//', '', $ln); # */
         $ln = preg_replace('/@manual (.*)/', '<h2>\\1</h2>', $ln); # @tags
 
+        #xml
         if( preg_match('/\<xml\>/', $ln) ){
             $xml = '';
             $i ++;
             $ln = $lines[$i];
-            while( !preg_match('/\<\/xml\>/', $ln) && $i < $cLines ){
+            while( !preg_match('/\<\/xml\>/', $ln) && $i < $cLines - 1 ){
                 $ln = preg_replace('/\</', '&lt;', $ln);
                 $ln = preg_replace('/\>/', '&gt;', $ln);
                 $ln = preg_replace('/&lt;([-a-zA-Z0-9_]+)(\s)/', '&lt;<tag>\\1</tag>\\2', $ln);
+                $ln = preg_replace('/&lt;\!--(.*)--\&gt;/U', '<i>&lt;!--\\1--&gt;</i>', $ln); # comments
                 $ln = preg_replace('/&lt;\/(\s*)([-a-zA-Z0-9_]+)(\s*)&gt;/', '&lt;/\\1<tag>\\2</tag>\\3&gt;', $ln);
                 $ln = preg_replace('/([-a-zA-Z0-9_]+)(\s*=\s*")/', '<attr>\\1</attr>\\2', $ln);
                 $ln = preg_replace('/"/', '<span class="quotes">"</span>', $ln);
-                $ln = preg_replace('/\<tag\>/', '<span class="tag">', $ln);
-                $ln = preg_replace('/\<\/tag\>/', '</span>', $ln);
+                $ln = preg_replace('/\<tag\>(.*)\<\/tag\>/U', '<span class="tag"><span class="type">ru.stablex.ui.widgets.\\1</span></span>', $ln);
                 $ln = preg_replace('/\<attr\>/', '<span class="attr">', $ln);
                 $ln = preg_replace('/\<\/attr\>/', '</span>', $ln);
 
@@ -291,11 +294,57 @@ function manual($str, $imports = array()){
                 $ln = $lines[$i];
             }
             $ln = "<div class=\"xml\">\n". $xml ."\n</div>";
+
+        #haxe
+        }elseif(preg_match('/\<haxe\>/', $ln)){
+            $haxe = '';
+            $i ++;
+            $ln = $lines[$i];
+            while( !preg_match('/\<\/haxe\>/', $ln) && $i < $cLines - 1 ){
+                $haxe .= $ln . "\n";
+
+                $i ++;
+                $ln = $lines[$i];
+            }
+
+            $ln = haxe($haxe);
         }
 
 
-        $str .= $ln . "\n";
+        $str .= $ln ."\n";
     }
 
     return imports($str, $imports);
+}
+
+
+
+function haxe($str){
+    $lines = explode("\n", $str);
+    $str   = '';
+
+    foreach($lines as $ln){
+        if( preg_match('/^\s*(class )|(interface )/', $ln) ){
+            $ln = classDef($ln);
+
+        }elseif( preg_match('/(var )|(function )/U', preg_replace('/(\/\/.*$)/U', '', $ln)) ){
+            $ln = definition($ln);
+
+        }else{
+            $ln = preg_replace('/\@(param|result|return|author|throws|throw|exception)/', '<span class="tag \\1">@\\1</span>', $ln) . "\n"; # @tags
+        }
+
+        $ln = preg_replace('/(?<!\:)(\/\/.*)$/', '<i>\\1</i>', $ln);
+        $ln = preg_replace('/(\s)(([a-z0-9_]+\.)+[A-Z][a-zA-Z0-9_]*)/', '\\1<type>\\2</type>', $ln);
+        $ln = preg_replace('/([^a-zA-Z0-9_])(this|super)([^a-zA-Z0-9_])/', '\\1<span class="\\2">\\2</span>\\3', $ln);
+        $ln = preg_replace('/([^a-zA-Z0-9_])(null|false|true)([^a-zA-Z0-9_])/', '\\1<span class="\\2">\\2</span>\\3', $ln);
+
+        $ln = preg_replace('/([^a-zA-Z0-9_])(this|super)([^a-zA-Z0-9_])/', '\\1<span class="\\2">\\2</span>\\3', $ln);
+
+        $ln = preg_replace('/([^a-zA-Z-0-9_])if(\s*)\(/', '\\1<span class="if">if</span>\\3(', $ln);
+
+        $str .= $ln;
+    }
+
+    return "<div class=\"haxe\">\n". imports($str) . "</div>";
 }

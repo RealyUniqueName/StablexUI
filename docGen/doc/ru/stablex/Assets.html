@@ -4,32 +4,32 @@
  Its methods are dynamic so you can override them to implement
  different types of resource loading
 </div>
-<div class="definition">    <span class="static">static</span> <span class="dynamic">dynamic</span> <span class="public">public</span> <span class="function">function</span> <span class="definitionName">getBitmapData</span>(src:<span class="type" data-url="http://haxe.org/api/String" title="String">String</span>, useCache:<span class="type" data-url="http://haxe.org/api/Bool" title="Bool">Bool</span> = true) : <span class="type" data-url="http://nme.io/api/types/nme/display/BitmapData.html" title="nme.display.BitmapData">BitmapData</span> 
+<div class="definition">    <span class="static">static</span> <span class="dynamic">dynamic</span> <span class="public">public</span> <span class="function">function</span> <span class="definitionName">getBitmapData</span>(src:<a class="type" href="/ui/doc/#http://haxe.org/api/String" title="String">String</a>, useCache:<a class="type" href="/ui/doc/#http://haxe.org/api/Bool" title="Bool">Bool</a> = true) : <a class="type" href="/ui/doc/#http://nme.io/api/types/nme/display/BitmapData.html" title="nme.display.BitmapData">BitmapData</a> 
 </div>
 <div class="comment"> By default it is equal to nme.Assets.getBitmapData
 </div>
-<div class="definition">    <span class="static">static</span> <span class="dynamic">dynamic</span> <span class="public">public</span> <span class="function">function</span> <span class="definitionName">getBytes</span>(src:<span class="type" data-url="http://haxe.org/api/String" title="String">String</span>) : <span class="type" data-url="http://nme.io/api/types/nme/utils/ByteArray.html" title="nme.utils.ByteArray">ByteArray</span> 
+<div class="definition">    <span class="static">static</span> <span class="dynamic">dynamic</span> <span class="public">public</span> <span class="function">function</span> <span class="definitionName">getBytes</span>(src:<a class="type" href="/ui/doc/#http://haxe.org/api/String" title="String">String</a>) : <a class="type" href="/ui/doc/#http://nme.io/api/types/nme/utils/ByteArray.html" title="nme.utils.ByteArray">ByteArray</a> 
 </div>
 <div class="comment"> By default it is equal to nme.Assets.getBytes
 </div>
-<div class="definition">    <span class="static">static</span> <span class="public">public</span> <span class="inline">inline</span> <span class="function">function</span> <span class="definitionName">getFont</span>(src:<span class="type" data-url="http://haxe.org/api/String" title="String">String</span>) : <span class="type" data-url="http://nme.io/api/types/nme/text/Font.html" title="nme.text.Font">Font</span> 
+<div class="definition">    <span class="static">static</span> <span class="public">public</span> <span class="inline">inline</span> <span class="function">function</span> <span class="definitionName">getFont</span>(src:<a class="type" href="/ui/doc/#http://haxe.org/api/String" title="String">String</a>) : <a class="type" href="/ui/doc/#http://nme.io/api/types/nme/text/Font.html" title="nme.text.Font">Font</a> 
 </div>
 <div class="comment"> It is equal to nme.Assets.getFont and can not be overriden due to some strange bug:
  if this method is declared as dynamic, cpp fails to compile (hxcpp 2.10.2)
 </div>
-<div class="definition">    <span class="static">static</span> <span class="dynamic">dynamic</span> <span class="public">public</span> <span class="function">function</span> <span class="definitionName">getSound</span>(src:<span class="type" data-url="http://haxe.org/api/String" title="String">String</span>) : <span class="type" data-url="http://nme.io/api/types/nme/media/Sound.html" title="nme.media.Sound">Sound</span> 
+<div class="definition">    <span class="static">static</span> <span class="dynamic">dynamic</span> <span class="public">public</span> <span class="function">function</span> <span class="definitionName">getSound</span>(src:<a class="type" href="/ui/doc/#http://haxe.org/api/String" title="String">String</a>) : <a class="type" href="/ui/doc/#http://nme.io/api/types/nme/media/Sound.html" title="nme.media.Sound">Sound</a> 
 </div>
 <div class="comment"> By default it is equal to nme.Assets.getSound
 </div>
-<div class="definition">    <span class="static">static</span> <span class="dynamic">dynamic</span> <span class="public">public</span> <span class="function">function</span> <span class="definitionName">getText</span>(src:<span class="type" data-url="http://haxe.org/api/String" title="String">String</span>) : <span class="type" data-url="http://haxe.org/api/String" title="String">String</span> 
+<div class="definition">    <span class="static">static</span> <span class="dynamic">dynamic</span> <span class="public">public</span> <span class="function">function</span> <span class="definitionName">getText</span>(src:<a class="type" href="/ui/doc/#http://haxe.org/api/String" title="String">String</a>) : <a class="type" href="/ui/doc/#http://haxe.org/api/String" title="String">String</a> 
 </div>
 <div class="comment"> By default it is equal to nme.Assets.getText
 </div>
-<div class="definition">    <span class="macro">@:macro</span> <span class="static">static</span> <span class="public">public</span> <span class="function">function</span> <span class="definitionName">embed</span> (file:<span class="type" data-url="http://haxe.org/api/String" title="String">String</span>) : <span class="type" data-url="http://haxe.org/api/haxe/macro/Expr" title="haxe.macro.Expr">Expr</span>
+<div class="definition">    <span class="macro">@:macro</span> <span class="static">static</span> <span class="public">public</span> <span class="function">function</span> <span class="definitionName">embed</span> (file:<a class="type" href="/ui/doc/#http://haxe.org/api/String" title="String">String</a>) : <a class="type" href="/ui/doc/#http://haxe.org/api/haxe/macro/Expr" title="haxe.macro.Expr">Expr</a>
 </div>
 <div class="comment"> Embed file content "as is" at compile time. This content can be any valid haxe code.
 </div>
-<div class="definition">    <span class="macro">@:macro</span> <span class="static">static</span> <span class="public">public</span> <span class="function">function</span> <span class="definitionName">embedStr</span> (fname:<span class="type" data-url="http://haxe.org/api/String" title="String">String</span>) : <span class="type" data-url="http://haxe.org/api/haxe/macro/Expr" title="haxe.macro.Expr">Expr</span>
+<div class="definition">    <span class="macro">@:macro</span> <span class="static">static</span> <span class="public">public</span> <span class="function">function</span> <span class="definitionName">embedStr</span> (fname:<a class="type" href="/ui/doc/#http://haxe.org/api/String" title="String">String</a>) : <a class="type" href="/ui/doc/#http://haxe.org/api/haxe/macro/Expr" title="haxe.macro.Expr">Expr</a>
 </div>
 <div class="comment"> Embed file content as String at compile time.
  <span class="tag return">@return</span> String - content of specified file

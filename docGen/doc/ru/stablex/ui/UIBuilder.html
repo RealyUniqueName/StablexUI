@@ -2,20 +2,20 @@
 </div>
 <div class="comment"> Core class. All macro magic lives here
 </div>
-<div class="definition">    <span class="static">static</span> <span class="public">public</span> <span class="var">var</span> <span class="definitionName">defaults</span> : <span class="type" data-url="http://haxe.org/api/Hash" title="Hash">Hash</span>&lt;<span class="type" data-url="http://haxe.org/api/Hash" title="Hash">Hash</span>&lt;Widget-&gt;<span class="type" data-url="http://haxe.org/api/Void" title="Void">Void</span>&gt;&gt; = new Hash()
+<div class="definition">    <span class="static">static</span> <span class="public">public</span> <span class="var">var</span> <span class="definitionName">defaults</span> : <a class="type" href="/ui/doc/#http://haxe.org/api/Hash" title="Hash">Hash</a>&lt;<a class="type" href="/ui/doc/#http://haxe.org/api/Hash" title="Hash">Hash</a>&lt;Widget-&gt;<a class="type" href="/ui/doc/#http://haxe.org/api/Void" title="Void">Void</a>&gt;&gt; = new Hash()
 </div>
 <div class="comment">Closures for applaying default settings to widgets. Closures created with UIBuilder.init('defaults.xml')
 </div>
-<div class="definition">    <span class="static">static</span> <span class="public">public</span> <span class="var">var</span> <span class="definitionName">skins</span> : <span class="type" data-url="http://haxe.org/api/Hash" title="Hash">Hash</span>&lt;<span class="type" data-url="ru/stablex/ui/TSkin.html" title="ru.stablex.ui.TSkin">TSkin</span>&gt; = new Hash()
+<div class="definition">    <span class="static">static</span> <span class="public">public</span> <span class="var">var</span> <span class="definitionName">skins</span> : <a class="type" href="/ui/doc/#http://haxe.org/api/Hash" title="Hash">Hash</a>&lt;<a class="type" href="/ui/doc/#ru/stablex/ui/TSkin.html" title="ru.stablex.ui.TSkin">TSkin</a>&gt; = new Hash()
 </div>
 <div class="comment">Skins. Loaded with UIBuilder.regSkins() or set manualy by UIBuilder.skins.set(skinName, skinStructure)
 </div>
-<div class="definition">    <span class="macro">@:macro</span> <span class="static">static</span> <span class="public">public</span> <span class="function">function</span> <span class="definitionName">init</span>(defaultsXmlFile:<span class="type" data-url="http://haxe.org/api/String" title="String">String</span> = null) : <span class="type" data-url="http://haxe.org/api/haxe/macro/Expr" title="haxe.macro.Expr">Expr</span> 
+<div class="definition">    <span class="macro">@:macro</span> <span class="static">static</span> <span class="public">public</span> <span class="function">function</span> <span class="definitionName">init</span>(defaultsXmlFile:<a class="type" href="/ui/doc/#http://haxe.org/api/String" title="String">String</a> = null) : <a class="type" href="/ui/doc/#http://haxe.org/api/haxe/macro/Expr" title="haxe.macro.Expr">Expr</a> 
 </div>
 <div class="comment"> Initializing UIBuilder. Should be called before using any other UIBuilder methods except .reg* methods
  <span class="tag param">@param</span> defaultsXmlFile - null (default) or path to xml file with default settings for widgets
 </div>
-<div class="definition">    <span class="macro">@:macro</span> <span class="static">static</span> <span class="public">public</span> <span class="function">function</span> <span class="definitionName">buildFn</span> (xmlFile:<span class="type" data-url="http://haxe.org/api/String" title="String">String</span>) : <span class="type" data-url="http://haxe.org/api/haxe/macro/Expr" title="haxe.macro.Expr">Expr</span>
+<div class="definition">    <span class="macro">@:macro</span> <span class="static">static</span> <span class="public">public</span> <span class="function">function</span> <span class="definitionName">buildFn</span> (xmlFile:<a class="type" href="/ui/doc/#http://haxe.org/api/String" title="String">String</a>) : <a class="type" href="/ui/doc/#http://haxe.org/api/haxe/macro/Expr" title="haxe.macro.Expr">Expr</a>
 </div>
 <div class="comment"> Generates closure for widget creation. xmlFile - path to xml file with markup.
  In xml you can use these placeholders:
@@ -23,34 +23,34 @@
    $SomeClass - replaced with com.some.package.SomeClass. If registered with UIBuilder.regClass('com.some.package.SomeClass');
    #widgetId - replaced with UIBuilder.get('widgetId');
    @someParam - replaced with arguments.someParam. Arguments can be passed like this: UIBuilder.buildFn(xmlFile)({someParam:'some value', someParam2: 3.14});
- <span class="tag throw">@throw</span> <span class="type" data-url="http://haxe.org/api/String" title="String">String</span> if .init() was not called before
- <span class="tag throw">@throw</span> <span class="type" data-url="http://haxe.org/api/String" title="String">String</span> if one of used in xml widgets, classes or events was not registered by .regClass() or .regEvent()
- <span class="tag return">@return</span> <span class="type" data-url="http://haxe.org/api/Dynamic" title="Dynamic">Dynamic</span>->Root_Xml_Element_Class<Widget>
+ <span class="tag throw">@throw</span> <a class="type" href="/ui/doc/#http://haxe.org/api/String" title="String">String</a> if .init() was not called before
+ <span class="tag throw">@throw</span> <a class="type" href="/ui/doc/#http://haxe.org/api/String" title="String">String</a> if one of used in xml widgets, classes or events was not registered by .regClass() or .regEvent()
+ <span class="tag return">@return</span> <a class="type" href="/ui/doc/#http://haxe.org/api/Dynamic" title="Dynamic">Dynamic</a>->Root_Xml_Element_Class<Widget>
 </div>
-<div class="definition">    <span class="macro">@:macro</span> <span class="static">static</span> <span class="public">public</span> <span class="function">function</span> <span class="definitionName">regEvent</span> (shortcut:<span class="type" data-url="http://haxe.org/api/String" title="String">String</span>, eventType:<span class="type" data-url="http://haxe.org/api/String" title="String">String</span>) : <span class="type" data-url="http://haxe.org/api/haxe/macro/Expr" title="haxe.macro.Expr">Expr</span>
+<div class="definition">    <span class="macro">@:macro</span> <span class="static">static</span> <span class="public">public</span> <span class="function">function</span> <span class="definitionName">regEvent</span> (shortcut:<a class="type" href="/ui/doc/#http://haxe.org/api/String" title="String">String</a>, eventType:<a class="type" href="/ui/doc/#http://haxe.org/api/String" title="String">String</a>) : <a class="type" href="/ui/doc/#http://haxe.org/api/haxe/macro/Expr" title="haxe.macro.Expr">Expr</a>
 </div>
 <div class="comment"> Register event type to declare event listeners in xml (attributes prefixed with `on-[shortcut]`).
- <span class="tag throw">@throw</span> <span class="type" data-url="http://haxe.org/api/String" title="String">String</span> if this shortcut is already used
+ <span class="tag throw">@throw</span> <a class="type" href="/ui/doc/#http://haxe.org/api/String" title="String">String</a> if this shortcut is already used
 </div>
-<div class="definition">    <span class="macro">@:macro</span> <span class="static">static</span> <span class="public">public</span> <span class="function">function</span> <span class="definitionName">regClass</span> (fullyQualifiedName:<span class="type" data-url="http://haxe.org/api/String" title="String">String</span>) : <span class="type" data-url="http://haxe.org/api/haxe/macro/Expr" title="haxe.macro.Expr">Expr</span>
+<div class="definition">    <span class="macro">@:macro</span> <span class="static">static</span> <span class="public">public</span> <span class="function">function</span> <span class="definitionName">regClass</span> (fullyQualifiedName:<a class="type" href="/ui/doc/#http://haxe.org/api/String" title="String">String</a>) : <a class="type" href="/ui/doc/#http://haxe.org/api/haxe/macro/Expr" title="haxe.macro.Expr">Expr</a>
 </div>
 <div class="comment"> Register class to use it in xml code.
  For example 'com.pack.SomeClass' can be referenced in xml like this: $SomeClass
- <span class="tag throw">@throw</span> <span class="type" data-url="http://haxe.org/api/String" title="String">String</span> if fullyQualifiedName is wrong (does not match `com.package.ClassName` notation)
- <span class="tag throw">@throw</span> <span class="type" data-url="http://haxe.org/api/String" title="String">String</span> if class is already registered. E.g. com.pack1.MyClass and org.pack2.MyClass
+ <span class="tag throw">@throw</span> <a class="type" href="/ui/doc/#http://haxe.org/api/String" title="String">String</a> if fullyQualifiedName is wrong (does not match `com.package.ClassName` notation)
+ <span class="tag throw">@throw</span> <a class="type" href="/ui/doc/#http://haxe.org/api/String" title="String">String</a> if class is already registered. E.g. com.pack1.MyClass and org.pack2.MyClass
  can not be registered simultaniousely, because both will be shortened to $MyClass for usage in xml.
  You still can register one of them and use another one by it's full classpath in xml
 </div>
-<div class="definition">    <span class="static">static</span> <span class="inline">inline</span> <span class="public">public</span> <span class="function">function</span> <span class="definitionName">regSkins</span>(skinList:<span class="type" data-url="http://haxe.org/api/Dynamic" title="Dynamic">Dynamic</span>&lt;<span class="type" data-url="ru/stablex/ui/TSkin.html" title="ru.stablex.ui.TSkin">TSkin</span>&gt;) : <span class="type" data-url="http://haxe.org/api/Void" title="Void">Void</span> 
+<div class="definition">    <span class="static">static</span> <span class="inline">inline</span> <span class="public">public</span> <span class="function">function</span> <span class="definitionName">regSkins</span>(skinList:<a class="type" href="/ui/doc/#http://haxe.org/api/Dynamic" title="Dynamic">Dynamic</a>&lt;<a class="type" href="/ui/doc/#ru/stablex/ui/TSkin.html" title="ru.stablex.ui.TSkin">TSkin</a>&gt;) : <a class="type" href="/ui/doc/#http://haxe.org/api/Void" title="Void">Void</a> 
 </div>
 <div class="comment"> Register skin list
 </div>
-<div class="definition">    <span class="static">static</span> <span class="public">public</span> <span class="function">function</span> <span class="definitionName">create</span> (cls:<span class="type" data-url="http://haxe.org/api/Class" title="Class">Class</span>&lt;<span class="type" data-url="ru/stablex/ui/widgets/Widget.html" title="ru.stablex.ui.widgets.Widget">Widget</span>&gt;, properties:<span class="type" data-url="http://haxe.org/api/Dynamic" title="Dynamic">Dynamic</span> = null) : <span class="type" data-url="ru/stablex/ui/widgets/Widget.html" title="ru.stablex.ui.widgets.Widget">Widget</span>
+<div class="definition">    <span class="static">static</span> <span class="public">public</span> <span class="function">function</span> <span class="definitionName">create</span> (cls:<a class="type" href="/ui/doc/#http://haxe.org/api/Class" title="Class">Class</a>&lt;<a class="type" href="/ui/doc/#ru/stablex/ui/widgets/Widget.html" title="ru.stablex.ui.widgets.Widget">Widget</a>&gt;, properties:<a class="type" href="/ui/doc/#http://haxe.org/api/Dynamic" title="Dynamic">Dynamic</a> = null) : <a class="type" href="/ui/doc/#ru/stablex/ui/widgets/Widget.html" title="ru.stablex.ui.widgets.Widget">Widget</a>
 </div>
 <div class="comment"> Creates widgets at runtime
- <span class="tag throw">@throw</span> <span class="type" data-url="http://haxe.org/api/Dynamic" title="Dynamic">Dynamic</span> if requested widget class does not have one of the provided properties
+ <span class="tag throw">@throw</span> <a class="type" href="/ui/doc/#http://haxe.org/api/Dynamic" title="Dynamic">Dynamic</a> if requested widget class does not have one of the provided properties
 </div>
-<div class="definition">    <span class="static">static</span> <span class="public">public</span> <span class="inline">inline</span> <span class="function">function</span> <span class="definitionName">get</span>(id:<span class="type" data-url="http://haxe.org/api/String" title="String">String</span>) : <span class="type" data-url="ru/stablex/ui/widgets/Widget.html" title="ru.stablex.ui.widgets.Widget">Widget</span> 
+<div class="definition">    <span class="static">static</span> <span class="public">public</span> <span class="inline">inline</span> <span class="function">function</span> <span class="definitionName">get</span>(id:<a class="type" href="/ui/doc/#http://haxe.org/api/String" title="String">String</a>) : <a class="type" href="/ui/doc/#ru/stablex/ui/widgets/Widget.html" title="ru.stablex.ui.widgets.Widget">Widget</a> 
 </div>
 <div class="comment"> Get widget object by its id
 </div>
