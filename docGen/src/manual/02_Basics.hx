@@ -60,6 +60,7 @@ var fn : Dynamic->ru.stablex.ui.Widgets.Text = function(arguments:Dynamic = null
     widget.left = 50;
     widget.top  = 100;
     widget.text = 'My first widget!';
+    return widget;
 };
 nme.Lib.current.addChild( fn() );
 </haxe>
