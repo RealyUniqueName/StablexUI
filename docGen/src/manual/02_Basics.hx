@@ -99,3 +99,30 @@ looks or look at <a href="/ui/demo/02_nested.swf" target="_blank">flash</a> or a
 You can create nested widgets indefinite levels deep.
 
 */
+
+/**
+@manual Creating widgets at runtime without xml
+
+It's also possible to create widgets with plain Haxe without xml.
+For this purpose you should use <type>ru.stablex.ui.UIBuilder</type>.create() method.
+Here is example how to create exactly the same widget as in our first excercise without xml:
+
+<haxe>
+var widget = ru.stablex.ui.UIBuilder.create(ru.stablex.ui.widgets.Text, {
+    left : 50,
+    top  : 100,
+    text : 'My first widget!'
+});
+nme.Lib.current.addChild( widget );
+</haxe>
+
+To dynamically manage widget's children, use ordinary <type>nme.display.DisplayObjectContainer</type> methods:
+
+<haxe>
+widget1.addChild(widget2);
+widget1.removeChild(widget2);
+widget1.addChildAt(widget2, 0);
+widget1.removeChildAt(0);
+</haxe>
+
+*/

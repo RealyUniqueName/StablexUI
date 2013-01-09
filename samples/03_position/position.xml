@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Widget w="800" h="600">
+
+    <!-- Buttons -->
+    <VBox w="800" autoHeight="true" childPadding="10" padding="10">
+        <Button w="300" padding="10" border="1" bgColor="0x00FF00" bgAlpha="0.5" text="'Click here to set \'child.left = 30\''" autoHeight="true" on-click=" #child.left = 30; "/>
+        <Button w="300" padding="10" border="1" bgColor="0x00FF00" bgAlpha="0.5" text="'Click here to set \'child.leftPt = 30\''" autoHeight="true" on-click=" #child.leftPt = 30; " />
+        <Button w="300" padding="10" border="1" bgColor="0x00FF00" bgAlpha="0.5" text="'Click here to set \'child.right = 30\''" autoHeight="true" on-click=" #child.right = 30; " />
+        <Button w="300" padding="10" border="1" bgColor="0x00FF00" bgAlpha="0.5" text="'Click here to set \'child.rightPt = 30\''" autoHeight="true" on-click=" #child.rightPt = 30; " />
+        <Button w="300" padding="10" border="1" bgColor="0x00FF00" bgAlpha="0.5" text="'Click here to set \'child.top = 30\''" autoHeight="true" on-click=" #child.top = 30; " />
+        <Button w="300" padding="10" border="1" bgColor="0x00FF00" bgAlpha="0.5" text="'Click here to set \'child.topPt = 30\''" autoHeight="true" on-click=" #child.topPt = 30; " />
+        <Button w="300" padding="10" border="1" bgColor="0x00FF00" bgAlpha="0.5" text="'Click here to set \'child.bottom = 30\''" autoHeight="true" on-click=" #child.bottom = 30; " />
+        <Button w="300" padding="10" border="1" bgColor="0x00FF00" bgAlpha="0.5" text="'Click here to set \'child.bottomPt = 30\''" autoHeight="true" on-click=" #child.bottomPt = 30; " />
+    </VBox>
+
+    <!-- parent -->
+    <Panel bottom="10" left="50" h="300" w="700" border="1" bgColor="0x005500">
+        <!-- child -->
+        <Panel leftPt="50" topPt="50" id="'child'" w="50" h="50" border="1" bgColor="0x550000" />
+    </Panel>
+</Widget>
