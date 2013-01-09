@@ -34,7 +34,7 @@ nme.Lib.current.addChild( <a class="type" href="/ui/doc/#ru/stablex/ui/UIBuilder
 
 </div>
 Don't forget empty parentheses after 'first.xml'. That's all! You've just created your first UI :)
-Build your project to any target or see result in <a href="/ui/demo/01_first.swf" target="_blank">flash</a> or in <a href="/ui/demo/01_first" target="_blank">html5</a>.
+Build your project to any target or see result in <a href="/ui/demo/02_first.swf" target="_blank">flash</a> or in <a href="/ui/demo/02_first" target="_blank">html5</a>.
 Full project code is included in samples on <a href="https://github.com/RealyUniqueName/StablexUI" target="_blank">GitHub</a>.
 
 
@@ -75,6 +75,29 @@ widget.text = My first widget!;
 
 </div>
 wich of course breaks Haxe syntax.
+
+
+
+</div>
+<div class="manual">
+<h2>Nested widgets</h2>
+
+Every widget can contain children since <a class="type" href="/ui/doc/#ru/stablex/ui/widgets/Widget.html" title="ru.stablex.ui.widgets.Widget">Widget</a> inherits from <a class="type" href="/ui/doc/#http://nme.io/api/types/nme/display/DisplayObjectContainer.html" title="nme.display.DisplayObjectContainer">DisplayObjectContainer</a>.
+Child widgets behave like ordinary display objects in terms of position/scale/alpha etc.
+Lets modify our above sample. Place that text field to panel:
+
+<div class="xml">
+&lt;?xml <span class="attr">version</span>=<span class="quotes">"</span>1.0<span class="quotes">"</span> <span class="attr">encoding</span>=<span class="quotes">"</span>UTF-8<span class="quotes">"</span>?&gt;
+
+&lt;<span class="tag"><a class="type" href="/ui/doc/#ru/stablex/ui/widgets/Panel.html" title="ru.stablex.ui.widgets.Panel">Panel</a></span> <span class="attr">border</span>=<span class="quotes">"</span>1<span class="quotes">"</span> <span class="attr">w</span>=<span class="quotes">"</span>400<span class="quotes">"</span> <span class="attr">h</span>=<span class="quotes">"</span>400<span class="quotes">"</span> <span class="attr">left</span>=<span class="quotes">"</span>50<span class="quotes">"</span> <span class="attr">top</span>=<span class="quotes">"</span>100<span class="quotes">"</span>&gt;
+    &lt;<span class="tag"><a class="type" href="/ui/doc/#ru/stablex/ui/widgets/Text.html" title="ru.stablex.ui.widgets.Text">Text</a></span> <span class="attr">left</span>=<span class="quotes">"</span>50<span class="quotes">"</span> <span class="attr">top</span>=<span class="quotes">"</span>100<span class="quotes">"</span> <span class="attr">text</span>=<span class="quotes">"</span>'My first widget!'<span class="quotes">"</span> /&gt;
+&lt;/<span class="tag"><a class="type" href="/ui/doc/#ru/stablex/ui/widgets/Panel.html" title="ru.stablex.ui.widgets.Panel">Panel</a></span>&gt;
+
+
+</div>
+Now text field will be positioned in panel's system of axes. Build project to see how it
+looks or look at <a href="/ui/demo/02_nested.swf" target="_blank">flash</a> or at <a href="/ui/demo/02_nested" target="_blank">html5</a>
+You can create nested widgets indefinite levels deep.
 
 
 </div>

@@ -34,7 +34,7 @@ nme.Lib.current.addChild( ru.stablex.ui.UIBuilder.buildFn('first.xml')() );
 </haxe>
 
 Don't forget empty parentheses after 'first.xml'. That's all! You've just created your first UI :)
-Build your project to any target or see result in <a href="/ui/demo/01_first.swf" target="_blank">flash</a> or in <a href="/ui/demo/01_first" target="_blank">html5</a>.
+Build your project to any target or see result in <a href="/ui/demo/02_first.swf" target="_blank">flash</a> or in <a href="/ui/demo/02_first" target="_blank">html5</a>.
 Full project code is included in samples on <a href="https://github.com/RealyUniqueName/StablexUI" target="_blank">GitHub</a>.
 */
 
@@ -82,19 +82,20 @@ wich of course breaks Haxe syntax.
 
 Every widget can contain children since <type>ru.stablex.ui.widgets.Widget</type> inherits from <type>nme.display.DisplayObjectContainer</type>.
 Child widgets behave like ordinary display objects in terms of position/scale/alpha etc.
-Lets add another text field to our first sample. But this one will be a child for first text field:
+Lets modify above sample. Place that text field to panel:
 
 <xml>
 <?xml version="1.0" encoding="UTF-8"?>
 
+<!-- .w and .h properties define widget's area width and height respectively -->
 <Panel border="1" w="400" h="400" left="50" top="100">
     <Text left="50" top="100" text="'My first widget!'" />
 </Panel>
 
 </xml>
 
-Second text field will be positioned in first one system of axes. Build project
-to see how it looks or look at <a href="/ui/demo/01_nested.swf" target="_blank">flash</a> or at <a href="/ui/demo/01_nested" target="_blank">html5</a>
+Now text field will be positioned in panel's system of axes. Build project to see how it
+looks or look at <a href="/ui/demo/02_nested.swf" target="_blank">flash</a> or at <a href="/ui/demo/02_nested" target="_blank">html5</a>
 You can create nested widgets indefinite levels deep.
 
 */
