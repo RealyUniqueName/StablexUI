@@ -87,9 +87,10 @@ Lets add another text field to our first sample. But this one will be a child fo
 <xml>
 <?xml version="1.0" encoding="UTF-8"?>
 
-<Text left="50" top="100" text="'My first widget!'">
-    <Text left="0" top="100" text="'This text is a child display object for text field above.'">
-</Text>
+<Panel border="1" w="400" h="400" left="50" top="100">
+    <Text left="50" top="100" text="'My first widget!'" />
+</Panel>
+
 </xml>
 
 Second text field will be positioned in first one system of axes. Build project

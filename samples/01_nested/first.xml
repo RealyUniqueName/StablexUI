@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<Text left="50" top="100" text="'My first widget!'">
-    <Text left="0" top="100" text="'This text is a child display object for text field above.'">
-</Text>

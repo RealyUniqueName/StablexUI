@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project>
 
-    <meta title="StablexUI samples: 01_first" package="ru.stablex.ui" version="0.0.1" company="R.U.N" />
-    <app path="./build" file="01_first" main="Main" />
+    <meta title="StablexUI samples: 02_nested" package="ru.stablex.ui" version="0.0.1" company="R.U.N" />
+    <app path="./build" file="02_nested" main="Main" />
 
     <window width="800" height="600" background="0xFFFFFF" fps="60"/>
 

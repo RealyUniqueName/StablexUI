@@ -34,16 +34,16 @@ class Widget extends TweenSprite{
     public var w (_getWidth,_setWidth)   : Float;
     //Widget width in % of parent's width
     public var widthPt (_getWpt,_setWpt) : Float;
-    private var _width                   : Float;
-    private var _widthPercent            : Float;
+    private var _width                   : Float = 0;
+    private var _widthPercent            : Float = 0;
     private var _widthUsePercent         : Bool = false;
 
     //Widget height height in pixels
     public var h (_getHeight,_setHeight)  : Float;
     //Widget height in % of parent's height
     public var heightPt (_getHpt,_setHpt) : Float;
-    private var _height                   : Float;
-    private var _heightPercent            : Float;
+    private var _height                   : Float = 0;
+    private var _heightPercent            : Float = 0;
     private var _heightUsePercent         : Bool = false;
 
     //Widget id (unique)
@@ -53,15 +53,15 @@ class Widget extends TweenSprite{
     public var left (_getLeft,_setLeft) : Float;
     //position this widget by left border in % of parent's width
     public var leftPt (_getLpt,_setLpt) : Float;
-    private var _left                   : Float;
-    private var _leftPercent            : Float;
+    private var _left                   : Float = 0;
+    private var _leftPercent            : Float = 0;
 
     //position this widget by right border in pixels
     public var right (_getRight,_setRight) : Float;
     //position this widget by right border in % of parent's width
     public var rightPt (_getRpt,_setRpt)   : Float;
-    private var _right                     : Float;
-    private var _rightPercent              : Float;
+    private var _right                     : Float = 0;
+    private var _rightPercent              : Float = 0;
 
     //Wich one to use: left, right, leftPercent or rightPercent
     private var _xUse : Int = _X_USE_LEFT;
@@ -74,15 +74,15 @@ class Widget extends TweenSprite{
     public var top (_getTop,_setTop)   : Float;
     //position this widget by top border in % of parent's height
     public var topPt (_getTpt,_setTpt) : Float;
-    private var _top                   : Float;
-    private var _topPercent            : Float;
+    private var _top                   : Float = 0;
+    private var _topPercent            : Float = 0;
 
     //position this widget by bottom border in pixels
     public var bottom (_getBottom,_setBottom) : Float;
     //position this widget by bottom border in % of parent's height
     public var bottomPt (_getBpt,_setBpt)     : Float;
-    private var _bottom                       : Float;
-    private var _bottomPercent                : Float;
+    private var _bottom                       : Float = 0;
+    private var _bottomPercent                : Float = 0;
 
 
     /**
