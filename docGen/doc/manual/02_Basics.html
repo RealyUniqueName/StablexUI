@@ -61,6 +61,8 @@ is translated by StablexUI for haxe compiler when you build project:
     widget.left = 50;
     widget.top  = 100;
     widget.text = 'My first widget!';
+    widget.onCreate(); <i>//Here widget is notified it is created</i>
+    <span class="return">return</span> widget;
 };
 nme.Lib.current.addChild( fn() );
 
