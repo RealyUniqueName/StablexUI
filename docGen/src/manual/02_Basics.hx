@@ -76,3 +76,24 @@ widget.text = My first widget!;
 wich of course breaks Haxe syntax.
 
 */
+
+/**
+@manual Nested widgets
+
+Every widget can contain children since <type>ru.stablex.ui.widgets.Widget</type> inherits from <type>nme.display.DisplayObjectContainer</type>.
+Child widgets behave like ordinary display objects in terms of position/scale/alpha etc.
+Lets add another text field to our first sample. But this one will be a child for first text field:
+
+<xml>
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Text left="50" top="100" text="'My first widget!'">
+    <Text left="0" top="100" text="'This text is a child display object for text field above.'">
+</Text>
+</xml>
+
+Second text field will be positioned in first one system of axes. Build project
+to see how it looks or look at <a href="/ui/demo/01_nested.swf" target="_blank">flash</a> or at <a href="/ui/demo/01_nested" target="_blank">html5</a>
+You can create nested widgets indefinite levels deep.
+
+*/
