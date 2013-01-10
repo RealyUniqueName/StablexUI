@@ -5,6 +5,7 @@ import haxe.macro.Expr;
 #if macro
 import sys.io.File;
 #else
+import Type;
 import nme.text.TextField;
 import ru.stablex.ui.widgets.Widget;
 #end
@@ -378,7 +379,7 @@ class UIBuilder {
         for(property in Reflect.fields(properties)){
 
             //go deeper for nested properties
-            if( Type.typeof(Reflect.field(properties, property), TObject) ){
+            if( Type.typeof(Reflect.field(properties, property)) == TObject ){
                 UIBuilder.apply(Reflect.field(obj, property), Reflect.field(properties, property));
 
             //set scalar property
