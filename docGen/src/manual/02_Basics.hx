@@ -74,7 +74,6 @@ widget.text = My first widget!;
 </haxe>
 
 wich of course breaks Haxe syntax.
-
 */
 
 /**
@@ -97,7 +96,6 @@ Lets modify above sample. Place that text field to panel:
 Now text field will be positioned in panel's system of axes. Build project to see how it
 looks or look at <a href="/ui/demo/02_nested.swf" target="_blank">flash</a> or at <a href="/ui/demo/02_nested" target="_blank">html5</a>
 You can create nested widgets indefinite levels deep.
-
 */
 
 /**
@@ -124,5 +122,47 @@ widget1.removeChild(widget2);
 widget1.addChildAt(widget2, 0);
 widget1.removeChildAt(0);
 </haxe>
+*/
 
+/**
+@manual Widget ID
+
+Every widget has its own unique id. So you can get any widget object from any place in code:
+To set widget id in xml, use `id` attribute:
+
+<xml>
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Text id="'myWidget'" left="50" top="100" text="'My first widget!'"/>
+</xml>
+
+Or in haxe use `.id` property:
+
+<haxe>
+ru.stablex.ui.UIBuilder.create(ru.stablex.ui.widgets.Text, {
+    id   : 'myWidget',
+    left : 50,
+    top  : 100,
+    text : 'My first widget!'
+});
+</haxe>
+
+You can also change .id property any time in haxe as long as new value is unique across all existing widgets.
+Then to get widget object anywhere in code, use following snippet:
+
+<haxe>
+var widget : ru.stablex.ui.widgets.Text = cast ru.stablex.ui.UIBuilder.get('myWidget');
+trace(widget.text); //outputs: My first widget!
+</haxe>
+*/
+
+
+/**
+@manual Destroying widgets
+
+To destroy widget use .free() method of <type>ru.stablex.ui.Widget</type> class.
+All widget children will be removed, widget will remove itself from parent's display list
+and remove any added eventListeners. Make sure you cleared any other links to that widget.
+Method .free() has optional <type>Bool</type> parameter. Use .free(true) to also destroy every
+child widget.
 */

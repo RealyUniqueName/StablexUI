@@ -74,10 +74,12 @@
 </div>
 <div class="comment"> This method is called automatically after widget was created
  by <a class="type" href="/ui/doc/#ru/stablex/ui/UIBuilder.html" title="ru.stablex.ui.UIBuilder">UIBuilder</a>.buildFn() or <a class="type" href="/ui/doc/#ru/stablex/ui/UIBuilder.html" title="ru.stablex.ui.UIBuilder">UIBuilder</a>.create()
+ <span class="tag dispatch">@dispatch</span> <a class="type" href="/ui/doc/#ru/stablex/ui/events/WidgetEvent.html" title="ru.stablex.ui.events.WidgetEvent">WidgetEvent</a>.CREATE
 </div>
 <div class="definition">    <span class="override">override</span> <span class="public">public</span> <span class="function">function</span> <span class="definitionName">free</span> (recursive:<a class="type" href="/ui/doc/#http://haxe.org/api/Bool" title="Bool">Bool</a> = true) : <a class="type" href="/ui/doc/#http://haxe.org/api/Void" title="Void">Void</a>
 </div>
 <div class="comment"> Free (destroy) widget
+ <span class="tag dispatch">@dispatch</span> <a class="type" href="/ui/doc/#ru/stablex/ui/events/WidgetEvent.html" title="ru.stablex.ui.events.WidgetEvent">WidgetEvent</a>.FREE
 </div>
 <div class="definition">    <span class="public">public</span> <span class="function">function</span> <span class="definitionName">refresh</span>() : <a class="type" href="/ui/doc/#http://haxe.org/api/Void" title="Void">Void</a> 
 </div>
@@ -94,6 +96,8 @@
 <div class="definition">    <span class="public">public</span> <span class="function">function</span> <span class="definitionName">onResize</span>() : <a class="type" href="/ui/doc/#http://haxe.org/api/Void" title="Void">Void</a> 
 </div>
 <div class="comment"> Called every time this object is resized
+ <span class="tag dispatch">@dispatch</span> <a class="type" href="/ui/doc/#ru/stablex/ui/events/WidgetEvent.html" title="ru.stablex.ui.events.WidgetEvent">WidgetEvent</a>.RESIZE
+ <span class="tag dispatch">@dispatch</span> <a class="type" href="/ui/doc/#ru/stablex/ui/events/WidgetEvent.html" title="ru.stablex.ui.events.WidgetEvent">WidgetEvent</a>.INITIAL_RESIZE
 </div>
 <div class="definition">    <span class="override">override</span> <span class="public">public</span> <span class="function">function</span> <span class="definitionName">addChild</span>(child:<a class="type" href="/ui/doc/#http://nme.io/api/types/nme/display/DisplayObject.html" title="nme.display.DisplayObject">DisplayObject</a>) : <a class="type" href="/ui/doc/#http://nme.io/api/types/nme/display/DisplayObject.html" title="nme.display.DisplayObject">DisplayObject</a> 
 </div>

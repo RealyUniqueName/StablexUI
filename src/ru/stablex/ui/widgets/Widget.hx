@@ -474,6 +474,7 @@ class Widget extends TweenSprite{
     * This method is called automatically after widget was created
     * by <type>UIBuilder</type>.buildFn() or <type>UIBuilder</type>.create()
     *
+    * @dispatch <type>ru.stablex.ui.events.WidgetEvent</type>.CREATE
     */
     public function onCreate () : Void{
         //refresh widget
@@ -488,6 +489,7 @@ class Widget extends TweenSprite{
     /**
     * Free (destroy) widget
     *
+    * @dispatch <type>ru.stablex.ui.events.WidgetEvent</type>.FREE
     */
     override public function free (recursive:Bool = true) : Void{
         this.dispatchEvent(new WidgetEvent(WidgetEvent.FREE));
@@ -609,6 +611,8 @@ class Widget extends TweenSprite{
     /**
     * Called every time this object is resized
     *
+    * @dispatch <type>ru.stablex.ui.events.WidgetEvent</type>.RESIZE
+    * @dispatch <type>ru.stablex.ui.events.WidgetEvent</type>.INITIAL_RESIZE
     */
     public function onResize() : Void {
         //positioning

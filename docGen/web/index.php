@@ -10,7 +10,7 @@
                     $('.menu').html("<h1>StablexUI Docs</h1><hr/>" + data);
                     process('.menu');
 
-                    $('.menu').children('ul').children('li').children('ul').hide();
+                    // $('.menu').children('ul').children('li').children('ul').hide();
                 });
 
                 $('.external').height($(window).height());

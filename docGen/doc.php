@@ -176,7 +176,7 @@ function comment($str, $imports = array()){
         $ln = preg_replace('/^\s*\*\//', '', $ln); # */
         $ln = preg_replace('/^\s*\*/', '', $ln); # *
         $ln = preg_replace('/^\s*\/\//', '', $ln); # //
-        $ln = preg_replace('/^(\s*)\@(param|result|return|author|throws|throw|exception)/', '\\1<span class="tag \\2">@\\2</span>', $ln); # @tags
+        $ln = preg_replace('/^(\s*)\@(dispatch|param|result|return|author|throws|throw|exception)/', '\\1<span class="tag \\2">@\\2</span>', $ln); # @tags
 
         if( trim($ln) ){
             $str .= $ln . "\n";
@@ -333,7 +333,7 @@ function haxe($str){
             $ln = definition($ln);
 
         }else{
-            $ln = preg_replace('/\@(param|result|return|author|throws|throw|exception)/', '<span class="tag \\1">@\\1</span>', $ln) . "\n"; # @tags
+            $ln = preg_replace('/\@(dispatch|param|result|return|author|throws|throw|exception)/', '<span class="tag \\1">@\\1</span>', $ln) . "\n"; # @tags
         }
 
         $ln = preg_replace('/^(\s*(\*|\/\*).*)$/', '<i>\\1</i>', $ln);
@@ -341,7 +341,7 @@ function haxe($str){
         $ln = preg_replace('/(?<!\:)(\/\/.*)$/', '<i>\\1</i>', $ln);
         $ln = preg_replace('/(\s|\()(([a-z0-9_]+\.)+[A-Z][a-zA-Z0-9_]*)/', '\\1<type>\\2</type>', $ln);
         $ln = preg_replace('/([^a-zA-Z0-9_])(this|super)([^a-zA-Z0-9_])/', '\\1<span class="\\2">\\2</span>\\3', $ln);
-        $ln = preg_replace('/([^a-zA-Z0-9_])(null|false|true|return)([^a-zA-Z0-9_])/', '\\1<span class="\\2">\\2</span>\\3', $ln);
+        $ln = preg_replace('/([^a-zA-Z0-9_])(cast|null|false|true|return)([^a-zA-Z0-9_])/', '\\1<span class="\\2">\\2</span>\\3', $ln);
 
         $ln = preg_replace('/([^a-zA-Z-0-9_])if(\s*)\(/', '\\1<span class="if">if</span>\\3(', $ln);
 

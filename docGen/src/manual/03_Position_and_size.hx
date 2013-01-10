@@ -9,7 +9,6 @@ Here are properties to set widget area:
     .heightPt - set widget height in % of parent's height (works only if parent is a widget too).
 Play with following demo in <a href="/ui/demo/03_size.swf" target="_blank">flash</a> or in <a href="/ui/demo/03_size" target="_blank">html5</a> to understand sizing.
 You can find full source of this demo on <a href="https://github.com/RealyUniqueName/StablexUI" target="_blank">GitHub</a> in samples/03_size/
-
 */
 
 /**
