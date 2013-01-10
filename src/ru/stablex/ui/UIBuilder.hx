@@ -368,7 +368,7 @@ class UIBuilder {
     *       someObj.prop1 == -2
     *       someObj.prop2 == true
     *       someObj.prop3.nested1 == 'val1'
-    *       someObj.prop3.nested1 == null
+    *       someObj.prop3.nested2 == null
     * Note: non-scalar object properties must not be null, otherwise you'll get an exception
     * "Can't set property of Null"
     *
