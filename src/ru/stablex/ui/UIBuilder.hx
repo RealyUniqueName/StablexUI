@@ -372,7 +372,7 @@ class UIBuilder {
     * Note: non-scalar object properties must not be null, otherwise you'll get an exception
     * "Can't set property of Null"
     *
-    * @throw <type>Dynamic</type> if corresponding properties of `obj` and `properties` have different types
+    * @throw <type>Dynamic</type> if corresponding scalar properties of `obj` and `properties` have different types
     */
     static public function apply(obj:Dynamic, properties:Dynamic) : Void {
         for(property in Reflect.fields(properties)){

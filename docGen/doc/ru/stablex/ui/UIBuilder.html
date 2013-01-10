@@ -47,8 +47,30 @@
 </div>
 <div class="definition">    <span class="static">static</span> <span class="public">public</span> <span class="function">function</span> <span class="definitionName">create</span> (cls:<a class="type" href="/ui/doc/#http://haxe.org/api/Class" title="Class">Class</a>&lt;<a class="type" href="/ui/doc/#ru/stablex/ui/widgets/Widget.html" title="ru.stablex.ui.widgets.Widget">Widget</a>&gt;, properties:<a class="type" href="/ui/doc/#http://haxe.org/api/Dynamic" title="Dynamic">Dynamic</a> = null) : <a class="type" href="/ui/doc/#ru/stablex/ui/widgets/Widget.html" title="ru.stablex.ui.widgets.Widget">Widget</a>
 </div>
-<div class="comment"> Creates widgets at runtime
- <span class="tag throw">@throw</span> <a class="type" href="/ui/doc/#http://haxe.org/api/Dynamic" title="Dynamic">Dynamic</a> if requested widget class does not have one of the provided properties
+<div class="comment"> Creates widgets at runtime.
+ <span class="tag param">@param</span> cls - create widget of this class;
+ <span class="tag param">@param</span> properties - read description of .apply() method below.
+ <span class="tag throw">@throw</span> <a class="type" href="/ui/doc/#http://haxe.org/api/Dynamic" title="Dynamic">Dynamic</a> if corresponding properties of `cls` and `properties` have different types
+</div>
+<div class="definition">    <span class="static">static</span> <span class="public">public</span> <span class="function">function</span> <span class="definitionName">apply</span>(obj:<a class="type" href="/ui/doc/#http://haxe.org/api/Dynamic" title="Dynamic">Dynamic</a>, properties:<a class="type" href="/ui/doc/#http://haxe.org/api/Dynamic" title="Dynamic">Dynamic</a>) : <a class="type" href="/ui/doc/#http://haxe.org/api/Void" title="Void">Void</a> 
+</div>
+<div class="comment"> Apply properties to object.
+ e. g. propList = {
+                       prop1: -2,
+                       prop2: true,
+                       prop3: {
+                           nested1: 'val1',
+                           nested2: null,
+                       },
+                   }
+ than after calling UIBuilder.apply(someObj, propList) we will get following:
+       someObj.prop1 == -2
+       someObj.prop2 == true
+       someObj.prop3.nested1 == 'val1'
+       someObj.prop3.nested2 == null
+ Note: non-scalar object properties must not be null, otherwise you'll get an exception
+ "Can't set property of Null"
+ <span class="tag throw">@throw</span> <a class="type" href="/ui/doc/#http://haxe.org/api/Dynamic" title="Dynamic">Dynamic</a> if corresponding scalar properties of `obj` and `properties` have different types
 </div>
 <div class="definition">    <span class="static">static</span> <span class="public">public</span> <span class="inline">inline</span> <span class="function">function</span> <span class="definitionName">get</span>(id:<a class="type" href="/ui/doc/#http://haxe.org/api/String" title="String">String</a>) : <a class="type" href="/ui/doc/#ru/stablex/ui/widgets/Widget.html" title="ru.stablex.ui.widgets.Widget">Widget</a> 
 </div>
