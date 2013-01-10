@@ -82,6 +82,7 @@
                 margin           : 0px;
                 background-color : #042029;
                 font-size        : 14px;
+                line-height      : 18px;
                 font-family      : monospace;
             }
 
@@ -198,6 +199,7 @@
                 font-weight:bold;
                 cursor: pointer;
                 border-bottom: 1px dotted #476103;
+                text-decoration:none;
             }
 
             .comment .tag{
@@ -254,6 +256,23 @@
                 padding-left: 20px;
                 background-color: #052630;
                 color: #839496;
+            }
+
+            .content .manual pre{
+                border-left: 1px dashed #233d44;
+                margin:0px;
+                margin-left: 20px;
+                padding: 10px 0px 10px 0px;
+                background-color: #052630;
+            }
+
+            .content .manual a{
+                color: #476103;
+                text-decoration: underline;
+            }
+
+            .content .manual .type{
+                text-decoration: none;
             }
 
             .content .manual .haxe .tag{

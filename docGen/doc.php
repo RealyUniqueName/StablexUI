@@ -339,7 +339,7 @@ function haxe($str){
         $ln = preg_replace('/^(\s*(\*|\/\*).*)$/', '<i>\\1</i>', $ln);
             $ln = preg_replace('/^(\s*\*\/)/', '<i>\\1</i>', $ln);
         $ln = preg_replace('/(?<!\:)(\/\/.*)$/', '<i>\\1</i>', $ln);
-        $ln = preg_replace('/(\s)(([a-z0-9_]+\.)+[A-Z][a-zA-Z0-9_]*)/', '\\1<type>\\2</type>', $ln);
+        $ln = preg_replace('/(\s|\()(([a-z0-9_]+\.)+[A-Z][a-zA-Z0-9_]*)/', '\\1<type>\\2</type>', $ln);
         $ln = preg_replace('/([^a-zA-Z0-9_])(this|super)([^a-zA-Z0-9_])/', '\\1<span class="\\2">\\2</span>\\3', $ln);
         $ln = preg_replace('/([^a-zA-Z0-9_])(null|false|true|return)([^a-zA-Z0-9_])/', '\\1<span class="\\2">\\2</span>\\3', $ln);
 

@@ -34,7 +34,7 @@ nme.Lib.current.addChild( ru.stablex.ui.UIBuilder.buildFn('first.xml')() );
 </haxe>
 
 Don't forget empty parentheses after 'first.xml'. That's all! You've just created your first UI :)
-Build your project to any target or see result in <a href="/ui/demo/01_first.swf" target="_blank">flash</a> or in <a href="/ui/demo/01_first" target="_blank">html5</a>.
+Build your project to any target or see result in <a href="/ui/demo/02_first.swf" target="_blank">flash</a> or in <a href="/ui/demo/02_first" target="_blank">html5</a>.
 Full project code is included in samples on <a href="https://github.com/RealyUniqueName/StablexUI" target="_blank">GitHub</a>.
 */
 
@@ -60,6 +60,8 @@ var fn : Dynamic->ru.stablex.ui.Widgets.Text = function(arguments:Dynamic = null
     widget.left = 50;
     widget.top  = 100;
     widget.text = 'My first widget!';
+    widget.onCreate(); //Here widget is notified it is created
+    return widget;
 };
 nme.Lib.current.addChild( fn() );
 </haxe>
@@ -72,5 +74,55 @@ widget.text = My first widget!;
 </haxe>
 
 wich of course breaks Haxe syntax.
+
+*/
+
+/**
+@manual Nested widgets
+
+Every widget can contain children since <type>ru.stablex.ui.widgets.Widget</type> inherits from <type>nme.display.DisplayObjectContainer</type>.
+Child widgets behave like ordinary display objects in terms of position/scale/alpha etc.
+Lets modify above sample. Place that text field to panel:
+
+<xml>
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- .w and .h properties define widget's area width and height respectively -->
+<Panel border="1" w="400" h="400" left="50" top="100">
+    <Text left="50" top="100" text="'My first widget!'" />
+</Panel>
+
+</xml>
+
+Now text field will be positioned in panel's system of axes. Build project to see how it
+looks or look at <a href="/ui/demo/02_nested.swf" target="_blank">flash</a> or at <a href="/ui/demo/02_nested" target="_blank">html5</a>
+You can create nested widgets indefinite levels deep.
+
+*/
+
+/**
+@manual Creating widgets at runtime without xml
+
+It's also possible to create widgets with plain Haxe without xml.
+For this purpose you should use <type>ru.stablex.ui.UIBuilder</type>.create() method.
+Here is example how to create exactly the same widget as in our first excercise without xml:
+
+<haxe>
+var widget = ru.stablex.ui.UIBuilder.create(ru.stablex.ui.widgets.Text, {
+    left : 50,
+    top  : 100,
+    text : 'My first widget!'
+});
+nme.Lib.current.addChild( widget );
+</haxe>
+
+To dynamically manage widget's children, use ordinary <type>nme.display.DisplayObjectContainer</type> methods:
+
+<haxe>
+widget1.addChild(widget2);
+widget1.removeChild(widget2);
+widget1.addChildAt(widget2, 0);
+widget1.removeChildAt(0);
+</haxe>
 
 */

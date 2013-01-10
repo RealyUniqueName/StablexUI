@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Widget w="800" h="600">
+
+    <!-- Buttons -->
+    <VBox w="800" autoHeight="true" childPadding="10" padding="10">
+        <Button w="300" padding="10" border="1" bgColor="0x00FF00" bgAlpha="0.5" text="'Click here to set \'child.w = 50\''" autoHeight="true" on-click=" #child.w = 50; "/>
+        <Button w="300" padding="10" border="1" bgColor="0x00FF00" bgAlpha="0.5" text="'Click here to set \'child.widthPt = 50\''" autoHeight="true" on-click=" #child.widthPt = 50; " />
+        <Button w="300" padding="10" border="1" bgColor="0x00FF00" bgAlpha="0.5" text="'Click here to set \'child.h = 50\''" autoHeight="true" on-click=" #child.h = 50; "/>
+        <Button w="300" padding="10" border="1" bgColor="0x00FF00" bgAlpha="0.5" text="'Click here to set \'child.heightPt = 50\''" autoHeight="true" on-click=" #child.heightPt = 50; " />
+    </VBox>
+
+    <!-- parent -->
+    <Panel bottom="10" left="50" h="400" w="700" border="1" bgColor="0x005500">
+        <!-- child -->
+        <Panel left="50" top="50" id="'child'" w="100" h="100" border="1" bgColor="0x550000" />
+    </Panel>
+</Widget>
