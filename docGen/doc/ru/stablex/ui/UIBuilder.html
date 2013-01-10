@@ -22,6 +22,8 @@
    $this - replaced with current widget;
    $SomeClass - replaced with com.some.package.SomeClass. If registered with UIBuilder.regClass('com.some.package.SomeClass');
    #widgetId - replaced with UIBuilder.get('widgetId');
+   #SomeClass(widgetId) - replaced with UIBuilder.getAs('widgetId', SomeClass);
+                           SomeClass must be of <a class="type" href="/ui/doc/#http://haxe.org/api/Class" title="Class">Class</a>&lt;<a class="type" href="/ui/doc/#ru/stablex/ui/widgets/Widget.html" title="ru.stablex.ui.widgets.Widget">Widget</a>&gt;
    @someParam - replaced with arguments.someParam. Arguments can be passed like this: UIBuilder.buildFn(xmlFile)({someParam:'some value', someParam2: 3.14});
  <span class="tag throw">@throw</span> <a class="type" href="/ui/doc/#http://haxe.org/api/String" title="String">String</a> if .init() was not called before
  <span class="tag throw">@throw</span> <a class="type" href="/ui/doc/#http://haxe.org/api/String" title="String">String</a> if one of used in xml widgets, classes or events was not registered by .regClass() or .regEvent()
@@ -75,5 +77,9 @@
 <div class="definition">    <span class="static">static</span> <span class="public">public</span> <span class="inline">inline</span> <span class="function">function</span> <span class="definitionName">get</span>(id:<a class="type" href="/ui/doc/#http://haxe.org/api/String" title="String">String</a>) : <a class="type" href="/ui/doc/#ru/stablex/ui/widgets/Widget.html" title="ru.stablex.ui.widgets.Widget">Widget</a> 
 </div>
 <div class="comment"> Get widget object by its id
+</div>
+<div class="definition">    <span class="static">static</span> <span class="public">public</span> <span class="inline">inline</span> <span class="function">function</span> getAs&lt;<a class="type" href="/ui/doc/#http://haxe.org/api/T" title="T">T</a>&gt; (id:<a class="type" href="/ui/doc/#http://haxe.org/api/String" title="String">String</a>, cls:<a class="type" href="/ui/doc/#http://haxe.org/api/Class" title="Class">Class</a>&lt;<a class="type" href="/ui/doc/#http://haxe.org/api/T" title="T">T</a>&gt;) : <a class="type" href="/ui/doc/#http://haxe.org/api/Null" title="Null">Null</a>&lt;<a class="type" href="/ui/doc/#http://haxe.org/api/T" title="T">T</a>&gt; 
+</div>
+<div class="comment"> Return widget as instance of specified class. If widget is not of that class, returns null
 </div>
 </div>

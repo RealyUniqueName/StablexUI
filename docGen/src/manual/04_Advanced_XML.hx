@@ -36,7 +36,7 @@ var widget = ru.stablex.ui.UIBuilder.create(ru.stablex.ui.widgets.Text, {
 /**
 @manual Handlers
 
-It is possible to create handlers in xml. To create handler add on-&lt;eventShortcut&gt; attributes to tags in xml.
+It is possible to create handlers in xml. To create one, add on-&lt;eventShortcut&gt; attributes to tags in xml.
 For example to process click, use `on-click` handler:
 
 <xml>

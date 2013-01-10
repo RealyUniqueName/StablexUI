@@ -7,6 +7,10 @@
     w    = "$Lib.current.stage.stageWidth - 20"
     h    = "$Lib.current.stage.stageHeight - 20"
     skin = "'winxp'"
+    on-click="
+        var p = #Panel(root);
+        trace(p.skinBmp);
+    "
 >
     <Box left="100" top="100" border="2" autoSize="true" padding="10" childPadding="5">
         <Panel texture="'assets/img/nme.png'" w="100" h="50"/>

@@ -24,6 +24,8 @@ class UIBuilder {
         @:macro static private var _erCls     : EReg = ~/\$([a-z0-9_]+)([^a-z0-9_])/i;
         //for replacing #someId with UIBuilder.get('someId')
         @:macro static private var _erId      : EReg = new EReg("#([a-z0-9_]+)([^a-z0-9_])", "i");
+        //for replacing #SomeClass(someId) with UIBuilder.getAs('someId', SomeClass)
+        @:macro static private var _erCastId  : EReg = new EReg("#([a-z0-9_]+)\\(([a-z0-9_]+)\\)", "i");
         //for replacing `this` keyword with object currently being processed
         @:macro static private var _erThis    : EReg = ~/\$this([^a-z0-9_])/i;
     //}
@@ -115,6 +117,8 @@ class UIBuilder {
     *   $this - replaced with current widget;
     *   $SomeClass - replaced with com.some.package.SomeClass. If registered with UIBuilder.regClass('com.some.package.SomeClass');
     *   #widgetId - replaced with UIBuilder.get('widgetId');
+    *   #SomeClass(widgetId) - replaced with UIBuilder.getAs('widgetId', SomeClass);
+    *                           SomeClass must be of <type>Class</type>&lt;<type>ru.stablex.ui.widgets.Widget</type>&gt;
     *   @someParam - replaced with arguments.someParam. Arguments can be passed like this: UIBuilder.buildFn(xmlFile)({someParam:'some value', someParam2: 3.14});
     *
     * @throw <type>String</type> if .init() was not called before
@@ -263,11 +267,14 @@ class UIBuilder {
     *   $this - replaced with current widget;
     *   $SomeClass - replaced with com.some.package.SomeClass. If registered with UIBuilder.regClass('com.some.package.SomeClass');
     *   #widgetId - replaced with UIBuilder.get('widgetId');
+    *   #SomeClass(widgetId) - replaced with UIBuilder.getAs('widgetId', SomeClass);
+    *                           SomeClass must be of <type>Class</type>&lt;<type>ru.stablex.ui.widgets.Widget</type>&gt;
     *   @someParam - replaced with arguments.someParam. Arguments can be passed by UIBuilder.buildFn(xmlFile)({arguments});
     */
     static private function _fillCodeShortcuts (thisObj:String, code:String) : String{
         var cls    = UIBuilder._erCls;
         var id     = UIBuilder._erId;
+        var castId = UIBuilder._erCastId;
         var arg    = UIBuilder._erCodeArg;
         var erThis = UIBuilder._erThis;
 
@@ -280,6 +287,12 @@ class UIBuilder {
         while( cls.match(code) ){
             if( !UIBuilder._imports.exists(cls.matched(1)) ) Err.trigger('Class is not imported: ' + cls.matched(1));
             code = cls.replace(code, UIBuilder._imports.get(cls.matched(1)) + '$2' );
+        }
+
+        //widgets by id as specified class
+        while( castId.match(code) ){
+            if( !UIBuilder._imports.exists(castId.matched(1)) ) Err.trigger('Class is not imported: ' + castId.matched(1));
+            code = castId.replace(code, 'ru.stablex.ui.UIBuilder.getAs("$2", ' + UIBuilder._imports.get(castId.matched(1)) + ')');
         }
 
         //widgets by ids
@@ -391,7 +404,6 @@ class UIBuilder {
     }//function apply()
 
 
-
     /**
     * Get widget object by its id
     *
@@ -399,6 +411,16 @@ class UIBuilder {
     static public inline function get(id:String) : Widget {
         return UIBuilder._objects.get(id);
     }//function get()
+
+
+    /**
+    * Return widget as instance of specified class. If widget is not of that class, returns null
+    *
+    */
+    static public inline function getAs<T> (id:String, cls:Class<T>) : Null<T> {
+        var w : Widget = UIBuilder.get(id);
+        return ( Std.is(w, cls) ? cast w : null );
+    }//function getAs<T>()
 
 
     /**

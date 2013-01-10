@@ -28,6 +28,7 @@ class Main extends nme.display.Sprite{
 
         //Create our UI
         Lib.current.addChild( UIBuilder.buildFn('assets/ui/autosize.xml')() );
+
     }//function main()
 
 
