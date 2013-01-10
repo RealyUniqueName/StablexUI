@@ -147,11 +147,16 @@ ru.stablex.ui.UIBuilder.create(ru.stablex.ui.widgets.Text, {
 });
 </haxe>
 
-You can also change .id property any time in haxe as long as new value is unique across all existing widgets.
+You can also change .id property any time at runtime as long as new value is unique across all existing widgets.
 Then to get widget object anywhere in code, use following snippet:
 
 <haxe>
 var widget : ru.stablex.ui.widgets.Text = cast ru.stablex.ui.UIBuilder.get('myWidget');
+trace(widget.text); //outputs: My first widget!
+
+// or
+
+var widget : ru.stablex.ui.widgets.Text = ru.stablex.UIBuilder.getAs('myWidget', ru.stablex.ui.widgets.Text);
 trace(widget.text); //outputs: My first widget!
 </haxe>
 */

@@ -103,7 +103,7 @@ And this xml will be translated for compiler like this:
 widget.bgColor = 0x002200;
 widget.text    = 'Use mouse wheel over me';
 widget.addEventListener(<a class="type" href="/ui/doc/#http://nme.io/api/types/nme/events/MouseEvent.html" title="nme.events.MouseEvent">MouseEvent</a>.MOUSE_WHEEL, function(event:nme.events.Event){
-    trace('Oops! You wheel it again!');'
+    trace('Oops! You wheel it again!');
 });
 widget.onCreate();
 
@@ -123,14 +123,123 @@ to shorten haxe code in xml.
                .regClass() should be called before <a class="type" href="/ui/doc/#ru/stablex/ui/UIBuilder.html" title="ru.stablex.ui.UIBuilder">UIBuilder</a>.init();
  #widgetId   - replaced with <a class="type" href="/ui/doc/#ru/stablex/ui/UIBuilder.html" title="ru.stablex.ui.UIBuilder">UIBuilder</a>.get('widgetId').
                Type of #widgetId is <a class="type" href="/ui/doc/#ru/stablex/ui/widgets/Widget.html" title="ru.stablex.ui.widgets.Widget">Widget</a>;
+ #SomeClass(widgetId) - replaced with <a class="type" href="/ui/doc/#ru/stablex/ui/UIBuilder.html" title="ru.stablex.ui.UIBuilder">UIBuilder</a>.getAs('widgetId', SomeClass);
+               SomeClass must be registered with <a class="type" href="/ui/doc/#ru/stablex/ui/UIBuilder.html" title="ru.stablex.ui.UIBuilder">UIBuilder</a>.regClass('com.pack.SomeClass') (or one of standart widgets)
+               and must be of <a class="type" href="/ui/doc/#http://haxe.org/api/Class" title="Class">Class</a>&lt;<a class="type" href="/ui/doc/#ru/stablex/ui/widgets/Widget.html" title="ru.stablex.ui.widgets.Widget">Widget</a>&gt;
  @someArg    - read section "Xml arguments" below.
 </pre>
-...IN PROGRESS...
+Let's investigate how these placeholders work in examples.
 
+<h3>$this</h3>
+Following xml will output '100' on runtime:
+
+<div class="xml">
+&lt;?xml <span class="attr">version</span>=<span class="quotes">"</span>1.0<span class="quotes">"</span> <span class="attr">encoding</span>=<span class="quotes">"</span>UTF-8<span class="quotes">"</span>?&gt;
+
+&lt;<span class="tag"><a class="type" href="/ui/doc/#ru/stablex/ui/widgets/Panel.html" title="ru.stablex.ui.widgets.Panel">Panel</a></span> <span class="attr">w</span>=<span class="quotes">"</span>100<span class="quotes">"</span> <span class="attr">h</span>=<span class="quotes">"</span>200<span class="quotes">"</span> <span class="attr">bgColor</span>=<span class="quotes">"</span>0x002200<span class="quotes">"</span> <span class="attr">on-click</span>=<span class="quotes">"</span> trace( $this.w ); <span class="quotes">"</span>/&gt;
+
+</div>
+Such xml will be translated by StablexUI for haxe compiler like this:
+
+<div class="haxe">
+<div class="definition"><span class="var">var</span> <span class="definitionName">widget</span> : <a class="type" href="/ui/doc/#ru/stablex/ui/widgets/Panel.html" title="ru.stablex.ui.widgets.Panel">Panel</a> = ... <i>// UIBuilder actions to create widget object</div></i>
+widget.w       = 100;
+widget.h       = 200;
+widget.bgColor = 0x002200;
+widget.addEventListener(<a class="type" href="/ui/doc/#http://nme.io/api/types/nme/events/MouseEvent.html" title="nme.events.MouseEvent">MouseEvent</a>.CLICK, function(event:nme.events.Event){
+    trace( widget.w ); <i>//output: 100</i>
+});
+widget.onCreate();
+
+</div>
+<h3>$SomeClass</h3>
+Let's imagine we have following class:
+
+<div class="haxe">
+ <span class="package">package</span> com.packg;
+
+import <a class="type" href="/ui/doc/#http://nme.io/api/types/nme/Lib.html" title="nme.Lib">Lib</a>;
+import <a class="type" href="/ui/doc/#ru/stablex/ui/UIBuilder.html" title="ru.stablex.ui.UIBuilder">UIBuilder</a>;
+
+<i>/**</i>
+<i>* Random testing</i>
+<i>*/</i>
+<div class="classDef"> <span class="class">class</span> <span class="className">MyClass</span> <span class="extends">extends</span> <a class="type" href="/ui/doc/#http://nme.io/api/types/nme/display/Sprite.html" title="nme.display.Sprite">Sprite</a>{</div>
+<div class="definition">    <span class="static">static</span> <span class="public">public</span> <span class="inline">inline</span> <span class="var">var</span> TEST = 'here is MyClass';</div>
+
+<i>    /**</i>
+<i>    * Entry point</i>
+<i>    *</i>
+<i>    */</i>
+<div class="definition">    <span class="static">static</span> <span class="public">public</span> <span class="function">function</span> <span class="definitionName">main</span> () : <a class="type" href="/ui/doc/#http://haxe.org/api/Void" title="Void">Void</a>{</div>
+        <i>//initialize StablexUI</i>
+        UIBuilder.init();
+
+        <i>//register class for usage in xml</i>
+        UIBuilder.regClass('com.packg.MyClass');
+
+        <i>//Create UI</i>
+        Lib.current.addChild( UIBuilder.buildFn('ui.xml')() );
+    }<i>//function main()</i>
+}<i>//class MyClass</i>
+
+</div>
+And content of 'ui.xml':
+
+<div class="xml">
+&lt;?xml <span class="attr">version</span>=<span class="quotes">"</span>1.0<span class="quotes">"</span> <span class="attr">encoding</span>=<span class="quotes">"</span>UTF-8<span class="quotes">"</span>?&gt;
+
+&lt;<span class="tag"><a class="type" href="/ui/doc/#ru/stablex/ui/widgets/Panel.html" title="ru.stablex.ui.widgets.Panel">Panel</a></span> <span class="attr">id</span>=<span class="quotes">"</span>'root'<span class="quotes">"</span> <span class="attr">w</span>=<span class="quotes">"</span>100<span class="quotes">"</span> <span class="attr">h</span>=<span class="quotes">"</span>200<span class="quotes">"</span>&gt;
+    &lt;<span class="tag"><a class="type" href="/ui/doc/#ru/stablex/ui/widgets/Button.html" title="ru.stablex.ui.widgets.Button">Button</a></span> <span class="attr">w</span>=<span class="quotes">"</span>50<span class="quotes">"</span> <span class="attr">h</span>=<span class="quotes">"</span>20<span class="quotes">"</span> <span class="attr">text</span>=<span class="quotes">"</span>hit<span class="quotes">"</span> <span class="attr">on-click</span>=<span class="quotes">"</span> trace( $MyClass.TEST ); <span class="quotes">"</span>
+&lt;/<span class="tag"><a class="type" href="/ui/doc/#ru/stablex/ui/widgets/Panel.html" title="ru.stablex.ui.widgets.Panel">Panel</a></span>&gt;
+
+</div>
+Now if we run this project and click the button, we'll see output: 'here is MyClass'.
+
+<h3>#widgetId</h3>
+
+This placeholder is translated to haxe in following code:
+
+<div class="haxe">
+ <a class="type" href="/ui/doc/#ru/stablex/ui/UIBuilder.html" title="ru.stablex.ui.UIBuilder">UIBuilder</a>.get('widgetId');
+
+</div>
+So you can use it when you need to operate with properties inherited from <a class="type" href="/ui/doc/#ru/stablex/ui/widgets/Widget.html" title="ru.stablex.ui.widgets.Widget">Widget</a> like here:
+
+<div class="xml">
+&lt;?xml <span class="attr">version</span>=<span class="quotes">"</span>1.0<span class="quotes">"</span> <span class="attr">encoding</span>=<span class="quotes">"</span>UTF-8<span class="quotes">"</span>?&gt;
+
+&lt;<span class="tag"><a class="type" href="/ui/doc/#ru/stablex/ui/widgets/Panel.html" title="ru.stablex.ui.widgets.Panel">Panel</a></span> <span class="attr">id</span>=<span class="quotes">"</span>'root'<span class="quotes">"</span> <span class="attr">w</span>=<span class="quotes">"</span>100<span class="quotes">"</span> <span class="attr">h</span>=<span class="quotes">"</span>200<span class="quotes">"</span> <span class="attr">bgColor</span>=<span class="quotes">"</span>0x002200<span class="quotes">"</span>&gt;
+    &lt;<span class="tag"><a class="type" href="/ui/doc/#ru/stablex/ui/widgets/Button.html" title="ru.stablex.ui.widgets.Button">Button</a></span> <span class="attr">w</span>=<span class="quotes">"</span>50<span class="quotes">"</span> <span class="attr">h</span>=<span class="quotes">"</span>20<span class="quotes">"</span> <span class="attr">text</span>=<span class="quotes">"</span>'hit'<span class="quotes">"</span> <span class="attr">on-click</span>=<span class="quotes">"</span> trace( #root.w ); <span class="quotes">"</span>
+&lt;/<span class="tag"><a class="type" href="/ui/doc/#ru/stablex/ui/widgets/Panel.html" title="ru.stablex.ui.widgets.Panel">Panel</a></span>&gt;
+
+</div>
+will output: 100
+
+<h3>#SomeClass(widgetId)</h3>
+
+You need this placeholder if you need to work with property, wich is not in list of <a class="type" href="/ui/doc/#ru/stablex/ui/widgets/Widget.html" title="ru.stablex.ui.widgets.Widget">Widget</a>
+(such as .bgColor of <a class="type" href="/ui/doc/#ru/stablex/ui/widgets/Panel.html" title="ru.stablex.ui.widgets.Panel">Panel</a>)
+For example, `#Panel(root)` will be translated to:
+
+<div class="haxe">
+ <a class="type" href="/ui/doc/#ru/stablex/ui/UIBuilder.html" title="ru.stablex.ui.UIBuilder">UIBuilder</a>.getAs('widgetId', <a class="type" href="/ui/doc/#ru/stablex/ui/widgets/Panel.html" title="ru.stablex.ui.widgets.Panel">Panel</a>);
+
+</div>
+And following xml will output panel's color:
+
+<div class="xml">
+&lt;?xml <span class="attr">version</span>=<span class="quotes">"</span>1.0<span class="quotes">"</span> <span class="attr">encoding</span>=<span class="quotes">"</span>UTF-8<span class="quotes">"</span>?&gt;
+
+&lt;<span class="tag"><a class="type" href="/ui/doc/#ru/stablex/ui/widgets/Panel.html" title="ru.stablex.ui.widgets.Panel">Panel</a></span> <span class="attr">id</span>=<span class="quotes">"</span>'root'<span class="quotes">"</span> <span class="attr">w</span>=<span class="quotes">"</span>100<span class="quotes">"</span> <span class="attr">h</span>=<span class="quotes">"</span>200<span class="quotes">"</span> <span class="attr">bgColor</span>=<span class="quotes">"</span>0x002200<span class="quotes">"</span>&gt;
+    &lt;<span class="tag"><a class="type" href="/ui/doc/#ru/stablex/ui/widgets/Button.html" title="ru.stablex.ui.widgets.Button">Button</a></span> <span class="attr">w</span>=<span class="quotes">"</span>50<span class="quotes">"</span> <span class="attr">h</span>=<span class="quotes">"</span>20<span class="quotes">"</span> <span class="attr">text</span>=<span class="quotes">"</span>'hit'<span class="quotes">"</span> <span class="attr">on-click</span>=<span class="quotes">"</span> trace( #Panel(root).bgColor ); <span class="quotes">"</span>
+&lt;/<span class="tag"><a class="type" href="/ui/doc/#ru/stablex/ui/widgets/Panel.html" title="ru.stablex.ui.widgets.Panel">Panel</a></span>&gt;
+
+</div>
 
 </div>
 <div class="manual">
-<h2>Xml arguments</h2>
+<h2>Xml arguments (`@someArg` placeholder)</h2>
 
 ...IN PROGRESS...
 @someArg    - replaced with arguments.someArg. Arguments can be passed like

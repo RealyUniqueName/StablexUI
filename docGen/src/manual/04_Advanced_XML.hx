@@ -101,7 +101,7 @@ var widget : ru.stablex.ui.widgets.Button = ... // UIBuilder actions to create w
 widget.bgColor = 0x002200;
 widget.text    = 'Use mouse wheel over me';
 widget.addEventListener(nme.events.MouseEvent.MOUSE_WHEEL, function(event:nme.events.Event){
-    trace('Oops! You wheel it again!');'
+    trace('Oops! You wheel it again!');
 });
 widget.onCreate();
 </haxe>
@@ -120,14 +120,123 @@ to shorten haxe code in xml.
                .regClass() should be called before <type>ru.stablex.ui.UIBuilder</type>.init();
  #widgetId   - replaced with <type>ru.stablex.ui.UIBuilder</type>.get('widgetId').
                Type of #widgetId is <type>ru.stablex.ui.widgets.Widget</type>;
+ #SomeClass(widgetId) - replaced with <type>ru.stablex.ui.UIBuilder</type>.getAs('widgetId', SomeClass);
+               SomeClass must be registered with <type>ru.stablex.ui.UIBuilder</type>.regClass('com.pack.SomeClass') (or one of standart widgets)
+               and must be of <type>Class</type>&lt;<type>ru.stablex.ui.widgets.Widget</type>&gt;
  @someArg    - read section "Xml arguments" below.
 </pre>
 
-...IN PROGRESS...
+Let's investigate how these placeholders work in examples.
+
+<h3>$this</h3>
+Following xml will output '100' on runtime:
+
+<xml>
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Panel w="100" h="200" bgColor="0x002200" on-click=" trace( $this.w ); "/>
+</xml>
+
+Such xml will be translated by StablexUI for haxe compiler like this:
+
+<haxe>
+var widget : ru.stablex.ui.widgets.Panel = ... // UIBuilder actions to create widget object
+widget.w       = 100;
+widget.h       = 200;
+widget.bgColor = 0x002200;
+widget.addEventListener(nme.events.MouseEvent.CLICK, function(event:nme.events.Event){
+    trace( widget.w ); //output: 100
+});
+widget.onCreate();
+</haxe>
+
+<h3>$SomeClass</h3>
+Let's imagine we have following class:
+
+<haxe>
+ package com.packg;
+
+import nme.Lib;
+import ru.stablex.ui.UIBuilder;
+
+/**
+* Random testing
+*/
+class MyClass extends nme.display.Sprite{
+    static public inline var TEST = 'here is MyClass';
+
+    /**
+    * Entry point
+    *
+    */
+    static public function main () : Void{
+        //initialize StablexUI
+        UIBuilder.init();
+
+        //register class for usage in xml
+        UIBuilder.regClass('com.packg.MyClass');
+
+        //Create UI
+        Lib.current.addChild( UIBuilder.buildFn('ui.xml')() );
+    }//function main()
+}//class MyClass
+</haxe>
+
+And content of 'ui.xml':
+
+<xml>
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Panel id="'root'" w="100" h="200">
+    <Button w="50" h="20" text="hit" on-click=" trace( $MyClass.TEST ); "
+</Panel>
+</xml>
+
+Now if we run this project and click the button, we'll see output: 'here is MyClass'.
+
+<h3>#widgetId</h3>
+
+This placeholder is translated to haxe in following code:
+
+<haxe>
+ ru.stablex.ui.UIBuilder.get('widgetId');
+</haxe>
+
+So you can use it when you need to operate with properties inherited from <type>ru.stablex.ui.widgets.Widget</type> like here:
+
+<xml>
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Panel id="'root'" w="100" h="200" bgColor="0x002200">
+    <Button w="50" h="20" text="'hit'" on-click=" trace( #root.w ); "
+</Panel>
+</xml>
+
+will output: 100
+
+<h3>#SomeClass(widgetId)</h3>
+
+You need this placeholder if you need to work with property, wich is not in list of <type>ru.stablex.ui.widgets.Widget</type>
+(such as .bgColor of <type>ru.stablex.ui.widgets.Panel</type>)
+For example, `#Panel(root)` will be translated to:
+
+<haxe>
+ ru.stablex.ui.UIBuilder.getAs('widgetId', ru.stablex.ui.widgets.Panel);
+</haxe>
+
+And following xml will output panel's color:
+
+<xml>
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Panel id="'root'" w="100" h="200" bgColor="0x002200">
+    <Button w="50" h="20" text="'hit'" on-click=" trace( #Panel(root).bgColor ); "
+</Panel>
+</xml>
 */
 
 /**
-@manual Xml arguments
+@manual Xml arguments (`@someArg` placeholder)
 
 ...IN PROGRESS...
 @someArg    - replaced with arguments.someArg. Arguments can be passed like

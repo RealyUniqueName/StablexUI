@@ -179,6 +179,7 @@
             .content .var,
             .content .if,
             .content .null,
+            .content .package,
             .content .true,
             .content .false,
             .content .return,
@@ -221,11 +222,20 @@
             }
 
             .content .manual h2{
-                font-size: 16px;
+                font-size: 18px;
                 color : #448005;
                 padding: 0px;
                 margin:0px;
                 display:inline;
+            }
+
+            .content .manual h3{
+                font-size: 14px;
+                color : #448005;
+                padding: 0px;
+                margin:0px;
+                display:inline;
+                font-style: italic;
             }
 
             .content .manual .xml{

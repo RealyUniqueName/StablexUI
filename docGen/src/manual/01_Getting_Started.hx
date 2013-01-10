@@ -31,7 +31,7 @@ Here is a sample main class with StablexUI initialization:
 class Test extends nme.display.Sprite{
 
     /**
-    * Enrty point
+    * Entry point
     *
     */
     static public function main () : Void{
