@@ -19,7 +19,7 @@ import nme.display.Sprite;
 
 
 /**
-* class TweenSprite implements easy access to Actuate methods and manages registered
+* class TweenSprite implements easy access to <type>com.eclecticdesignstudio.motion.Actuate</type> methods and manages registered
 * eventListeners
 *
 */
@@ -30,7 +30,7 @@ class TweenSprite extends Sprite{
 
 
     /**
-    * Equal to nme.display.Sprite.addEventListener except this ignores useCapture and does not support weak references.
+    * Equal to <type>nme.display.Sprite</type>.addEventListener except this ignores `useCapture` and does not support weak references.
     *
     */
     override public function addEventListener (type:String, listener:Dynamic->Void, useCapture:Bool = false, priority:Int = 0, useWeakReference:Bool = false) : Void{
@@ -58,6 +58,7 @@ class TweenSprite extends Sprite{
 
     /**
     * Add event listener only if this listener is still not added to this object
+    * Ignores `useCapture` and `useWeakReference`
     *
     * @return whether listener was added
     */
@@ -72,7 +73,7 @@ class TweenSprite extends Sprite{
 
 
     /**
-    * Equal to nme.display.Sprite.removeEventListener except this ignores useCapture
+    * Equal to <type>nme.display.Sprite</type>.removeEventListener except this ignores `useCapture`
     *
     */
     override public function removeEventListener (type:String, listener:Dynamic->Void, useCapture:Bool = false) : Void{
@@ -120,8 +121,8 @@ class TweenSprite extends Sprite{
 
 
     /**
-    * Easy access to Actuate.tween for this object. Equals to Actuate.tween(this, ....).
-    * Parameter easing should be like this: 'Quad.easeInOut' or 'Back.easeIn' etc. By default it is 'Linear.easeNone'
+    * Easy access to <type>com.eclecticdesignstudio.motion.Actuate</type>.tween for this object. Equals to <type>com.eclecticdesignstudio.motion.Actuate</type>.tween(this, ....).
+    * Parameter `easing` should be like this: 'Quad.easeInOut' or 'Back.easeIn' etc. By default it is 'Linear.easeNone'
     *
     */
     public inline function tween (duration:Float, properties:Dynamic, easing:String = 'Linear.easeNone', overwrite:Bool = true, customActuator:Class<GenericActuator> = null) : IGenericActuator{
@@ -165,7 +166,7 @@ class TweenSprite extends Sprite{
 
 
     /**
-    * Calls Actuate.stop() for this object. By default complete and sendEvent equal to false
+    * Calls <type>com.eclecticdesignstudio.motion.Actuate</type>.stop() for this object. By default `complete` and `sendEvent` equal to false
     *
     */
     public function tweenStop(properties:Dynamic = null, complete:Bool = false, sendEvent:Bool = false) : Void {
@@ -175,7 +176,7 @@ class TweenSprite extends Sprite{
 
     /**
     * Free object. Removes all registered eventListeners and children. Also removes itself from parent's display list.
-    * If recursive is true (by default), tries to call .free(true) for each child (TweenSprite instances only)
+    * If `recursive` is true (by default), tries to call .free(true) for each child (TweenSprite instances only)
     */
     public function free (recursive:Bool = true) : Void{
         this.tweenStop();
@@ -201,7 +202,7 @@ class TweenSprite extends Sprite{
 
 
     /**
-    * Removes children. If recursive = true (default) tries to call .free(true) for TweenSprite instances
+    * Removes children. If `recursive` = true (default) tries to call .free(true) for TweenSprite instances
     */
     public function freeChildren(recursive:Bool = true) : Void {
         var child : DisplayObject;

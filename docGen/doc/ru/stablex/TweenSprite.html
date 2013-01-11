@@ -1,20 +1,21 @@
 <dic class="classContainer"><div class="classDef"> <span class="class">class</span> <span class="className">TweenSprite</span> <span class="extends">extends</span> <a class="type" href="/ui/doc/#http://nme.io/api/types/nme/display/Sprite.html" title="nme.display.Sprite">Sprite</a>
 </div>
-<div class="comment"> class TweenSprite implements easy access to Actuate methods and manages registered
+<div class="comment"> class TweenSprite implements easy access to <a class="type" href="/ui/doc/#http://haxe.org/com/libs/actuate" title="com.eclecticdesignstudio.motion.Actuate">Actuate</a> methods and manages registered
  eventListeners
 </div>
 <div class="definition">    <span class="override">override</span> <span class="public">public</span> <span class="function">function</span> <span class="definitionName">addEventListener</span> (type:<a class="type" href="/ui/doc/#http://haxe.org/api/String" title="String">String</a>, listener:<a class="type" href="/ui/doc/#http://haxe.org/api/Dynamic" title="Dynamic">Dynamic</a>-&gt;<a class="type" href="/ui/doc/#http://haxe.org/api/Void" title="Void">Void</a>, useCapture:<a class="type" href="/ui/doc/#http://haxe.org/api/Bool" title="Bool">Bool</a> = false, priority:<a class="type" href="/ui/doc/#http://haxe.org/api/Int" title="Int">Int</a> = 0, useWeakReference:<a class="type" href="/ui/doc/#http://haxe.org/api/Bool" title="Bool">Bool</a> = false) : <a class="type" href="/ui/doc/#http://haxe.org/api/Void" title="Void">Void</a>
 </div>
-<div class="comment"> Equal to nme.display.Sprite.addEventListener except this ignores useCapture and does not support weak references.
+<div class="comment"> Equal to <a class="type" href="/ui/doc/#http://nme.io/api/types/nme/display/Sprite.html" title="nme.display.Sprite">Sprite</a>.addEventListener except this ignores `useCapture` and does not support weak references.
 </div>
 <div class="definition">    <span class="public">public</span> <span class="function">function</span> <span class="definitionName">addUniqueListener</span> (type:<a class="type" href="/ui/doc/#http://haxe.org/api/String" title="String">String</a>, listener:<a class="type" href="/ui/doc/#http://haxe.org/api/Dynamic" title="Dynamic">Dynamic</a>-&gt;<a class="type" href="/ui/doc/#http://haxe.org/api/Void" title="Void">Void</a>, useCapture:<a class="type" href="/ui/doc/#http://haxe.org/api/Bool" title="Bool">Bool</a> = false, priority:<a class="type" href="/ui/doc/#http://haxe.org/api/Int" title="Int">Int</a> = 0, useWeakReference:<a class="type" href="/ui/doc/#http://haxe.org/api/Bool" title="Bool">Bool</a> = false) : <a class="type" href="/ui/doc/#http://haxe.org/api/Bool" title="Bool">Bool</a>
 </div>
 <div class="comment"> Add event listener only if this listener is still not added to this object
+ Ignores `useCapture` and `useWeakReference`
  <span class="tag return">@return</span> whether listener was added
 </div>
 <div class="definition">    <span class="override">override</span> <span class="public">public</span> <span class="function">function</span> <span class="definitionName">removeEventListener</span> (type:<a class="type" href="/ui/doc/#http://haxe.org/api/String" title="String">String</a>, listener:<a class="type" href="/ui/doc/#http://haxe.org/api/Dynamic" title="Dynamic">Dynamic</a>-&gt;<a class="type" href="/ui/doc/#http://haxe.org/api/Void" title="Void">Void</a>, useCapture:<a class="type" href="/ui/doc/#http://haxe.org/api/Bool" title="Bool">Bool</a> = false) : <a class="type" href="/ui/doc/#http://haxe.org/api/Void" title="Void">Void</a>
 </div>
-<div class="comment"> Equal to nme.display.Sprite.removeEventListener except this ignores useCapture
+<div class="comment"> Equal to <a class="type" href="/ui/doc/#http://nme.io/api/types/nme/display/Sprite.html" title="nme.display.Sprite">Sprite</a>.removeEventListener except this ignores `useCapture`
 </div>
 <div class="definition">    <span class="public">public</span> <span class="function">function</span> <span class="definitionName">clearEvent</span> (type:<a class="type" href="/ui/doc/#http://haxe.org/api/String" title="String">String</a>) : <a class="type" href="/ui/doc/#http://haxe.org/api/Void" title="Void">Void</a> 
 </div>
@@ -24,22 +25,22 @@
 </div>
 <div class="comment"> Indicates whether this object has this listener registered for specified event type
 </div>
-<div class="definition">    <span class="public">public</span> <span class="inline">inline</span> <span class="function">function</span> <span class="definitionName">tween</span> (duration:<a class="type" href="/ui/doc/#http://haxe.org/api/Float" title="Float">Float</a>, properties:<a class="type" href="/ui/doc/#http://haxe.org/api/Dynamic" title="Dynamic">Dynamic</a>, easing:<a class="type" href="/ui/doc/#http://haxe.org/api/String" title="String">String</a> = 'Linear.easeNone', overwrite:<a class="type" href="/ui/doc/#http://haxe.org/api/Bool" title="Bool">Bool</a> = true, customActuator:<a class="type" href="/ui/doc/#http://haxe.org/api/Class" title="Class">Class</a>&lt;<a class="type" href="http://haxe.org/com/libs/actuate" title="com.eclecticdesignstudio.motion.actuators.GenericActuator">GenericActuator</a>&gt; = null) : <a class="type" href="/ui/doc/#http://haxe.org/api/IGenericActuator" title="IGenericActuator">IGenericActuator</a>
+<div class="definition">    <span class="public">public</span> <span class="inline">inline</span> <span class="function">function</span> <span class="definitionName">tween</span> (duration:<a class="type" href="/ui/doc/#http://haxe.org/api/Float" title="Float">Float</a>, properties:<a class="type" href="/ui/doc/#http://haxe.org/api/Dynamic" title="Dynamic">Dynamic</a>, easing:<a class="type" href="/ui/doc/#http://haxe.org/api/String" title="String">String</a> = 'Linear.easeNone', overwrite:<a class="type" href="/ui/doc/#http://haxe.org/api/Bool" title="Bool">Bool</a> = true, customActuator:<a class="type" href="/ui/doc/#http://haxe.org/api/Class" title="Class">Class</a>&lt;<a class="type" href="/ui/doc/#http://haxe.org/com/libs/actuate" title="com.eclecticdesignstudio.motion.actuators.GenericActuator">GenericActuator</a>&gt; = null) : <a class="type" href="/ui/doc/#http://haxe.org/api/IGenericActuator" title="IGenericActuator">IGenericActuator</a>
 </div>
-<div class="comment"> Easy access to Actuate.tween for this object. Equals to Actuate.tween(this, ....).
- Parameter easing should be like this: 'Quad.easeInOut' or 'Back.easeIn' etc. By default it is 'Linear.easeNone'
+<div class="comment"> Easy access to <a class="type" href="/ui/doc/#http://haxe.org/com/libs/actuate" title="com.eclecticdesignstudio.motion.Actuate">Actuate</a>.tween for this object. Equals to <a class="type" href="/ui/doc/#http://haxe.org/com/libs/actuate" title="com.eclecticdesignstudio.motion.Actuate">Actuate</a>.tween(this, ....).
+ Parameter `easing` should be like this: 'Quad.easeInOut' or 'Back.easeIn' etc. By default it is 'Linear.easeNone'
 </div>
 <div class="definition">    <span class="public">public</span> <span class="function">function</span> <span class="definitionName">tweenStop</span>(properties:<a class="type" href="/ui/doc/#http://haxe.org/api/Dynamic" title="Dynamic">Dynamic</a> = null, complete:<a class="type" href="/ui/doc/#http://haxe.org/api/Bool" title="Bool">Bool</a> = false, sendEvent:<a class="type" href="/ui/doc/#http://haxe.org/api/Bool" title="Bool">Bool</a> = false) : <a class="type" href="/ui/doc/#http://haxe.org/api/Void" title="Void">Void</a> 
 </div>
-<div class="comment"> Calls Actuate.stop() for this object. By default complete and sendEvent equal to false
+<div class="comment"> Calls <a class="type" href="/ui/doc/#http://haxe.org/com/libs/actuate" title="com.eclecticdesignstudio.motion.Actuate">Actuate</a>.stop() for this object. By default `complete` and `sendEvent` equal to false
 </div>
 <div class="definition">    <span class="public">public</span> <span class="function">function</span> <span class="definitionName">free</span> (recursive:<a class="type" href="/ui/doc/#http://haxe.org/api/Bool" title="Bool">Bool</a> = true) : <a class="type" href="/ui/doc/#http://haxe.org/api/Void" title="Void">Void</a>
 </div>
 <div class="comment"> Free object. Removes all registered eventListeners and children. Also removes itself from parent's display list.
- If recursive is true (by default), tries to call .free(true) for each child (TweenSprite instances only)
+ If `recursive` is true (by default), tries to call .free(true) for each child (TweenSprite instances only)
 </div>
 <div class="definition">    <span class="public">public</span> <span class="function">function</span> <span class="definitionName">freeChildren</span>(recursive:<a class="type" href="/ui/doc/#http://haxe.org/api/Bool" title="Bool">Bool</a> = true) : <a class="type" href="/ui/doc/#http://haxe.org/api/Void" title="Void">Void</a> 
 </div>
-<div class="comment"> Removes children. If recursive = true (default) tries to call .free(true) for TweenSprite instances
+<div class="comment"> Removes children. If `recursive` = true (default) tries to call .free(true) for TweenSprite instances
 </div>
 </div>
