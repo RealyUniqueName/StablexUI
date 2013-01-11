@@ -1,0 +1,65 @@
+<div class="manual">
+<h2>Skinnable widgets</h2>
+
+<i>... IN PROGRESS ...</i>
+
+Basic scinnable widget is <a class="type" href="/ui/doc/#ru/stablex/ui/widgets/Panel.html" title="ru.stablex.ui.widgets.Panel">Panel</a>. You can apply skins to every widget,
+wich is or extends <a class="type" href="/ui/doc/#ru/stablex/ui/widgets/Panel.html" title="ru.stablex.ui.widgets.Panel">Panel</a>. There are three basic bethods for skins.
+Plus regardless skin method you can draw borders. You can find examples of skin usage in samples/ on <a href="https://github.com/RealyUniqueName/StablexUI" target="_blank">GitHub</a>.
+
+
+</div>
+<div class="manual">
+<h2>Fill with color</h2>
+
+To set widget's background color you need to specify .bgColor property and .bgAlpha property.
+StablexUI uses <a class="type" href="/ui/doc/#http://nme.io/api/types/nme/display/Graphics.html" title="nme.display.Graphics">Graphics</a>.beginFill(bgColor, bgAlpha) method to paint widget's
+background. Also note, till .bgAlpha is set to zero, widget won't be painted at all.
+Here is example xml for half-transparent red panel:
+
+<div class="xml">
+&lt;?xml <span class="attr">version</span>=<span class="quotes">"</span>1.0<span class="quotes">"</span> <span class="attr">encoding</span>=<span class="quotes">"</span>UTF-8<span class="quotes">"</span>?&gt;
+
+&lt;<span class="tag"><a class="type" href="/ui/doc/#ru/stablex/ui/widgets/Panel.html" title="ru.stablex.ui.widgets.Panel">Panel</a></span> <span class="attr">w</span>=<span class="quotes">"</span>200<span class="quotes">"</span> <span class="attr">h</span>=<span class="quotes">"</span>200<span class="quotes">"</span> <span class="attr">bgColor</span>=<span class="quotes">"</span>0xFF0000<span class="quotes">"</span> <span class="attr">bgAlpha</span>=<span class="quotes">"</span>0.5<span class="quotes">"</span> /&gt;
+
+</div>
+
+</div>
+<div class="manual">
+<h2>Fill with bitmap</h2>
+
+To fill widget's background with bitmap you need to specify .texture property.
+StablexUI uses <a class="type" href="/ui/doc/#http://nme.io/api/types/nme/display/Graphics.html" title="nme.display.Graphics">Graphics</a>.beginBitmapFill() for this method.
+And .bgAlpha won't affect this method. Here is example xml for bitmap filled panel:
+
+<div class="xml">
+&lt;?xml <span class="attr">version</span>=<span class="quotes">"</span>1.0<span class="quotes">"</span> <span class="attr">encoding</span>=<span class="quotes">"</span>UTF-8<span class="quotes">"</span>?&gt;
+
+&lt;<span class="tag"><a class="type" href="/ui/doc/#ru/stablex/ui/widgets/Panel.html" title="ru.stablex.ui.widgets.Panel">Panel</a></span> <span class="attr">w</span>=<span class="quotes">"</span>200<span class="quotes">"</span> <span class="attr">h</span>=<span class="quotes">"</span>200<span class="quotes">"</span> <span class="attr">texture</span>=<span class="quotes">"</span>'assets/img/somePic.png'<span class="quotes">"</span>/&gt;
+
+</div>
+
+</div>
+<div class="manual">
+<h2>3-slice-scaling, 9-slice-scaling</h2>
+
+To use these methods you need to define .skinBmp property (wich is path to bitmap or asset ID)
+and .skinSlices property. Here is description for .skinSlices:
+
+<pre>
+.skinSlices is <a class="type" href="/ui/doc/#http://haxe.org/api/Array" title="Array">Array</a>&lt;<a class="type" href="/ui/doc/#http://haxe.org/api/Int" title="Int">Int</a>&gt;. Depending on its length StablexUI will
+choose 3- or 9-slice method:
+Zero - 3-slice-scaling (horizontal). Bitmap is divided into two equal sized bitmaps.
+       Middle part is filled with central column of pixels;
+One  - 3-slice-scaling (horizontal). Bitmap is divided into two bitmaps. Middle part is
+       filled with column of pixels with x = specified integer;
+Two  - 3-slice-scaling (horizontal). Integers - left and right guidelines for slicing;
+Four - 9-slice-scaling. Integers - vertical left, vertical right, horizontal top, horizontal bottom
+       guidlines for slicing.
+</pre>
+You can also create skin-list with <a class="type" href="/ui/doc/#ru/stablex/ui/UIBuilder.html" title="ru.stablex.ui.UIBuilder">UIBuilder</a>.regSkins() and then
+instead of specifying .skinBmp and .skinSlices properties for every widget, just set .skin = &lt;skin_name&gt;
+You can find examples of skin usage in samples/ on <a href="https://github.com/RealyUniqueName/StablexUI" target="_blank">GitHub</a>.
+
+
+</div>

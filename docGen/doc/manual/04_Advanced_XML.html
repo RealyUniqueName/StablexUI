@@ -117,16 +117,16 @@ Since you can't use `import` directive in xml, StablexUI introduces placeholders
 to shorten haxe code in xml.
 
 <pre>
- $this       - replaced with current widget. Type of $this is the same type as current widget;
- $SomeClass  - replaced with com.some.package.SomeClass. If registered
+<span class="placeholder">$this</span>       - replaced with current widget. Type of <span class="placeholder">$this</span> is the same type as current widget;
+<span class="placeholder">$SomeClass</span>  - replaced with com.some.package.SomeClass. If registered
                with <a class="type" href="/ui/doc/#ru/stablex/ui/UIBuilder.html" title="ru.stablex.ui.UIBuilder">UIBuilder</a>.regClass('com.some.package.SomeClass');
                .regClass() should be called before <a class="type" href="/ui/doc/#ru/stablex/ui/UIBuilder.html" title="ru.stablex.ui.UIBuilder">UIBuilder</a>.init();
- #widgetId   - replaced with <a class="type" href="/ui/doc/#ru/stablex/ui/UIBuilder.html" title="ru.stablex.ui.UIBuilder">UIBuilder</a>.get('widgetId').
-               Type of #widgetId is <a class="type" href="/ui/doc/#ru/stablex/ui/widgets/Widget.html" title="ru.stablex.ui.widgets.Widget">Widget</a>;
- #SomeClass(widgetId) - replaced with <a class="type" href="/ui/doc/#ru/stablex/ui/UIBuilder.html" title="ru.stablex.ui.UIBuilder">UIBuilder</a>.getAs('widgetId', SomeClass);
+<span class="placeholder">#widgetId</span>   - replaced with <a class="type" href="/ui/doc/#ru/stablex/ui/UIBuilder.html" title="ru.stablex.ui.UIBuilder">UIBuilder</a>.get('widgetId').
+               Type of <span class="placeholder">#widgetId</span> is <a class="type" href="/ui/doc/#ru/stablex/ui/widgets/Widget.html" title="ru.stablex.ui.widgets.Widget">Widget</a>;
+<span class="placeholder">#SomeClass(widgetId)</span> - replaced with <a class="type" href="/ui/doc/#ru/stablex/ui/UIBuilder.html" title="ru.stablex.ui.UIBuilder">UIBuilder</a>.getAs('widgetId', SomeClass);
                SomeClass must be registered with <a class="type" href="/ui/doc/#ru/stablex/ui/UIBuilder.html" title="ru.stablex.ui.UIBuilder">UIBuilder</a>.regClass('com.pack.SomeClass') (or one of standart widgets)
                and must be of <a class="type" href="/ui/doc/#http://haxe.org/api/Class" title="Class">Class</a>&lt;<a class="type" href="/ui/doc/#ru/stablex/ui/widgets/Widget.html" title="ru.stablex.ui.widgets.Widget">Widget</a>&gt;
- @someArg    - read section "Xml arguments" below.
+<span class="placeholder">@someArg</span>    - read section "Xml arguments" below.
 </pre>
 Let's investigate how these placeholders work in examples.
 
@@ -136,7 +136,7 @@ Following xml will output '100' on runtime:
 <div class="xml">
 &lt;?xml <span class="attr">version</span>=<span class="quotes">"</span>1.0<span class="quotes">"</span> <span class="attr">encoding</span>=<span class="quotes">"</span>UTF-8<span class="quotes">"</span>?&gt;
 
-&lt;<span class="tag"><a class="type" href="/ui/doc/#ru/stablex/ui/widgets/Panel.html" title="ru.stablex.ui.widgets.Panel">Panel</a></span> <span class="attr">w</span>=<span class="quotes">"</span>100<span class="quotes">"</span> <span class="attr">h</span>=<span class="quotes">"</span>200<span class="quotes">"</span> <span class="attr">bgColor</span>=<span class="quotes">"</span>0x002200<span class="quotes">"</span> <span class="attr">on-click</span>=<span class="quotes">"</span> trace( $this.w ); <span class="quotes">"</span>/&gt;
+&lt;<span class="tag"><a class="type" href="/ui/doc/#ru/stablex/ui/widgets/Panel.html" title="ru.stablex.ui.widgets.Panel">Panel</a></span> <span class="attr">w</span>=<span class="quotes">"</span>100<span class="quotes">"</span> <span class="attr">h</span>=<span class="quotes">"</span>200<span class="quotes">"</span> <span class="attr">bgColor</span>=<span class="quotes">"</span>0x002200<span class="quotes">"</span> <span class="attr">on-click</span>=<span class="quotes">"</span> trace( <span class="placeholder">$this</span>.w ); <span class="quotes">"</span>/&gt;
 
 </div>
 Such xml will be translated by StablexUI for haxe compiler like this:
@@ -190,7 +190,7 @@ And content of 'ui.xml':
 &lt;?xml <span class="attr">version</span>=<span class="quotes">"</span>1.0<span class="quotes">"</span> <span class="attr">encoding</span>=<span class="quotes">"</span>UTF-8<span class="quotes">"</span>?&gt;
 
 &lt;<span class="tag"><a class="type" href="/ui/doc/#ru/stablex/ui/widgets/Panel.html" title="ru.stablex.ui.widgets.Panel">Panel</a></span> <span class="attr">id</span>=<span class="quotes">"</span>'root'<span class="quotes">"</span> <span class="attr">w</span>=<span class="quotes">"</span>100<span class="quotes">"</span> <span class="attr">h</span>=<span class="quotes">"</span>200<span class="quotes">"</span>&gt;
-    &lt;<span class="tag"><a class="type" href="/ui/doc/#ru/stablex/ui/widgets/Button.html" title="ru.stablex.ui.widgets.Button">Button</a></span> <span class="attr">w</span>=<span class="quotes">"</span>50<span class="quotes">"</span> <span class="attr">h</span>=<span class="quotes">"</span>20<span class="quotes">"</span> <span class="attr">text</span>=<span class="quotes">"</span>hit<span class="quotes">"</span> <span class="attr">on-click</span>=<span class="quotes">"</span> trace( $MyClass.TEST ); <span class="quotes">"</span>
+    &lt;<span class="tag"><a class="type" href="/ui/doc/#ru/stablex/ui/widgets/Button.html" title="ru.stablex.ui.widgets.Button">Button</a></span> <span class="attr">w</span>=<span class="quotes">"</span>50<span class="quotes">"</span> <span class="attr">h</span>=<span class="quotes">"</span>20<span class="quotes">"</span> <span class="attr">text</span>=<span class="quotes">"</span>hit<span class="quotes">"</span> <span class="attr">on-click</span>=<span class="quotes">"</span> trace( <span class="placeholder">$MyClass</span>.TEST ); <span class="quotes">"</span>
 &lt;/<span class="tag"><a class="type" href="/ui/doc/#ru/stablex/ui/widgets/Panel.html" title="ru.stablex.ui.widgets.Panel">Panel</a></span>&gt;
 
 </div>
@@ -232,7 +232,7 @@ So you can use it when you need to operate with properties inherited from <a cla
 &lt;?xml <span class="attr">version</span>=<span class="quotes">"</span>1.0<span class="quotes">"</span> <span class="attr">encoding</span>=<span class="quotes">"</span>UTF-8<span class="quotes">"</span>?&gt;
 
 &lt;<span class="tag"><a class="type" href="/ui/doc/#ru/stablex/ui/widgets/Panel.html" title="ru.stablex.ui.widgets.Panel">Panel</a></span> <span class="attr">id</span>=<span class="quotes">"</span>'root'<span class="quotes">"</span> <span class="attr">w</span>=<span class="quotes">"</span>100<span class="quotes">"</span> <span class="attr">h</span>=<span class="quotes">"</span>200<span class="quotes">"</span> <span class="attr">bgColor</span>=<span class="quotes">"</span>0x002200<span class="quotes">"</span>&gt;
-    &lt;<span class="tag"><a class="type" href="/ui/doc/#ru/stablex/ui/widgets/Button.html" title="ru.stablex.ui.widgets.Button">Button</a></span> <span class="attr">w</span>=<span class="quotes">"</span>50<span class="quotes">"</span> <span class="attr">h</span>=<span class="quotes">"</span>20<span class="quotes">"</span> <span class="attr">text</span>=<span class="quotes">"</span>'hit'<span class="quotes">"</span> <span class="attr">on-click</span>=<span class="quotes">"</span> trace( #root.w ); <span class="quotes">"</span> /&gt;
+    &lt;<span class="tag"><a class="type" href="/ui/doc/#ru/stablex/ui/widgets/Button.html" title="ru.stablex.ui.widgets.Button">Button</a></span> <span class="attr">w</span>=<span class="quotes">"</span>50<span class="quotes">"</span> <span class="attr">h</span>=<span class="quotes">"</span>20<span class="quotes">"</span> <span class="attr">text</span>=<span class="quotes">"</span>'hit'<span class="quotes">"</span> <span class="attr">on-click</span>=<span class="quotes">"</span> trace( <span class="placeholder">#root</span>.w ); <span class="quotes">"</span> /&gt;
 &lt;/<span class="tag"><a class="type" href="/ui/doc/#ru/stablex/ui/widgets/Panel.html" title="ru.stablex.ui.widgets.Panel">Panel</a></span>&gt;
 
 </div>
@@ -254,7 +254,7 @@ And following xml will output panel's color:
 &lt;?xml <span class="attr">version</span>=<span class="quotes">"</span>1.0<span class="quotes">"</span> <span class="attr">encoding</span>=<span class="quotes">"</span>UTF-8<span class="quotes">"</span>?&gt;
 
 &lt;<span class="tag"><a class="type" href="/ui/doc/#ru/stablex/ui/widgets/Panel.html" title="ru.stablex.ui.widgets.Panel">Panel</a></span> <span class="attr">id</span>=<span class="quotes">"</span>'root'<span class="quotes">"</span> <span class="attr">w</span>=<span class="quotes">"</span>100<span class="quotes">"</span> <span class="attr">h</span>=<span class="quotes">"</span>200<span class="quotes">"</span> <span class="attr">bgColor</span>=<span class="quotes">"</span>0x002200<span class="quotes">"</span>&gt;
-    &lt;<span class="tag"><a class="type" href="/ui/doc/#ru/stablex/ui/widgets/Button.html" title="ru.stablex.ui.widgets.Button">Button</a></span> <span class="attr">w</span>=<span class="quotes">"</span>50<span class="quotes">"</span> <span class="attr">h</span>=<span class="quotes">"</span>20<span class="quotes">"</span> <span class="attr">text</span>=<span class="quotes">"</span>'hit'<span class="quotes">"</span> <span class="attr">on-click</span>=<span class="quotes">"</span> trace( #Panel(root).bgColor ); <span class="quotes">"</span>
+    &lt;<span class="tag"><a class="type" href="/ui/doc/#ru/stablex/ui/widgets/Button.html" title="ru.stablex.ui.widgets.Button">Button</a></span> <span class="attr">w</span>=<span class="quotes">"</span>50<span class="quotes">"</span> <span class="attr">h</span>=<span class="quotes">"</span>20<span class="quotes">"</span> <span class="attr">text</span>=<span class="quotes">"</span>'hit'<span class="quotes">"</span> <span class="attr">on-click</span>=<span class="quotes">"</span> trace( <span class="placeholder"><span class="placeholder">#Panel</span>(root)</span>.bgColor ); <span class="quotes">"</span>
 &lt;/<span class="tag"><a class="type" href="/ui/doc/#ru/stablex/ui/widgets/Panel.html" title="ru.stablex.ui.widgets.Panel">Panel</a></span>&gt;
 
 </div>
@@ -272,8 +272,10 @@ For example, let's implement alert box. Create `alert.xml` and place there follo
 &lt;?xml <span class="attr">version</span>=<span class="quotes">"</span>1.0<span class="quotes">"</span> <span class="attr">encoding</span>=<span class="quotes">"</span>UTF-8<span class="quotes">"</span>?&gt;
 
 &lt;<span class="tag"><a class="type" href="/ui/doc/#ru/stablex/ui/widgets/VBox.html" title="ru.stablex.ui.widgets.VBox">VBox</a></span> <span class="attr">left</span>=<span class="quotes">"</span>100<span class="quotes">"</span> <span class="attr">top</span>=<span class="quotes">"</span>100<span class="quotes">"</span> <span class="attr">bgColor</span>=<span class="quotes">"</span>0xbbbbbb<span class="quotes">"</span> <span class="attr">border</span>=<span class="quotes">"</span>2<span class="quotes">"</span> <span class="attr">autoSize</span>=<span class="quotes">"</span>true<span class="quotes">"</span> <span class="attr">padding</span>=<span class="quotes">"</span>10<span class="quotes">"</span> <span class="attr">childPadding</span>=<span class="quotes">"</span>5<span class="quotes">"</span>&gt;
-    &lt;<span class="tag"><a class="type" href="/ui/doc/#ru/stablex/ui/widgets/Text.html" title="ru.stablex.ui.widgets.Text">Text</a></span> <span class="attr">text</span>=<span class="quotes">"</span>@message<span class="quotes">"</span> /&gt;
-    &lt;<span class="tag"><a class="type" href="/ui/doc/#ru/stablex/ui/widgets/Button.html" title="ru.stablex.ui.widgets.Button">Button</a></span> <span class="attr">w</span>=<span class="quotes">"</span>50<span class="quotes">"</span> <span class="attr">h</span>=<span class="quotes">"</span>20<span class="quotes">"</span> <span class="attr">text</span>=<span class="quotes">"</span>'close'<span class="quotes">"</span> <span class="attr">bgColor</span>=<span class="quotes">"</span>0x777777<span class="quotes">"</span> <span class="attr">border</span>=<span class="quotes">"</span>1<span class="quotes">"</span> <span class="attr">on-click</span>=<span class="quotes">"</span> $this.wparent.free(); <span class="quotes">"</span> /&gt;
+
+    <i>&lt;<span class="tag">--</span> Here we use argument to set text for text field --&gt;</i>
+    &lt;<span class="tag"><a class="type" href="/ui/doc/#ru/stablex/ui/widgets/Text.html" title="ru.stablex.ui.widgets.Text">Text</a></span> <span class="attr">text</span>=<span class="quotes">"</span><span class="placeholder">@message</span><span class="quotes">"</span> /&gt;
+    &lt;<span class="tag"><a class="type" href="/ui/doc/#ru/stablex/ui/widgets/Button.html" title="ru.stablex.ui.widgets.Button">Button</a></span> <span class="attr">w</span>=<span class="quotes">"</span>50<span class="quotes">"</span> <span class="attr">h</span>=<span class="quotes">"</span>20<span class="quotes">"</span> <span class="attr">text</span>=<span class="quotes">"</span>'close'<span class="quotes">"</span> <span class="attr">bgColor</span>=<span class="quotes">"</span>0x777777<span class="quotes">"</span> <span class="attr">border</span>=<span class="quotes">"</span>1<span class="quotes">"</span> <span class="attr">on-click</span>=<span class="quotes">"</span> <span class="placeholder">$this</span>.wparent.free(); <span class="quotes">"</span> /&gt;
 &lt;/<span class="tag"><a class="type" href="/ui/doc/#ru/stablex/ui/widgets/VBox.html" title="ru.stablex.ui.widgets.VBox">VBox</a></span>&gt;
 
 </div>
@@ -286,11 +288,11 @@ Create `main.xml`:
 &lt;<span class="tag"><a class="type" href="/ui/doc/#ru/stablex/ui/widgets/HBox.html" title="ru.stablex.ui.widgets.HBox">HBox</a></span> <span class="attr">autoSize</span>=<span class="quotes">"</span>true<span class="quotes">"</span> <span class="attr">padding</span>=<span class="quotes">"</span>10<span class="quotes">"</span> <span class="attr">childPadding</span>=<span class="quotes">"</span>5<span class="quotes">"</span>&gt;
     &lt;<span class="tag"><a class="type" href="/ui/doc/#ru/stablex/ui/widgets/InputText.html" title="ru.stablex.ui.widgets.InputText">InputText</a></span> <span class="attr">id</span>=<span class="quotes">"</span>'input'<span class="quotes">"</span> <span class="attr">border</span>=<span class="quotes">"</span>1<span class="quotes">"</span> <span class="attr">bgColor</span>=<span class="quotes">"</span>0xFFFFFF<span class="quotes">"</span> <span class="attr">w</span>=<span class="quotes">"</span>150<span class="quotes">"</span> <span class="attr">h</span>=<span class="quotes">"</span>20<span class="quotes">"</span> <span class="attr">autoSize</span>=<span class="quotes">"</span>false<span class="quotes">"</span> <span class="attr">text</span>=<span class="quotes">"</span>'type any message here'<span class="quotes">"</span>/&gt;
 
-    <i>&lt;!-- Here we create on-click handler wich shows our alert box and pass input message as argument --&gt;</i>
+    <i>&lt;<span class="tag">--</span> Here we create on-click handler wich shows our alert box and pass input message as argument --&gt;</i>
     &lt;<span class="tag"><a class="type" href="/ui/doc/#ru/stablex/ui/widgets/Button.html" title="ru.stablex.ui.widgets.Button">Button</a></span> <span class="attr">autoWidth</span>=<span class="quotes">"</span>true<span class="quotes">"</span> <span class="attr">h</span>=<span class="quotes">"</span>20<span class="quotes">"</span> <span class="attr">padding</span>=<span class="quotes">"</span>5<span class="quotes">"</span> <span class="attr">text</span>=<span class="quotes">"</span>'Show me the alert!'<span class="quotes">"</span> <span class="attr">bgColor</span>=<span class="quotes">"</span>0xbbbbbb<span class="quotes">"</span> <span class="attr">border</span>=<span class="quotes">"</span>1<span class="quotes">"</span> <span class="attr">on-click</span>=<span class="quotes">"</span>
-        $Lib.current.addChild( $UIBuilder.buildFn('alert.xml')(
+        <span class="placeholder">$Lib</span>.current.addChild( <span class="placeholder">$UIBuilder</span>.buildFn('alert.xml')(
             {
-                message : #InputText(input).text
+                message : <span class="placeholder"><span class="placeholder">#InputText</span>(input)</span>.text
             }
         ) );
     <span class="quotes">"</span>/&gt;

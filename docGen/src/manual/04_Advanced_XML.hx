@@ -114,16 +114,16 @@ Since you can't use `import` directive in xml, StablexUI introduces placeholders
 to shorten haxe code in xml.
 
 <pre>
- $this       - replaced with current widget. Type of $this is the same type as current widget;
- $SomeClass  - replaced with com.some.package.SomeClass. If registered
+<span class="placeholder">$this</span>       - replaced with current widget. Type of <span class="placeholder">$this</span> is the same type as current widget;
+<span class="placeholder">$SomeClass</span>  - replaced with com.some.package.SomeClass. If registered
                with <type>ru.stablex.ui.UIBuilder</type>.regClass('com.some.package.SomeClass');
                .regClass() should be called before <type>ru.stablex.ui.UIBuilder</type>.init();
- #widgetId   - replaced with <type>ru.stablex.ui.UIBuilder</type>.get('widgetId').
-               Type of #widgetId is <type>ru.stablex.ui.widgets.Widget</type>;
- #SomeClass(widgetId) - replaced with <type>ru.stablex.ui.UIBuilder</type>.getAs('widgetId', SomeClass);
+<span class="placeholder">#widgetId</span>   - replaced with <type>ru.stablex.ui.UIBuilder</type>.get('widgetId').
+               Type of <span class="placeholder">#widgetId</span> is <type>ru.stablex.ui.widgets.Widget</type>;
+<span class="placeholder">#SomeClass(widgetId)</span> - replaced with <type>ru.stablex.ui.UIBuilder</type>.getAs('widgetId', SomeClass);
                SomeClass must be registered with <type>ru.stablex.ui.UIBuilder</type>.regClass('com.pack.SomeClass') (or one of standart widgets)
                and must be of <type>Class</type>&lt;<type>ru.stablex.ui.widgets.Widget</type>&gt;
- @someArg    - read section "Xml arguments" below.
+<span class="placeholder">@someArg</span>    - read section "Xml arguments" below.
 </pre>
 
 Let's investigate how these placeholders work in examples.
@@ -270,6 +270,8 @@ For example, let's implement alert box. Create `alert.xml` and place there follo
 <?xml version="1.0" encoding="UTF-8"?>
 
 <VBox left="100" top="100" bgColor="0xbbbbbb" border="2" autoSize="true" padding="10" childPadding="5">
+
+    <!-- Here we use argument to set text for text field -->
     <Text text="@message" />
     <Button w="50" h="20" text="'close'" bgColor="0x777777" border="1" on-click=" $this.wparent.free(); " />
 </VBox>

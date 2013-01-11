@@ -15,6 +15,7 @@ $urls = array(
 file_put_contents(
     'doc/menu.html',
     "<ul>\n"
+        ."<li class=\"package\"><a href=\"". DOC_BASE_URL ."\" class=\"class\">FEEDBACK</a></li>\n"
         . generate(DOC_ROOT, 'doc/')
         ."<li class=\"package\"><span class=\"package\">API</span>\n"
             ."<ul>\n"
@@ -285,8 +286,13 @@ function manual($str, $imports = array()){
                 $ln = preg_replace('/([-a-zA-Z0-9_]+)(\s*=\s*")/', '<attr>\\1</attr>\\2', $ln);
                 $ln = preg_replace('/"/', '<span class="quotes">"</span>', $ln);
                 $ln = preg_replace('/\<tag\>(.*)\<\/tag\>/U', '<span class="tag"><span class="type">ru.stablex.ui.widgets.\\1</span></span>', $ln);
+                $ln = preg_replace('/&lt;\!([-a-zA-Z0-9_]+)(\s)/', '&lt;<span class="tag">\\1</span>\\2', $ln);
                 $ln = preg_replace('/\<attr\>/', '<span class="attr">', $ln);
                 $ln = preg_replace('/\<\/attr\>/', '</span>', $ln);
+
+                $ln = preg_replace('/(#[a-zA-Z_]+\([a-zA-Z_]+\))/', '<span class="placeholder">\\1</span>', $ln);
+                $ln = preg_replace('/((\@|#|\$)[a-zA-Z_]+)/', '<span class="placeholder">\\1</span>', $ln);
+
 
                 $xml .= $ln . "\n";
 

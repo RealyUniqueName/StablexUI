@@ -245,6 +245,11 @@
                 background-color: #052630;
             }
 
+            .content .manual .placeholder{
+                /*font-weight: bold;*/
+                color: #156087;
+            }
+
             .content .manual .xml .tag,
             .content .manual .xml .tag .type{
                 font-weight:normal;
@@ -272,7 +277,7 @@
                 border-left: 1px dashed #233d44;
                 margin:0px;
                 margin-left: 20px;
-                padding: 10px 0px 10px 0px;
+                padding: 10px 0px 10px 10px;
                 background-color: #052630;
             }
 
