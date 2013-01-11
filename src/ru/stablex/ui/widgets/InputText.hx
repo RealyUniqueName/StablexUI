@@ -23,8 +23,23 @@ class InputText extends Text{
         #else
             //due to strange bug we need this hack
             this.addEventListener(Event.ADDED_TO_STAGE, function(e:Event){
-                this.label.type = nme.text.TextFieldType.INPUT;
+                this.label.type = browser.text.TextFieldType.INPUT;
             });
         #end
     }//function new()
+
+
+#if html5
+    /**
+    * Text getter
+    * we need this hack to get actual text of textfield
+    */
+    override private function _getText() : String {
+        return (
+            this.label.type == nme.text.TextFieldType.INPUT
+                ? Reflect.field(this.label, 'nmeGraphics').nmeSurface.innerHTML
+                : this.label.text
+        );
+    }//function _getText()
+#end
 }//class InputText
