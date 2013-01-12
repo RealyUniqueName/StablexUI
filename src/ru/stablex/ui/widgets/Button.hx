@@ -86,12 +86,12 @@ class Button extends Text{
 
     /**
     * Constructor
-    *
+    * By default .padding = 10 and .mouseChildren = false
     */
     public function new () : Void{
         super();
 
-        this.autoSize         = false;
+        this.padding          = 10;
         this.label.selectable = false;
 
         this.buttonMode    = this.useHandCursor = true;

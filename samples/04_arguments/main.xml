@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<HBox autoSize="true" padding="10" childPadding="5">
+<HBox padding="10" childPadding="5">
     <InputText id="'input'" border="1" bgColor="0xFFFFFF" w="150" h="20" autoSize="false" text="'type any message here'"/>
 
     <!-- Here we create on-click handler wich shows our alert box with input message -->
-    <Button autoWidth="true" h="20" padding="5" text="'Show me the alert!'" bgColor="0xbbbbbb" border="1" on-click="
+    <Button h="20" padding="5" text="'Show me the alert!'" bgColor="0xbbbbbb" border="1" on-click="
         $Lib.current.addChild( $UIBuilder.buildFn('alert.xml')(
             {
                 message : #InputText(input).text

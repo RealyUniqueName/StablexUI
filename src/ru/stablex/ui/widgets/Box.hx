@@ -31,9 +31,9 @@ class Box extends Panel{
     //set size depending on content size
     public var autoSize (never,_setAutoSize) : Bool;
     //set width depending on content width
-    public var autoWidth                     : Bool = false;
+    public var autoWidth                     : Bool = true;
     //set height depending on content height
-    public var autoHeight                    : Bool = false;
+    public var autoHeight                    : Bool = true;
 
 
     /**
@@ -43,6 +43,46 @@ class Box extends Panel{
     private function _setAutoSize (as:Bool) : Bool {
         return this.autoWidth = this.autoHeight = as;
     }//function _setAutoSize()
+
+
+    /**
+    * If width is set, disable autoWidth
+    *
+    */
+    override private function _setWidth(w:Float) : Float {
+        this.autoWidth = false;
+        return super._setWidth(w);
+    }//function _setWidth()
+
+
+    /**
+    * If width is set, disable autoWidth
+    *
+    */
+    override private function _setWpt(wp:Float) : Float {
+        this.autoWidth = false;
+        return super._setWpt(wp);
+    }//function _setWpt()
+
+
+    /**
+    * If height is set, disable autoHeight
+    *
+    */
+    override private function _setHpt(hp:Float) : Float {
+        this.autoHeight = false;
+        return super._setHpt(hp);
+    }//function _setHpt()
+
+
+    /**
+    * If height is set, disable autoHeight
+    *
+    */
+    override function _setHeight(h:Float) : Float {
+        this.autoHeight = false;
+        return super._setHeight(h);
+    }//function _setHeight()
 
 
     /**

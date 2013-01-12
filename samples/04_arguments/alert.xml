@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<VBox left="100" top="100" bgColor="0xbbbbbb" border="2" autoSize="true" padding="10" childPadding="5">
+<VBox left="100" top="100" bgColor="0xbbbbbb" border="2" padding="10" childPadding="5">
+
+    <!-- Here we use argument to set text for text field -->
     <Text text="@message" />
-    <Button w="50" h="20" text="'close'" bgColor="0x777777" border="1" on-click=" $this.wparent.free(); " />
+    <Button text="'close'" bgColor="0x777777" border="1" on-click=" $this.wparent.free(); " />
 </VBox>

@@ -269,11 +269,11 @@ For example, let's implement alert box. Create `alert.xml` and place there follo
 <xml>
 <?xml version="1.0" encoding="UTF-8"?>
 
-<VBox left="100" top="100" bgColor="0xbbbbbb" border="2" autoSize="true" padding="10" childPadding="5">
+<VBox left="100" top="100" bgColor="0xbbbbbb" border="2" padding="10" childPadding="5">
 
     <!-- Here we use argument to set text for text field -->
     <Text text="@message" />
-    <Button w="50" h="20" text="'close'" bgColor="0x777777" border="1" on-click=" $this.wparent.free(); " />
+    <Button text="'close'" bgColor="0x777777" border="1" on-click=" $this.wparent.free(); " />
 </VBox>
 </xml>
 
@@ -283,11 +283,11 @@ Create `main.xml`:
 <xml>
 <?xml version="1.0" encoding="UTF-8"?>
 
-<HBox autoSize="true" padding="10" childPadding="5">
+<HBox padding="10" childPadding="5">
     <InputText id="'input'" border="1" bgColor="0xFFFFFF" w="150" h="20" autoSize="false" text="'type any message here'"/>
 
-    <!-- Here we create on-click handler wich shows our alert box and pass input message as argument -->
-    <Button autoWidth="true" h="20" padding="5" text="'Show me the alert!'" bgColor="0xbbbbbb" border="1" on-click="
+    <!-- Here we create on-click handler wich shows our alert box with input message -->
+    <Button h="20" padding="5" text="'Show me the alert!'" bgColor="0xbbbbbb" border="1" on-click="
         $Lib.current.addChild( $UIBuilder.buildFn('alert.xml')(
             {
                 message : #InputText(input).text

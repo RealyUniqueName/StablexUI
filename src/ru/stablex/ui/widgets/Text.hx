@@ -30,7 +30,6 @@ class Text extends Box{
 
         this.format = this.label.defaultTextFormat;
 
-        this.autoSize = true;
         this.align    = 'top,left';
     }//function new()
 

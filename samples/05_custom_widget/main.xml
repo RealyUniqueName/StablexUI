@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<HBox autoSize="true" padding="20" childPadding="20">
+<HBox padding="20" childPadding="20">
     <ColorWidget id="'custom'" w="200" h="100" color="0x0000FF" />
-    <Button padding="10" autoSize="true" text="'set random color'" bgColor="0x999999" on-click="
+    <Button text="'set random color'" bgColor="0x999999" on-click="
         #ColorWidget(custom).color = Std.random(0xFFFFFF);
         #custom.refresh();
     "/>
