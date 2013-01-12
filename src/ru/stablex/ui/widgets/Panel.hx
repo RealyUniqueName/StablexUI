@@ -40,6 +40,8 @@ class Panel extends Widget{
     * If bgAlpha = 0, background won't be colored at all.
     */
     public var bgAlpha : Float = 0;
+    //define corner radius for filling with color. Format: [elipseWidth, elipseHeight] or [radius], e.g. [10, 20] or [20]
+    public var bgCorners : Array<Float>;
 
 
     /**
@@ -110,7 +112,14 @@ class Panel extends Widget{
 
             //or just fill with color?
             }else{
-                this._fillWithColor(this.bgColor, this.border, this.borderColor, this.bgAlpha);
+                if( this.bgCorners == null || this.bgCorners.length == 0 ){
+                    this._fillWithColor(this.bgColor, this.border, this.borderColor, this.bgAlpha);
+                }else if( this.bgCorners.length == 1 ){
+                    this._fillWithColor(this.bgColor, this.border, this.borderColor, this.bgAlpha, this.bgCorners[0], this.bgCorners[0]);
+                }else{
+                    this._fillWithColor(this.bgColor, this.border, this.borderColor, this.bgAlpha, this.bgCorners[0], this.bgCorners[1]);
+                }
+
             }
         }
     }//function reskin()
@@ -183,20 +192,28 @@ class Panel extends Widget{
     * Fill with color
     *
     */
-    private function _fillWithColor(color:Int, borderWidth:Float = 0, borderColor:Int = 0x000000, alpha:Float = 1) : Void {
+    private function _fillWithColor(color:Int, borderWidth:Float = 0, borderColor:Int = 0x000000, alpha:Float = 1, elipseWidth:Float = 0, elipseHeight:Float = 0) : Void {
         this.graphics.clear();
 
         if( borderWidth > 0 ){
             this.graphics.lineStyle(borderWidth, borderColor);
         }
 
+        var ew : Float = 0;
+        var eh : Float = 0;
+
         if( alpha > 0 ){
             this.graphics.beginFill(color, alpha);
-            this.graphics.drawRect(0, 0, this.w, this.h);
+            //workaround for cpp bug with zero radius corners
+            if( elipseWidth == 0 || elipseHeight == 0 ){
+                this.graphics.drawRect(0, 0, this.w, this.h);
+            }else{
+                this.graphics.drawRoundRect(0, 0, this.w, this.h, elipseWidth, elipseHeight);
+            }
             this.graphics.endFill();
 
         }else if( borderWidth > 0 ){
-            this.graphics.drawRect(0, 0, this.w, this.h);
+            this.graphics.drawRoundRect(0, 0, this.w, this.h, elipseWidth, elipseHeight);
         }
     }//function _fillWithColor()
 

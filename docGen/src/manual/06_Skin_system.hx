@@ -12,9 +12,9 @@ Plus regardless skin method you can draw borders. You can find examples of skin 
 @manual Fill with color
 
 To set widget's background color you need to specify .bgColor property and .bgAlpha property.
-StablexUI uses <type>nme.display.Graphics</type>.beginFill(bgColor, bgAlpha) method to paint widget's
-background. Also note, till .bgAlpha is set to zero, widget won't be painted at all.
-Here is example xml for half-transparent red panel:
+StablexUI uses <type>nme.display.Graphics</type>.beginFill(bgColor, bgAlpha) and .drowRoundRect()
+methods to paint widget's background. Also note, till .bgAlpha is set to zero, widget won't be
+painted at all. Here is example xml for half-transparent red panel:
 
 <xml>
 <?xml version="1.0" encoding="UTF-8"?>

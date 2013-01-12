@@ -8,6 +8,7 @@
             h="120"
             bgColor="0x00FF00"
             bgAlpha="0.5"
+            bgCorners="[80, 120]"
             border="8"
             borderColor="0x00FF00"
             format-size="14"
