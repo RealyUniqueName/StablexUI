@@ -7,7 +7,7 @@ import ru.stablex.Err;
 /**
 * Children of this box are aligned relative to box bounds
 */
-class Box extends Panel{
+class Box extends Widget{
 
     //Should we arrange children vertically (true) or horizontally (false). True by default.
     public var vertical : Bool = true;

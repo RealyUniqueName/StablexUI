@@ -1,11 +1,11 @@
 package ru.stablex.ui.widgets;
 
-import flash.display.DisplayObject;
 import nme.display.DisplayObject;
 import nme.display.DisplayObjectContainer;
 import ru.stablex.TweenSprite;
 import ru.stablex.ui.events.WidgetEvent;
 import ru.stablex.ui.UIBuilder;
+import ru.stablex.ui.skins.ISkin;
 
 
 /**
@@ -83,6 +83,9 @@ class Widget extends TweenSprite{
     public var bottomPt (_getBpt,_setBpt)     : Float;
     private var _bottom                       : Float = 0;
     private var _bottomPercent                : Float = 0;
+
+    //Skin processor (see ru.stablex.ui.skins package)
+    public var skin : ISkin;
 
 
     /**
@@ -502,10 +505,22 @@ class Widget extends TweenSprite{
 
 
     /**
+    * Apply skin defined by `.skin` property
+    *
+    */
+    public function applySkin () : Void {
+        if( this.skin != null ){
+            this.skin.apply(this);
+        }
+    }//function applySkin()
+
+
+    /**
     * Refresh widget. This method is called at least once for every widget (on creation)
     *
     */
     public function refresh() : Void {
+        this.applySkin();
     }//function refresh()
 
 
@@ -631,6 +646,9 @@ class Widget extends TweenSprite{
                 case _Y_USE_BOTTOM_PERCENT: this.y = this.wparent._height - this.wparent._height * this._bottomPercent / 100 - this._height;
             }//switch()
         }//if()
+
+        //skin
+        this.applySkin();
 
         this.dispatchEvent(new WidgetEvent( this.created ? WidgetEvent.RESIZE : WidgetEvent.INITIAL_RESIZE ));
     }//function onResize()

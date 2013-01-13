@@ -61,7 +61,7 @@ class Text extends Box{
     */
     private function _setText(txt:String) : String {
         this.label.text = txt;
-        if( this.autoWidth || this.autoHeight ){
+        if( this.autoWidth ){
             this.refresh();
         }else{
             this.alignElements();

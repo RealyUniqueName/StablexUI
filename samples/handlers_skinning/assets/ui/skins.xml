@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Skins>
+    <winxp:Slice9
+        src="'assets/img/winxp.png'"
+        slice="[5, 10, 32, 48]"
+    />
+    <btnxp:Slice9
+        src="'assets/img/btnxp.png'"
+        slice="[3, 4, 4, 20]"
+    />
+    <winubuntu:Slice9
+        src="'assets/img/winubuntu.png'"
+        slice="[6, 9, 31, 101]"
+    />
+    <btnubuntu:Slice9
+        src="'assets/img/btnubuntu.png'"
+        slice="[4, 5, 7, 20]"
+    />
+    <win7:Slice9
+        src="'assets/img/win7.png'"
+        slice="[6, 14, 6, 52]"
+    />
+</Skins>

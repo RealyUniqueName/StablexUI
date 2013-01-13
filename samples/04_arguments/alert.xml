@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<VBox left="100" top="100" bgColor="0xbbbbbb" border="2" padding="10" childPadding="5">
+<VBox left="100" top="100" skin:Paint-color="0xbbbbbb" skin:Paint-border="2" padding="10" childPadding="5">
 
     <!-- Here we use argument to set text for text field -->
     <Text text="@message" />
-    <Button text="'close'" bgColor="0x777777" border="1" on-click=" $this.wparent.free(); " />
+    <Button text="'close'" skin:Paint-color="0x777777" skin:Paint-border="1" on-click=" $this.wparent.free(); " />
 </VBox>

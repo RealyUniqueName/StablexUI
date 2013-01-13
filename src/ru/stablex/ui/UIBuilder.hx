@@ -5,6 +5,7 @@ import haxe.macro.Expr;
 #if macro
 import sys.io.File;
 #else
+import ru.stablex.ui.skins.ISkin;
 import Type;
 import nme.text.TextField;
 import ru.stablex.ui.widgets.Widget;
@@ -28,6 +29,8 @@ class UIBuilder {
         @:macro static private var _erCastId  : EReg = new EReg("#([a-z0-9_]+)\\(([a-z0-9_]+)\\)", "i");
         //for replacing `this` keyword with object currently being processed
         @:macro static private var _erThis    : EReg = ~/\$this([^a-z0-9_])/i;
+        //checks wether we need to create object of specified class (second matched group) for this attribute (first matched group)
+        @:macro static private var _erAttrCls : EReg = ~/^([a-z0-9_]+):([a-z0-9_]+)-(.*)$/i;
     //}
 
     @:macro static private var _events  : Hash<String> = new Hash();
@@ -42,11 +45,11 @@ class UIBuilder {
     //Widgets created with UIBuilder.buildFn() or UIBuilder.create()
     static private var _objects : Hash<Widget> = new Hash();
 
+    //registered skins
+    static public var skins : Hash<ISkin> = new Hash();
+
     //For id generator
     static private var _nextId : Int = 0;
-
-    //Skins. Loaded with UIBuilder.regSkins() or set manualy by UIBuilder.skins.set(skinName, skinStructure)
-    static public var skins : Hash<TSkin> = new Hash();
 #end
 
 
@@ -73,7 +76,7 @@ class UIBuilder {
             //registering frequently used classes
             UIBuilder.regClass('ru.stablex.ui.widgets.Text');
             UIBuilder.regClass('ru.stablex.ui.widgets.InputText');
-            UIBuilder.regClass('ru.stablex.ui.widgets.Panel');
+            // UIBuilder.regClass('ru.stablex.ui.widgets.Panel');
             UIBuilder.regClass('ru.stablex.ui.widgets.Widget');
             UIBuilder.regClass('ru.stablex.ui.widgets.Bmp');
             UIBuilder.regClass('ru.stablex.ui.widgets.Button');
@@ -83,12 +86,16 @@ class UIBuilder {
             UIBuilder.regClass('ru.stablex.ui.widgets.ViewStack');
             UIBuilder.regClass('ru.stablex.ui.widgets.Mask');
             UIBuilder.regClass('ru.stablex.ui.events.WidgetEvent');
-            UIBuilder.regClass('ru.stablex.TweenSprite');
+            UIBuilder.regClass('ru.stablex.ui.skins.Paint');
+            UIBuilder.regClass('ru.stablex.ui.skins.Tile');
+            UIBuilder.regClass('ru.stablex.ui.skins.Slice3');
+            UIBuilder.regClass('ru.stablex.ui.skins.Slice9');
             UIBuilder.regClass('ru.stablex.ui.UIBuilder');
-            UIBuilder.regClass('nme.Lib');
+            UIBuilder.regClass('ru.stablex.TweenSprite');
             UIBuilder.regClass('ru.stablex.Assets');
             UIBuilder.regClass('nme.events.Event');
             UIBuilder.regClass('nme.events.MouseEvent');
+            UIBuilder.regClass('nme.Lib');
 
             //If provided with file for defaults, generate closures for applying defaults to widgets
             if( defaultsXmlFile != null ){
@@ -171,13 +178,33 @@ class UIBuilder {
         }
 
         //apply xml attributes to widget
-        var value : String;
+        var value   : String;
+        var prop    : String;
+        var objects : Hash<Bool> = new Hash();
         for(attr in element.attributes()){
 
             var value : String = element.get(attr);
 
+            //if we need to create object of specified class for property
+            if( UIBuilder._erAttrCls.match(attr) ){
+                cls = UIBuilder._imports.get( UIBuilder._erAttrCls.matched(2) );
+                if( cls == null ) Err.trigger('Class is not registered: ' + UIBuilder._erAttrCls.matched(2));
+                prop = UIBuilder._erAttrCls.matched(1);
+                if( !objects.exists(prop) ){
+                    objects.set(prop, true);
+                    code += '\nvar ' + prop + ' = new ' + cls + '();';
+                }
+
+                //change '-' to '.', so 'someProp-nestedProp' becomes 'someProp.nestedProp'
+                attr = StringTools.replace(UIBuilder._erAttrCls.matched(3), '-', '.');
+
+                //required code replacements
+                value = UIBuilder._fillCodeShortcuts('__ui__widget' + n, value);
+
+                code += '\n' + prop + '.' + attr + ' = ' + value + ';';
+
             //if this attribute defines event listener
-            if( UIBuilder._erEvent.match(attr) ){
+            }else if( UIBuilder._erEvent.match(attr) ){
                 cls = UIBuilder._events.get( UIBuilder._erEvent.matched(1) );
                 if( cls == null ) Err.trigger('Event is not registered: ' + UIBuilder._erEvent.matched(1));
 
@@ -197,6 +224,11 @@ class UIBuilder {
                 code += '\n__ui__widget' + n + '.' + attr + ' = ' + value + ';';
             }
         }//for( attr )
+
+        //assign all specific-class properties
+        for(property in objects.keys()){
+            code += '\n__ui__widget' + n + '.' + property + ' = ' + property + ';';
+        }
 
         if( n > 1 ){
             code += '\n__ui__widget' + Std.string(n - 1) + '.addChild(__ui__widget' + n + ');';
@@ -263,6 +295,15 @@ class UIBuilder {
 
 
     /**
+    * Register skin list
+    *
+    */
+    @:macro static public function regSkins(skinsXml:String) : Void {
+
+    }//function regSkins()
+
+
+    /**
     * Replace code shortcuts:
     *   $this - replaced with current widget;
     *   $SomeClass - replaced with com.some.package.SomeClass. If registered with UIBuilder.regClass('com.some.package.SomeClass');
@@ -310,17 +351,6 @@ class UIBuilder {
 
 
 #if !macro
-
-    /**
-    * Register skin list
-    *
-    */
-    static inline public function regSkins(skinList:Dynamic<TSkin>) : Void {
-        for(name in Reflect.fields(skinList)){
-            UIBuilder.skins.set(name, Reflect.field(skinList, name));
-        }
-    }//function regSkins()
-
 
     /**
     * Creates unique id for widgets
@@ -402,6 +432,15 @@ class UIBuilder {
 
         }//for(properties)
     }//function apply()
+
+
+    /**
+    * Get registered skin
+    *
+    */
+    static public inline function skin (skinName:String) : ISkin {
+        return UIBuilder.skins.get(skinName);
+    }//function skin()
 
 
     /**
