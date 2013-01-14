@@ -295,11 +295,50 @@ class UIBuilder {
 
 
     /**
-    * Register skin list
-    *
+    * Register skin list. See samples/handlers_skinning for example skins.xml
+    * @throw <type>String</type> if UIBuilder.init() was not called before
+    * @throw <type>String</type> if one of tag names in xml does not match ~/^([a-z0-9_]+):([a-z0-9_]+)$/i
+    * @throw <type>String</type> if class specified for skin system is not registered with .regClass
     */
     @:macro static public function regSkins(skinsXml:String) : Void {
+        if( !UIBuilder._initialized ) Err.trigger('Call UIBuilder.init()');
 
+        var element = Xml.parse( File.getContent(xmlFile) ).firstElement();
+
+        var code   : String = '';
+        var erSkin : EReg = ~/^([a-z0-9_]+):([a-z0-9_]+)$/i;
+
+        //process every skin
+        for(node in element.elements()){
+            if( !erSkin.match(node.nodeName) ) Err.trigger('Wrong skin format: ' + node.nodeName);
+
+            if( UIBuilder._imports.exists(cls) ) Err.trigger('Class is already imported: ' + cls);
+            var cls : String = UIBuilder._imports.get(erSkin.matched(2));
+
+            var name : String = erSkin.matched(1);
+
+            code += '\nvar skin = new ' + cls + '();';
+
+            //apply xml attributes to skin
+            var value : String;
+            for(attr in node.attributes()){
+
+                var value : String = node.get(attr);
+
+                //change '-' to '.', so 'someProp-nestedProp' becomes 'someProp.nestedProp'
+                attr  = StringTools.replace(attr, '-', '.');
+
+                //required code replacements
+                value = UIBuilder._fillCodeShortcuts('', value);
+
+                code += '\nskin.' + attr + ' = ' + value + ';';
+            }//for( attr )
+
+            code += '\nru.stablex.ui.UIBuilder.skins.set("' + name + '", skin);';
+        }//for(nodes)
+
+        code = '(function(){' + code + '})();';
+        return Context.parse(code, Context.makePosition({ min:0, max:0, file:xmlFile}) );
     }//function regSkins()
 
 
