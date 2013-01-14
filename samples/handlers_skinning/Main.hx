@@ -36,11 +36,11 @@ class Main extends ru.stablex.ui.widgets.Widget{
         //There are some frequenlty used events already registered by default.
         //Look in ru.stablex.ui.UIBuilder.init() for the list of preregistered events
 
-        //register skins. You can also define skins separately for each widget right in ui xml
-        UIBuilder.regSkins('assets/ui/skins.xml');
-
         //initialize StablexUI
         UIBuilder.init();
+
+        //register skins. You can also define skins separately for each widget right in ui xml
+        UIBuilder.regSkins('assets/ui/skins.xml');
 
         //Create our UI
         Lib.current.addChild( UIBuilder.buildFn('assets/ui/index.xml')() );

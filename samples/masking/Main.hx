@@ -10,7 +10,7 @@ import ru.stablex.Assets;
 /**
 * Simple demo project for StablexUI
 */
-class Main extends ru.stablex.ui.widgets.Panel{
+class Main extends ru.stablex.ui.widgets.Widget{
     /**
     * Enrty point
     *
@@ -31,9 +31,6 @@ class Main extends ru.stablex.ui.widgets.Panel{
 
         //initialize StablexUI
         UIBuilder.init();
-
-        //register skins. You can also setup skin for each skinable element by using .skinBmp and .skinSlices
-        UIBuilder.regSkins( Assets.embed('assets/ui/skins.hx') );
 
         //Create our UI
         Lib.current.addChild( UIBuilder.buildFn('assets/ui/mask.xml')() );

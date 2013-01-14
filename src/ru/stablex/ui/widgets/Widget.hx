@@ -87,7 +87,7 @@ class Widget extends TweenSprite{
     //Skin processor (see ru.stablex.ui.skins package)
     public var skin : ISkin;
     //skin name to use. One of registered with <type>ru.stablex.ui.UIBuilder</type>.regSkins()
-    public var skinName (default,_setSkinName) : String
+    public var skinName (default,_setSkinName) : String;
 
 
     /**
@@ -105,10 +105,10 @@ class Widget extends TweenSprite{
     * Setter for `skinName`
     *
     */
-    private function _setkinName(sn:String) : String {
+    private function _setSkinName(sn:String) : String {
         this.skin = UIBuilder.skin(sn);
         return this.skinName = sn;
-    }//function _setkinName()
+    }//function _setSkinName()
 
 
     /**

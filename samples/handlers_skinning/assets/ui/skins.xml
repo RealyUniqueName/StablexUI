@@ -1,24 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <Skins>
+    <red:Paint
+        color       = "0x550000"
+        borderColor = "0xFF0000"
+        border      = "8"
+    />
+    <green:Paint
+        color       = "0x005500"
+        borderColor = "0x00FF00"
+        border      = "8"
+    />
     <winxp:Slice9
-        src="'assets/img/winxp.png'"
-        slice="[5, 10, 32, 48]"
+        src   = "'assets/img/winxp.png'"
+        slice = "[5, 10, 32, 48]"
     />
     <btnxp:Slice9
-        src="'assets/img/btnxp.png'"
-        slice="[3, 4, 4, 20]"
+        src   = "'assets/img/btnxp.png'"
+        slice = "[3, 4, 4, 20]"
     />
     <winubuntu:Slice9
-        src="'assets/img/winubuntu.png'"
-        slice="[6, 9, 31, 101]"
+        src   = "'assets/img/winubuntu.png'"
+        slice = "[6, 9, 31, 101]"
     />
     <btnubuntu:Slice9
-        src="'assets/img/btnubuntu.png'"
-        slice="[4, 5, 7, 20]"
+        src   = "'assets/img/btnubuntu.png'"
+        slice = "[4, 5, 7, 20]"
     />
     <win7:Slice9
-        src="'assets/img/win7.png'"
-        slice="[6, 14, 6, 52]"
+        src   = "'assets/img/win7.png'"
+        slice = "[6, 14, 6, 52]"
     />
 </Skins>

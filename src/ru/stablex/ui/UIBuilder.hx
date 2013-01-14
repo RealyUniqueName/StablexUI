@@ -189,6 +189,7 @@ class UIBuilder {
             if( UIBuilder._erAttrCls.match(attr) ){
                 cls = UIBuilder._imports.get( UIBuilder._erAttrCls.matched(2) );
                 if( cls == null ) Err.trigger('Class is not registered: ' + UIBuilder._erAttrCls.matched(2));
+
                 prop = UIBuilder._erAttrCls.matched(1);
                 if( !objects.exists(prop) ){
                     objects.set(prop, true);
@@ -300,8 +301,8 @@ class UIBuilder {
     * @throw <type>String</type> if one of tag names in xml does not match ~/^([a-z0-9_]+):([a-z0-9_]+)$/i
     * @throw <type>String</type> if class specified for skin system is not registered with .regClass
     */
-    @:macro static public function regSkins(skinsXml:String) : Void {
-        if( !UIBuilder._initialized ) Err.trigger('Call UIBuilder.init()');
+    @:macro static public function regSkins(xmlFile:String) : Expr {
+        if( !UIBuilder._initialized ) Err.trigger('Call UIBuilder.init() first');
 
         var element = Xml.parse( File.getContent(xmlFile) ).firstElement();
 
@@ -312,12 +313,13 @@ class UIBuilder {
         for(node in element.elements()){
             if( !erSkin.match(node.nodeName) ) Err.trigger('Wrong skin format: ' + node.nodeName);
 
-            if( UIBuilder._imports.exists(cls) ) Err.trigger('Class is already imported: ' + cls);
-            var cls : String = UIBuilder._imports.get(erSkin.matched(2));
-
             var name : String = erSkin.matched(1);
+            var cls  : String = erSkin.matched(2);
 
-            code += '\nvar skin = new ' + cls + '();';
+
+            if( !UIBuilder._imports.exists(cls) ) Err.trigger('Class is not imported: ' + cls);
+
+            code += '\nvar skin = new ' +  UIBuilder._imports.get(cls) + '();';
 
             //apply xml attributes to skin
             var value : String;
@@ -329,7 +331,7 @@ class UIBuilder {
                 attr  = StringTools.replace(attr, '-', '.');
 
                 //required code replacements
-                value = UIBuilder._fillCodeShortcuts('', value);
+                value = UIBuilder._fillCodeShortcuts('skin', value);
 
                 code += '\nskin.' + attr + ' = ' + value + ';';
             }//for( attr )
@@ -337,7 +339,7 @@ class UIBuilder {
             code += '\nru.stablex.ui.UIBuilder.skins.set("' + name + '", skin);';
         }//for(nodes)
 
-        code = '(function(){' + code + '})();';
+        code = '(function(){' + code + '})()';
         return Context.parse(code, Context.makePosition({ min:0, max:0, file:xmlFile}) );
     }//function regSkins()
 
