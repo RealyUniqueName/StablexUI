@@ -20,11 +20,13 @@ class Slice3 implements ISkin{
     public var smooth : Bool = true;
     //should we stretch skin to fit widget's height?
     public var stretch : Bool = true;
-    /*
+    /**
     * Where to slice skin bitmap.
     * This array should contain zero, one or two integers.
-    * Zero - 3 slice scaling (horizontal). Bitmap is divided into two equal sized bitmaps. Middle part is filled with central column of pixels.
-    * One - 3 slice scaling (horizontal). Bitmap is divided into two bitmaps. Middle part is filled with column of pixels with x = specified integer.
+    * Zero - 3 slice scaling (horizontal). Bitmap is divided into two equal sized bitmaps.
+    *         Middle part is filled with central column of pixels.
+    * One - 3 slice scaling (horizontal). Bitmap is divided into two bitmaps. Middle part
+    *         is filled with column of pixels with x = specified integer.
     * Two - 3 slice scaling (horizontal). Integers: left and right guidelines for slicing
     */
     public var slice : Array<Int>;

@@ -34,6 +34,37 @@ var widget = ru.stablex.ui.UIBuilder.create(ru.stablex.ui.widgets.Text, {
 */
 
 /**
+@manual Creating objects to assign to widget properties in xml
+
+Some widget properties (e.g. `.skin` property) are not scalar. So we need to create
+objects for these properties to define them in xml.
+`.skin` property gets objects of <type>ru.stablex.ui.skins.ISkin</type>. Let's create instance of <type>ru.stablex.ui.skins.Paint</type>
+for skin. <type>ru.stablex.ui.skins.Paint</type> implements <type>ru.stablex.ui.skins.ISkin</type>, so we can assign instances
+of <type>ru.stablex.ui.skins.Paint</type> to variables and properties typed as <type>ru.stablex.ui.skins.ISkin</type>.
+Here is xml wich does the job:
+
+<xml>
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Widget w="100" h="100" skin:Paint-color="0x00FF00" skin:Paint-border="2"/>
+</xml>
+
+`-color` and `-border` are properties of <type>ru.stablex.ui.skins.Paint</type>;
+This xml is translated by StablexUI for haxe compiler as follows:
+
+<haxe>
+var widget : ru.stablex.ui.widgets.Widget = ... // UIBuilder actions to create widget object
+var skin = new ru.stablex.ui.skins.Paint();
+skin.Color  = 0x002200;
+skin.border = 1;
+widget.skin = skin;
+widget.onCreate();
+</haxe>
+
+Class <type>ru.stablex.ui.skins.Paint</type> must be registered with <type>ru.stablex.ui.UIBuilder</type>.regClass() (It is by default. See section "Xml placeholders" below)
+*/
+
+/**
 @manual Handlers
 
 It is possible to create handlers in xml. To create one, add on-&lt;eventShortcut&gt; attributes to tags in xml.
@@ -42,7 +73,7 @@ For example to process click, use `on-click` handler:
 <xml>
 <?xml version="1.0" encoding="UTF-8"?>
 
-<Button bgColor="0x002200" text="'Click me'" on-click="trace('Oops! You clicked it again!');"/>
+<Button skin:Paint-color="0x002200" text="'Click me'" on-click="trace('Oops! You clicked it again!');"/>
 </xml>
 
 Handler's body can be any valid haxe code. Here is how above xml is translated by StablexUI for
@@ -50,11 +81,13 @@ haxe compiler:
 
 <haxe>
 var widget : ru.stablex.ui.widgets.Button = ... // UIBuilder actions to create widget object
-widget.bgColor = 0x002200;
-widget.text    = 'Click me';
+var skin = new ru.stablex.ui.skins.Paint();
+skin.color  = 0x002200;
+widget.text = 'Click me';
 widget.addEventListener(nme.events.MouseEvent.CLICK, function(event:nme.events.Event){
     trace('Oops! You clicked it again!');'
 })
+widget.skin = skin;
 widget.onCreate();
 </haxe>
 
@@ -91,18 +124,20 @@ Now you can use on-mouseWheel attribute in xml:
 <xml>
 <?xml version="1.0" encoding="UTF-8"?>
 
-<Button bgColor="0x002200" text="'Use mouse wheel over me'" on-mouseWheel="trace('Oops! You wheel it again!);"/>
+<Button skin:Paint-color="0x002200" text="'Use mouse wheel over me'" on-mouseWheel="trace('Oops! You wheel it again!);"/>
 </xml>
 
 And this xml will be translated for compiler like this:
 
 <haxe>
 var widget : ru.stablex.ui.widgets.Button = ... // UIBuilder actions to create widget object
-widget.bgColor = 0x002200;
+var skin = new ru.stablex.ui.skins.Paint();
+skin.color  = 0x002200;
 widget.text    = 'Use mouse wheel over me';
 widget.addEventListener(nme.events.MouseEvent.MOUSE_WHEEL, function(event:nme.events.Event){
     trace('Oops! You wheel it again!');
 });
+widget.skin = skin;
 widget.onCreate();
 </haxe>
 */
@@ -134,19 +169,21 @@ Following xml will output '100' on runtime:
 <xml>
 <?xml version="1.0" encoding="UTF-8"?>
 
-<Panel w="100" h="200" bgColor="0x002200" on-click=" trace( $this.w ); "/>
+<Widget w="100" h="200" skin:Paint-color="0x002200" on-click=" trace( $this.w ); "/>
 </xml>
 
 Such xml will be translated by StablexUI for haxe compiler like this:
 
 <haxe>
-var widget : ru.stablex.ui.widgets.Panel = ... // UIBuilder actions to create widget object
+var widget : ru.stablex.ui.widgets.Widget = ... // UIBuilder actions to create widget object
 widget.w       = 100;
 widget.h       = 200;
-widget.bgColor = 0x002200;
+var skin = new ru.stablex.ui.skins.Paint();
+skin.color  = 0x002200;
 widget.addEventListener(nme.events.MouseEvent.CLICK, function(event:nme.events.Event){
     trace( widget.w ); //output: 100
 });
+widget.skin = skin;
 widget.onCreate();
 </haxe>
 
@@ -187,9 +224,9 @@ And content of 'ui.xml':
 <xml>
 <?xml version="1.0" encoding="UTF-8"?>
 
-<Panel id="'root'" w="100" h="200">
+<Widget id="'root'" w="100" h="200">
     <Button w="50" h="20" text="hit" on-click=" trace( $MyClass.TEST ); "
-</Panel>
+</Widget>
 </xml>
 
 Now if we run this project and click the button, we'll see output: 'here is MyClass'.
@@ -199,7 +236,6 @@ There are some frequently used classes preregistered in StablexUI. Here is the l
 <pre>
  ru.stablex.ui.widgets.Text;
  ru.stablex.ui.widgets.InputText;
- ru.stablex.ui.widgets.Panel;
  ru.stablex.ui.widgets.Widget;
  ru.stablex.ui.widgets.Bmp;
  ru.stablex.ui.widgets.Button;
@@ -209,6 +245,10 @@ There are some frequently used classes preregistered in StablexUI. Here is the l
  ru.stablex.ui.widgets.ViewStack;
  ru.stablex.ui.widgets.Mask;
  ru.stablex.ui.events.WidgetEvent;
+ ru.stablex.ui.skins.Paint;
+ ru.stablex.ui.skins.Tile;
+ ru.stablex.ui.skins.Slice3;
+ ru.stablex.ui.skins.Slice9;
  ru.stablex.TweenSprite;
  ru.stablex.ui.UIBuilder;
  nme.Lib;
@@ -230,9 +270,9 @@ So you can use it when you need to operate with properties inherited from <type>
 <xml>
 <?xml version="1.0" encoding="UTF-8"?>
 
-<Panel id="'root'" w="100" h="200" bgColor="0x002200">
+<Widget id="'root'" w="100" h="200" skin:Paint-color="0x002200">
     <Button w="50" h="20" text="'hit'" on-click=" trace( #root.w ); " />
-</Panel>
+</Widget>
 </xml>
 
 will output: 100
@@ -240,21 +280,22 @@ will output: 100
 <h3>#SomeClass(widgetId)</h3>
 
 You need this placeholder if you need to work with property, wich is not in list of <type>ru.stablex.ui.widgets.Widget</type>
-(such as .bgColor of <type>ru.stablex.ui.widgets.Panel</type>)
-For example, `#Panel(root)` will be translated to:
+(such as .text of <type>ru.stablex.ui.widgets.Text</type>)
+For example, `#Text(txt)` will be translated to:
 
 <haxe>
- ru.stablex.ui.UIBuilder.getAs('root', ru.stablex.ui.widgets.Panel);
+ ru.stablex.ui.UIBuilder.getAs('txt', ru.stablex.ui.widgets.Text);
 </haxe>
 
-And following xml will output panel's color:
+And following xml will output text field content color:
 
 <xml>
 <?xml version="1.0" encoding="UTF-8"?>
 
-<Panel id="'root'" w="100" h="200" bgColor="0x002200">
-    <Button w="50" h="20" text="'hit'" on-click=" trace( #Panel(root).bgColor ); "
-</Panel>
+<VBox w="100" h="200" skin:Paint-color="0x002200">
+    <Text id="'txt'" text="'Hello, world!'" />
+    <Button w="50" h="20" text="'hit'" on-click=" trace( #Text(txt).text ); "
+</VBox>
 </xml>
 */
 
@@ -269,11 +310,11 @@ For example, let's implement alert box. Create `alert.xml` and place there follo
 <xml>
 <?xml version="1.0" encoding="UTF-8"?>
 
-<VBox left="100" top="100" bgColor="0xbbbbbb" border="2" padding="10" childPadding="5">
+<VBox left="100" top="100" skin:Paint-color="0xbbbbbb" skin:Paint-border="2" padding="10" childPadding="5">
 
     <!-- Here we use argument to set text for text field -->
     <Text text="@message" />
-    <Button text="'close'" bgColor="0x777777" border="1" on-click=" $this.wparent.free(); " />
+    <Button text="'close'" skin:Paint-color="0x777777" skin:Paint-border="1" on-click=" $this.wparent.free(); " />
 </VBox>
 </xml>
 
@@ -284,10 +325,10 @@ Create `main.xml`:
 <?xml version="1.0" encoding="UTF-8"?>
 
 <HBox padding="10" childPadding="5">
-    <InputText id="'input'" border="1" bgColor="0xFFFFFF" w="150" h="20" autoSize="false" text="'type any message here'"/>
+    <InputText id="'input'" skin:Paint-border="1" skin:Paint-color="0xFFFFFF" w="150" h="20" autoSize="false" text="'type any message here'"/>
 
     <!-- Here we create on-click handler wich shows our alert box with input message -->
-    <Button h="20" padding="5" text="'Show me the alert!'" bgColor="0xbbbbbb" border="1" on-click="
+    <Button h="20" padding="5" text="'Show me the alert!'" skin:Paint-color="0xbbbbbb" skin:Paint-border="1" on-click="
         $Lib.current.addChild( $UIBuilder.buildFn('alert.xml')(
             {
                 message : #InputText(input).text

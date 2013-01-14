@@ -11,10 +11,7 @@ class Paint implements ISkin{
 
     //use this color to fill
     public var color : Int = 0xFFFFFF;
-    /**
-    * Background alpha for coloring. Default - 0.
-    * If bgAlpha = 0, background won't be colored at all.
-    */
+    //Background alpha for coloring.
     public var alpha : Float = 1;
     //border width
     public var border : Float = 0;
@@ -22,7 +19,7 @@ class Paint implements ISkin{
     public var borderColor : Int = 0x000000;
     //border alpha
     public var borderAlpha : Float = 1;
-    //define corner radius for filling with color. Format: [elipseWidth, elipseHeight] or [radius], e.g. [10, 20] or [20]
+    //define corner radius. Format: [elipseWidth, elipseHeight] or [radius], e.g. [10, 20] or [20]
     public var corners : Array<Float>;
 
 

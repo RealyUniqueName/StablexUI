@@ -6,9 +6,9 @@
 </div>
 <div class="comment">Closures for applaying default settings to widgets. Closures created with UIBuilder.init('defaults.xml')
 </div>
-<div class="definition">    <span class="static">static</span> <span class="public">public</span> <span class="var">var</span> <span class="definitionName">skins</span> : <a class="type" href="/ui/doc/#http://haxe.org/api/Hash" title="Hash">Hash</a>&lt;<a class="type" href="/ui/doc/#ru/stablex/ui/TSkin.html" title="ru.stablex.ui.TSkin">TSkin</a>&gt; = new Hash()
+<div class="definition">    <span class="static">static</span> <span class="public">public</span> <span class="var">var</span> <span class="definitionName">skins</span> : <a class="type" href="/ui/doc/#http://haxe.org/api/Hash" title="Hash">Hash</a>&lt;<a class="type" href="/ui/doc/#ru/stablex/ui/skins/ISkin.html" title="ru.stablex.ui.skins.ISkin">ISkin</a>&gt; = new Hash()
 </div>
-<div class="comment">Skins. Loaded with UIBuilder.regSkins() or set manualy by UIBuilder.skins.set(skinName, skinStructure)
+<div class="comment">registered skins
 </div>
 <div class="definition">    <span class="macro">@:macro</span> <span class="static">static</span> <span class="public">public</span> <span class="function">function</span> <span class="definitionName">init</span>(defaultsXmlFile:<a class="type" href="/ui/doc/#http://haxe.org/api/String" title="String">String</a> = null) : <a class="type" href="/ui/doc/#http://haxe.org/api/haxe/macro/Expr" title="haxe.macro.Expr">Expr</a> 
 </div>
@@ -43,9 +43,12 @@
  can not be registered simultaneously, because both will be shortened to $MyClass for usage in xml.
  You still can register one of them and use another one by it's full classpath in xml
 </div>
-<div class="definition">    <span class="static">static</span> <span class="inline">inline</span> <span class="public">public</span> <span class="function">function</span> <span class="definitionName">regSkins</span>(skinList:<a class="type" href="/ui/doc/#http://haxe.org/api/Dynamic" title="Dynamic">Dynamic</a>&lt;<a class="type" href="/ui/doc/#ru/stablex/ui/TSkin.html" title="ru.stablex.ui.TSkin">TSkin</a>&gt;) : <a class="type" href="/ui/doc/#http://haxe.org/api/Void" title="Void">Void</a> 
+<div class="definition">    <span class="macro">@:macro</span> <span class="static">static</span> <span class="public">public</span> <span class="function">function</span> <span class="definitionName">regSkins</span>(xmlFile:<a class="type" href="/ui/doc/#http://haxe.org/api/String" title="String">String</a>) : <a class="type" href="/ui/doc/#http://haxe.org/api/haxe/macro/Expr" title="haxe.macro.Expr">Expr</a> 
 </div>
-<div class="comment"> Register skin list
+<div class="comment"> Register skin list. See samples/handlers_skinning for example skins.xml
+ <span class="tag throw">@throw</span> <a class="type" href="/ui/doc/#http://haxe.org/api/String" title="String">String</a> if UIBuilder.init() was not called before
+ <span class="tag throw">@throw</span> <a class="type" href="/ui/doc/#http://haxe.org/api/String" title="String">String</a> if one of tag names in xml does not match ~/^([a-z0-9_]+):([a-z0-9_]+)$/i
+ <span class="tag throw">@throw</span> <a class="type" href="/ui/doc/#http://haxe.org/api/String" title="String">String</a> if class specified for skin system is not registered with .regClass
 </div>
 <div class="definition">    <span class="static">static</span> <span class="public">public</span> <span class="function">function</span> <span class="definitionName">create</span> (cls:<a class="type" href="/ui/doc/#http://haxe.org/api/Class" title="Class">Class</a>&lt;<a class="type" href="/ui/doc/#ru/stablex/ui/widgets/Widget.html" title="ru.stablex.ui.widgets.Widget">Widget</a>&gt;, properties:<a class="type" href="/ui/doc/#http://haxe.org/api/Dynamic" title="Dynamic">Dynamic</a> = null) : <a class="type" href="/ui/doc/#ru/stablex/ui/widgets/Widget.html" title="ru.stablex.ui.widgets.Widget">Widget</a>
 </div>
@@ -73,6 +76,10 @@
  Note: non-scalar object properties must not be null, otherwise you'll get an exception
  "Can't set property of Null"
  <span class="tag throw">@throw</span> <a class="type" href="/ui/doc/#http://haxe.org/api/Dynamic" title="Dynamic">Dynamic</a> if corresponding scalar properties of `obj` and `properties` have different types
+</div>
+<div class="definition">    <span class="static">static</span> <span class="public">public</span> <span class="inline">inline</span> <span class="function">function</span> <span class="definitionName">skin</span> (skinName:<a class="type" href="/ui/doc/#http://haxe.org/api/String" title="String">String</a>) : <a class="type" href="/ui/doc/#ru/stablex/ui/skins/ISkin.html" title="ru.stablex.ui.skins.ISkin">ISkin</a> 
+</div>
+<div class="comment"> Get registered skin
 </div>
 <div class="definition">    <span class="static">static</span> <span class="public">public</span> <span class="inline">inline</span> <span class="function">function</span> <span class="definitionName">get</span>(id:<a class="type" href="/ui/doc/#http://haxe.org/api/String" title="String">String</a>) : <a class="type" href="/ui/doc/#ru/stablex/ui/widgets/Widget.html" title="ru.stablex.ui.widgets.Widget">Widget</a> 
 </div>

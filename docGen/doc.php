@@ -280,10 +280,10 @@ function manual($str, $imports = array()){
             while( !preg_match('/\<\/xml\>/', $ln) && $i < $cLines - 1 ){
                 $ln = preg_replace('/\</', '&lt;', $ln);
                 $ln = preg_replace('/\>/', '&gt;', $ln);
-                $ln = preg_replace('/&lt;([-a-zA-Z0-9_]+)(\s)/', '&lt;<tag>\\1</tag>\\2', $ln);
+                $ln = preg_replace('/&lt;([-a-zA-Z0-9_:]+)(\s)/', '&lt;<tag>\\1</tag>\\2', $ln);
                 $ln = preg_replace('/&lt;\!--(.*)--\&gt;/U', '<i>&lt;!--\\1--&gt;</i>', $ln); # comments
                 $ln = preg_replace('/&lt;\/(\s*)([-a-zA-Z0-9_]+)(\s*)&gt;/', '&lt;/\\1<tag>\\2</tag>\\3&gt;', $ln);
-                $ln = preg_replace('/([-a-zA-Z0-9_]+)(\s*=\s*")/', '<attr>\\1</attr>\\2', $ln);
+                $ln = preg_replace('/([-a-zA-Z0-9_:]+)(\s*=\s*")/', '<attr>\\1</attr>\\2', $ln);
                 $ln = preg_replace('/"/', '<span class="quotes">"</span>', $ln);
                 $ln = preg_replace('/\<tag\>(.*)\<\/tag\>/U', '<span class="tag"><span class="type">ru.stablex.ui.widgets.\\1</span></span>', $ln);
                 $ln = preg_replace('/&lt;\!([-a-zA-Z0-9_]+)(\s)/', '&lt;<span class="tag">\\1</span>\\2', $ln);

@@ -2,7 +2,7 @@
 @manual Creating UI elements
 
 For StablexUI widgets are objects wich can be used in gui. These are buttons,
-panels, text fields, etc. All widgets' classes extend <type>ru.stablex.ui.widgets.Widget</type> wich extends <type>nme.display.Sprite</type>.
+boxes, text fields, etc. All widgets' classes extend <type>ru.stablex.ui.widgets.Widget</type> wich extends <type>nme.display.Sprite</type>.
 
 To create our first gui, let's write xml like this:
 
@@ -81,19 +81,19 @@ wich of course breaks Haxe syntax.
 
 Every widget can contain children since <type>ru.stablex.ui.widgets.Widget</type> inherits from <type>nme.display.DisplayObjectContainer</type>.
 Child widgets behave like ordinary display objects in terms of position/scale/alpha etc.
-Lets modify above sample. Place that text field to panel:
+Lets modify above sample. Place that text field to another widget:
 
 <xml>
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!-- .w and .h properties define widget's area width and height respectively -->
-<Panel border="1" w="400" h="400" left="50" top="100">
+<Widget skin:Paint-border="1" w="400" h="400" left="50" top="100">
     <Text left="50" top="100" text="'My first widget!'" />
-</Panel>
+</Widget>
 
 </xml>
 
-Now text field will be positioned in panel's system of axes. Build project to see how it
+Now text field will be positioned in root widget's system of axes. Build project to see how it
 looks or look at <a href="/ui/demo/02_nested.swf" target="_blank">flash</a> or at <a href="/ui/demo/02_nested" target="_blank">html5</a>
 You can create nested widgets indefinite levels deep.
 */
