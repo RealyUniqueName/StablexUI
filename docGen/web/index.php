@@ -132,6 +132,7 @@
 
             div.content{
                 margin-left: 260px;
+                padding-top: 50px;
             }
 
 
@@ -141,6 +142,14 @@
 
             .content h1{
                 color: #6d9496;
+                position:fixed;
+                top: 0px;
+                background: #052630;
+                width: 100%;
+                padding: 10px;
+                margin:0px;
+                margin-left: -10px;
+                border-bottom: 2px solid #233d44;
             }
 
             .content div{
@@ -326,7 +335,7 @@
         </div>
         <div class="content">
             <!-- DISQUS -->
-                <!-- <div id="disqus_thread" style="display:none"></div>
+                <div id="disqus_thread" style="padding:20px 50px 20px 50px;background:#e6e6e6;margin:10px 10px 0px 0px;"></div>
                 <script type="text/javascript">
                     /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
                     var disqus_shortname = 'stablexui'; // required: replace example with your forum shortname
@@ -339,7 +348,7 @@
                     })();
                 </script>
                 <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-                <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a> -->
+                <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
             <!-- /DISQUS -->
         </div>
         <div class="external">

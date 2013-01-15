@@ -34,7 +34,7 @@ var widget = ru.stablex.ui.UIBuilder.create(ru.stablex.ui.widgets.Text, {
 */
 
 /**
-@manual Creating objects to assign to widget properties in xml
+@manual Creating objects for non-scalar properties in xml
 
 Some widget properties (e.g. `.skin` property) are not scalar. So we need to create
 objects for these properties to define them in xml.
@@ -55,7 +55,7 @@ This xml is translated by StablexUI for haxe compiler as follows:
 <haxe>
 var widget : ru.stablex.ui.widgets.Widget = ... // UIBuilder actions to create widget object
 var skin = new ru.stablex.ui.skins.Paint();
-skin.Color  = 0x002200;
+skin.color  = 0x002200;
 skin.border = 1;
 widget.skin = skin;
 widget.onCreate();
@@ -287,7 +287,7 @@ For example, `#Text(txt)` will be translated to:
  ru.stablex.ui.UIBuilder.getAs('txt', ru.stablex.ui.widgets.Text);
 </haxe>
 
-And following xml will output text field content color:
+And following xml will output text field content:
 
 <xml>
 <?xml version="1.0" encoding="UTF-8"?>

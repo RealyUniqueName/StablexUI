@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Widget
+    w="400"
+    h="200"
+    skin:Fractal-lineThickness = "8"
+    skin:Fractal-lineColor     = "0x00FF00"
+    skin:Fractal-step          = "20"
+/>

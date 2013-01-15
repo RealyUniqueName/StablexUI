@@ -69,7 +69,7 @@ Now, to demonstrate it in action, create `main.xml`:
 <?xml version="1.0" encoding="UTF-8"?>
 
 <HBox padding="20" childPadding="20">
-    <ColorWidget id="'custom'" w="200" h="100" color="0x0000FF" />
+    <|ColorWidget id="'custom'" w="200" h="100" color="0x0000FF" />
     <Button text="'set random color'" skin:Paint-color="0x999999" on-click="
         #ColorWidget(custom).color = Std.random(0xFFFFFF);
         #custom.refresh();
