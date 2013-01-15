@@ -757,4 +757,39 @@ class Widget extends TweenSprite{
     }//function getChildByName()
 
 
+    /**
+    * Find child widget by `name` (recursively) and return it as instance of specified class
+    *
+    */
+    public inline function getChildAs<T>(name:String, cls:Class<T>) : Null<T> {
+        var w : Widget = this._findChildWidget(name);
+        return ( Std.is(w, cls) ? cast w : null );
+    }//function getChild()
+
+
+    /**
+    * Look through children for widget with specified `name`
+    *
+    */
+    private function _findChildWidget(name:String) : Widget {
+        var child : DisplayObject = null;
+
+        //check each child
+        for(i in 0...this.numChildren){
+            child = this.getChildAt(i);
+
+            if( child.name == name ) break;
+
+            //look through this child children
+            if( Std.is(child, Widget) ){
+                child = cast(child, Widget)._findChildWidget(name);
+                if( child != null ) break;
+            }
+
+            child = null;
+        }
+
+        return ( Std.is(child, Widget) ? cast(child, Widget) : null );
+    }//function _findChildWidget()
+
 }//class Widget
