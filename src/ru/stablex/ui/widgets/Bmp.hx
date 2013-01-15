@@ -47,8 +47,8 @@ class Bmp extends Widget{
             this.graphics.drawRect(0, 0, bmp.width, bmp.height);
             this.graphics.endFill();
 
-            this.w = this.width;
-            this.h = this.height;
+            this.w = bmp.width;
+            this.h = bmp.height;
         }
     }//function _load()
 
