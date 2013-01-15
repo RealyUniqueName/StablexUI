@@ -409,10 +409,15 @@ class UIBuilder {
     * @param properties - read description of .apply() method below.
     *
     * @throw <type>Dynamic</type> if corresponding properties of `cls` and `properties` have different types
+    * @throw <type>String</type> if `cls` is not of <type>Class</type>&lt;<type>ru.stblex.ui.widgets.Widget</type>&gt;
     */
-    static public function create (cls:Class<Widget>, properties:Dynamic = null) : Widget{
+    static public function create<T>(cls:Class<T>, properties:Dynamic = null) : Null<T>{
         //create widget instance
-        var obj : Widget = Type.createInstance(cls, []);
+        var obj : Widget = cast Type.createInstance(cls, []);
+
+        if( obj == null ){
+            Err.trigger('Wrong class provided for UIBuilder.create(). Must be Widget or extended Widget');
+        }
 
         //apply defaults  {
             obj.defaults = Reflect.field(properties, 'defaults');
@@ -435,7 +440,7 @@ class UIBuilder {
 
         obj.onCreate();
 
-        return obj;
+        return cast obj;
     }//function create ()
 
 
