@@ -50,12 +50,13 @@
  <span class="tag throw">@throw</span> <a class="type" href="/ui/doc/#http://haxe.org/api/String" title="String">String</a> if one of tag names in xml does not match ~/^([a-z0-9_]+):([a-z0-9_]+)$/i
  <span class="tag throw">@throw</span> <a class="type" href="/ui/doc/#http://haxe.org/api/String" title="String">String</a> if class specified for skin system is not registered with .regClass
 </div>
-<div class="definition">    <span class="static">static</span> <span class="public">public</span> <span class="function">function</span> <span class="definitionName">create</span> (cls:<a class="type" href="/ui/doc/#http://haxe.org/api/Class" title="Class">Class</a>&lt;<a class="type" href="/ui/doc/#ru/stablex/ui/widgets/Widget.html" title="ru.stablex.ui.widgets.Widget">Widget</a>&gt;, properties:<a class="type" href="/ui/doc/#http://haxe.org/api/Dynamic" title="Dynamic">Dynamic</a> = null) : <a class="type" href="/ui/doc/#ru/stablex/ui/widgets/Widget.html" title="ru.stablex.ui.widgets.Widget">Widget</a>
+<div class="definition">    <span class="static">static</span> <span class="public">public</span> <span class="function">function</span> create&lt;<a class="type" href="/ui/doc/#http://haxe.org/api/T" title="T">T</a>&gt;(cls:<a class="type" href="/ui/doc/#http://haxe.org/api/Class" title="Class">Class</a>&lt;<a class="type" href="/ui/doc/#http://haxe.org/api/T" title="T">T</a>&gt;, properties:<a class="type" href="/ui/doc/#http://haxe.org/api/Dynamic" title="Dynamic">Dynamic</a> = null) : <a class="type" href="/ui/doc/#http://haxe.org/api/Null" title="Null">Null</a>&lt;<a class="type" href="/ui/doc/#http://haxe.org/api/T" title="T">T</a>&gt;
 </div>
 <div class="comment"> Creates widgets at runtime.
  <span class="tag param">@param</span> cls - create widget of this class;
  <span class="tag param">@param</span> properties - read description of .apply() method below.
  <span class="tag throw">@throw</span> <a class="type" href="/ui/doc/#http://haxe.org/api/Dynamic" title="Dynamic">Dynamic</a> if corresponding properties of `cls` and `properties` have different types
+ <span class="tag throw">@throw</span> <a class="type" href="/ui/doc/#http://haxe.org/api/String" title="String">String</a> if `cls` is not of <a class="type" href="/ui/doc/#http://haxe.org/api/Class" title="Class">Class</a>&lt;<a class="type" href="/ui/doc/#ru/stblex/ui/widgets/Widget.html" title="ru.stblex.ui.widgets.Widget">Widget</a>&gt;
 </div>
 <div class="definition">    <span class="static">static</span> <span class="public">public</span> <span class="function">function</span> <span class="definitionName">apply</span>(obj:<a class="type" href="/ui/doc/#http://haxe.org/api/Dynamic" title="Dynamic">Dynamic</a>, properties:<a class="type" href="/ui/doc/#http://haxe.org/api/Dynamic" title="Dynamic">Dynamic</a>) : <a class="type" href="/ui/doc/#http://haxe.org/api/Void" title="Void">Void</a> 
 </div>

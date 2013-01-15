@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Default widgets settings -->
+<Defaults>
+    <Button>
+        <Default
+            w="700"
+            h="120"
+            skin:Paint-color="0x00FF00"
+            skin:Paint-alpha="0.5"
+            skin:Paint-corners="[80, 120]"
+            skin:Paint-border="16"
+            skin:Paint-borderColor="0x00FF00"
+            format-size="14"
+            format-color="0xff0000"
+            format-bold="true"
+        />
+        <Red
+            w="400"
+            h="60"
+            skin:Paint-color="0xFF0000"
+            skin:Paint-border="4"
+            skin:Paint-borderColor="0x00FF00"
+            skin:Paint-corners="[40]"
+            format-size="12"
+            format-color="0x0000FF"
+        />
+    </Button>
+    <Text>
+        <Title
+            filters="[new nme.filters.DropShadowFilter()]"
+            label-selectable="false"
+            mouseEnabled="false"
+            format-size="30"
+            format-color="0xffffff"
+            format-bold="true"
+        />
+    </Text>
+</Defaults>

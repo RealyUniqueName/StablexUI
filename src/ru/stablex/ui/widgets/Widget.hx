@@ -731,30 +731,30 @@ class Widget extends TweenSprite{
     }//function removeChild()
 
 
-    /**
-    * Recursively looks for child with specified name
-    *
-    */
-    override public function getChildByName(name:String) : DisplayObject {
-        var child : DisplayObject = null;
+    // /**
+    // * Recursively looks for child with specified name
+    // *
+    // */
+    // override public function getChildByName(name:String) : DisplayObject {
+    //     var child : DisplayObject = null;
 
-        //check each child
-        for(i in 0...this.numChildren){
-            child = this.getChildAt(i);
+    //     //check each child
+    //     for(i in 0...this.numChildren){
+    //         child = this.getChildAt(i);
 
-            if( child.name == name ) break;
+    //         if( child.name == name ) break;
 
-            //look through this child children
-            if( Std.is(child, DisplayObjectContainer) ){
-                child = cast(child, DisplayObjectContainer).getChildByName(name);
-                if( child != null ) break;
-            }
+    //         //look through this child children
+    //         if( Std.is(child, DisplayObjectContainer) ){
+    //             child = cast(child, DisplayObjectContainer).getChildByName(name);
+    //             if( child != null ) break;
+    //         }
 
-            child = null;
-        }
+    //         child = null;
+    //     }
 
-        return child;
-    }//function getChildByName()
+    //     return child;
+    // }//function getChildByName()
 
 
     /**
@@ -764,7 +764,7 @@ class Widget extends TweenSprite{
     public inline function getChildAs<T>(name:String, cls:Class<T>) : Null<T> {
         var w : Widget = this._findChildWidget(name);
         return ( Std.is(w, cls) ? cast w : null );
-    }//function getChild()
+    }//function getChildAs()
 
 
     /**
@@ -791,5 +791,20 @@ class Widget extends TweenSprite{
 
         return ( Std.is(child, Widget) ? cast(child, Widget) : null );
     }//function _findChildWidget()
+
+
+    /**
+    * Find parent widget by `name` (recursively) and return it as instance of specified class
+    *
+    */
+    public inline function getParentAs<T>(name:String, cls:Class<T>) : Null<T> {
+        var p : Widget = this.wparent;
+
+        while( p.name != name && p != null ){
+            p = p.wparent;
+        }
+
+        return ( Std.is(p, cls) ? cast p : null );
+    }//function getParentAs()
 
 }//class Widget
