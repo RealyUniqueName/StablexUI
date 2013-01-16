@@ -7,7 +7,7 @@ import ru.stablex.ui.widgets.Widget;
 * Fill widget with color
 *
 */
-class Paint implements ISkin{
+class Paint extends Skin{
 
     //use this color to fill
     public var color : Int = 0xFFFFFF;
@@ -24,18 +24,10 @@ class Paint implements ISkin{
 
 
     /**
-    * Constructor
-    *
-    */
-    public function new () : Void {
-    }//function new()
-
-
-    /**
     * Apply skin to widget
     *
     */
-    public function apply (w:Widget) : Void {
+    override public function apply (w:Widget) : Void {
         w.graphics.clear();
 
         if( this.border > 0 ){

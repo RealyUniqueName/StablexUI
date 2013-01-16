@@ -6,7 +6,7 @@ import nme.geom.Rectangle;
 import ru.stablex.TweenSprite;
 import ru.stablex.ui.events.WidgetEvent;
 import ru.stablex.ui.UIBuilder;
-import ru.stablex.ui.skins.ISkin;
+import ru.stablex.ui.skins.Skin;
 
 
 /**
@@ -86,7 +86,7 @@ class Widget extends TweenSprite{
     private var _bottomPercent                : Float = 0;
 
     //Skin processor (see ru.stablex.ui.skins package)
-    public var skin : ISkin;
+    public var skin : Skin;
     //skin name to use. One of registered with <type>ru.stablex.ui.UIBuilder</type>.regSkins()
     public var skinName (default,_setSkinName) : String;
     //wether widget content out of widgt bounds is visible
@@ -141,7 +141,7 @@ class Widget extends TweenSprite{
     *
     */
     private function _setSkinName(sn:String) : String {
-        this.skin = UIBuilder.skin(sn);
+        this.skin = UIBuilder.skin(sn)();
         return this.skinName = sn;
     }//function _setSkinName()
 

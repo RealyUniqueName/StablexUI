@@ -5,7 +5,7 @@ import haxe.macro.Expr;
 #if macro
 import sys.io.File;
 #else
-import ru.stablex.ui.skins.ISkin;
+import ru.stablex.ui.skins.Skin;
 import Type;
 import nme.text.TextField;
 import ru.stablex.ui.widgets.Widget;
@@ -46,7 +46,7 @@ class UIBuilder {
     static private var _objects : Hash<Widget> = new Hash();
 
     //registered skins
-    static public var skins : Hash<ISkin> = new Hash();
+    static public var skins : Hash<Void->Skin> = new Hash();
 
     //For id generator
     static private var _nextId : Int = 0;
@@ -161,6 +161,8 @@ class UIBuilder {
 
         if( zeroElementCls != null ){
             code = '\nvar __ui__widget' + n + ' : ' + cls + ' = cast(__ui__widget0, ' + cls + ');';
+
+        //special properties
         }else{
             code += '\nvar __ui__widget' + n + ' : ' + cls + ' = new ' + cls + '();';
 
@@ -174,6 +176,14 @@ class UIBuilder {
                 code += '\n     var defaultsFn : ru.stablex.ui.widgets.Widget->Void = ru.stablex.ui.UIBuilder.defaults.get("' + element.nodeName + '").get(' + defaults + ');';
                 code += '\n     if( defaultsFn != null ) defaultsFn(__ui__widget' + n + ');';
                 code += '\n}';
+            //}
+
+            //skin settings {
+                var skinName : String = element.get("skinName");
+                if( skinName != null ){
+                    element.remove('skinName');
+                    code += '\n __ui__widget' + n + '.skinName = ' + skinName + ';';
+                }
             //}
         }
 
@@ -193,7 +203,7 @@ class UIBuilder {
                 prop = UIBuilder._erAttrCls.matched(1);
                 if( !objects.exists(prop) ){
                     objects.set(prop, true);
-                    code += '\nvar ' + prop + ' = new ' + cls + '();';
+                    code += '\nvar ' + prop + ' = (Std.is(__ui__widget' + n + '.' + prop + ', ' + cls + ') ? cast(__ui__widget' + n + '.' + prop + ', ' + cls + ') : new ' + cls + '() );';
                 }
 
                 //change '-' to '.', so 'someProp-nestedProp' becomes 'someProp.nestedProp'
@@ -308,7 +318,7 @@ class UIBuilder {
 
         var code   : String = '';
         var erSkin : EReg = ~/^([a-z0-9_]+):([a-z0-9_]+)$/i;
-
+        var local  : String = '';
         //process every skin
         for(node in element.elements()){
             if( !erSkin.match(node.nodeName) ) Err.trigger('Wrong skin format: ' + node.nodeName);
@@ -316,10 +326,10 @@ class UIBuilder {
             var name : String = erSkin.matched(1);
             var cls  : String = erSkin.matched(2);
 
-
             if( !UIBuilder._imports.exists(cls) ) Err.trigger('Class is not imported: ' + cls);
+            cls = UIBuilder._imports.get(cls);
 
-            code += '\nvar skin = new ' +  UIBuilder._imports.get(cls) + '();';
+            local = '\nvar skin = new ' +  cls + '();';
 
             //apply xml attributes to skin
             var value : String;
@@ -333,12 +343,12 @@ class UIBuilder {
                 //required code replacements
                 value = UIBuilder._fillCodeShortcuts('skin', value);
 
-                code += '\nskin.' + attr + ' = ' + value + ';';
+                local += '\nskin.' + attr + ' = ' + value + ';';
             }//for( attr )
 
-            code += '\nru.stablex.ui.UIBuilder.skins.set("' + name + '", skin);';
+            code += '\nru.stablex.ui.UIBuilder.skins.set("' + name + '", function():ru.stablex.ui.skins.Skin{' + local + '\nreturn skin;\n});';
         }//for(nodes)
-
+trace(code);
         code = '(function(){' + code + '})()';
         return Context.parse(code, Context.makePosition({ min:0, max:0, file:xmlFile}) );
     }//function regSkins()
@@ -484,7 +494,7 @@ class UIBuilder {
     * Get registered skin
     *
     */
-    static public inline function skin (skinName:String) : ISkin {
+    static public inline function skin (skinName:String) : Void->Skin {
         return UIBuilder.skins.get(skinName);
     }//function skin()
 

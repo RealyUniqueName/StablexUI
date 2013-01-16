@@ -10,7 +10,7 @@ import ru.stablex.ui.widgets.Widget;
 * Fill widget with bitmap
 *
 */
-class Tile implements ISkin{
+class Tile extends Skin{
 
     //Asset ID or path to bitmap for tiling
     public var src : String;
@@ -27,18 +27,10 @@ class Tile implements ISkin{
 
 
     /**
-    * Constructor
-    *
-    */
-    public function new () : Void {
-    }//function new()
-
-
-    /**
     * Apply skin to widget
     *
     */
-    public function apply (w:Widget) : Void {
+    override public function apply (w:Widget) : Void {
         var bmp : BitmapData = Assets.getBitmapData(this.src);
 
         if( bmp == null ){
