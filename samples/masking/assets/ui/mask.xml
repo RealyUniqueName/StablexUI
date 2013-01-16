@@ -13,9 +13,9 @@
     <Widget top="100" left="300" w="400" h="400" skin:Paint-border="2" skin:Paint-color="0xffffff" on-click="
         #panel.tween(0.5, {top:#mask.mouseY - #panel.h / 2, left:#mask.mouseX - #panel.w / 2});
     ">
-        <Mask id="'mask'" widthPt="100" heightPt="100">
-            <Widget id="'panel'" skin:Tile-src="'assets/img/nme.png'" w="300" h="300" left="-50" top="-50" skin:Tile-border="4" />
-        </Mask>
+        <Widget id="'mask'" widthPt="100" heightPt="100" overflow="false">
+            <Widget id="'panel'" skin:Paint-color="0xffff0c" w="300" h="300" left="-50" top="-50" skin:Tile-border="4" />
+        </Widget>
     </Widget>
 
 </Main>

@@ -2,6 +2,7 @@ package ru.stablex.ui.widgets;
 
 import nme.display.DisplayObject;
 import nme.display.DisplayObjectContainer;
+import nme.geom.Rectangle;
 import ru.stablex.TweenSprite;
 import ru.stablex.ui.events.WidgetEvent;
 import ru.stablex.ui.UIBuilder;
@@ -88,6 +89,8 @@ class Widget extends TweenSprite{
     public var skin : ISkin;
     //skin name to use. One of registered with <type>ru.stablex.ui.UIBuilder</type>.regSkins()
     public var skinName (default,_setSkinName) : String;
+    //wether widget content out of widgt bounds is visible
+    public var overflow (default,_setOverflow): Bool = true;
 
 
     /**
@@ -99,6 +102,38 @@ class Widget extends TweenSprite{
 
         this.id = UIBuilder.createId();
     }//function new()
+
+
+    /**
+    * Setter for `overflow`
+    *
+    */
+    private function _setOverflow (o:Bool) : Bool {
+        if( !o ){
+            this.scrollRect = new Rectangle(0, 0, this._width, this._height);
+            if( !this.created ){
+                this.addUniqueListener(WidgetEvent.INITIAL_RESIZE, this._updateScrollRect);
+            }
+            this.addUniqueListener(WidgetEvent.RESIZE, this._updateScrollRect);
+        }else{
+            this.scrollRect = null;
+            if( !this.created ){
+                this.removeEventListener(WidgetEvent.INITIAL_RESIZE, this._updateScrollRect);
+            }
+            this.removeEventListener(WidgetEvent.RESIZE, this._updateScrollRect);
+        }
+
+        return this.overflow = o;
+    }//function _setOverflow()
+
+
+    /**
+    * Update `scrollRect` on resize
+    *
+    */
+    private function _updateScrollRect (e:WidgetEvent) : Void {
+        this.scrollRect = new Rectangle(0, 0, this._width, this._height);
+    }//function _updateScrollRect()
 
 
     /**
@@ -492,6 +527,9 @@ class Widget extends TweenSprite{
     * @dispatch <type>ru.stablex.ui.events.WidgetEvent</type>.CREATE
     */
     public function onCreate () : Void{
+        //remove event listeners used for creation
+        this.clearEvent(WidgetEvent.INITIAL_RESIZE);
+
         //refresh widget
         this.refresh();
 
