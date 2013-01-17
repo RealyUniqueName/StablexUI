@@ -832,7 +832,22 @@ class Widget extends TweenSprite{
 
 
     /**
-    * Find parent widget by `name` (recursively) and return it as instance of specified class
+    * Find parent widget by `name` (recursively up on display list)
+    *
+    */
+    public inline function getParent(name:String) : Widget {
+        var p : Widget = this.wparent;
+
+        while( p.name != name && p != null ){
+            p = p.wparent;
+        }
+
+        return p;
+    }//function getParent()
+
+
+    /**
+    * Find parent widget by `name` (recursively up on display list) and return it as instance of specified class
     *
     */
     public inline function getParentAs<T>(name:String, cls:Class<T>) : Null<T> {

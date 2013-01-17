@@ -173,8 +173,12 @@ class UIBuilder {
                 }
 
                 code += '\nif( ru.stablex.ui.UIBuilder.defaults.exists("' + element.nodeName + '") ){';
-                code += '\n     var defaultsFn : ru.stablex.ui.widgets.Widget->Void = ru.stablex.ui.UIBuilder.defaults.get("' + element.nodeName + '").get(' + defaults + ');';
-                code += '\n     if( defaultsFn != null ) defaultsFn(__ui__widget' + n + ');';
+                code += '\n     var defs = ' + defaults + '.split(",");';
+                code += '\n     var defFns = ru.stablex.ui.UIBuilder.defaults.get("' + element.nodeName + '");';
+                code += '\n     for(i in 0...defs.length){';
+                code += '\n         var defaultsFn : ru.stablex.ui.widgets.Widget->Void = defFns.get(defs[i]);';
+                code += '\n         if( defaultsFn != null ) defaultsFn(__ui__widget' + n + ');';
+                code += '\n     }';
                 code += '\n}';
             //}
 
@@ -436,9 +440,12 @@ trace(code);
             var clsName : String = Type.getClassName(cls);
             var widgetDefaults : Hash<Widget->Void> = UIBuilder.defaults.get( clsName.substr(clsName.lastIndexOf('.', clsName.length - 1) + 1) );
             if( widgetDefaults != null ){
-                var defaultsFn : Widget->Void = widgetDefaults.get(obj.defaults);
-                if( defaultsFn != null ){
-                    defaultsFn(obj);
+                var defs : Array<String> = obj.defaults.split(',');
+                for(i in 0...defs.length){
+                    var defaultsFn : Widget->Void = widgetDefaults.get(defs[i]);
+                    if( defaultsFn != null ){
+                        defaultsFn(obj);
+                    }
                 }
             }
         //}
