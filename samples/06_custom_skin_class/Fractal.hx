@@ -7,7 +7,7 @@ import ru.stablex.ui.widgets.Widget;
 * Draw fractal rectangles
 *
 */
-class Fractal implements ISkin{
+class Fractal extends ru.stablex.ui.skins.Skin{
 
     //Thickness of line used to draw rectangles
     public var lineThickness : Int = 2;
@@ -16,19 +16,12 @@ class Fractal implements ISkin{
     //step between rectangles in pixels
     public var step : Int = 10;
 
-    /**
-    * Constructor of skin class must take no necessary arguments.
-    *
-    */
-    public function new () : Void {
-    }//function new()
-
 
     /**
     * Apply skin to widget
     *
     */
-    public function apply (widget:Widget) : Void {
+    override public function apply (widget:Widget) : Void {
         //make sure `step` is valid
         if( this.step <= 0 ) this.step = 10;
 

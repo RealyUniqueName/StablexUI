@@ -39,7 +39,7 @@ class Tile extends Skin{
 
         w.graphics.clear();
 
-        #if !html5
+        // #if !html5
             if( this.border > 0 ){
                 w.graphics.lineStyle(this.border, this.borderColor, this.borderAlpha);
             }
@@ -55,47 +55,47 @@ class Tile extends Skin{
             }
 
             w.graphics.endFill();
-        #else
-            var wh : Float = 0;
-            var hh : Float = 0;
-            var mx = new nme.geom.Matrix();
+        // #else
+        //     var wh : Float = 0;
+        //     var hh : Float = 0;
+        //     var mx = new nme.geom.Matrix();
 
-            while(wh < w.w){
-                while(hh < w.h){
-                    mx.identity();
-                    mx.translate(wh, hh);
+        //     while(wh < w.w){
+        //         while(hh < w.h){
+        //             mx.identity();
+        //             mx.translate(wh, hh);
 
-                    if( hh + bmp.height > w.h || wh + bmp.width > w.w ){
-                        var h1 : Float = (hh + bmp.height > w.h ? w.h - hh : bmp.height);
-                        var w1 : Float = (wh + bmp.width > w.w ? w.w - wh : bmp.width);
+        //             if( hh + bmp.height > w.h || wh + bmp.width > w.w ){
+        //                 var h1 : Float = (hh + bmp.height > w.h ? w.h - hh : bmp.height);
+        //                 var w1 : Float = (wh + bmp.width > w.w ? w.w - wh : bmp.width);
 
-                        var bmp1 : BitmapData = new BitmapData(Std.int(w1), Std.int(h1), true, 0x00FFFFFF);
-                        bmp1.copyPixels(bmp, new nme.geom.Rectangle(0, 0, w1, h1), new nme.geom.Point());
+        //                 var bmp1 : BitmapData = new BitmapData(Std.int(w1), Std.int(h1), true, 0x00FFFFFF);
+        //                 bmp1.copyPixels(bmp, new nme.geom.Rectangle(0, 0, w1, h1), new nme.geom.Point());
 
-                        w.graphics.beginBitmapFill(bmp1, mx, true, true);
-                    }else{
-                        w.graphics.beginBitmapFill(bmp, mx, true, true);
-                    }
+        //                 w.graphics.beginBitmapFill(bmp1, mx, true, true);
+        //             }else{
+        //                 w.graphics.beginBitmapFill(bmp, mx, true, true);
+        //             }
 
-                    w.graphics.drawRect(
-                        wh,
-                        hh,
-                        (wh + bmp.width > w.w ? w.w - wh : bmp.width),
-                        (hh + bmp.height > w.h ? w.h - hh : bmp.height)
-                    );
-                    w.graphics.endFill();
+        //             w.graphics.drawRect(
+        //                 wh,
+        //                 hh,
+        //                 (wh + bmp.width > w.w ? w.w - wh : bmp.width),
+        //                 (hh + bmp.height > w.h ? w.h - hh : bmp.height)
+        //             );
+        //             w.graphics.endFill();
 
-                    hh += bmp.height;
-                }
-                hh = 0;
-                wh += bmp.width;
-            }
+        //             hh += bmp.height;
+        //         }
+        //         hh = 0;
+        //         wh += bmp.width;
+        //     }
 
-            //if border is described
-            if( this.border > 0 ){
-                w.graphics.lineStyle(this.border, this.borderColor, this.borderAlpha);
-                w.graphics.drawRect(0, 0, w.w, w.h);
-            }
-        #end
+        //     //if border is described
+        //     if( this.border > 0 ){
+        //         w.graphics.lineStyle(this.border, this.borderColor, this.borderAlpha);
+        //         w.graphics.drawRect(0, 0, w.w, w.h);
+        //     }
+        // #end
     }//function apply()
 }//class Tile

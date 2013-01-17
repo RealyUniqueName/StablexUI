@@ -2,8 +2,8 @@
 @manual Skin system
 
 Every widget can be skinned using <type>ru.stablex.ui.widgets.Widget</type>.skin property.
-This property is of type <type>ru.stablex.ui.skins.ISkin</type>. You can choose any skinning class
-from ru.stablex.ui.skins.* package or your custom class, wich implements ISkin.
+This property is of type <type>ru.stablex.ui.skins.Skin</type>. You can choose any skinning class
+from ru.stablex.ui.skins.* package or your custom class, wich extends Skin.
 
 Here is example of using <type>ru.stablex.ui.skins.Paint</type> class to skin widget:
 
@@ -103,7 +103,7 @@ That is all! Now you can use your skins by theirs names as in following ui xml:
 /**
 @manual Custom skin class
 
-You can create your own skin classes by implementing <type>ru.stablex.ui.skins.ISkin</type>. For example,
+You can create your own skin classes by extending <type>ru.stablex.ui.skins.Skin</type>. For example,
 let's create skin wich draws fractal rectangles on widget. Here is the source code for Fractal.hx:
 
 <haxe>
@@ -112,7 +112,7 @@ let's create skin wich draws fractal rectangles on widget. Here is the source co
 * Draw fractal rectangles
 *
 */
-class Fractal implements ru.stablex.ui.skins.ISkin{
+class Fractal extends ru.stablex.ui.skins.Skin{
 
     //Thickness of line used to draw rectangles
     public var lineThickness : Int = 2;
@@ -121,19 +121,12 @@ class Fractal implements ru.stablex.ui.skins.ISkin{
     //step between rectangles in pixels
     public var step : Int = 10;
 
-    /**
-    * Constructor of skin class must take no necessary arguments.
-    *
-    */
-    public function new () : Void {
-    }//function new()
-
 
     /**
     * Apply skin to widget
     *
     */
-    public function apply (widget:ru.stablex.ui.widgets.Widget) : Void {
+    override public function apply (widget:ru.stablex.ui.widgets.Widget) : Void {
         //make sure `step` is valid
         if( this.step <= 0 ) this.step = 10;
 

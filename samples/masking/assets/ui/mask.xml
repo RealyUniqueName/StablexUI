@@ -14,7 +14,7 @@
         #panel.tween(0.5, {top:#mask.mouseY - #panel.h / 2, left:#mask.mouseX - #panel.w / 2});
     ">
         <Widget id="'mask'" widthPt="100" heightPt="100" overflow="false">
-            <Widget id="'panel'" skin:Paint-color="0xffff0c" w="300" h="300" left="-50" top="-50" skin:Tile-border="4" />
+            <Widget id="'panel'" skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[40]" w="300" h="300" left="-50" top="-50" />
         </Widget>
     </Widget>
 

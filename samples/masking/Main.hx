@@ -31,7 +31,7 @@ class Main extends ru.stablex.ui.widgets.Widget{
 
         //initialize StablexUI
         UIBuilder.init();
-
+trace({h:Lib.current.stage.stageHeight, w:Lib.current.stage.stageWidth});
         //Create our UI
         Lib.current.addChild( UIBuilder.buildFn('assets/ui/mask.xml')() );
     }//function main()

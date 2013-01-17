@@ -2,8 +2,8 @@
 <h2>Skin system</h2>
 
 Every widget can be skinned using <a class="type" href="/ui/doc/#ru/stablex/ui/widgets/Widget.html" title="ru.stablex.ui.widgets.Widget">Widget</a>.skin property.
-This property is of type <a class="type" href="/ui/doc/#ru/stablex/ui/skins/ISkin.html" title="ru.stablex.ui.skins.ISkin">ISkin</a>. You can choose any skinning class
-from ru.stablex.ui.skins.* package or your custom class, wich implements ISkin.
+This property is of type <a class="type" href="/ui/doc/#ru/stablex/ui/skins/Skin.html" title="ru.stablex.ui.skins.Skin">Skin</a>. You can choose any skinning class
+from ru.stablex.ui.skins.* package or your custom class, wich extends Skin.
 
 Here is example of using <a class="type" href="/ui/doc/#ru/stablex/ui/skins/Paint.html" title="ru.stablex.ui.skins.Paint">Paint</a> class to skin widget:
 
@@ -104,7 +104,7 @@ That is all! Now you can use your skins by theirs names as in following ui xml:
 <div class="manual">
 <h2>Custom skin class</h2>
 
-You can create your own skin classes by implementing <a class="type" href="/ui/doc/#ru/stablex/ui/skins/ISkin.html" title="ru.stablex.ui.skins.ISkin">ISkin</a>. For example,
+You can create your own skin classes by extending <a class="type" href="/ui/doc/#ru/stablex/ui/skins/Skin.html" title="ru.stablex.ui.skins.Skin">Skin</a>. For example,
 let's create skin wich draws fractal rectangles on widget. Here is the source code for Fractal.hx:
 
 <div class="haxe">
@@ -113,7 +113,7 @@ let's create skin wich draws fractal rectangles on widget. Here is the source co
 <i>* Draw fractal rectangles</i>
 <i>*</i>
 <i>*/</i>
-<div class="classDef"> <span class="class">class</span> <span class="className">Fractal</span> <span class="implements">implements</span> <a class="type" href="/ui/doc/#ru/stablex/ui/skins/ISkin.html" title="ru.stablex.ui.skins.ISkin">ISkin</a>{</div>
+<div class="classDef"> <span class="class">class</span> <span class="className">Fractal</span> <span class="extends">extends</span> <a class="type" href="/ui/doc/#ru/stablex/ui/skins/Skin.html" title="ru.stablex.ui.skins.Skin">Skin</a>{</div>
 
     <i>//Thickness of line used to draw rectangles</i>
 <div class="definition">    <span class="public">public</span> <span class="var">var</span> <span class="definitionName">lineThickness</span> : <a class="type" href="/ui/doc/#http://haxe.org/api/Int" title="Int">Int</a> = 2;</div>
@@ -122,19 +122,12 @@ let's create skin wich draws fractal rectangles on widget. Here is the source co
     <i>//step between rectangles in pixels</i>
 <div class="definition">    <span class="public">public</span> <span class="var">var</span> <span class="definitionName">step</span> : <a class="type" href="/ui/doc/#http://haxe.org/api/Int" title="Int">Int</a> = 10;</div>
 
-<i>    /**</i>
-<i>    * Constructor of skin class must take no necessary arguments.</i>
-<i>    *</i>
-<i>    */</i>
-<div class="definition">    <span class="public">public</span> <span class="function">function</span> <span class="definitionName">new</span> () : <a class="type" href="/ui/doc/#http://haxe.org/api/Void" title="Void">Void</a> {</div>
-    }<i>//function new()</i>
-
 
 <i>    /**</i>
 <i>    * Apply skin to widget</i>
 <i>    *</i>
 <i>    */</i>
-<div class="definition">    <span class="public">public</span> <span class="function">function</span> <span class="definitionName">apply</span> (widget:<a class="type" href="/ui/doc/#ru/stablex/ui/widgets/Widget.html" title="ru.stablex.ui.widgets.Widget">Widget</a>) : <a class="type" href="/ui/doc/#http://haxe.org/api/Void" title="Void">Void</a> {</div>
+<div class="definition">    <span class="override">override</span> <span class="public">public</span> <span class="function">function</span> <span class="definitionName">apply</span> (widget:<a class="type" href="/ui/doc/#ru/stablex/ui/widgets/Widget.html" title="ru.stablex.ui.widgets.Widget">Widget</a>) : <a class="type" href="/ui/doc/#http://haxe.org/api/Void" title="Void">Void</a> {</div>
         <i>//make sure `step` is valid</i>
         <span class="if">if</span>( <span class="this">this</span>.step <span class="operator"><=</span> 0 ) <span class="this">this</span>.step = 10;
 
