@@ -9,9 +9,20 @@
     h    = "$Lib.current.stage.stageHeight - 20"
     skin:Slice9-src   = "'assets/img/winxp.png'"
     skin:Slice9-slice = "[5, 10, 32, 48]"
+    on-display=" haxe.Timer.delay(#mask.onResize, 10); "
 >
-    <Widget top="100" left="300" w="400" h="400" skin:Paint-border="2" skin:Paint-color="0xffffff" on-click="
-        #panel.tween(0.5, {top:#mask.mouseY - #panel.h / 2, left:#mask.mouseX - #panel.w / 2});
+
+    <HBox widthPt="100" top="40" childPadding="20">
+        <Button skin:Paint-color="0x999999" skin:Paint-border="1" text="'remove object with scrollRect'" on-click=" #cont.removeChild(#mask); "/>
+        <Button skin:Paint-color="0x999999" skin:Paint-border="1" text="'add object with scrollRect'" on-click=" #cont.addChild(#mask); "/>
+        <Button skin:Paint-color="0x999999" skin:Paint-border="1" text="'scrollRect = null'" on-click=" #mask.scrollRect = null; "/>
+        <Button skin:Paint-color="0x999999" skin:Paint-border="1" text="'set scrollRect'" on-click=" #mask.onResize(); "/>
+    </HBox>
+
+    <Widget id="'cont'" widthPt="90" h="500" leftPt="5" bottom="10" skin:Paint-border="1" skin:Paint-color="0xAAAAAA" on-click="
+        if( event.target != #mask && event.target != #panel ){
+            #mask.tween(0.5, {left:$this.mouseX - #mask.w / 2, top:$this.mouseY - #mask.h / 2});
+        }
     ">
         <Widget id="'mask'" widthPt="100" heightPt="100" overflow="false">
             <Widget id="'panel'" skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[40]" w="300" h="300" left="-50" top="-50" />
