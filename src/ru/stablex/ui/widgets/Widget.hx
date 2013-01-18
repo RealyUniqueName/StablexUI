@@ -769,32 +769,6 @@ class Widget extends TweenSprite{
     }//function removeChild()
 
 
-    // /**
-    // * Recursively looks for child with specified name
-    // *
-    // */
-    // override public function getChildByName(name:String) : DisplayObject {
-    //     var child : DisplayObject = null;
-
-    //     //check each child
-    //     for(i in 0...this.numChildren){
-    //         child = this.getChildAt(i);
-
-    //         if( child.name == name ) break;
-
-    //         //look through this child children
-    //         if( Std.is(child, DisplayObjectContainer) ){
-    //             child = cast(child, DisplayObjectContainer).getChildByName(name);
-    //             if( child != null ) break;
-    //         }
-
-    //         child = null;
-    //     }
-
-    //     return child;
-    // }//function getChildByName()
-
-
     /**
     * Find child widget by `name` (recursively) and return it as instance of specified class
     *
@@ -803,6 +777,15 @@ class Widget extends TweenSprite{
         var w : Widget = this._findChildWidget(name);
         return ( Std.is(w, cls) ? cast w : null );
     }//function getChildAs()
+
+
+    /**
+    * Find child widget by `name` (recursively) and return it
+    *
+    */
+    public inline function getChild(name:String) : Widget {
+        return this._findChildWidget(name);
+    }//function getChild()
 
 
     /**

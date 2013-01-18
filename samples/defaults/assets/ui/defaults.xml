@@ -25,6 +25,12 @@
             format-size="12"
             format-color="0x0000FF"
         />
+        <AnotherFormat
+            format-size  = "16"
+            format-color = "0x00FF33"
+            format-bold  = "true"
+            autoWidth    = "true"
+        />
     </Button>
     <Text>
         <Title

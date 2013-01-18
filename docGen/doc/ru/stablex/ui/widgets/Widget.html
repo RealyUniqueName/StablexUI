@@ -131,16 +131,20 @@
 </div>
 <div class="comment"> Remove child at specified index from display list
 </div>
-<div class="definition">    // <span class="override">override</span> <span class="public">public</span> <span class="function">function</span> <span class="definitionName">getChildByName</span>(name:<a class="type" href="/ui/doc/#http://haxe.org/api/String" title="String">String</a>) : <a class="type" href="/ui/doc/#http://nme.io/api/types/nme/display/DisplayObject.html" title="nme.display.DisplayObject">DisplayObject</a> 
-</div>
-<div class="comment"> */
-</div>
 <div class="definition">    <span class="public">public</span> <span class="inline">inline</span> <span class="function">function</span> getChildAs&lt;<a class="type" href="/ui/doc/#http://haxe.org/api/T" title="T">T</a>&gt;(name:<a class="type" href="/ui/doc/#http://haxe.org/api/String" title="String">String</a>, cls:<a class="type" href="/ui/doc/#http://haxe.org/api/Class" title="Class">Class</a>&lt;<a class="type" href="/ui/doc/#http://haxe.org/api/T" title="T">T</a>&gt;) : <a class="type" href="/ui/doc/#http://haxe.org/api/Null" title="Null">Null</a>&lt;<a class="type" href="/ui/doc/#http://haxe.org/api/T" title="T">T</a>&gt; 
 </div>
 <div class="comment"> Find child widget by `name` (recursively) and return it as instance of specified class
 </div>
+<div class="definition">    <span class="public">public</span> <span class="inline">inline</span> <span class="function">function</span> <span class="definitionName">getChild</span>(name:<a class="type" href="/ui/doc/#http://haxe.org/api/String" title="String">String</a>) : <a class="type" href="/ui/doc/#ru/stablex/ui/widgets/Widget.html" title="ru.stablex.ui.widgets.Widget">Widget</a> 
+</div>
+<div class="comment"> Find child widget by `name` (recursively) and return it
+</div>
+<div class="definition">    <span class="public">public</span> <span class="inline">inline</span> <span class="function">function</span> <span class="definitionName">getParent</span>(name:<a class="type" href="/ui/doc/#http://haxe.org/api/String" title="String">String</a>) : <a class="type" href="/ui/doc/#ru/stablex/ui/widgets/Widget.html" title="ru.stablex.ui.widgets.Widget">Widget</a> 
+</div>
+<div class="comment"> Find parent widget by `name` (recursively up on display list)
+</div>
 <div class="definition">    <span class="public">public</span> <span class="inline">inline</span> <span class="function">function</span> getParentAs&lt;<a class="type" href="/ui/doc/#http://haxe.org/api/T" title="T">T</a>&gt;(name:<a class="type" href="/ui/doc/#http://haxe.org/api/String" title="String">String</a>, cls:<a class="type" href="/ui/doc/#http://haxe.org/api/Class" title="Class">Class</a>&lt;<a class="type" href="/ui/doc/#http://haxe.org/api/T" title="T">T</a>&gt;) : <a class="type" href="/ui/doc/#http://haxe.org/api/Null" title="Null">Null</a>&lt;<a class="type" href="/ui/doc/#http://haxe.org/api/T" title="T">T</a>&gt; 
 </div>
-<div class="comment"> Find parent widget by `name` (recursively) and return it as instance of specified class
+<div class="comment"> Find parent widget by `name` (recursively up on display list) and return it as instance of specified class
 </div>
 </div>

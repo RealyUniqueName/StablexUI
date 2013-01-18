@@ -8,12 +8,4 @@
     <Button text="'this is button with no defaults specified. But `Default` section for buttons does exist in defaults.xml'"/>
     <Button defaults="'Red'" text="'this button is using `Red` section for buttons in defaults.xml'"/>
     <Button defaults="'Red,AnotherFormat'" text="'this button is using `Red` and `AnotherFormat` sections for buttons in defaults.xml'"/>
-    <Widget>
-        <Widget on-display=" trace( Type.typeof($this.getParentAs('top', $Widget)) ); ">
-            <Widget>
-                <Widget name="'c1'" />
-                <Widget name="'c2'" />
-            </Widget>
-        </Widget>
-    </Widget>
 </VBox>
