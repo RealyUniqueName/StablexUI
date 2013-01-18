@@ -22,7 +22,7 @@ class Tile extends Skin{
     public var borderColor : Int = 0x000000;
     //border alpha
     public var borderAlpha : Float = 1;
-    //define corner radius for filling with color. Format: [elipseWidth, elipseHeight] or [radius], e.g. [10, 20] or [20]
+    //define corner radius. Format: [elipseWidth, elipseHeight] or [radius], e.g. [10, 20] or [20]
     public var corners : Array<Float>;
 
 

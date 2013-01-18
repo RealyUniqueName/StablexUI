@@ -38,9 +38,9 @@ var widget = ru.stablex.ui.UIBuilder.create(ru.stablex.ui.widgets.Text, {
 
 Some widget properties (e.g. `.skin` property) are not scalar. So we need to create
 objects for these properties to define them in xml.
-`.skin` property gets objects of <type>ru.stablex.ui.skins.ISkin</type>. Let's create instance of <type>ru.stablex.ui.skins.Paint</type>
-for skin. <type>ru.stablex.ui.skins.Paint</type> implements <type>ru.stablex.ui.skins.ISkin</type>, so we can assign instances
-of <type>ru.stablex.ui.skins.Paint</type> to variables and properties typed as <type>ru.stablex.ui.skins.ISkin</type>.
+`.skin` property gets objects of <type>ru.stablex.ui.skins.Skin</type>. Let's create instance of <type>ru.stablex.ui.skins.Paint</type>
+for skin. <type>ru.stablex.ui.skins.Paint</type> extends <type>ru.stablex.ui.skins.Skin</type>, so we can assign instances
+of <type>ru.stablex.ui.skins.Paint</type> to variables and properties typed as <type>ru.stablex.ui.skins.Skin</type>.
 Here is xml wich does the job:
 
 <xml>

@@ -39,9 +39,9 @@ You can define nested properties when creating widgets dynamically (in haxe code
 
 Some widget properties (e.g. `.skin` property) are not scalar. So we need to create
 objects for these properties to define them in xml.
-`.skin` property gets objects of <a class="type" href="/ui/doc/#ru/stablex/ui/skins/ISkin.html" title="ru.stablex.ui.skins.ISkin">ISkin</a>. Let's create instance of <a class="type" href="/ui/doc/#ru/stablex/ui/skins/Paint.html" title="ru.stablex.ui.skins.Paint">Paint</a>
-for skin. <a class="type" href="/ui/doc/#ru/stablex/ui/skins/Paint.html" title="ru.stablex.ui.skins.Paint">Paint</a> implements <a class="type" href="/ui/doc/#ru/stablex/ui/skins/ISkin.html" title="ru.stablex.ui.skins.ISkin">ISkin</a>, so we can assign instances
-of <a class="type" href="/ui/doc/#ru/stablex/ui/skins/Paint.html" title="ru.stablex.ui.skins.Paint">Paint</a> to variables and properties typed as <a class="type" href="/ui/doc/#ru/stablex/ui/skins/ISkin.html" title="ru.stablex.ui.skins.ISkin">ISkin</a>.
+`.skin` property gets objects of <a class="type" href="/ui/doc/#ru/stablex/ui/skins/Skin.html" title="ru.stablex.ui.skins.Skin">Skin</a>. Let's create instance of <a class="type" href="/ui/doc/#ru/stablex/ui/skins/Paint.html" title="ru.stablex.ui.skins.Paint">Paint</a>
+for skin. <a class="type" href="/ui/doc/#ru/stablex/ui/skins/Paint.html" title="ru.stablex.ui.skins.Paint">Paint</a> extends <a class="type" href="/ui/doc/#ru/stablex/ui/skins/Skin.html" title="ru.stablex.ui.skins.Skin">Skin</a>, so we can assign instances
+of <a class="type" href="/ui/doc/#ru/stablex/ui/skins/Paint.html" title="ru.stablex.ui.skins.Paint">Paint</a> to variables and properties typed as <a class="type" href="/ui/doc/#ru/stablex/ui/skins/Skin.html" title="ru.stablex.ui.skins.Skin">Skin</a>.
 Here is xml wich does the job:
 
 <div class="xml">
