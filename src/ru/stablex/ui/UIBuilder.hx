@@ -20,7 +20,7 @@ class UIBuilder {
         //checks wether attribute declares event listener
         @:macro static private var _erEvent    : EReg = ~/^on-(.+)/i;
         //for replacing @someVar with arguments passed to UIBuilder.buildFn()({arguments})
-        @:macro static private var _erCodeArg : EReg = ~/@([._a-z0-9]+)([^.a-z0-9_])/i;
+        @:macro static private var _erCodeArg : EReg = ~/@([._a-z0-9]+)/i;
         //for replacing $ClassName with classes registered through UIBuilder.regClass('fully qualified class name')
         @:macro static private var _erCls     : EReg = ~/\$([a-z0-9_]+)([^a-z0-9_])/i;
         //for replacing #someId with UIBuilder.get('someId')
@@ -352,7 +352,7 @@ class UIBuilder {
 
             code += '\nru.stablex.ui.UIBuilder.skins.set("' + name + '", function():ru.stablex.ui.skins.Skin{' + local + '\nreturn skin;\n});';
         }//for(nodes)
-trace(code);
+
         code = '(function(){' + code + '})()';
         return Context.parse(code, Context.makePosition({ min:0, max:0, file:xmlFile}) );
     }//function regSkins()
@@ -398,7 +398,7 @@ trace(code);
 
         //arguments
         while( arg.match(code) ){
-            code = arg.replace(code, '__ui__arguments.$1$2');
+            code = arg.replace(code, '__ui__arguments.$1');
         }
 
         return code;
