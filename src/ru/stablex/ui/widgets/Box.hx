@@ -26,6 +26,7 @@ class Box extends Widget{
     /**
     * This should be like 'left,top' or 'bottom' or 'center,middle' etc.
     * Vertical: left, right, center. Horizontal: top, bottom, middle.
+    * Use any other value to cancel alignment
     */
     public var align : String = 'center,middle';
     //set size depending on content size
@@ -141,20 +142,23 @@ class Box extends Widget{
             this._width = w + this.paddingLeft + this.paddingRight;
         //if this is horizontal box set width = sum children width
         }else{
-
-            var w : Float = this.paddingLeft + this.paddingRight + (this.numChildren - 1) * this.childPadding;
+            var w : Float = this.paddingLeft + this.paddingRight;
             var child : DisplayObject;
+            var visibleChildren : Int = 0;
 
             for(i in 0...this.numChildren){
                 child = this.getChildAt(i);
-                if( Std.is(child, Widget) ){
-                    w += cast(child, Widget)._width;
-                }else if( child.width > w ){
-                    w = child.width;
+                if( child.visible ){
+                    if( Std.is(child, Widget) ){
+                        w += cast(child, Widget)._width;
+                    }else if( child.width > w ){
+                        w += child.width;
+                    }
+                    visibleChildren ++;
                 }
             }
 
-            this._width = w;
+            this._width = w + (visibleChildren - 1) * this.childPadding;
         }
     }//function _calcWidth()
 
@@ -164,24 +168,28 @@ class Box extends Widget{
     *
     */
     private function _calcHeight () : Void {
-        //if this is vertical box, set height = sum children height
+        //if this is vertical box, set height = sum child height
         if( this.vertical ){
 
-            var h : Float = this.paddingTop + this.paddingBottom + (this.numChildren - 1) * this.childPadding;
+            var h : Float = this.paddingTop + this.paddingBottom;
             var child : DisplayObject;
+            var visibleChildren : Int = 0;
 
             for(i in 0...this.numChildren){
                 child = this.getChildAt(i);
-                if( Std.is(child, Widget) ){
-                    h += cast(child, Widget)._height;
-                }else if( child.height > h ){
-                    h = child.height;
+                if( child.visible ){
+                    if( Std.is(child, Widget) ){
+                        h += cast(child, Widget)._height;
+                    }else if( child.height > h ){
+                        h += child.height;
+                    }
+                    visibleChildren ++;
                 }
             }
 
-            this._height = h;
+            this._height = h + (visibleChildren - 1) * this.childPadding;
 
-        //if this is horizontal box set height = sum children height
+        //if this is horizontal box set height = max children height
         }else{
 
             var h : Float = 0;
@@ -220,7 +228,6 @@ class Box extends Widget{
                 case 'left'   : this._hAlignLeft();
                 case 'center' : this._hAlignCenter();
                 case 'right'  : this._hAlignRight();
-                default : Err.trigger('Unknown alignment: ' + align);
             }
         }
     }//function alignElements()
