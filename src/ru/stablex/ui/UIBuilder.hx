@@ -86,7 +86,7 @@ class UIBuilder {
             UIBuilder.regClass('ru.stablex.ui.widgets.VBox');
             UIBuilder.regClass('ru.stablex.ui.widgets.HBox');
             UIBuilder.regClass('ru.stablex.ui.widgets.ViewStack');
-            UIBuilder.regClass('ru.stablex.ui.widgets.Mask');
+            UIBuilder.regClass('ru.stablex.ui.widgets.Scroll');
             UIBuilder.regClass('ru.stablex.ui.events.WidgetEvent');
             UIBuilder.regClass('ru.stablex.ui.skins.Paint');
             UIBuilder.regClass('ru.stablex.ui.skins.Tile');

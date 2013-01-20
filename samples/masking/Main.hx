@@ -17,12 +17,6 @@ class Main extends ru.stablex.ui.widgets.Widget{
     */
     static public function main () : Void{
 
-/*************************
-*
-* MASKING DOES NOT WORK FOR HTML5
-*
-*************************/
-
         Lib.current.stage.align     = StageAlign.TOP_LEFT;
         Lib.current.stage.scaleMode = StageScaleMode.NO_SCALE;
 
@@ -31,7 +25,7 @@ class Main extends ru.stablex.ui.widgets.Widget{
 
         //initialize StablexUI
         UIBuilder.init();
-trace({h:Lib.current.stage.stageHeight, w:Lib.current.stage.stageWidth});
+
         //Create our UI
         Lib.current.addChild( UIBuilder.buildFn('assets/ui/mask.xml')() );
     }//function main()

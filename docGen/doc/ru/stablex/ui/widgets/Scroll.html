@@ -1,0 +1,77 @@
+<dic class="classContainer"><div class="classDef"> <span class="class">class</span> <span class="className">Scroll</span> <span class="extends">extends</span> <a class="type" href="/ui/doc/#ru/stablex/ui/widgets/Widget.html" title="ru.stablex.ui.widgets.Widget">Widget</a>
+</div>
+<div class="comment"> Scroll container.
+ ...IN PROGRESS...
+</div>
+<div class="definition">    <span class="public">public</span> <span class="var">var</span> <span class="definitionName">vScroll</span> : <a class="type" href="/ui/doc/#http://haxe.org/api/Bool" title="Bool">Bool</a> = true
+</div>
+<div class="comment">allow vertical scrolling
+</div>
+<div class="definition">    <span class="public">public</span> <span class="var">var</span> <span class="definitionName">hScroll</span> : <a class="type" href="/ui/doc/#http://haxe.org/api/Bool" title="Bool">Bool</a> = true
+</div>
+<div class="comment">allow horizontal scrolling
+</div>
+<div class="definition">    <span class="public">public</span> <span class="var">var</span> <span class="definitionName">wheelScroll</span> : <a class="type" href="/ui/doc/#http://haxe.org/api/Bool" title="Bool">Bool</a> = true
+</div>
+<div class="comment">allow scrolling by mouse wheel
+</div>
+<div class="definition">    <span class="public">public</span> <span class="var">var</span> <span class="definitionName">hScrollKey</span> : <a class="type" href="/ui/doc/#http://haxe.org/api/String" title="String">String</a> = 'alt'
+</div>
+<div class="comment"> Modifier to scroll horizontally instead of vertically, when using mouse wheel
+ Possible values: shift, alt, ctrl
+ Note for flash: some browsers reserve shift+wheel, alt+wheel, ctrl+wheel combinations
+</div>
+<div class="definition">    <span class="public">public</span> <span class="var">var</span> <span class="definitionName">dragScroll</span> : <a class="type" href="/ui/doc/#http://haxe.org/api/Bool" title="Bool">Bool</a> = true
+</div>
+<div class="comment">allow scrolling by dragging
+</div>
+<div class="definition">    <span class="public">public</span> <span class="var">var</span> <span class="definitionName">box</span> : <a class="type" href="/ui/doc/#ru/stablex/ui/widgets/Box.html" title="ru.stablex.ui.widgets.Box">Box</a>
+</div>
+<div class="comment">container for content. Content is scrolled by moving this container
+</div>
+<div class="definition">    <span class="public">public</span> <span class="var">var</span> <span class="definitionName">scrollX</span> (default,_setScrollX) : <a class="type" href="/ui/doc/#http://haxe.org/api/Float" title="Float">Float</a> = 0
+</div>
+<div class="comment">scroll position along x axes
+</div>
+<div class="definition">    <span class="public">public</span> <span class="var">var</span> <span class="definitionName">scrollY</span> (default,_setScrollY) : <a class="type" href="/ui/doc/#http://haxe.org/api/Float" title="Float">Float</a> = 0
+</div>
+<div class="comment">scroll position along y axes
+</div>
+<div class="definition">    <span class="public">public</span> <span class="function">function</span> <span class="definitionName">new</span> () : <a class="type" href="/ui/doc/#http://haxe.org/api/Void" title="Void">Void</a> 
+</div>
+<div class="comment"> Constructor
+  `.overflow` = false by default
+</div>
+<div class="definition">    <span class="override">override</span> <span class="public">public</span> <span class="function">function</span> <span class="definitionName">refresh</span> () : <a class="type" href="/ui/doc/#http://haxe.org/api/Void" title="Void">Void</a> 
+</div>
+<div class="comment"> Refresh container too
+</div>
+<div class="definition">    <span class="override">override</span> <span class="public">public</span> <span class="function">function</span> <span class="definitionName">addChild</span> (child:<a class="type" href="/ui/doc/#http://nme.io/api/types/nme/display/DisplayObject.html" title="nme.display.DisplayObject">DisplayObject</a>) : <a class="type" href="/ui/doc/#http://nme.io/api/types/nme/display/DisplayObject.html" title="nme.display.DisplayObject">DisplayObject</a> 
+</div>
+<div class="comment"> add child to display list. Adds to `.box` display list
+</div>
+<div class="definition">    <span class="override">override</span> <span class="public">public</span> <span class="function">function</span> <span class="definitionName">addChildAt</span> (child:<a class="type" href="/ui/doc/#http://nme.io/api/types/nme/display/DisplayObject.html" title="nme.display.DisplayObject">DisplayObject</a>, idx:<a class="type" href="/ui/doc/#http://haxe.org/api/Int" title="Int">Int</a>) : <a class="type" href="/ui/doc/#http://nme.io/api/types/nme/display/DisplayObject.html" title="nme.display.DisplayObject">DisplayObject</a> 
+</div>
+<div class="comment"> Add child to display list at specified index. Adds to `.box` display list
+</div>
+<div class="definition">    <span class="override">override</span> <span class="public">public</span> <span class="function">function</span> <span class="definitionName">removeChild</span> (child:<a class="type" href="/ui/doc/#http://nme.io/api/types/nme/display/DisplayObject.html" title="nme.display.DisplayObject">DisplayObject</a>) : <a class="type" href="/ui/doc/#http://nme.io/api/types/nme/display/DisplayObject.html" title="nme.display.DisplayObject">DisplayObject</a> 
+</div>
+<div class="comment"> Remove child from display list. Removes from `.box` display list
+</div>
+<div class="definition">    <span class="override">override</span> <span class="public">public</span> <span class="function">function</span> <span class="definitionName">removeChildAt</span> (idx:<a class="type" href="/ui/doc/#http://haxe.org/api/Int" title="Int">Int</a>) : <a class="type" href="/ui/doc/#http://nme.io/api/types/nme/display/DisplayObject.html" title="nme.display.DisplayObject">DisplayObject</a> 
+</div>
+<div class="comment"> Remove child from display list at specified index. Removes from `.box` display list
+</div>
+<div class="definition">    <span class="override">override</span> <span class="public">public</span> <span class="function">function</span> <span class="definitionName">setChildIndex</span> (child:<a class="type" href="/ui/doc/#http://nme.io/api/types/nme/display/DisplayObject.html" title="nme.display.DisplayObject">DisplayObject</a>, idx:<a class="type" href="/ui/doc/#http://haxe.org/api/Int" title="Int">Int</a>) : <a class="type" href="/ui/doc/#http://haxe.org/api/Void" title="Void">Void</a> 
+</div>
+<div class="comment"> Set child index.
+</div>
+<div class="definition">    <span class="override">override</span> <span class="public">public</span> <span class="function">function</span> <span class="definitionName">swapChildren</span> (child1:<a class="type" href="/ui/doc/#http://nme.io/api/types/nme/display/DisplayObject.html" title="nme.display.DisplayObject">DisplayObject</a>, child2:<a class="type" href="/ui/doc/#http://nme.io/api/types/nme/display/DisplayObject.html" title="nme.display.DisplayObject">DisplayObject</a>) : <a class="type" href="/ui/doc/#http://haxe.org/api/Void" title="Void">Void</a> 
+</div>
+<div class="comment"> Swap children in display list
+</div>
+<div class="definition">    <span class="override">override</span> <span class="public">public</span> <span class="function">function</span> <span class="definitionName">swapChildrenAt</span> (idx1:<a class="type" href="/ui/doc/#http://haxe.org/api/Int" title="Int">Int</a>, idx2:<a class="type" href="/ui/doc/#http://haxe.org/api/Int" title="Int">Int</a>) : <a class="type" href="/ui/doc/#http://haxe.org/api/Void" title="Void">Void</a> 
+</div>
+<div class="comment"> Swap children at specified indexes
+</div>
+</div>

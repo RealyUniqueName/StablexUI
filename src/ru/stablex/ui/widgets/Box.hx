@@ -110,12 +110,17 @@ class Box extends Widget{
 
 
     /**
-    * on resize refresh widget
+    * On resize refresh widget if `autoWidth` or `autoHeight` is set. 
+    * Otherwise just realign children
     *
     */
     override public function onResize() : Void {
         super.onResize();
-        this.alignElements();
+        if( this.autoHeight || this.autoWidth ){
+            this.refresh();
+        }else{
+            this.alignElements();
+        }
     }//function onResize()
 
 
@@ -189,7 +194,7 @@ class Box extends Widget{
 
             this._height = h + (visibleChildren - 1) * this.childPadding;
 
-        //if this is horizontal box set height = max children height
+        //if this is horizontal box set height = max child height
         }else{
 
             var h : Float = 0;

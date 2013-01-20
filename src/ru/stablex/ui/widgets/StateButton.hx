@@ -84,7 +84,7 @@ class StateButton extends Button{
         //if order is not defined, do nothing
         if( this.order != null && this.order.length > 0 ){
             this.state = this.order[ this._currentIdx ];
-            var state : BtnState = Reflect.getProperty(this.states, this.state);
+            var state : BtnState = this.states.get(this.state);
 
             this.label.text = (state.text == null ? this.state : state.text);
             if( state.skin != null ){
