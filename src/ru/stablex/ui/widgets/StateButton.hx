@@ -1,7 +1,6 @@
 package ru.stablex.ui.widgets;
 
 import nme.events.MouseEvent;
-import ru.stablex.ui.misc.DynamicList;
 import ru.stablex.ui.misc.BtnState;
 import ru.stablex.ui.skins.Skin;
 
