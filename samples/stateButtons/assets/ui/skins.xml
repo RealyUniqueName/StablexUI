@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Skins>
+    <redUp:Paint
+        color   = "0xFF0000"
+        corners = "[20]"
+    />
+    <redDown:Paint
+        color   = "0x330000"
+        corners = "[20]"
+    />
+    <redHovered:Paint
+        color   = "0xFF3333"
+        corners = "[20]"
+    />
+    <redPressed:Paint
+        color   = "0x990000"
+        corners = "[20]"
+    />
+
+    <rgbOne:Paint
+        color   = "0x00FF00"
+        corners = "[20]"
+    />
+    <rgbTwo:Paint
+        color   = "0x0000FF"
+        corners = "[20]"
+    />
+    <rgbThree:Paint
+        color   = "0xFF0000"
+        corners = "[20]"
+    />
+</Skins>

@@ -32,6 +32,6 @@ class Skin {
     *
     */
     public inline function as<T> (cls:Class<T>) : Null<T> {
-        return (Std.is(this, cls) ? cast cls : null);
+        return (Std.is(this, cls) ? cast this : null);
     }//function as()
 }//class Skin
