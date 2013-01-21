@@ -30,7 +30,7 @@ class UIBuilder {
         //for replacing `this` keyword with object currently being processed
         @:macro static private var _erThis    : EReg = ~/\$this([^a-z0-9_])/i;
         //checks wether we need to create object of specified class (second matched group) for this attribute (first matched group)
-        @:macro static private var _erAttrCls : EReg = ~/^([a-z0-9_]+):([a-z0-9_]+)-(.*)$/i;
+        @:macro static private var _erAttrCls : EReg = ~/^(([-a-z0-9_]+):([a-z0-9_]+))/i;
     //}
 
     @:macro static private var _events  : Hash<String> = new Hash();
@@ -263,6 +263,114 @@ class UIBuilder {
 
         return code;
     }//function construct()
+
+
+    /**
+    * Generate haxe code based on `element` attributes as properties of `obj`
+    *
+    */
+    static private function _attr2Haxe (element:Xml, obj:String) : String {
+        var value   : String;
+        
+        var attributes : Array<String> = element.attributes();
+        var post       : Array<String> = [];
+        
+        var attr : String;
+        var cls  : String;
+
+        while( attributes.length > 0 )
+            attr = attributes.pop();
+
+            //if this attribute defines class casting, leave it for the end
+            if( attr.indexOf(':') != -1 ){
+                post.push(attr);
+                continue;
+            }
+
+            value = element.get(attr);
+            //required code replacements
+            value = UIBuilder._fillCodeShortcuts(obj, value);
+            
+            //if this attribute defines event listener
+            if( UIBuilder._erEvent.match(attr) ){
+                cls = UIBuilder._events.get( UIBuilder._erEvent.matched(1) );
+                if( cls == null ) Err.trigger('Event is not registered: ' + UIBuilder._erEvent.matched(1));
+
+                code += '\n' + obj + '.addEventListener('+ cls +', function(event:nme.events.Event){' + value + '});';
+
+            //just apply attribute value to appropriate widget property
+            }else{
+                //change '-' to '.', so 'someProp-nestedProp' becomes 'someProp.nestedProp'
+                attr  = StringTools.replace(attr, '-', '.');
+
+                code += '\n' + obj + '.' + attr + ' = ' + value + ';';
+            }
+        }//while( attributes.length )
+
+        //process class-casting attributes
+        if( post.length > 0 ){
+            var props : Hash<Bool> = new Hash();
+            var prop : String;
+            post.sort(UIBuilder._attrClassCastSorter);
+
+            for(i in 0...post.length){
+                attr = post[i];
+                while( UIBuilder._erAttrCls.match(attr) ){
+                    prop = StringTools.replace(UIBuilder._erAttrCls.matched(2), '-', '.');
+                    cls  = UIBuilder._imports.get( UIBuilder._erAttrCls.matched(3) );
+                    if( cls == null ) Err.trigger('Class is not registered: ' + UIBuilder._erAttrCls.matched(3));
+
+                    //if we still didn't checked wether property is not null
+                    if( !props.exists(prop) ){
+                        props.set(prop, true);
+                        code += '\nif( ' + obj + '.' + prop + ' == null ){';
+                        code += '\n     ' + obj + '.' + prop + ' = new ' + cls + '()';
+                        code += '\n}';
+                    }
+
+                    attr = 
+                }//while()
+            }//for( post )
+
+        }//if( post.length > 0 )
+
+        // //assign all specific-class properties
+        // for(property in objects.keys()){
+        //     code += '\n__ui__widget' + n + '.' + property + ' = ' + property + ';';
+        // }
+    }//function _attr2Haxe()
+
+
+    /**
+    * Description
+    *
+    */
+    static private function _attrClassCastSorter (attr1:String, attr2:String) : Void {
+        //count casts in first attr
+        var c1  : Int = 0;
+        var pos : Int = 0;
+        while( pos < attr.length && -1 != pos = attr1.indexOf(':', pos) ){
+            c1 ++;
+            pos ++;
+        }
+
+        //count casts in second attr
+        var c2  : Int = 0;
+        var pos : Int = 0;
+        while( pos < attr.length && -1 != pos = attr1.indexOf(':', pos) ){
+            c2 ++;
+            pos ++;
+        }
+
+        //less casts => earlier processing
+        if( c1 > c2 ){
+            return 1;
+        }else if( c1 < c2 ){
+            return -1;
+        }else{
+            return 0;
+        }
+    }//function _attrClassCastSorter()
 
 
     /**
