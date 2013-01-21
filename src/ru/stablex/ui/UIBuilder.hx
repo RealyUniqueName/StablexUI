@@ -80,11 +80,13 @@ class UIBuilder {
             UIBuilder.regClass('ru.stablex.ui.widgets.Widget');
             UIBuilder.regClass('ru.stablex.ui.widgets.Bmp');
             UIBuilder.regClass('ru.stablex.ui.widgets.Button');
+            UIBuilder.regClass('ru.stablex.ui.widgets.StateButton');
+            UIBuilder.regClass('ru.stablex.ui.widgets.Toggle');
             UIBuilder.regClass('ru.stablex.ui.widgets.Box');
             UIBuilder.regClass('ru.stablex.ui.widgets.VBox');
             UIBuilder.regClass('ru.stablex.ui.widgets.HBox');
             UIBuilder.regClass('ru.stablex.ui.widgets.ViewStack');
-            UIBuilder.regClass('ru.stablex.ui.widgets.Mask');
+            UIBuilder.regClass('ru.stablex.ui.widgets.Scroll');
             UIBuilder.regClass('ru.stablex.ui.events.WidgetEvent');
             UIBuilder.regClass('ru.stablex.ui.skins.Paint');
             UIBuilder.regClass('ru.stablex.ui.skins.Tile');
@@ -502,6 +504,11 @@ class UIBuilder {
     *
     */
     static public inline function skin (skinName:String) : Void->Skin {
+        #if debug
+            if( !UIBuilder.skins.exists(skinName) ){
+                Err.trigger('Skin not found: ' + skinName);
+            }
+        #end
         return UIBuilder.skins.get(skinName);
     }//function skin()
 

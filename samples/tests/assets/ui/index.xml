@@ -1,11 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- Root element of our UI -->
-<VBox name="'top'" w="800" h="600" skin:Paint-border="8" skin:Paint-color="0x005d00" skin:Paint-borderColor="0x003a00" skin:Paint-alpha="0.8" childPadding="20">
-    <Text defaults="'Title'" text="'This text is using `Title` defaults'"/>
-    <Text text="'This is text with no defaults specified. And `Default` section for Text tag is not defined in defaults.xml'"/>
-    <Text text="'So this text looks like it was just `new nme.text.TextField()` '"/>
-    <Button text="'this is button with no defaults specified. But `Default` section for buttons does exist in defaults.xml'"/>
-    <Button defaults="'Red'" text="'this button is using `Red` section for buttons in defaults.xml'"/>
-    <Button defaults="'Red,AnotherFormat'" text="'this button is using `Red` and `AnotherFormat` sections for buttons in defaults.xml'"/>
-</VBox>
+<!-- Root element of our UI. We can use Main in markup since it extends ru.stablex.ui.widgets.Widget -->
+<Main
+    id   = "'root'"
+    x    = "10"
+    y    = "10"
+    w    = "$Lib.current.stage.stageWidth - 20"
+    h    = "$Lib.current.stage.stageHeight - 20"
+    skin:Slice9-src   = "'assets/img/winxp.png'"
+    skin:Slice9-slice = "[5, 10, 32, 48]"
+>
+    <Box top="50" left="100" skin:Paint-border="2" skin:Paint-color="0xffffff" childPadding="20">
+        <Scroll id="'scroll'" w="200" h="350" hScrollKey="'shift'" skin:Paint-color="0xAAAAAA" box-name="'boxScroll'">
+            <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[40]" w="300" h="100" on-click="trace($this.parent.name);"/>
+            <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[40]" w="300" h="100"/>
+            <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[40]" w="300" h="100"/>
+            <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[40]" w="300" h="100"/>
+            <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[40]" w="300" h="100"/>
+            <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[40]" w="300" h="100"/>
+            <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[40]" w="300" h="100"/>
+            <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[40]" w="300" h="100"/>
+            <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[40]" w="300" h="100"/>
+            <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[40]" w="300" h="100"/>
+        </Scroll>
+        <HBox childPadding="10">
+            <Button skin:Paint-color="0xFF0000" text="'scroll down'" on-click="
+                #Scroll(scroll).scrollY += 5;
+            "/>
+            <Button skin:Paint-color="0xFF0000" text="'scroll up'" on-click="
+                #Scroll(scroll).scrollY -= 5;
+            "/>
+        </HBox>
+        <HBox childPadding="10">
+            <Button skin:Paint-color="0xFF0000" text="'scroll left'"/>
+            <Button skin:Paint-color="0xFF0000" text="'scroll right'"/>
+        </HBox>
+    </Box>
+
+</Main>

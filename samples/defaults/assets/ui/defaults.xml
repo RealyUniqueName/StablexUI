@@ -18,12 +18,27 @@
         <Red
             w="400"
             h="60"
+            
             skin:Paint-color="0xFF0000"
             skin:Paint-border="4"
             skin:Paint-borderColor="0x00FF00"
             skin:Paint-corners="[40]"
+
+            skinHovered:Paint-color="0xFF5555"
+            skinHovered:Paint-border="4"
+            skinHovered:Paint-borderColor="0x55FF55"
+            skinHovered:Paint-corners="[40]"
+
+            skinPressed:Paint-color="0x550000"
+            skinPressed:Paint-border="4"
+            skinPressed:Paint-borderColor="0x005500"
+            skinPressed:Paint-corners="[40]"
+
+            ico-src="'assets/img/haxe24.png'"
+            icoHovered-src="'assets/img/haxeHovered24.png'"
+            icoPressed-src="'assets/img/haxePressed24.png'"
             format-size="12"
-            format-color="0x0000FF"
+            format-color="0xFFFFFF"
         />
         <AnotherFormat
             format-size  = "16"

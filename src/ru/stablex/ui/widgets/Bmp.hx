@@ -11,8 +11,8 @@ import ru.stablex.Err;
 class Bmp extends Widget{
     //Asset ID or path to bitmap
     public var src : String;
-    //Should we use smoothing? False by default
-    public var smooth : Bool = false;
+    //Should we use smoothing?
+    public var smooth : Bool = true;
 
 
     /**
