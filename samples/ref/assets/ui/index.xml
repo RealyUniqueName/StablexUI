@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Root element of our UI. We can use Main in markup since it extends ru.stablex.ui.widgets.Widget -->
+<Main
+    w    = "$Lib.current.stage.stageWidth"
+    h    = "$Lib.current.stage.stageHeight"
+    skin:Paint-color   = "0xFF0000"
+    skin:Paint-skin:Paint-border = "20"
+    on-click = "
+        trace($this.skin.skin.border);
+    "
+/>

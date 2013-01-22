@@ -30,7 +30,7 @@ class UIBuilder {
         //for replacing `this` keyword with object currently being processed
         @:macro static private var _erThis    : EReg = ~/\$this([^a-z0-9_])/i;
         //checks wether we need to create object of specified class (second matched group) for this attribute (first matched group)
-        @:macro static private var _erAttrCls : EReg = ~/^(([-a-z0-9_]+):([a-z0-9_]+))/i;
+        @:macro static private var _erAttrCls : EReg = ~/(([-a-z0-9_]+):([a-z0-9_]+))/i;
     //}
 
     @:macro static private var _events  : Hash<String> = new Hash();
@@ -184,68 +184,68 @@ class UIBuilder {
                 code += '\n}';
             //}
 
-            //skin settings {
-                var skinName : String = element.get("skinName");
-                if( skinName != null ){
-                    element.remove('skinName');
-                    code += '\n __ui__widget' + n + '.skinName = ' + skinName + ';';
-                }
-            //}
+            // //skin settings {
+            //     var skinName : String = element.get("skinName");
+            //     if( skinName != null ){
+            //         element.remove('skinName');
+            //         code += '\n __ui__widget' + n + '.skinName = ' + skinName + ';';
+            //     }
+            // //}
         }
+        code += UIBuilder._attr2Haxe(element, '__ui__widget' + n);
+        // //apply xml attributes to widget
+        // var value   : String;
+        // var prop    : String;
+        // var objects : Hash<Bool> = new Hash();
+        // for(attr in element.attributes()){
 
-        //apply xml attributes to widget
-        var value   : String;
-        var prop    : String;
-        var objects : Hash<Bool> = new Hash();
-        for(attr in element.attributes()){
+        //     var value : String = element.get(attr);
 
-            var value : String = element.get(attr);
+        //     //if we need to create object of specified class for property
+        //     if( UIBuilder._erAttrCls.match(attr) ){
+        //         cls = UIBuilder._imports.get( UIBuilder._erAttrCls.matched(2) );
+        //         if( cls == null ) Err.trigger('Class is not registered: ' + UIBuilder._erAttrCls.matched(2));
 
-            //if we need to create object of specified class for property
-            if( UIBuilder._erAttrCls.match(attr) ){
-                cls = UIBuilder._imports.get( UIBuilder._erAttrCls.matched(2) );
-                if( cls == null ) Err.trigger('Class is not registered: ' + UIBuilder._erAttrCls.matched(2));
+        //         prop = UIBuilder._erAttrCls.matched(1);
+        //         if( !objects.exists(prop) ){
+        //             objects.set(prop, true);
+        //             code += '\nvar ' + prop + ' = (Std.is(__ui__widget' + n + '.' + prop + ', ' + cls + ') ? cast(__ui__widget' + n + '.' + prop + ', ' + cls + ') : new ' + cls + '() );';
+        //         }
 
-                prop = UIBuilder._erAttrCls.matched(1);
-                if( !objects.exists(prop) ){
-                    objects.set(prop, true);
-                    code += '\nvar ' + prop + ' = (Std.is(__ui__widget' + n + '.' + prop + ', ' + cls + ') ? cast(__ui__widget' + n + '.' + prop + ', ' + cls + ') : new ' + cls + '() );';
-                }
+        //         //change '-' to '.', so 'someProp-nestedProp' becomes 'someProp.nestedProp'
+        //         attr = StringTools.replace(UIBuilder._erAttrCls.matched(3), '-', '.');
 
-                //change '-' to '.', so 'someProp-nestedProp' becomes 'someProp.nestedProp'
-                attr = StringTools.replace(UIBuilder._erAttrCls.matched(3), '-', '.');
+        //         //required code replacements
+        //         value = UIBuilder._fillCodeShortcuts('__ui__widget' + n, value);
 
-                //required code replacements
-                value = UIBuilder._fillCodeShortcuts('__ui__widget' + n, value);
+        //         code += '\n' + prop + '.' + attr + ' = ' + value + ';';
 
-                code += '\n' + prop + '.' + attr + ' = ' + value + ';';
+        //     //if this attribute defines event listener
+        //     }else if( UIBuilder._erEvent.match(attr) ){
+        //         cls = UIBuilder._events.get( UIBuilder._erEvent.matched(1) );
+        //         if( cls == null ) Err.trigger('Event is not registered: ' + UIBuilder._erEvent.matched(1));
 
-            //if this attribute defines event listener
-            }else if( UIBuilder._erEvent.match(attr) ){
-                cls = UIBuilder._events.get( UIBuilder._erEvent.matched(1) );
-                if( cls == null ) Err.trigger('Event is not registered: ' + UIBuilder._erEvent.matched(1));
+        //         //required code replacements
+        //         value = UIBuilder._fillCodeShortcuts('__ui__widget' + n, value);
 
-                //required code replacements
-                value = UIBuilder._fillCodeShortcuts('__ui__widget' + n, value);
+        //         code += '\n__ui__widget' + n + '.addEventListener('+ cls +', function(event:nme.events.Event){' + value + '});';
 
-                code += '\n__ui__widget' + n + '.addEventListener('+ cls +', function(event:nme.events.Event){' + value + '});';
+        //     //just apply attribute value to appropriate widget property
+        //     }else{
+        //         //change '-' to '.', so 'someProp-nestedProp' becomes 'someProp.nestedProp'
+        //         attr  = StringTools.replace(attr, '-', '.');
 
-            //just apply attribute value to appropriate widget property
-            }else{
-                //change '-' to '.', so 'someProp-nestedProp' becomes 'someProp.nestedProp'
-                attr  = StringTools.replace(attr, '-', '.');
+        //         //required code replacements
+        //         value = UIBuilder._fillCodeShortcuts('__ui__widget' + n, value);
 
-                //required code replacements
-                value = UIBuilder._fillCodeShortcuts('__ui__widget' + n, value);
+        //         code += '\n__ui__widget' + n + '.' + attr + ' = ' + value + ';';
+        //     }
+        // }//for( attr )
 
-                code += '\n__ui__widget' + n + '.' + attr + ' = ' + value + ';';
-            }
-        }//for( attr )
-
-        //assign all specific-class properties
-        for(property in objects.keys()){
-            code += '\n__ui__widget' + n + '.' + property + ' = ' + property + ';';
-        }
+        // //assign all specific-class properties
+        // for(property in objects.keys()){
+        //     code += '\n__ui__widget' + n + '.' + property + ' = ' + property + ';';
+        // }
 
         if( n > 1 ){
             code += '\n__ui__widget' + Std.string(n - 1) + '.addChild(__ui__widget' + n + ');';
@@ -270,13 +270,15 @@ class UIBuilder {
     *
     */
     static private function _attr2Haxe (element:Xml, obj:String) : String {
-        var value   : String;
-        
+
         var attributes : Array<String> = element.attributes();
         var post       : Array<String> = [];
-        
-        var attr : String;
-        var cls  : String;
+
+        var attr  : String;
+        var cls   : String;
+        var value : String;
+
+        var code : String = '';
 
         while( attributes.length > 0 )
             attr = attributes.pop();
@@ -290,7 +292,7 @@ class UIBuilder {
             value = element.get(attr);
             //required code replacements
             value = UIBuilder._fillCodeShortcuts(obj, value);
-            
+
             //if this attribute defines event listener
             if( UIBuilder._erEvent.match(attr) ){
                 cls = UIBuilder._events.get( UIBuilder._erEvent.matched(1) );
@@ -310,34 +312,41 @@ class UIBuilder {
         //process class-casting attributes
         if( post.length > 0 ){
             var props : Hash<Bool> = new Hash();
-            var prop : String;
+            var prop  : String;
+            var casts : String;
             post.sort(UIBuilder._attrClassCastSorter);
 
             for(i in 0...post.length){
-                attr = post[i];
+                attr  = post[i];
+                casts = obj;
                 while( UIBuilder._erAttrCls.match(attr) ){
                     prop = StringTools.replace(UIBuilder._erAttrCls.matched(2), '-', '.');
                     cls  = UIBuilder._imports.get( UIBuilder._erAttrCls.matched(3) );
                     if( cls == null ) Err.trigger('Class is not registered: ' + UIBuilder._erAttrCls.matched(3));
 
                     //if we still didn't checked wether property is not null
-                    if( !props.exists(prop) ){
-                        props.set(prop, true);
-                        code += '\nif( ' + obj + '.' + prop + ' == null ){';
-                        code += '\n     ' + obj + '.' + prop + ' = new ' + cls + '()';
+                    if( !props.exists(casts + '.' + prop) ){
+                        props.set(casts + '.' + prop, true);
+                        code += '\nif( ' + casts + '.' + prop + ' == null ){';
+                        code += '\n     ' + casts + '.' + prop + ' = new ' + cls + '()';
                         code += '\n}';
                     }
 
-                    attr = 
+                    casts = 'cast(' + casts + '.' + prop + ', ' + cls + ')';
+
+                    attr = StringTools.replace(attr, UIBuilder._erAttrCls.matched(1), '');
                 }//while()
+
+                attr = StringTools.replace(attr, '-', '.');
+                value = UIBuilder._fillCodeShortcuts(obj, value);
+                code += '\n' + casts + '.' + attr + ' = ' + value ';';
+
+                trace(casts + '.' + attr + ' = ' + value ';');
             }//for( post )
 
         }//if( post.length > 0 )
 
-        // //assign all specific-class properties
-        // for(property in objects.keys()){
-        //     code += '\n__ui__widget' + n + '.' + property + ' = ' + property + ';';
-        // }
+        return code;
     }//function _attr2Haxe()
 
 
@@ -349,7 +358,7 @@ class UIBuilder {
         //count casts in first attr
         var c1  : Int = 0;
         var pos : Int = 0;
-        while( pos < attr.length && -1 != pos = attr1.indexOf(':', pos) ){
+        while( pos < attr.length && -1 != (pos = attr1.indexOf(':', pos)) ){
             c1 ++;
             pos ++;
         }
@@ -357,7 +366,7 @@ class UIBuilder {
         //count casts in second attr
         var c2  : Int = 0;
         var pos : Int = 0;
-        while( pos < attr.length && -1 != pos = attr1.indexOf(':', pos) ){
+        while( pos < attr.length && -1 != (pos = attr2.indexOf(':', pos)) ){
             c2 ++;
             pos ++;
         }
