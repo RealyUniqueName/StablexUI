@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<HBox w="800" h="600" childPadding="20">
+
+    <!-- World map -->
+    <Scroll
+        w           = "500"
+        h           = "500"
+        box-padding = "10"
+        skin:Paint-color  = "0xAAAAAA"
+        skin:Paint-border = "4"
+        on-display="
+            $this.scrollX = $this.w / 2 - $this.box.w / 2;
+            $this.scrollY  = $this.h / 2 - $this.box.h / 2;
+        "
+    >
+        <Bmp src="'assets/img/map.jpg'"/>
+    </Scroll>
+
+    <!-- List -->
+    <Scroll
+        w                 = "150"
+        h                 = "500"
+        box-childPadding  = "5"
+        box-paddingTop    = "10"
+        box-paddingBottom = "10"
+        box-widthPt       = "100"
+        skin:Paint-color  = "0xAAAAAA"
+        skin:Paint-border = "4"
+        on-display = "
+            $this.scrollY  = $this.h / 2 - $this.box.h / 2;
+        "
+    >
+        <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
+        <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
+        <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
+        <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
+        <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
+        <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
+        <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
+        <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
+        <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
+        <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
+        <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
+        <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
+        <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
+        <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
+        <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
+        <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
+        <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
+        <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
+        <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
+        <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
+        <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
+        <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
+        <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
+        <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
+        <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
+        <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
+        <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
+        <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
+        <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
+        <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
+        <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
+        <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
+        <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
+        <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
+        <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
+        <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
+        <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
+        <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
+        <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
+        <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
+        <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
+        <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
+        <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
+        <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
+        <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
+        <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
+        <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
+        <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
+        <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
+        <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
+        <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
+        <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
+        <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
+        <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
+        <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
+        <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
+        <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
+        <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
+    </Scroll>
+</HBox>
