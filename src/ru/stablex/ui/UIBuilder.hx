@@ -157,7 +157,7 @@ class UIBuilder {
     static private function construct (element:Xml, n:Int = 1, zeroElementCls:String = null) : String{
         //get class for widget
         var cls  : String = UIBuilder._imports.get(zeroElementCls == null ? element.nodeName : zeroElementCls);
-        if( cls == null ) Err.trigger('Widget class is not registered: ' + element.nodeName);
+        if( cls == null ) Err.trigger('Widget class is not registered: ' + (zeroElementCls == null ? element.nodeName : zeroElementCls));
 
         var code : String = '';
 
