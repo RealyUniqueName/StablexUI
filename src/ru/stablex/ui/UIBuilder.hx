@@ -271,7 +271,7 @@ class UIBuilder {
     */
     static private function _attr2Haxe (element:Xml, obj:String) : String {
 
-        var attributes : Array<String> = element.attributes();
+        var attributes : Iterator<String> = element.attributes();
         var post       : Array<String> = [];
 
         var attr  : String;
@@ -280,8 +280,8 @@ class UIBuilder {
 
         var code : String = '';
 
-        while( attributes.length > 0 )
-            attr = attributes.pop();
+        while( attributes.hasNext() ){
+            attr = attributes.next();
 
             //if this attribute defines class casting, leave it for the end
             if( attr.indexOf(':') != -1 ){
@@ -313,37 +313,38 @@ class UIBuilder {
         if( post.length > 0 ){
             var props : Hash<Bool> = new Hash();
             var prop  : String;
-            var casts : String;
+            var pos   : Int = -1;
             post.sort(UIBuilder._attrClassCastSorter);
 
             for(i in 0...post.length){
-                attr  = post[i];
-                casts = obj;
-                while( UIBuilder._erAttrCls.match(attr) ){
-                    prop = StringTools.replace(UIBuilder._erAttrCls.matched(2), '-', '.');
-                    cls  = UIBuilder._imports.get( UIBuilder._erAttrCls.matched(3) );
-                    if( cls == null ) Err.trigger('Class is not registered: ' + UIBuilder._erAttrCls.matched(3));
+                attr = obj + '.' + post[i];
 
-                    //if we still didn't checked wether property is not null
-                    if( !props.exists(casts + '.' + prop) ){
-                        props.set(casts + '.' + prop, true);
-                        code += '\nif( ' + casts + '.' + prop + ' == null ){';
-                        code += '\n     ' + casts + '.' + prop + ' = new ' + cls + '()';
+                //find class start
+                while( -1 != (pos = attr.indexOf(':')) ){
+                    //find class name
+                    cls = attr.substring(pos + 1, attr.indexOf('-', pos));
+                    if( !UIBuilder._imports.exists(cls) ) Err.trigger('Class is not registered: ' + cls);
+                    cls = UIBuilder._imports.get(cls);
+
+                    //property
+                    prop = StringTools.replace(attr.substr(0, pos), '-', '.');
+
+                    //create new object if needed
+                    if( !props.exists(prop) ){
+                        props.set(prop, true);
+                        code += '\nif(' + prop + ' == null ){';
+                        code += '\n     ' + prop + ' = new ' + cls + '();';
                         code += '\n}';
                     }
 
-                    casts = 'cast(' + casts + '.' + prop + ', ' + cls + ')';
-
-                    attr = StringTools.replace(attr, UIBuilder._erAttrCls.matched(1), '');
+                    attr = 'cast(' + prop + ', ' + cls + ').' + attr.substr(attr.indexOf('-', pos) + 1);
                 }//while()
 
+                //replace remaining `-`-chars
                 attr = StringTools.replace(attr, '-', '.');
-                value = UIBuilder._fillCodeShortcuts(obj, value);
-                code += '\n' + casts + '.' + attr + ' = ' + value ';';
 
-                trace(casts + '.' + attr + ' = ' + value ';');
+                code += '\n' + attr + ' = ' + UIBuilder._fillCodeShortcuts(obj, element.get(post[i])) + ';';
             }//for( post )
-
         }//if( post.length > 0 )
 
         return code;
@@ -354,11 +355,11 @@ class UIBuilder {
     * Description
     *
     */
-    static private function _attrClassCastSorter (attr1:String, attr2:String) : Void {
+    static private function _attrClassCastSorter (attr1:String, attr2:String) : Int {
         //count casts in first attr
         var c1  : Int = 0;
         var pos : Int = 0;
-        while( pos < attr.length && -1 != (pos = attr1.indexOf(':', pos)) ){
+        while( pos < attr1.length && -1 != (pos = attr1.indexOf(':', pos)) ){
             c1 ++;
             pos ++;
         }
@@ -366,7 +367,7 @@ class UIBuilder {
         //count casts in second attr
         var c2  : Int = 0;
         var pos : Int = 0;
-        while( pos < attr.length && -1 != (pos = attr2.indexOf(':', pos)) ){
+        while( pos < attr2.length && -1 != (pos = attr2.indexOf(':', pos)) ){
             c2 ++;
             pos ++;
         }

@@ -147,7 +147,7 @@ class Button extends Text{
 
         this.vertical = false;
 
-        this.padding          = 10;
+        this.padding          = 2;
         this.childPadding     = 5;
         this.label.selectable = false;
 

@@ -7,6 +7,6 @@
     skin:Paint-color   = "0xFF0000"
     skin:Paint-skin:Paint-border = "20"
     on-click = "
-        trace($this.skin.skin.border);
+        trace($this.skin.skin.as($Paint).border);
     "
 />
