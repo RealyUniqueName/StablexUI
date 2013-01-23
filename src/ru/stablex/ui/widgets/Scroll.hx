@@ -168,6 +168,21 @@ class Scroll extends Widget{
 
 
     /**
+    * Destroy widget
+    *
+    */
+    override public function free(r:Bool = true) : Void {
+        if( r ){
+            super.removeChild(this.box);
+            this.box.free(r);
+        }else{
+            super.removeChild(this.box);
+        }
+        super.free(r);
+    }//function free()
+
+
+    /**
     * add child to display list. Adds to `.box` display list
     *
     */
