@@ -30,11 +30,10 @@ class Scroll extends Widget{
     //container for content. Content is scrolled by moving this container
     public var box : Box;
 
-
     //scroll position along x axes
-    public var scrollX (default,_setScrollX) : Float = 0;
+    public var scrollX (_getScrollX,_setScrollX) : Float;
     //scroll position along y axes
-    public var scrollY (default,_setScrollY) : Float = 0;
+    public var scrollY (_getScrollY,_setScrollY) : Float;
 
 
     /**
@@ -56,8 +55,17 @@ class Scroll extends Widget{
     private function _setScrollX (x:Float) : Float {
         if( x > 0 ) x = 0;
         if( x + this.box._width < this._width ) x = this._width - this.box._width;
-        return this.scrollX = this.box.left = x;
+        return this.box.left = x;
     }//function _setScrollX()
+
+
+    /**
+    * Getter for .scrollX
+    *
+    */
+    private function _getScrollX () : Float {
+        return this.box.left;
+    }//function _getScrollX()
 
 
     /**
@@ -67,8 +75,17 @@ class Scroll extends Widget{
     private function _setScrollY (y:Float) : Float {
         if( y > 0 ) y = 0;
         if( y + this.box._height < this._height ) y = this._height - this.box._height;
-        return this.scrollY = this.box.top = y;
+        return this.box.top = y;
     }//function _setScrollY()
+
+
+    /**
+    * Getter for .scrollY
+    *
+    */
+    private function _getScrollY () : Float {
+        return this.box.top;
+    }//function _getScrollY()
 
 
     /**
@@ -159,9 +176,11 @@ class Scroll extends Widget{
                 || (e.ctrlKey && this.hScrollKey == 'ctrl')
             )
         ){
+            this.tweenStop();
             this.scrollX += e.delta * 10;
         //scroll vertically
         }else if( this.vScroll ){
+            this.tweenStop();
             this.scrollY += e.delta * 10;
         }
     }//function _wheelScroll()
