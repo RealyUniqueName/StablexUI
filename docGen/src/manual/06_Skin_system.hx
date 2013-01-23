@@ -13,17 +13,16 @@ Here is example of using <type>ru.stablex.ui.skins.Paint</type> class to skin wi
 <Widget w="100" h="100" skin:Paint-color="0x00FF00" skin:Paint-border="2"/>
 </xml>
 
-It creates instance of <type>ru.stablex.ui.skins.Paint</type>; assigns `.color` and `.border` properties to
-that instance; and than assigns that instance to `.skin` property of widget.
+It creates instance of <type>ru.stablex.ui.skins.Paint</type> and assigns `.color` and `.border` properties to
+that instance.
 This xml is translated by StablexUI for haxe compiler as follows:
 
 <haxe>
 var widget : ru.stablex.ui.widgets.Widget = ... // UIBuilder actions to create widget object
-var skin = new ru.stablex.ui.skins.Paint(); //create instance of skin class
-skin.color  = 0x002200;
-skin.border = 1;
-widget.skin = skin; //assign tuned skin to widget
-widget.onCreate(); //skin will be applied inside this call
+if( widget.skin == null ) widget.skin = new ru.stablex.ui.skins.Paint(); //create instance of skin class
+cast(widget.skin, ru.stablex.ui.skins.Paint).color  = 0x00FF00;          //skin adjustments
+cast(widget.skin, ru.stablex.ui.skins.Paint).border = 2;
+widget.onCreate();  //skin will be applied inside this call
 </haxe>
 */
 
@@ -39,9 +38,9 @@ Step 1. Create xml with skin presets. For example, `skins.xml`:
 <?xml version="1.0" encoding="UTF-8"?>
 
 <|Skins>
-    <!-- here goes `skinName`:`SkinClass` -->
+    <!-- here goes `skinName`:`SkinClass` with list of skin properties -->
     <|red:Paint
-        color       = "0x550000"  <!-- these are properties of chosen skin class -->
+        color       = "0x550000"
         borderColor = "0xFF0000"
         border      = "8"
     />

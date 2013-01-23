@@ -13,17 +13,16 @@ Here is example of using <a class="type" href="/ui/doc/#ru/stablex/ui/skins/Pain
 &lt;<span class="tag"><a class="type" href="/ui/doc/#ru/stablex/ui/widgets/Widget.html" title="ru.stablex.ui.widgets.Widget">Widget</a></span> <span class="attr">w</span>=<span class="quotes">"</span>100<span class="quotes">"</span> <span class="attr">h</span>=<span class="quotes">"</span>100<span class="quotes">"</span> <span class="attr">skin:Paint-color</span>=<span class="quotes">"</span>0x00FF00<span class="quotes">"</span> <span class="attr">skin:Paint-border</span>=<span class="quotes">"</span>2<span class="quotes">"</span>/&gt;
 
 </div>
-It creates instance of <a class="type" href="/ui/doc/#ru/stablex/ui/skins/Paint.html" title="ru.stablex.ui.skins.Paint">Paint</a>; assigns `.color` and `.border` properties to
-that instance; and than assigns that instance to `.skin` property of widget.
+It creates instance of <a class="type" href="/ui/doc/#ru/stablex/ui/skins/Paint.html" title="ru.stablex.ui.skins.Paint">Paint</a> and assigns `.color` and `.border` properties to
+that instance.
 This xml is translated by StablexUI for haxe compiler as follows:
 
 <div class="haxe">
 <div class="definition"><span class="var">var</span> <span class="definitionName">widget</span> : <a class="type" href="/ui/doc/#ru/stablex/ui/widgets/Widget.html" title="ru.stablex.ui.widgets.Widget">Widget</a> = ... <i>// UIBuilder actions to create widget object</div></i>
-<div class="definition"><span class="var">var</span> skin = new <a class="type" href="/ui/doc/#ru/stablex/ui/skins/Paint.html" title="ru.stablex.ui.skins.Paint">Paint</a>(); <i>//create instance of skin class</div></i>
-skin.color  = 0x002200;
-skin.border = 1;
-widget.skin = skin; <i>//assign tuned skin to widget</i>
-widget.onCreate(); <i>//skin will be applied inside <span class="this">this</span> call</i>
+if( widget.skin <span class="operator">==</span> <span class="null">null</span> ) widget.skin = new <a class="type" href="/ui/doc/#ru/stablex/ui/skins/Paint.html" title="ru.stablex.ui.skins.Paint">Paint</a>(); <i>//create instance of skin class</i>
+cast(widget.skin, <a class="type" href="/ui/doc/#ru/stablex/ui/skins/Paint.html" title="ru.stablex.ui.skins.Paint">Paint</a>).color  = 0x00FF00;          <i>//skin adjustments</i>
+cast(widget.skin, <a class="type" href="/ui/doc/#ru/stablex/ui/skins/Paint.html" title="ru.stablex.ui.skins.Paint">Paint</a>).border = 2;
+widget.onCreate();  <i>//skin will be applied inside <span class="this">this</span> call</i>
 
 </div>
 
@@ -40,9 +39,9 @@ Step 1. Create xml with skin presets. For example, `skins.xml`:
 &lt;?xml <span class="attr">version</span>=<span class="quotes">"</span>1.0<span class="quotes">"</span> <span class="attr">encoding</span>=<span class="quotes">"</span>UTF-8<span class="quotes">"</span>?&gt;
 
 &lt;<span class="tag">Skins</span>&gt;
-    <i>&lt;!-- here goes `skinName`:`SkinClass` --&gt;</i>
+    <i>&lt;!-- here goes `skinName`:`SkinClass` with list of skin properties --&gt;</i>
     &lt;<span class="tag">red:Paint</span>
-        <span class="attr">color</span>       = <span class="quotes">"</span>0x550000<span class="quotes">"</span>  <i>&lt;!-- these are properties of chosen skin class --&gt;</i>
+        <span class="attr">color</span>       = <span class="quotes">"</span>0x550000<span class="quotes">"</span>
         <span class="attr">borderColor</span> = <span class="quotes">"</span>0xFF0000<span class="quotes">"</span>
         <span class="attr">border</span>      = <span class="quotes">"</span>8<span class="quotes">"</span>
     /&gt;

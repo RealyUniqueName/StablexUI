@@ -34,13 +34,16 @@ var widget = ru.stablex.ui.UIBuilder.create(ru.stablex.ui.widgets.Text, {
 */
 
 /**
-@manual Creating objects for non-scalar properties in xml
+@manual Type casting and object creation via attributes in xml
 
-Some widget properties (e.g. `.skin` property) are not scalar. So we need to create
-objects for these properties to define them in xml.
-`.skin` property gets objects of <type>ru.stablex.ui.skins.Skin</type>. Let's create instance of <type>ru.stablex.ui.skins.Paint</type>
-for skin. <type>ru.stablex.ui.skins.Paint</type> extends <type>ru.stablex.ui.skins.Skin</type>, so we can assign instances
-of <type>ru.stablex.ui.skins.Paint</type> to variables and properties typed as <type>ru.stablex.ui.skins.Skin</type>.
+Some widget fields (e.g. `.skin` property) are not scalar. Such fields can take values of
+different classes. In case of `.skin` property it can be any class, wich extends <type>ru.stablex.ui.skins.Skin</type>.
+Thus we need to cast `.skin` to that class to be able to use specific fields, wich were not
+declared in <type>ru.stablex.ui.skins.Skin</type>. Also such properties can be <type>null</type> on start, so we need to create
+objects for them. Fortunately StablexUI gives you the ability to do all that things.
+Since we started on `.skin` property, let me show you, how type casting and object creation
+works in xml attributes. `.skin` is declared in <type>ru.stablex.ui.widgets.Widget</type> as <type>ru.stablex.ui.skins.Skin</type>. Let's assign instance of <type>ru.stablex.ui.skins.Paint</type>
+to it. <type>ru.stablex.ui.skins.Paint</type> extends <type>ru.stablex.ui.skins.Skin</type>, so we can assign instances of <type>ru.stablex.ui.skins.Paint</type> to variables and properties typed as <type>ru.stablex.ui.skins.Skin</type>.
 Here is xml wich does the job:
 
 <xml>
@@ -54,10 +57,9 @@ This xml is translated by StablexUI for haxe compiler as follows:
 
 <haxe>
 var widget : ru.stablex.ui.widgets.Widget = ... // UIBuilder actions to create widget object
-var skin = new ru.stablex.ui.skins.Paint();
-skin.color  = 0x002200;
-skin.border = 1;
-widget.skin = skin;
+if( widget.skin == null ) widget.skin = new ru.stablex.ui.skins.Paint();
+cast(widget.skin, ru.stablex.ui.skins.Paint).color  = 0x002200;
+cast(widget.skin, ru.stablex.ui.skins.Paint).border = 1;
 widget.onCreate();
 </haxe>
 
@@ -231,7 +233,9 @@ And content of 'ui.xml':
 
 Now if we run this project and click the button, we'll see output: 'here is MyClass'.
 
-There are some frequently used classes preregistered in StablexUI. Here is the list:
+There are frequently used classes preregistered in StablexUI. The list can change in the latest
+version of StablexUI, see <type>ru.stablex.ui.UIBuilder</type>.init() source code for the full list)
+Here are some of them:
 
 <pre>
  ru.stablex.ui.widgets.Text;
