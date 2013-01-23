@@ -9,9 +9,6 @@ import ru.stablex.ui.widgets.Widget;
 *
 */
 class Skin {
-    //description
-    public var skin : Skin;
-
     /**
     * Constructor
     *
