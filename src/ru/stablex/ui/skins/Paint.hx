@@ -9,8 +9,8 @@ import ru.stablex.ui.widgets.Widget;
 */
 class Paint extends Skin{
 
-    //use this color to fill
-    public var color : Int = 0xFFFFFF;
+    //use this color to fill. Negative values for no fill
+    public var color : Int = -1;
     //Background alpha for coloring.
     public var alpha : Float = 1;
     //border width
@@ -34,7 +34,9 @@ class Paint extends Skin{
             w.graphics.lineStyle(this.border, this.borderColor, this.borderAlpha);
         }
 
-        w.graphics.beginFill(this.color, this.alpha);
+        if( this.color >= 0 ){
+            w.graphics.beginFill(this.color, this.alpha);
+        }
 
         //workaround for cpp bug with zero radius corners
         if( this.corners == null || this.corners.length == 0 ){
@@ -45,6 +47,8 @@ class Paint extends Skin{
             w.graphics.drawRoundRect(0, 0, w.w, w.h, this.corners[0], this.corners[1]);
         }
 
-        w.graphics.endFill();
+        if( this.color >= 0 ){
+            w.graphics.endFill();
+        }
     }//function apply()
 }//class Paint

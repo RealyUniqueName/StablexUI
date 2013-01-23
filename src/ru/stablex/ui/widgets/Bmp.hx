@@ -43,6 +43,10 @@ class Bmp extends Widget{
 
             //draw picture on graphics
             this.graphics.clear();
+
+            //apply skin
+            this.applySkin();
+
             this.graphics.beginBitmapFill(bmp, null, false, this.smooth);
             this.graphics.drawRect(0, 0, bmp.width, bmp.height);
             this.graphics.endFill();
