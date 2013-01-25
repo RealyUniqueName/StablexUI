@@ -148,11 +148,11 @@ class Scroll extends Widget{
 
             //go-go!
             if( this.vScroll && this.hScroll ){
-                this.tween(2, {scrollX:this.scrollX + lastDx * 20, scrollY:this.scrollY + lastDy * 20}, 'Quint.easeOut');
+                this.tween(2, {scrollX:this.scrollX + lastDx * 20, scrollY:this.scrollY + lastDy * 20}, 'Expo.easeOut');
             }else if( this.vScroll ){
-                this.tween(2, {scrollY:this.scrollY + lastDy * 20}, 'Quint.easeOut');
+                this.tween(2, {scrollY:this.scrollY + lastDy * 20}, 'Expo.easeOut');
             }else{
-                this.tween(2, {scrollX:this.scrollX + lastDx * 20}, 'Quint.easeOut');
+                this.tween(2, {scrollX:this.scrollX + lastDx * 20}, 'Expo.easeOut');
             }
         }
 

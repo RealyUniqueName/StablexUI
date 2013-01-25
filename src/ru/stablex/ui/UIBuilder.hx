@@ -3,6 +3,7 @@ package ru.stablex.ui;
 import haxe.macro.Context;
 import haxe.macro.Expr;
 #if macro
+import sys.FileSystem;
 import sys.io.File;
 #else
 import ru.stablex.ui.skins.Skin;
@@ -37,6 +38,8 @@ class UIBuilder {
     @:macor static private var _imports : Hash<String> = new Hash();
 
     @:macro static private var _initialized : Bool = false;
+    //all generated code will be saved in this direcory (see .init() method for details)
+    @:macro static private var _generatedCodeDir : String = null;
 
 #if !macro
     //Closures for applaying default settings to widgets. Closures created with UIBuilder.init('defaults.xml')
@@ -54,10 +57,29 @@ class UIBuilder {
 
 
     /**
+    * Set directory to save generated code to. Should be called before .init()
+    * If you get any compiler errors on your xml files, you can find corresponding
+    * file with generated code to find out what was wrong.
+    */
+    @:macro static public function saveCodeTo (dir:String) : Expr {
+        var endSlash : EReg = ~/(\/|\\)$/;
+        if( !endSlash.match(dir) ){
+            dir += '/';
+        }
+        if( !FileSystem.exists(dir) || !FileSystem.isDirectory(dir) ){
+            Err.trigger('Path does not exist or is not a directory: ' + dir);
+        }
+        UIBuilder._generatedCodeDir = dir;
+
+        return Context.parse('true', Context.currentPos());
+    }//function saveCodeTo()
+
+
+    /**
     * Initializing UIBuilder. Should be called before using any other UIBuilder methods except .reg* methods
     * @param defaultsXmlFile - path to xml file with default settings for widgets
     */
-    @:macro static public function init(defaultsXmlFile:String = null) : Expr {
+    @:macro static public function init(defaultsXmlFile:String = null /*, generatedCodeDir:String = null */) : Expr {
         var code : String = 'true';
 
         if( !UIBuilder._initialized ){
@@ -113,12 +135,63 @@ class UIBuilder {
                 }
 
                 code = '(function() : Void {' + code + '})()';
+                UIBuilder._saveCode(defaultsXmlFile, code);
             }
         }
 
-        return Context.parse(code, Context.makePosition({ min:0, max:0, file:'UIBuilder.hx'}) );
+        return UIBuilder._parse((defaultsXmlFile == null ? 'UIBuilder.hx' : defaultsXmlFile), code);
     }//function _init()
 
+#if macro
+    /**
+    * Save code generated from specified file
+    *
+    */
+    static private inline function _saveCode (xmlFile:String, code:String) : Void {
+        if( UIBuilder._generatedCodeDir != null ){
+            xmlFile = StringTools.replace(xmlFile, '\\', '_');
+            xmlFile = StringTools.replace(xmlFile, '/', '_');
+            xmlFile = StringTools.replace(xmlFile, '.', '_');
+            File.saveContent(UIBuilder._generatedCodeDir + xmlFile + '.hx', code);
+        }
+    }//function _saveCode()
+
+
+    /**
+    * Parse error in xml file
+    *
+    */
+    static private function _parseError (code:String, err:haxe.macro.Error) : Void {
+        var pos        : String = Std.string(err.pos);
+        var fnameStart : Int = pos.indexOf('(') + 1;
+        var fnameEnd   : Int = pos.indexOf(':');
+
+        var line  : Int = Std.parseInt( pos.substring(fnameEnd + 1, pos.indexOf(':', fnameEnd + 1)) );
+        var fname : String = pos.substring(fnameStart, fnameEnd);
+
+        var lines : Array<String> = code.split('\n');
+
+        Sys.stderr().writeString( pos.substring(pos.indexOf('(') + 1, pos.indexOf(')')) + ' ' + err.message + '\n' );
+        Sys.stderr().writeString( StringTools.replace(lines[line - 1], '\r', '') + '\n' );
+
+        Sys.exit(-1);
+    }//function _parseError()
+
+
+    /**
+    * Try to parse this code
+    *
+    */
+    static private inline function _parse (xmlFile:String, code:String) : Expr {
+        var expr : Expr = null;
+        try{
+            expr = Context.parseInlineString(code, Context.makePosition({ min:0, max:0, file:xmlFile}) );
+        }catch(e:haxe.macro.Error){
+            UIBuilder._parseError(code, e);
+        }
+        return expr;
+    }//function _parse()
+#end
 
     /**
     * Generates closure for widget creation. xmlFile - path to xml file with markup.
@@ -145,7 +218,9 @@ class UIBuilder {
         code += '\nreturn __ui__widget1;';
         code = 'function(__ui__arguments:Dynamic = null) : ' + cls + ' {' + code + '}';
 
-        return Context.parse(code, Context.makePosition({ min:0, max:0, file:xmlFile}) );
+        UIBuilder._saveCode(xmlFile, code);
+
+        return UIBuilder._parse(xmlFile, code);
     }//function buildFn()
 
 
@@ -183,69 +258,8 @@ class UIBuilder {
                 code += '\n     }';
                 code += '\n}';
             //}
-
-            // //skin settings {
-            //     var skinName : String = element.get("skinName");
-            //     if( skinName != null ){
-            //         element.remove('skinName');
-            //         code += '\n __ui__widget' + n + '.skinName = ' + skinName + ';';
-            //     }
-            // //}
         }
         code += UIBuilder._attr2Haxe(element, '__ui__widget' + n);
-        // //apply xml attributes to widget
-        // var value   : String;
-        // var prop    : String;
-        // var objects : Hash<Bool> = new Hash();
-        // for(attr in element.attributes()){
-
-        //     var value : String = element.get(attr);
-
-        //     //if we need to create object of specified class for property
-        //     if( UIBuilder._erAttrCls.match(attr) ){
-        //         cls = UIBuilder._imports.get( UIBuilder._erAttrCls.matched(2) );
-        //         if( cls == null ) Err.trigger('Class is not registered: ' + UIBuilder._erAttrCls.matched(2));
-
-        //         prop = UIBuilder._erAttrCls.matched(1);
-        //         if( !objects.exists(prop) ){
-        //             objects.set(prop, true);
-        //             code += '\nvar ' + prop + ' = (Std.is(__ui__widget' + n + '.' + prop + ', ' + cls + ') ? cast(__ui__widget' + n + '.' + prop + ', ' + cls + ') : new ' + cls + '() );';
-        //         }
-
-        //         //change '-' to '.', so 'someProp-nestedProp' becomes 'someProp.nestedProp'
-        //         attr = StringTools.replace(UIBuilder._erAttrCls.matched(3), '-', '.');
-
-        //         //required code replacements
-        //         value = UIBuilder._fillCodeShortcuts('__ui__widget' + n, value);
-
-        //         code += '\n' + prop + '.' + attr + ' = ' + value + ';';
-
-        //     //if this attribute defines event listener
-        //     }else if( UIBuilder._erEvent.match(attr) ){
-        //         cls = UIBuilder._events.get( UIBuilder._erEvent.matched(1) );
-        //         if( cls == null ) Err.trigger('Event is not registered: ' + UIBuilder._erEvent.matched(1));
-
-        //         //required code replacements
-        //         value = UIBuilder._fillCodeShortcuts('__ui__widget' + n, value);
-
-        //         code += '\n__ui__widget' + n + '.addEventListener('+ cls +', function(event:nme.events.Event){' + value + '});';
-
-        //     //just apply attribute value to appropriate widget property
-        //     }else{
-        //         //change '-' to '.', so 'someProp-nestedProp' becomes 'someProp.nestedProp'
-        //         attr  = StringTools.replace(attr, '-', '.');
-
-        //         //required code replacements
-        //         value = UIBuilder._fillCodeShortcuts('__ui__widget' + n, value);
-
-        //         code += '\n__ui__widget' + n + '.' + attr + ' = ' + value + ';';
-        //     }
-        // }//for( attr )
-
-        // //assign all specific-class properties
-        // for(property in objects.keys()){
-        //     code += '\n__ui__widget' + n + '.' + property + ' = ' + property + ';';
-        // }
 
         if( n > 1 ){
             code += '\n__ui__widget' + Std.string(n - 1) + '.addChild(__ui__widget' + n + ');';
@@ -474,7 +488,10 @@ class UIBuilder {
         }//for(nodes)
 
         code = '(function(){' + code + '})()';
-        return Context.parse(code, Context.makePosition({ min:0, max:0, file:xmlFile}) );
+
+        UIBuilder._saveCode(xmlFile, code);
+
+        return UIBuilder._parse(xmlFile, code);
     }//function regSkins()
 
 
