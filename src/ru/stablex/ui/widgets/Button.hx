@@ -15,7 +15,7 @@ class Button extends Text{
     public var pressed (default,null) : Bool = false;
     //Wether mouse pointer is currently over this button
     public var hovered (default,null) : Bool = false;
-    //default icon for button   
+    //default icon for button
     public var ico (_getIco,_setIco): Bmp;
     private var _ico : Bmp;
     //icon for hovered state
@@ -257,7 +257,7 @@ class Button extends Text{
 
 
     /**
-    * Setter for icoHovered 
+    * Setter for icoHovered
     *
     */
     private function _setIcoHovered (ico:Bmp) : Bmp {
@@ -290,7 +290,7 @@ class Button extends Text{
 
 
     /**
-    * Setter for icoPressed 
+    * Setter for icoPressed
     *
     */
     private function _setIcoPressed (ico:Bmp) : Bmp {
@@ -327,7 +327,7 @@ class Button extends Text{
 
 
     /**
-    * Adds icon object to the button's display list according to `icoBeforeLabel` property  
+    * Adds icon object to the button's display list according to `icoBeforeLabel` property
     *
     */
     private inline function _addIco (ico:Bmp) : Void {
@@ -364,7 +364,7 @@ class Button extends Text{
     */
     private inline function _switchSkin (skin:Skin) : Void {
         if( this._appliedSkin != skin && skin != null ){
-            skin.apply(this);  
+            skin.apply(this);
             this._appliedSkin = skin;
         }
     }//function _switchSkin()

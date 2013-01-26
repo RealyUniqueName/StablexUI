@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Root element of our UI -->
+<VBox w="800" h="600" skin:Paint-border="8" skin:Paint-color="0x005d00" skin:Paint-borderColor="0x003a00" skin:Paint-alpha="0.8" childPadding="20">
+
+<!-- TOGGLE - 2 states button -->
+    <Toggle
+        w = "200"
+        format-color = "0xFFFFFF"
+        format-size  = "20"
+        label-filters = "[new nme.filters.GlowFilter()]"
+
+        skinHoveredName      = "'redHovered'"
+        skinPressedName      = "'redPressed'"
+
+        states-up-skinName   = "'redUp'"
+        states-up-text       = "'Released state'"
+
+        states-down-skinName = "'redDown'"
+        states-down-text     = "'Pressed state'"
+    />
+
+<!-- MULTI-STATE BUTTON -->
+    <StateButton
+        w = "200"
+        format-color  = "0xFFFFFF"
+        format-size   = "20"
+        label-filters = "[new nme.filters.GlowFilter()]"
+
+        order = "['one', 'two', 'three']"
+
+        states-one-skinName   = "'rgbOne'"
+        states-one-text       = "'First state'"
+
+        states-two-skinName   = "'rgbTwo'"
+        states-two-text       = "'Second state'"
+
+        states-three-skinName   = "'rgbThree'"
+        states-three-text       = "'Third state'"
+    />
+
+<!-- CHECKBOXES -->
+    <Checkbox
+        format-color  = "0xFFFFFF"
+        format-size   = "20"
+        label-filters = "[new nme.filters.GlowFilter()]"
+
+        states-up-ico-src   = "'assets/img/haxe24Unchecked.png'"
+        states-down-ico-src = "'assets/img/haxe24.png'"
+
+        text = "'checkbox with static text'"
+    />
+
+    <Checkbox
+        format-color  = "0xFFFFFF"
+        format-size   = "20"
+        label-filters = "[new nme.filters.GlowFilter()]"
+
+        states-up-ico-src   = "'assets/img/haxe24Unchecked.png'"
+        states-down-ico-src = "'assets/img/haxe24.png'"
+
+        states-up-text = "'check me'"
+        states-down-text = "'uncheck me'"
+    />
+
+<!-- OPTIONS -->
+    <HBox skin:Paint-border="2" padding="5" childPadding="10">
+        <Radio
+            format-color  = "0xFFFFFF"
+            format-size   = "20"
+            label-filters = "[new nme.filters.GlowFilter()]"
+
+            states-up-ico-src   = "'assets/img/haxe24Unchecked.png'"
+            states-down-ico-src = "'assets/img/haxe24.png'"
+
+            group = "'group1'"
+
+            text = "'option 1'"
+        />
+        <Radio
+            format-color  = "0xFFFFFF"
+            format-size   = "20"
+            label-filters = "[new nme.filters.GlowFilter()]"
+
+            states-up-ico-src   = "'assets/img/haxe24Unchecked.png'"
+            states-down-ico-src = "'assets/img/haxe24.png'"
+
+            group = "'group1'"
+
+            text = "'option 2'"
+        />
+    </HBox>
+</VBox>

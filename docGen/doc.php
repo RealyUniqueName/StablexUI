@@ -1,6 +1,11 @@
 #!/usr/bin/php
 <?php
 
+/**
+* Custom doc generator.
+*
+*/
+
 define('SRC_ROOT', '../src/');
 define('DOC_ROOT', 'src/');
 define('DOC_BASE_URL', '/ui/doc/');

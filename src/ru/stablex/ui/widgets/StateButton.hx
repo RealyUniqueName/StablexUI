@@ -12,14 +12,14 @@ import ru.stablex.ui.skins.Skin;
 * See samples/stateButtons on <a href="https://github.com/RealyUniqueName/StablexUI" target="_blank">GitHub</a>
 */
 class StateButton extends Button{
-    
+
 
     //object to define button states
     public var states : DynamicList<BtnState>;
     //defines states order. Only states defined in this array will apear on button clicking
     public var order : Array<String>;
     //current state
-    public var state(default,null) : String;
+    public var state(_getState,_setState) : String;
     //current state index in this.order array
     private var _currentIdx : Int = 0;
 
@@ -30,12 +30,34 @@ class StateButton extends Button{
     */
     public function new () : Void {
         super();
-        
+
         this.states = new DynamicList(BtnState);
 
         //change states on click
         this.addEventListener(MouseEvent.CLICK, this.nextState);
     }//function new()
+
+
+    /**
+    * Getter for `.state`
+    *
+    */
+    private function _getState () : String {
+        //order must be defined
+        if( this.order == null || this.order.length == 0 ) return null;
+
+        return this.order[ this._currentIdx ];
+    }//function _getState()
+
+
+    /**
+    * Setter for state
+    *
+    */
+    private function _setState (s:String) : String {
+        this.set(s);
+        return s;
+    }//function _setState()
 
 
     /**
@@ -47,7 +69,7 @@ class StateButton extends Button{
         if( this.order == null || this.order.length == 0 ) return;
 
         if( this.order.length <= this._currentIdx + 1 ){
-            this._currentIdx = 0; 
+            this._currentIdx = 0;
         }else{
             this._currentIdx ++;
         }
@@ -72,7 +94,9 @@ class StateButton extends Button{
             }
         }
 
-        this.refresh();
+        if( this.created ){
+            this.refresh();
+        }
     }//function set()
 
 
@@ -83,10 +107,9 @@ class StateButton extends Button{
     override public function refresh () : Void {
         //if order is not defined, do nothing
         if( this.order != null && this.order.length > 0 ){
-            this.state = this.order[ this._currentIdx ];
             var state : BtnState = this.states.get(this.state);
 
-            this.label.text = (state.text == null ? this.state : state.text);
+            this.label.text = (state.text == null ? (this.text == null ? this.state : this.text) : state.text);
             if( state.skin != null ){
                 this.skin = state.skin;
             }

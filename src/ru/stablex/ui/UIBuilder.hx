@@ -98,12 +98,13 @@ class UIBuilder {
             //registering frequently used classes
             UIBuilder.regClass('ru.stablex.ui.widgets.Text');
             UIBuilder.regClass('ru.stablex.ui.widgets.InputText');
-            // UIBuilder.regClass('ru.stablex.ui.widgets.Panel');
             UIBuilder.regClass('ru.stablex.ui.widgets.Widget');
             UIBuilder.regClass('ru.stablex.ui.widgets.Bmp');
             UIBuilder.regClass('ru.stablex.ui.widgets.Button');
             UIBuilder.regClass('ru.stablex.ui.widgets.StateButton');
             UIBuilder.regClass('ru.stablex.ui.widgets.Toggle');
+            UIBuilder.regClass('ru.stablex.ui.widgets.Checkbox');
+            UIBuilder.regClass('ru.stablex.ui.widgets.Radio');
             UIBuilder.regClass('ru.stablex.ui.widgets.Box');
             UIBuilder.regClass('ru.stablex.ui.widgets.VBox');
             UIBuilder.regClass('ru.stablex.ui.widgets.HBox');

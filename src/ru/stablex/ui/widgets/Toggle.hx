@@ -4,11 +4,11 @@ package ru.stablex.ui.widgets;
 
 /**
 * Simple <type>StateButton</type> with two states expected: "up" and "down"
-* 
+*
 */
 class Toggle extends StateButton{
     //wether button is in down/selected state
-    public var selected (_getSelected,never) : Bool = false;
+    public var selected (_getSelected,_setSelected) : Bool = false;
 
 
     /**
@@ -28,6 +28,21 @@ class Toggle extends StateButton{
     private function _getSelected () : Bool {
         return this.state == 'down';
     }//function _getSelected()
+
+
+    /**
+    * Setter for `.selected`
+    *
+    */
+    private function _setSelected (s:Bool) : Bool {
+        if( s ){
+            this.down();
+        }else{
+            this.up();
+        }
+
+        return s;
+    }//function _setSelected()
 
 
     /**

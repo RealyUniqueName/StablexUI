@@ -132,15 +132,18 @@ class Box extends Widget{
         //if this is vertical box, set width = max child width
         if( this.vertical ){
 
-            var w : Float = 0;
-            var child : DisplayObject;
+            var w      : Float = 0;
+            var child  : DisplayObject;
+            var childW : Float = 0;
 
             for(i in 0...this.numChildren){
                 child = this.getChildAt(i);
-                if( Std.is(child, Widget) && cast(child, Widget)._width > w ){
-                    w = cast(child, Widget)._width;
-                }else if( child.width > w ){
-                    w = child.width;
+                child = this.getChildAt(i);
+                if( child.visible ){
+                    childW = Box._objWidth(child);
+                    if( childW > w ){
+                        w = childW;
+                    }
                 }
             }
 
@@ -154,11 +157,7 @@ class Box extends Widget{
             for(i in 0...this.numChildren){
                 child = this.getChildAt(i);
                 if( child.visible ){
-                    if( Std.is(child, Widget) ){
-                        w += cast(child, Widget)._width;
-                    }else if( child.width > w ){
-                        w += child.width;
-                    }
+                    w += Box._objWidth(child);
                     visibleChildren ++;
                 }
             }
@@ -183,11 +182,7 @@ class Box extends Widget{
             for(i in 0...this.numChildren){
                 child = this.getChildAt(i);
                 if( child.visible ){
-                    if( Std.is(child, Widget) ){
-                        h += cast(child, Widget)._height;
-                    }else if( child.height > h ){
-                        h += child.height;
-                    }
+                    h += Box._objHeight(child);
                     visibleChildren ++;
                 }
             }
@@ -197,15 +192,17 @@ class Box extends Widget{
         //if this is horizontal box set height = max child height
         }else{
 
-            var h : Float = 0;
-            var child : DisplayObject;
+            var h      : Float = 0;
+            var childH : Float = 0;
+            var child  : DisplayObject;
 
             for(i in 0...this.numChildren){
                 child = this.getChildAt(i);
-                if( Std.is(child, Widget) && cast(child, Widget)._height > h ){
-                    h = cast(child, Widget)._height;
-                }else if( child.height > h ){
-                    h = child.height;
+                if( child.visible ){
+                    childH = Box._objHeight(child);
+                    if( childH > h ){
+                        h = childH;
+                    }
                 }
             }
 
@@ -251,14 +248,14 @@ class Box extends Widget{
             for(i in 0...this.numChildren){
                 child   = this.getChildAt(i);
                 if( !child.visible ) continue;
-                child.y = lastY;
-                lastY   += (Std.is(child, Widget) ? cast(child, Widget).h : child.height) + this.childPadding;
+                Box._setObjY(child, lastY);
+                lastY += Box._objHeight(child) + this.childPadding;
             }
 
         //horizontal box
         }else{
             for(i in 0...this.numChildren){
-                this.getChildAt(i).y = this.paddingTop;
+                Box._setObjY(this.getChildAt(i), this.paddingTop);
             }
         }
     }//function _vAlignTop()
@@ -280,7 +277,7 @@ class Box extends Widget{
                 child = this.getChildAt(i);
                 if( !child.visible ) continue;
                 visibleChildren ++;
-                height += (Std.is(child, Widget) ? cast(child, Widget).h : child.height);
+                height += Box._objHeight(child);
             }
 
             //add padding
@@ -292,8 +289,8 @@ class Box extends Widget{
             for(i in 0...this.numChildren){
                 child   = this.getChildAt(i);
                 if( !child.visible ) continue;
-                child.y = lastY;
-                lastY   += (Std.is(child, Widget) ? cast(child, Widget).h : child.height) + this.childPadding;
+                Box._setObjY(child, lastY);
+                lastY   += Box._objHeight(child) + this.childPadding;
             }
 
         //horizontal box
@@ -301,7 +298,7 @@ class Box extends Widget{
             var child : DisplayObject;
             for(i in 0...this.numChildren){
                 child   = this.getChildAt(i);
-                child.y = (this.h - (Std.is(child, Widget) ? cast(child, Widget).h : child.height)) / 2;
+                Box._setObjY(child, (this.h - Box._objHeight(child)) / 2);
             }
         }
     }//function _vAlignMiddle()
@@ -320,8 +317,8 @@ class Box extends Widget{
             for(i in 0...this.numChildren){
                 child   = this.getChildAt(this.numChildren - 1 - i);
                 if( !child.visible ) continue;
-                child.y = lastY - (Std.is(child, Widget) ? cast(child, Widget).h : child.height);
-                lastY   = child.y - this.childPadding;
+                Box._setObjY(child, lastY - Box._objHeight(child));
+                lastY   = child.y - this.childPadding #if html5 - (Std.is(child, nme.text.TextField) ? 2 : 0) #end;
             }
 
         //horizontal box
@@ -329,7 +326,7 @@ class Box extends Widget{
             var child : DisplayObject;
             for(i in 0...this.numChildren){
                 child = this.getChildAt(i);
-                child.y = this.h - this.paddingBottom - (Std.is(child, Widget) ? cast(child, Widget).h : child.height);
+                Box._setObjY(child, this.h - this.paddingBottom - Box._objHeight(child));
             }
         }
     }//function _vAlignBottom()
@@ -343,7 +340,7 @@ class Box extends Widget{
         //vertical box
         if(this.vertical){
             for(i in 0...this.numChildren){
-                this.getChildAt(i).x = this.paddingLeft;
+                Box._setObjX(this.getChildAt(i), this.paddingLeft);
             }
 
         //horizontal box
@@ -354,8 +351,8 @@ class Box extends Widget{
             for(i in 0...this.numChildren){
                 child   = this.getChildAt(i);
                 if( !child.visible ) continue;
-                child.x = lastX;
-                lastX   += (Std.is(child, Widget) ? cast(child, Widget).w : child.width) + this.childPadding;
+                Box._setObjX(child, lastX);
+                lastX   += Box._objWidth(child) + this.childPadding;
             }
         }
     }//function _hAlignLeft()
@@ -371,7 +368,7 @@ class Box extends Widget{
             var child : DisplayObject;
             for(i in 0...this.numChildren){
                 child = this.getChildAt(i);
-                child.x = this.w - this.paddingRight - (Std.is(child, Widget) ? cast(child, Widget).w : child.width);
+                Box._setObjX(child, this.w - this.paddingRight - Box._objWidth(child));
             }
 
         //horizontal box
@@ -382,8 +379,8 @@ class Box extends Widget{
             for(i in 0...this.numChildren){
                 child = this.getChildAt(this.numChildren - 1 - i);
                 if( !child.visible ) continue;
-                child.x = lastX - (Std.is(child, Widget) ? cast(child, Widget).w : child.width);
-                lastX = child.x - this.childPadding;
+                Box._setObjX(child, lastX - Box._objWidth(child));
+                lastX = child.x #if html5 - (Std.is(child, nme.text.TextField) ? 2 : 0) #end - this.childPadding;
             }
         }
     }//function _hAlignRight()
@@ -399,7 +396,7 @@ class Box extends Widget{
             var child : DisplayObject;
             for(i in 0...this.numChildren){
                 child   = this.getChildAt(i);
-                child.x = (this.w - (Std.is(child, Widget) ? cast(child, Widget).w : child.width)) / 2;
+                Box._setObjX(child, (this.w - Box._objWidth(child)) / 2);
             }
 
         //horizontal box
@@ -413,7 +410,7 @@ class Box extends Widget{
                 child = this.getChildAt(i);
                 if( !child.visible ) continue;
                 visibleChildren ++;
-                width += (Std.is(child, Widget) ? cast(child, Widget).w : child.width);
+                width += Box._objWidth(child);
             }
 
             //add padding
@@ -425,9 +422,85 @@ class Box extends Widget{
             for(i in 0...this.numChildren){
                 child   = this.getChildAt(i);
                 if( !child.visible ) continue;
-                child.x = lastX;
-                lastX   += (Std.is(child, Widget) ? cast(child, Widget).w : child.width) + this.childPadding;
+                Box._setObjX(child, lastX);
+                lastX += Box._objWidth(child) + this.childPadding;
             }
         }
     }//function _hAlignCenter()
+
+
+
+    /**
+    * Strange bug: on html5 TextField.width (.height) reported is less than TextField.textWidth (.textHeight).
+    * While on other targets .width (.height) is bigger by approximately 4 pixels.
+    * That's why we need these functions.
+    * {
+    */
+
+        /**
+        * get object width
+        *
+        */
+        static private inline function _objWidth (obj:DisplayObject) : Float {
+            #if html5
+                if( Std.is(obj, Widget) ){
+                    return cast(obj, Widget).w;
+                }else if( Std.is(obj, nme.text.TextField) ){
+                    return cast(obj, nme.text.TextField).textWidth + 4;
+                }else{
+                    return obj.width;
+                }
+            #else
+                return (Std.is(obj, Widget) ? cast(obj, Widget).w : obj.width);
+            #end
+        }//function _objWidth()
+
+
+        /**
+        * get object height
+        *
+        */
+        static private inline function _objHeight (obj:DisplayObject) : Float {
+            #if html5
+                if( Std.is(obj, Widget) ){
+                    return cast(obj, Widget).h;
+                }else if( Std.is(obj, nme.text.TextField) ){
+                    return cast(obj, nme.text.TextField).textHeight + 4;
+                }else{
+                    return obj.height;
+                }
+            #else
+                return (Std.is(obj, Widget) ? cast(obj, Widget).h : obj.height);
+            #end
+        }//function _objHeight()
+
+
+        /**
+        * Set object x
+        *
+        */
+        static private inline function _setObjX (obj:DisplayObject, x:Float) : Void {
+            #if html5
+                obj.x = (Std.is(obj, nme.text.TextField) ? obj.x = x + 2 : x);
+            #else
+                obj.x = x;
+            #end
+        }//function _setObjX()
+
+
+        /**
+        * Set object y
+        *
+        */
+        static private inline function _setObjY (obj:DisplayObject, y:Float) : Void {
+            #if html5
+                obj.y = (Std.is(obj, nme.text.TextField) ? obj.y = y + 2 : y);
+            #else
+                obj.y = y;
+            #end
+        }//function _setObjY()
+
+    /**
+    * }
+    */
 }//class Box
