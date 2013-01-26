@@ -16,7 +16,9 @@ Features:
 * Only parts of framework you use are compiled to your binaries. For example if you don't use buttons, their classes won't be compilled.
 * Relative positioning (you can define position  by any border of element - left, right, top, bottom in pixels or percentage of parent's size. Define width/height in percentage etc);
 * You can write haxe code right in attributes in xml to acces anything from anywhere! For example:
-    <Text text="'Hello world!'" x="nme.Lib.current.stage.stageWidth/2" />
+```
+<Text text="'Hello world!'" x="nme.Lib.current.stage.stageWidth/2" />
+```
 * Easy skinning with 3-slice-scaling, 9-slice-scaling, tiling with texture, filling with color or your own custom skin processor;
 * Don't worry about forgotten eventListeners. Just use widget.free() method to let GC destroy the object;
 * Another basic features are described in docs: http://stablex.ru/ui/doc
