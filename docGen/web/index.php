@@ -10,7 +10,14 @@
                     $('.menu').html("<h1>StablexUI Docs</h1><hr/>" + data);
                     process('.menu');
 
-                    // $('.menu').children('ul').children('li').children('ul').hide();
+                    //hide everything below level 5
+                    $('.menu')
+                        .children('ul').children('li')
+                        .children('ul').children('li')
+                        .children('ul').children('li')
+                        .children('ul').children('li')
+                        .children('ul').children('li')
+                    .children('ul').hide();
                 });
 
                 $('.external').height($(window).height());
@@ -57,20 +64,6 @@
                 $(el + ' span.package').click(function(){
                     $(this).parent().children('ul:first').toggle('fast');
                 });
-
-                // $(el + ' span.class').click(function(){
-                //     var url = $(this).parent().data('url');
-                //     if( url != undefined ){
-                //         location.hash = '#' + url;
-                //     }
-                // });
-
-                // $(el + ' span.type').click(function(){
-                //     var url = $(this).data('url');
-                //     if( url != undefined ){
-                //         location.hash = '#' + url;
-                //     }
-                // });
             }
 
         </script>
