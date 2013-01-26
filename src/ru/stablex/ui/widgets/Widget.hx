@@ -90,7 +90,7 @@ class Widget extends TweenSprite{
     //skin name to use. One of registered with <type>ru.stablex.ui.UIBuilder</type>.regSkins()
     public var skinName (default,_setSkinName) : String;
     //wether widget content out of widgt bounds is visible
-    public var overflow (default,_setOverflow): Bool = true;
+    public var overflow (default,_setOverflow) : Bool = true;
 
 
     /**
@@ -111,29 +111,27 @@ class Widget extends TweenSprite{
     private function _setOverflow (o:Bool) : Bool {
         if( !o ){
             this.scrollRect = new Rectangle(0, 0, this._width, this._height);
-            if( !this.created ){
-                this.addUniqueListener(WidgetEvent.INITIAL_RESIZE, this._updateScrollRect);
-            }
-            this.addUniqueListener(WidgetEvent.RESIZE, this._updateScrollRect);
+            // if( !this.created ){
+            //     this.addUniqueListener(WidgetEvent.INITIAL_RESIZE, this._updateScrollRect);
+            // }
+            // this.addUniqueListener(WidgetEvent.RESIZE, this._updateScrollRect);
         }else{
             this.scrollRect = null;
-            if( !this.created ){
-                this.removeEventListener(WidgetEvent.INITIAL_RESIZE, this._updateScrollRect);
-            }
-            this.removeEventListener(WidgetEvent.RESIZE, this._updateScrollRect);
+            // this.removeEventListener(WidgetEvent.INITIAL_RESIZE, this._updateScrollRect);
+            // this.removeEventListener(WidgetEvent.RESIZE, this._updateScrollRect);
         }
 
         return this.overflow = o;
     }//function _setOverflow()
 
 
-    /**
-    * Update `scrollRect` on resize
-    *
-    */
-    private function _updateScrollRect (e:WidgetEvent) : Void {
-        this.scrollRect = new Rectangle(0, 0, this._width, this._height);
-    }//function _updateScrollRect()
+    // /**
+    // * Update `scrollRect` on resize
+    // *
+    // */
+    // private function _updateScrollRect (e:WidgetEvent) : Void {
+    //     this.scrollRect = new Rectangle(0, 0, this._width, this._height);
+    // }//function _updateScrollRect()
 
 
     /**
@@ -684,7 +682,7 @@ class Widget extends TweenSprite{
         if( this.wparent != null ){
             switch( this._xUse ){
                 //by right border
-                case _X_USE_RIGHT:this.x = this.wparent._width - this._right - this._width;
+                case _X_USE_RIGHT: this.x = this.wparent._width - this._right - this._width;
                 //by right percent
                 case _X_USE_RIGHT_PERCENT: this.x = this.wparent._width - this.wparent._width * this._rightPercent / 100 - this._width;
             }//switch()
@@ -699,6 +697,11 @@ class Widget extends TweenSprite{
 
         //skin
         this.applySkin();
+
+        //handle overflow visibility
+        if( !this.overflow ){
+            this.scrollRect = new Rectangle(0, 0, this._width, this._height);
+        }
 
         this.dispatchEvent(new WidgetEvent( this.created ? WidgetEvent.RESIZE : WidgetEvent.INITIAL_RESIZE ));
     }//function onResize()

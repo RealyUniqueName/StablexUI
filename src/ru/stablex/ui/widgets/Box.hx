@@ -110,7 +110,7 @@ class Box extends Widget{
 
 
     /**
-    * On resize refresh widget if `autoWidth` or `autoHeight` is set. 
+    * On resize refresh widget if `autoWidth` or `autoHeight` is set.
     * Otherwise just realign children
     *
     */

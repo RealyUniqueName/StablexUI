@@ -79,7 +79,7 @@ class UIBuilder {
     * Initializing UIBuilder. Should be called before using any other UIBuilder methods except .reg* methods
     * @param defaultsXmlFile - path to xml file with default settings for widgets
     */
-    @:macro static public function init(defaultsXmlFile:String = null /*, generatedCodeDir:String = null */) : Expr {
+    @:macro static public function init(defaultsXmlFile:String = null) : Expr {
         var code : String = 'true';
 
         if( !UIBuilder._initialized ){

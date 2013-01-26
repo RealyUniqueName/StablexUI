@@ -29,11 +29,11 @@
 </div>
 <div class="comment">container for content. Content is scrolled by moving this container
 </div>
-<div class="definition">    <span class="public">public</span> <span class="var">var</span> <span class="definitionName">scrollX</span> (default,_setScrollX) : <a class="type" href="/ui/doc/#http://haxe.org/api/Float" title="Float">Float</a> = 0
+<div class="definition">    <span class="public">public</span> <span class="var">var</span> <span class="definitionName">scrollX</span> (_getScrollX,_setScrollX) : <a class="type" href="/ui/doc/#http://haxe.org/api/Float" title="Float">Float</a>
 </div>
 <div class="comment">scroll position along x axes
 </div>
-<div class="definition">    <span class="public">public</span> <span class="var">var</span> <span class="definitionName">scrollY</span> (default,_setScrollY) : <a class="type" href="/ui/doc/#http://haxe.org/api/Float" title="Float">Float</a> = 0
+<div class="definition">    <span class="public">public</span> <span class="var">var</span> <span class="definitionName">scrollY</span> (_getScrollY,_setScrollY) : <a class="type" href="/ui/doc/#http://haxe.org/api/Float" title="Float">Float</a>
 </div>
 <div class="comment">scroll position along y axes
 </div>
@@ -45,6 +45,10 @@
 <div class="definition">    <span class="override">override</span> <span class="public">public</span> <span class="function">function</span> <span class="definitionName">refresh</span> () : <a class="type" href="/ui/doc/#http://haxe.org/api/Void" title="Void">Void</a> 
 </div>
 <div class="comment"> Refresh container too
+</div>
+<div class="definition">    <span class="override">override</span> <span class="public">public</span> <span class="function">function</span> <span class="definitionName">free</span>(r:<a class="type" href="/ui/doc/#http://haxe.org/api/Bool" title="Bool">Bool</a> = true) : <a class="type" href="/ui/doc/#http://haxe.org/api/Void" title="Void">Void</a> 
+</div>
+<div class="comment"> Destroy widget
 </div>
 <div class="definition">    <span class="override">override</span> <span class="public">public</span> <span class="function">function</span> <span class="definitionName">addChild</span> (child:<a class="type" href="/ui/doc/#http://nme.io/api/types/nme/display/DisplayObject.html" title="nme.display.DisplayObject">DisplayObject</a>) : <a class="type" href="/ui/doc/#http://nme.io/api/types/nme/display/DisplayObject.html" title="nme.display.DisplayObject">DisplayObject</a> 
 </div>
