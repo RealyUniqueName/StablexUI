@@ -35,6 +35,7 @@ Currenlty implemented:
 * VBox, HBox;
 * Scroll container;
 * Progress bar;
+* Options box (picker list / drop-down)
 * View stacks (only one visible child at every moment);
 * More will be available soon ;)
 

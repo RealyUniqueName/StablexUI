@@ -10,8 +10,8 @@ import ru.stablex.ui.skins.Skin;
 
 /**
 * Simple options box.
-* E.g. drop-down. Or list can appear full screen on top of the stage - `phone`-style*
-* <type>ru.stablex.ui.widgets.Button</type> widget is used to render options is list.
+* E.g. drop-down. Or list can appear full screen on top of the stage - `phone`-style
+* <type>ru.stablex.ui.widgets.Button</type> widget is used to render options in list.
 */
 class Options extends Button{
     /**

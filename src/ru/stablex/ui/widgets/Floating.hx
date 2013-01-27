@@ -6,8 +6,8 @@ import nme.Lib;
 
 
 /**
-* `Floating` widget. Call `.show()` to render on top of everything of specified display object.
-* By default it is rendered on top of everything on stage.
+* `Floating` widget. Call `.show()` to render on top of display list of specified display object.
+* By default it is rendered on top of the stage.
 * If it is rendered on top of stage, size and position in % of parent size is still works properly.
 * E.g. with `.renderTo` == null and `.widthPt` == 100. This widget's width will always be the same
 * as stage width (even on stage resize)
