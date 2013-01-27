@@ -97,4 +97,14 @@ class Radio extends Checkbox{
             this._unselectOthers();
         }
     }//function nextState()
+
+
+    /**
+    * On radio desrtoy, remove it from group
+    *
+    */
+    override public function free (recursive:Bool = true) : Void {
+        this.group = null;
+        super.free(recursive);
+    }//function free()
 }//class Radio

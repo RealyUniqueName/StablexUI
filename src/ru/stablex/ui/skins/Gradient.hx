@@ -7,7 +7,7 @@ import ru.stablex.ui.widgets.Widget;
 
 /**
 * Fill widget with gradient
-* <a href="http://help.adobe.com/ru_RU/FlashPlatform/reference/actionscript/3/flash/display/Graphics.html#beginGradientFill()" target="_blank">read this</a>
+* <a href="http://help.adobe.com/en_US/FlashPlatform/reference/actionscript/3/flash/display/Graphics.html#beginGradientFill()" target="_blank">read this</a>
 */
 class Gradient extends Skin{
     //gradient type (linear or radial)
