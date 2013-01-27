@@ -12,7 +12,7 @@ import nme.Lib;
 * E.g. with `.renderTo` == null and `.widthPt` == 100. This widget's width will always be the same
 * as stage width (even on stage resize)
 */
-class Floating extends Widget{
+class Floating extends Box{
 
     //wether widget is shown
     public var shown (default,null) : Bool = false;

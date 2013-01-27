@@ -1,5 +1,6 @@
 package ru.stablex.ui.widgets;
 
+import nme.display.DisplayObject;
 import ru.stablex.ui.skins.Skin;
 import ru.stablex.ui.UIBuilder;
 import nme.events.MouseEvent;
@@ -36,13 +37,14 @@ class Button extends Text{
     public var skinPressed : Skin;
     //to test wether we trying to apply already applied skin
     private var _appliedSkin : Skin;
+    //stick ico and text to opposite borders
+    public var apart : Bool = false;
 
 
     /**
     * We use wrappers so if we assign another functions to instance methods like .onPress, we don't need to reaply eventListeners
     * {
     */
-
         /**
         * wrapper for hover
         *
@@ -140,7 +142,7 @@ class Button extends Text{
 
     /**
     * Constructor
-    * By default .padding = 10, .childPadding = 5 and .mouseChildren = false
+    * By default `.padding` = 2, `.childPadding` = 5 and `.mouseChildren` = false
     */
     public function new () : Void{
         super();
@@ -383,4 +385,54 @@ class Button extends Text{
 
         super.refresh();
     }//function refresh()
+
+
+    /**
+    * Align elements according to this.align
+    *
+    */
+    override public function alignElements () : Void {
+        if( this.apart ){
+            this._moveApart();
+        }else{
+            super.alignElements();
+        }
+    }//function alignElements()
+
+
+    /**
+    * Move ico and label to opposite borders
+    *
+    */
+    private inline function _moveApart () : Void {
+        var child : DisplayObject;
+
+        //ico to the left border, label to the right border
+        if( this.icoBeforeLabel ){
+            //there can be several icons for different states
+            for(i in 0...this.numChildren){
+                child = this.getChildAt(i);
+                //if this is Bmp, consider it icon
+                if( Std.is(child, Bmp) ){
+                    cast(child, Bmp).left = this.paddingLeft;
+                }
+            }
+
+            Box._setObjX(this.label, this._width -  this.paddingRight - Box._objWidth(this.label));
+
+        //ico to the right border, label to the left border
+        }else{
+            //there can be several icons for different states
+            for(i in 0...this.numChildren){
+                child = this.getChildAt(i);
+                //if this is Bmp, consider it icon
+                if( Std.is(child, Bmp) ){
+                    cast(child, Bmp).right = this.paddingRight;
+                }
+            }
+
+            Box._setObjX(this.label, this.paddingLeft);
+        }
+    }//function _moveApart()
+
 }//class Button

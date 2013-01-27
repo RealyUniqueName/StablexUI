@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Box id="'root'" w="800" h="600">
+    <Options
+        w = "100"
+        h = "30"
+        skin:Paint-color   = "0xFF0000"
+        skin:Paint-corners = "[20]"
+
+        options = "[['option 1', 1], ['option 2', 2], ['option 3', 3]]"
+
+        list-skin:Paint-color = "0x222222"
+        list-skin:Paint-alpha = "0.9"
+        list-padding = "5"
+        list-childPadding = "5"
+
+        skinOption:Paint-color = "0x00FF00"
+        skinSelected:Paint-color = "0x007700"
+    />
+</Box>
+
