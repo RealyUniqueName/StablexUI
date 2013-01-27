@@ -21,7 +21,7 @@ Features:
 ```
 * Easy skinning with 3-slice-scaling, 9-slice-scaling, tiling with texture, filling with color or your own custom skin processor;
 * Don't worry about forgotten eventListeners. Just use widget.free() method to let GC destroy the object;
-* Another basic features are described in docs: http://stablex.ru/ui/doc
+* Other basic features are described in docs: http://stablex.ru/ui/doc
 
 Few elements are implemented now. But i found that's enough for majority of mobile and web games, so i've decided to publish StablexUI.
 

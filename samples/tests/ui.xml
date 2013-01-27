@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Root element of our UI -->
+<VBox w="800" h="600" skin:Paint-border="8" skin:Paint-color="0x005d00" skin:Paint-borderColor="0x003a00" skin:Paint-alpha="0.8" childPadding="20">
+
+    <Button
+        w            = "200"
+        h            = "50"
+        format-color = "0xFFFFFF"
+        format-size  = "20"
+        text         = "'hello'"
+        skin:Gradient-colors = "[0x000000, 0xFFFFFF]"
+        skin:Gradient-corners="[20]"
+    />
+</VBox>
