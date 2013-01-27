@@ -19,7 +19,7 @@ Features:
 ```xml
 <Text text="'Hello world!'" x="nme.Lib.current.stage.stageWidth/2" />
 ```
-* Easy skinning with 3-slice-scaling, 9-slice-scaling, tiling with texture, filling with color or your own custom skin processor;
+* Easy skinning with 3-slice-scaling, 9-slice-scaling, tiling with texture, filling with color, gradient fill or your own custom skin processor;
 * Don't worry about forgotten eventListeners. Just use widget.free() method to let GC destroy the object;
 * Other basic features are described in docs: http://stablex.ru/ui/doc
 
