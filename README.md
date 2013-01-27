@@ -34,6 +34,7 @@ Currenlty implemented:
 * Bitmaps;
 * VBox, HBox;
 * Scroll container;
+* Progress bar;
 * View stacks (only one visible child at every moment);
 * More will be available soon ;)
 
