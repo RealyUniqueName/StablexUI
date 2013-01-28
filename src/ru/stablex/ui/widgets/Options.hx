@@ -59,6 +59,8 @@ class Options extends Button{
         this.box = UIBuilder.create(Box);
         this.list.addChild(this.box);
 
+        this.box.unifyChildren = true;
+
         this.addEventListener(MouseEvent.CLICK, this.toggleList);
         this.list.addEventListener(MouseEvent.CLICK, this.toggleList);
     }//function new()
@@ -208,7 +210,6 @@ class Options extends Button{
                 defaults : (this._selectedIdx == i ? this.defaultsSelected : this.defaultsOption),
                 name     : Std.string(i),
                 text     : this.options[i][0],
-                apart    : true
             })).addEventListener(MouseEvent.CLICK, this._onSelectOption);
         }
 

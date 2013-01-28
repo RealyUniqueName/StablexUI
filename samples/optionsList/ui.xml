@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<Box id="'root'" w="800" h="600">
+<Box id="'root'" w="800" h="600" childPadding="20">
     <!-- drop-down -->
     <Options
         w = "100"
@@ -8,7 +8,7 @@
         skin:Paint-color   = "0xFF0000"
         skin:Paint-corners = "[20]"
 
-        options = "[['lion 1', 1], ['camel 2', 2], ['option 3', 3]]"
+        options = "[['lion', 1], ['camel', 2], ['elephant', 3]]"
 
         box-skin:Paint-color = "0x222222"
         box-skin:Paint-alpha = "0.9"
@@ -23,12 +23,12 @@
     <HBox childPadding="10">
         <Text text="'Full screen list:'" />
         <Options
-            w = "100"
+            w = "150"
             h = "30"
             skin:Paint-color   = "0xFF0000"
             skin:Paint-corners = "[20]"
 
-            options = "[['fullscreen 1', 'wow'], ['fullscreen 2', 'yay'], ['fullscreen 3', 'doh']]"
+            options = "[['apple', 'wow'], ['pancakes', 'yay'], ['peanut butter jelly time!', 'doh']]"
 
             list-skin:Paint-color = "0x000000"
             list-skin:Paint-alpha = "0.7"

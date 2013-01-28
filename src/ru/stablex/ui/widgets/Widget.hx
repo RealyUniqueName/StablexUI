@@ -47,6 +47,9 @@ class Widget extends TweenSprite{
     private var _heightPercent            : Float = 0;
     private var _heightUsePercent         : Bool = false;
 
+    //do not adjust widget position and do not fire event on setting widget size
+    private var _silentResize : Bool = false;
+
     //Widget id (unique)
     public var id (default, _setId) : String;
 
@@ -392,7 +395,9 @@ class Widget extends TweenSprite{
     private function _setWidth(w:Float) : Float {
         this._width           = w;
         this._widthUsePercent = false;
-        this.onResize();
+        if( !this._silentResize ){
+            this.onResize();
+        }
         return w;
     }//function _setWidth()
 
@@ -413,7 +418,9 @@ class Widget extends TweenSprite{
     private function _setHeight(h:Float) : Float {
         this._height           = h;
         this._heightUsePercent = false;
-        this.onResize();
+        if( !this._silentResize ){
+            this.onResize();
+        }
         return h;
     }//function _setHeight()
 
@@ -437,7 +444,9 @@ class Widget extends TweenSprite{
 
         if( this.wparent != null ){
             this._width = this.wparent._width * wp / 100;
-            this.onResize();
+            if( !this._silentResize ){
+                this.onResize();
+            }
         }
 
         return wp;
@@ -471,7 +480,9 @@ class Widget extends TweenSprite{
 
         if( this.wparent != null ){
             this._height = this.wparent._height * hp / 100;
-            this.onResize();
+            if( !this._silentResize ){
+                this.onResize();
+            }
         }
 
         return hp;
@@ -660,11 +671,14 @@ class Widget extends TweenSprite{
     *
     */
     public function resize(width:Float, height:Float, keepPercentage:Bool = false) : Void {
-        this._width  = width;
-        this._height = height;
-
         if( !keepPercentage ){
-            this._heightUsePercent = this._widthUsePercent = false;
+            this._silentResize = true;
+            this.w = width;
+            this.h = height;
+            this._silentResize = false;
+        }else{
+            this._width  = width;
+            this._height = height;
         }
 
         this.onResize();
