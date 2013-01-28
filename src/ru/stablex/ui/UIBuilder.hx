@@ -94,6 +94,7 @@ class UIBuilder {
             UIBuilder.regEvent('create',    'ru.stablex.ui.events.WidgetEvent.CREATE');
             UIBuilder.regEvent('free',      'ru.stablex.ui.events.WidgetEvent.FREE');
             UIBuilder.regEvent('resize',    'ru.stablex.ui.events.WidgetEvent.RESIZE');
+            UIBuilder.regEvent('change',    'ru.stablex.ui.events.WidgetEvent.CHANGE');
 
             //registering frequently used classes
             UIBuilder.regClass('ru.stablex.ui.widgets.Text');

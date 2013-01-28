@@ -4,6 +4,7 @@ import nme.display.DisplayObject;
 import nme.events.MouseEvent;
 import nme.geom.Rectangle;
 import nme.Lib;
+import ru.stablex.ui.events.WidgetEvent;
 import ru.stablex.ui.skins.Skin;
 
 
@@ -22,6 +23,8 @@ class Options extends Button{
     public var options (default,_setOptions) : Array<Array<Dynamic>>;
     //List wich appears when control is clicked
     public var list : Floating;
+    //box is a child for `.list` and contains buttons for each option
+    public var box : Box;
     //Currently selected value. If you try to set value wich is not in the `.options`, than `.value` won't be changed
     public var value (_getValue,_setValue) : Dynamic;
     //skin to use for options in list
@@ -51,9 +54,11 @@ class Options extends Button{
     */
     public function new () : Void {
         super();
-        this.list = UIBuilder.create(Floating, {
-            align : 'top,left'
-        });
+
+        this.list = UIBuilder.create(Floating);
+        this.box = UIBuilder.create(Box);
+        this.list.addChild(this.box);
+
         this.addEventListener(MouseEvent.CLICK, this.toggleList);
         this.list.addEventListener(MouseEvent.CLICK, this.toggleList);
     }//function new()
@@ -61,11 +66,15 @@ class Options extends Button{
 
     /**
     * Setter for `._selectedIdx`
-    *
+    * @dispatch <type>ru.stablex.ui.events.WidgetEvent</type>.CHANGE
     */
     private function _setSelectedIdx (idx:Int) : Int {
-        this._rebuildList = true;
-        return this._selectedIdx = idx;
+        if( idx != this._selectedIdx ){
+            this._rebuildList = true;
+            this._selectedIdx = idx;
+            this.dispatchEvent(new WidgetEvent(WidgetEvent.CHANGE));
+        }
+        return idx;
     }//function _setSelectedIdx()
 
 
@@ -191,10 +200,10 @@ class Options extends Button{
     private function _buildList () : Void {
         if( this.options == null ) return;
 
-        this.list.freeChildren();
+        this.box.freeChildren();
 
         for(i in 0...this.options.length){
-            this.list.addChild(UIBuilder.create(Button, {
+            this.box.addChild(UIBuilder.create(Button, {
                 skin     : (this._selectedIdx == i ? this.skinSelected : this.skinOption),
                 defaults : (this._selectedIdx == i ? this.defaultsSelected : this.defaultsOption),
                 name     : Std.string(i),
@@ -202,6 +211,8 @@ class Options extends Button{
                 apart    : true
             })).addEventListener(MouseEvent.CLICK, this._onSelectOption);
         }
+
+        this.box.refresh();
         this.list.refresh();
     }//function _buildList()
 
