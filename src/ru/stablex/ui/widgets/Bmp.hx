@@ -16,25 +16,25 @@ class Bmp extends Widget{
     public var src : String;
     //Should we use smoothing?
     public var smooth : Bool = true;
-    //set size depending on bitmap size, overrides any width, height, xOffset and yOffset settings
+    //set size depending on bitmap size, overrides any width, height settings
     public var autoSize (never,_setAutoSize) : Bool;
-    //set width depending on bitmap width, overrides any width and xOffset settings
+    //set width depending on bitmap width, overrides any width settings
     public var autoWidth : Bool = true;
-    //set height depending on bitmap height, overrides any height and yOffset settings
+    //set height depending on bitmap height, overrides any height settings
     public var autoHeight : Bool = true;
     /**
     * If you want to draw just a portion of the bitmap. Specify top/left corner of
     * desired source rectangle by `.xOffset` and `.yOffset` and widht/height for
-    * that rectangle will be taken from `.w` and `.h` of this widget (wich means,
-    * you can't draw a portion of image while `.autoSize` == true)
+    * that rectangle will be taken from `.w` and `.h` of this widget. If `.autoSize` is true,
+    * width and height will be taken from `.xOffset` and `.yOffset` to bitmap right border
+    * and bottom border respectively
     */
     public var xOffset (default, _setXOffset) : Int = 0;
     // y offset for drawing a portion of the bitmap
     public var yOffset (default, _setYOffset) : Int = 0;
     /**
     * When `.xOffset` or `.yOffset` is set, this property is changed to true.
-    * To draw full image on next refresh set this property to false again or
-    * set `.autoSize` to true.
+    * To draw full image on next refresh set this property to false again.
     */
     public var drawPortion : Bool = false;
 
@@ -44,9 +44,6 @@ class Bmp extends Widget{
     *
     */
     private function _setAutoSize (as:Bool) : Bool {
-        if( as ){
-            this.drawPortion = false;
-        }
         return this.autoWidth = this.autoHeight = as;
     }//function _setAutoSize()
 
@@ -121,12 +118,18 @@ class Bmp extends Widget{
             }
 
             //handle auto size
-            if( this.autoWidth && this.autoHeight && (this._width != bmp.width || this._height != bmp.height ) ){
+            if(
+                this.autoWidth && this.autoHeight
+                && (
+                    this._width != (this.drawPortion ? bmp.width - this.xOffset : bmp.width)
+                    || this._height != (this.drawPortion ? bmp.height - this.yOffset : bmp.height)
+                )
+            ){
                 this.resize(bmp.width, bmp.height);
-            }else if( this.autoWidth && this._width != bmp.width ){
-                this.w = bmp.width;
-            }else if( this.autoHeight && this._height != bmp.height ){
-                this.h = bmp.height;
+            }else if( this.autoWidth && this._width != (this.drawPortion ? bmp.width - this.xOffset : bmp.width) ){
+                this.w = (this.drawPortion ? bmp.width - this.xOffset : bmp.width);
+            }else if( this.autoHeight && this._height != (this.drawPortion ? bmp.height - this.yOffset : bmp.height) ){
+                this.h = (this.drawPortion ? bmp.height - this.yOffset : bmp.height);
             }
 
             super.refresh();
