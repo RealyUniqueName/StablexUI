@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<HBox skin:Paint-color="0x555555" w="$Lib.current.stage.stageWidth" h="$Lib.current.stage.stageHeight" padding="50" childPadding="30">
+
+    <!-- full image -->
+    <Bmp src="'assets/haxe.png'"/>
+
+    <!-- part of image -->
+    <Bmp src="'assets/haxe.png'" xOffset="72" yOffset="72" w="76" h="76"/>
+
+    <!-- part of image with autoWidth -->
+    <Bmp src="'assets/haxe.png'" xOffset="0" yOffset="0" autoWidth="true" h="148"/>
+</HBox>

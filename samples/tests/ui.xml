@@ -3,17 +3,6 @@
 <!-- Root element of our UI -->
 <VBox w="800" h="600" skin:Paint-border="8" skin:Paint-color="0x005d00" skin:Paint-borderColor="0x003a00" skin:Paint-alpha="0.8" childPadding="20">
 
-    <Button
-        w            = "200"
-        h            = "50"
-        format-color = "0xFFFFFF"
-        format-size  = "20"
-        text         = "'hello'"
-        skin:Gradient-colors = "[0x000000, 0xFFFFFF]"
-        skin:Gradient-corners="[20]"
-    />
-
-
     <Progress
         w="500"
         h="50"
@@ -36,4 +25,39 @@
             }
         "
     />
+
+
+    <HBox childPadding="20">
+        <Button
+            w            = "200"
+            h            = "50"
+            format-color = "0xFFFFFF"
+            format-size  = "20"
+            text         = "'Previous color'"
+            skin:Gradient-colors = "[0x000000, 0xFFFFFF]"
+            skin:Gradient-corners="[20]"
+            on-click="
+                #ViewStack(vs).previous();
+            "
+        />
+        <Button
+            w            = "200"
+            h            = "50"
+            format-color = "0xFFFFFF"
+            format-size  = "20"
+            text         = "'Next color'"
+            skin:Gradient-colors = "[0x000000, 0xFFFFFF]"
+            skin:Gradient-corners="[20]"
+            on-click="
+                #ViewStack(vs).next();
+            "
+        />
+    </HBox>
+
+
+    <ViewStack id="'vs'" wrap="true" w="100" h="100">
+        <Widget name="'red'" skin:Paint-color="0xFF0000" widthPt="100" heightPt="100"/>
+        <Widget name="'green'" skin:Paint-color="0x00FF00" widthPt="100" heightPt="100"/>
+        <Widget name="'blue'" skin:Paint-color="0x0000FF" widthPt="100" heightPt="100"/>
+    </ViewStack>
 </VBox>

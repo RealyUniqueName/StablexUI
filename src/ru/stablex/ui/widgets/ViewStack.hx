@@ -15,8 +15,9 @@ class ViewStack extends Widget{
     public var current (_getCurrent,never)       : String;
     //child index of currently visible child
     public var currentIdx (_getCurrentIdx,never) : Int;
-    // wrap the stack list or not
+    // wrap the stack list or not (for `.next()` calls)
     public var wrap : Bool = false;
+
 
     /**
     * Constructor
@@ -41,7 +42,7 @@ class ViewStack extends Widget{
 
     /**
     * Shows element with given child index
-    *
+    * @param ignoreHistory - do not write this visit to history log
     */
     public function showIdx (idx:Int, ignoreHistory:Bool = false) : Void{
         if( idx < this.numChildren ){
@@ -82,16 +83,17 @@ class ViewStack extends Widget{
 
 
     /**
-    * Show element wich was visible previously
-    *
+    * Show element wich was visible previously.
+    * Goes back through history log and removes the last entry from log.
     */
     public inline function back() : Void {
         this._history.pop();
         this.showIdx(this._history.pop());
     }//function back()
-    
+
+
     /**
-    * Show next element
+    * Show next element in display list of viewstack.
     * If wrap is true and we are at the end of the stack then
     * show the first one
     */
@@ -99,23 +101,22 @@ class ViewStack extends Widget{
         var next = this._getCurrentIdx() + 1;
         if (next < this.numChildren) {
             this.showIdx(next);
-        }
-        else if (wrap) {
+        }else if (wrap) {
             this.showIdx(0);
         }
     }//function next()
-    
+
+
     /**
-    * Show previous element
+    * Show previous element in display list of viewstack.
     * If wrap is true and we are at the beginning of the stack then
-    * show the last one
+    * show the last one.
     */
     public inline function previous() : Void {
-        var previous = this._getCurrentIdx() - 1;
+        var previous = this.currentIdx - 1;
         if (previous >= 0) {
             this.showIdx(previous);
-        }
-        else if (wrap) {
+        }else if (wrap) {
             this.showIdx(this.numChildren - 1);
         }
     }//function previous()
