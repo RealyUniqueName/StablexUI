@@ -114,6 +114,8 @@ class UIBuilder {
             UIBuilder.regClass('ru.stablex.ui.widgets.Progress');
             UIBuilder.regClass('ru.stablex.ui.widgets.Floating');
             UIBuilder.regClass('ru.stablex.ui.widgets.Options');
+            UIBuilder.regClass('ru.stablex.ui.widgets.TabStack');
+            UIBuilder.regClass('ru.stablex.ui.widgets.Tab');
             UIBuilder.regClass('ru.stablex.ui.events.WidgetEvent');
             UIBuilder.regClass('ru.stablex.ui.skins.Paint');
             UIBuilder.regClass('ru.stablex.ui.skins.Gradient');
