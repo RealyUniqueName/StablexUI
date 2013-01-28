@@ -15,7 +15,8 @@ class ViewStack extends Widget{
     public var current (_getCurrent,never)       : String;
     //child index of currently visible child
     public var currentIdx (_getCurrentIdx,never) : Int;
-
+    // wrap the stack list or not
+    public var wrap : Bool = false;
 
     /**
     * Constructor
@@ -88,6 +89,36 @@ class ViewStack extends Widget{
         this._history.pop();
         this.showIdx(this._history.pop());
     }//function back()
+    
+    /**
+    * Show next element
+    * If wrap is true and we are at the end of the stack then
+    * show the first one
+    */
+    public inline function next() : Void {
+        var next = this._getCurrentIdx() + 1;
+        if (next < this.numChildren) {
+            this.showIdx(next);
+        }
+        else if (wrap) {
+            this.showIdx(0);
+        }
+    }//function next()
+    
+    /**
+    * Show previous element
+    * If wrap is true and we are at the beginning of the stack then
+    * show the last one
+    */
+    public inline function previous() : Void {
+        var previous = this._getCurrentIdx() - 1;
+        if (previous >= 0) {
+            this.showIdx(previous);
+        }
+        else if (wrap) {
+            this.showIdx(this.numChildren - 1);
+        }
+    }//function previous()
 
 
     /**
