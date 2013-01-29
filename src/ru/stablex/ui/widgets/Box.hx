@@ -35,6 +35,8 @@ class Box extends Widget{
     public var autoWidth                     : Bool = true;
     //set height depending on content height
     public var autoHeight                    : Bool = true;
+    //if this is set to true, all children will be set to equal size to fit box size
+    public var unifyChildren : Bool = false;
 
 
     /**
@@ -101,8 +103,8 @@ class Box extends Widget{
     *
     */
     override public function refresh() : Void {
-        if( this.autoWidth ) this._calcWidth();
-        if( this.autoHeight ) this._calcHeight();
+        if( this.autoWidth ) this._width = this._calcWidth();
+        if( this.autoHeight ) this._height = this._calcHeight();
 
         super.refresh();
         this.alignElements();
@@ -116,11 +118,7 @@ class Box extends Widget{
     */
     override public function onResize() : Void {
         super.onResize();
-        if( this.autoHeight || this.autoWidth ){
-            this.refresh();
-        }else{
-            this.alignElements();
-        }
+        this.refresh();
     }//function onResize()
 
 
@@ -128,7 +126,7 @@ class Box extends Widget{
     * Set width based on content width
     *
     */
-    private function _calcWidth () : Void {
+    private function _calcWidth () : Float {
         //if this is vertical box, set width = max child width
         if( this.vertical ){
 
@@ -147,7 +145,7 @@ class Box extends Widget{
                 }
             }
 
-            this._width = w + this.paddingLeft + this.paddingRight;
+            return w + this.paddingLeft + this.paddingRight;
         //if this is horizontal box set width = sum children width
         }else{
             var w : Float = this.paddingLeft + this.paddingRight;
@@ -162,7 +160,7 @@ class Box extends Widget{
                 }
             }
 
-            this._width = w + (visibleChildren - 1) * this.childPadding;
+            return w + (visibleChildren - 1) * this.childPadding;
         }
     }//function _calcWidth()
 
@@ -171,7 +169,7 @@ class Box extends Widget{
     * Set width based on content width
     *
     */
-    private function _calcHeight () : Void {
+    private function _calcHeight () : Float {
         //if this is vertical box, set height = sum child height
         if( this.vertical ){
 
@@ -187,7 +185,7 @@ class Box extends Widget{
                 }
             }
 
-            this._height = h + (visibleChildren - 1) * this.childPadding;
+            return h + (visibleChildren - 1) * this.childPadding;
 
         //if this is horizontal box set height = max child height
         }else{
@@ -206,7 +204,7 @@ class Box extends Widget{
                 }
             }
 
-            this._height = h + this.paddingTop + this.paddingBottom;
+            return h + this.paddingTop + this.paddingBottom;
         }
     }//function _calcHeight()
 
@@ -216,6 +214,10 @@ class Box extends Widget{
     *
     */
     public function alignElements () : Void {
+        if( this.unifyChildren ){
+            this._unifyChildren();
+        }
+
         //если нет дочерних элементов
         if( this.numChildren == 0 ) return;
 
@@ -233,6 +235,47 @@ class Box extends Widget{
             }
         }
     }//function alignElements()
+
+
+    /**
+    * Set all children equal size
+    *
+    */
+    private function _unifyChildren () : Void {
+        var visibleChildren : Int = 0;
+        for(i in 0...this.numChildren){
+            if( this.getChildAt(i).visible ){
+                visibleChildren ++;
+            }
+        }
+
+        var child : DisplayObject;
+
+        //if this is vertical box
+        if( this.vertical ){
+            var childWidth  : Float = this._width - this.paddingLeft - this.paddingRight;
+            var childHeight : Float = (this._height - this.paddingTop - this.paddingBottom - this.childPadding * (visibleChildren - 1)) / visibleChildren;
+
+            for(i in 0...this.numChildren){
+                child = this.getChildAt(i);
+                if( Std.is(child, Widget) ){
+                    cast(child, Widget).resize(childWidth, childHeight);
+                }
+            }
+
+        //if this is horizontal box
+        }else{
+            var childWidth  : Float = (this._width - this.paddingLeft - this.paddingRight - this.childPadding * (visibleChildren - 1)) / visibleChildren;
+            var childHeight : Float = this._height - this.paddingTop - this.paddingBottom;
+
+            for(i in 0...this.numChildren){
+                child = this.getChildAt(i);
+                if( Std.is(child, Widget) ){
+                    cast(child, Widget).resize(childWidth, childHeight);
+                }
+            }
+        }
+    }//function _unifyChildren()
 
 
     /**

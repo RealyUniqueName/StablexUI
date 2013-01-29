@@ -1,6 +1,7 @@
 package ru.stablex.ui.widgets;
 
 import nme.display.BitmapData;
+import nme.geom.Matrix;
 import nme.geom.Rectangle;
 import nme.geom.Point;
 import ru.stablex.Err;
@@ -15,16 +16,27 @@ class Bmp extends Widget{
     public var src : String;
     //Should we use smoothing?
     public var smooth : Bool = true;
-    //set size depending on bitmap size, overrides any width, height, xOffset and yOffset settings
+    //set size depending on bitmap size, overrides any width, height settings
     public var autoSize (never,_setAutoSize) : Bool;
-    //set width depending on bitmap width, overrides any width and xOffset settings
+    //set width depending on bitmap width, overrides any width settings
     public var autoWidth : Bool = true;
-    //set height depending on bitmap height, overrides any height and yOffset settings
+    //set height depending on bitmap height, overrides any height settings
     public var autoHeight : Bool = true;
-    // x offset for drawing a portion of the bitmap
+    /**
+    * If you want to draw just a portion of the bitmap. Specify top/left corner of
+    * desired source rectangle by `.xOffset` and `.yOffset` and widht/height for
+    * that rectangle will be taken from `.w` and `.h` of this widget. If `.autoSize` is true,
+    * width and height will be taken from `.xOffset` and `.yOffset` to bitmap right border
+    * and bottom border respectively
+    */
     public var xOffset (default, _setXOffset) : Int = 0;
     // y offset for drawing a portion of the bitmap
     public var yOffset (default, _setYOffset) : Int = 0;
+    /**
+    * When `.xOffset` or `.yOffset` is set, this property is changed to true.
+    * To draw full image on next refresh set this property to false again.
+    */
+    public var drawPortion : Bool = false;
 
 
     /**
@@ -32,7 +44,6 @@ class Bmp extends Widget{
     *
     */
     private function _setAutoSize (as:Bool) : Bool {
-        trace("setting autosize");
         return this.autoWidth = this.autoHeight = as;
     }//function _setAutoSize()
 
@@ -41,24 +52,25 @@ class Bmp extends Widget{
     *
     */
     private function _setXOffset (x:Int) : Int {
-        return this.xOffset = x;
+        this.drawPortion = true;
+        return this.xOffset = (x >= 0 ? x : 0);
     }//function _setXOffset()
-    
+
     /**
     * Setter for autoSize
     *
     */
     private function _setYOffset (y:Int) : Int {
-        return this.yOffset = y;
+        this.drawPortion = true;
+        return this.yOffset = (y >= 0 ? y : 0);
     }//function _setYOffset()
-    
+
     /**
     * If width is set, disable autoWidth
     *
     */
     override private function _setWidth(w:Float) : Float {
         this.autoWidth = false;
-        trace("setting width: " + autoWidth);
         return super._setWidth(w);
     }//function _setWidth()
 
@@ -89,7 +101,6 @@ class Bmp extends Widget{
     */
     override function _setHeight(h:Float) : Float {
         this.autoHeight = false;
-        trace("setting height: " + autoHeight);
         return super._setHeight(h);
     }//function _setHeight()
 
@@ -107,17 +118,20 @@ class Bmp extends Widget{
             }
 
             //handle auto size
-            if( this.autoWidth && this.autoHeight && (this._width != bmp.width || this._height != bmp.height ) ){
+            if(
+                this.autoWidth && this.autoHeight
+                && (
+                    this._width != (this.drawPortion ? bmp.width - this.xOffset : bmp.width)
+                    || this._height != (this.drawPortion ? bmp.height - this.yOffset : bmp.height)
+                )
+            ){
                 this.resize(bmp.width, bmp.height);
-            }else if( this.autoWidth && this._width != bmp.width ){
-                this.w = bmp.width;
-            }else if( this.autoHeight && this._height != bmp.height ){
-                this.h = bmp.height;
+            }else if( this.autoWidth && this._width != (this.drawPortion ? bmp.width - this.xOffset : bmp.width) ){
+                this.w = (this.drawPortion ? bmp.width - this.xOffset : bmp.width);
+            }else if( this.autoHeight && this._height != (this.drawPortion ? bmp.height - this.yOffset : bmp.height) ){
+                this.h = (this.drawPortion ? bmp.height - this.yOffset : bmp.height);
             }
-            
-            this.xOffset = (this.autoWidth) ? 0 : this.xOffset;
-            this.yOffset = (this.autoHeight) ? 0 : this.yOffset;
-            
+
             super.refresh();
             this._draw(bmp);
         }else{
@@ -133,13 +147,44 @@ class Bmp extends Widget{
     * @throw <type>String</type> if asset for bitmap was not found
     */
     private inline function _draw(bmp:BitmapData) : Void {
-        trace(this.autoWidth);
-        trace(this.autoHeight);
-        var dest = new BitmapData(Std.int(this.w), Std.int(this.h));
-        dest.copyPixels(bmp, new Rectangle(xOffset, yOffset, this.w, this.h), new Point(0,0));
-        this.graphics.beginBitmapFill(dest, null, false, this.smooth);
-        this.graphics.drawRect(0, 0, this.w, this.h);
-        this.graphics.endFill();
+        //draw just part of image
+        if( this.drawPortion ){
+            var width : Float = (
+                this.autoWidth
+                    ? bmp.width
+                    : (this._width > bmp.width - this.xOffset ? bmp.width - this.xOffset : this._width)
+            );
+            var height : Float = (
+                this.autoHeight
+                    ? bmp.height
+                    : (this._height > bmp.height - this.xOffset ? bmp.height - this.xOffset : Std.int(this._height))
+            );
+
+            //draw zero?
+            if( width <= 0 || height <= 0 ){
+                return;
+            }else{
+
+                var mx : Matrix = new Matrix();
+                #if !html5
+                    mx.translate(-this.xOffset, -this.yOffset);
+                #else
+                    var dest = new BitmapData(Std.int(width), Std.int(height));
+                    dest.copyPixels(bmp, new Rectangle(this.xOffset, this.yOffset, width, height), new Point(0, 0));
+                    bmp = dest;
+                #end
+
+                this.graphics.beginBitmapFill(bmp, mx, false, this.smooth);
+                this.graphics.drawRect(0, 0, width, height);
+                this.graphics.endFill();
+            }
+
+        //draw full image
+        }else{
+            this.graphics.beginBitmapFill(bmp, null, false, this.smooth);
+            this.graphics.drawRect(0, 0, bmp.width, bmp.height);
+            this.graphics.endFill();
+        }
     }//function _draw()
 
 

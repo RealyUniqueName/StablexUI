@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Widget left="0" top="0" w="800" h="600" >
+  <TabStack id="'tabs'" left="0" top="0"  widthPt="100" heightPt="600" wrap="true">
+    
+    <!-- Set states-up-skinName and states-down-skinName to add skins -->
+    <!-- You can also use highlightFormat on the tabs to change the text format -->
+    <Tab id="'tab_one'" left="20" top="0" w="200" h="45" text="'One'" states-up-skinName="'tabUp'" states-down-skinName="'tabDown'" highlightFormat-color="'0xFF0000'" highlightFormat-bold="true" />
+    <Tab id="'tab_two'" left="220" top="0" w="200" h="45" text="'Two'" states-up-skinName="'tabUp'" states-down-skinName="'tabDown'" />
+    <Tab id="'tab_three'" left="420" top="0" w="200" h="45" text="'Three'" states-up-skinName="'tabUp'" states-down-skinName="'tabDown'" />
+    
+    <ViewStack id="'tab_content'" left="0" top="45" widthPt="100" heightPt="600" wrap="true" skinName="'tabPane'">
+      <Widget id="'tab_content_one'" left="50" top="50" widthPt="100" heightPt="100" >
+        <Text left="0" top="0" text="'Tab one'" />
+      </Widget>
+  
+      <Widget id="'tab_content_two'" left="50" top="50" widthPt="100" heightPt="100" >
+        <Text left="0" top="0" text="'Tab two'" />
+      </Widget>
+      
+      <Widget id="'tab_content_three'" left="50" top="50" widthPt="100" heightPt="100" >
+        <Text left="0" top="0" text="'Tab three'" />
+      </Widget>
+    </ViewStack>
+    
+  </TabStack>
+</Widget>

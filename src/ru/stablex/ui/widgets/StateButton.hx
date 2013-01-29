@@ -1,6 +1,7 @@
 package ru.stablex.ui.widgets;
 
 import nme.events.MouseEvent;
+import ru.stablex.ui.events.WidgetEvent;
 import ru.stablex.ui.misc.BtnState;
 import ru.stablex.ui.skins.Skin;
 
@@ -21,7 +22,7 @@ class StateButton extends Button{
     //current state
     public var state(_getState,_setState) : String;
     //current state index in this.order array
-    private var _currentIdx : Int = 0;
+    private var _currentIdx (default,_setCurrentIdx) : Int = 0;
 
 
     /**
@@ -36,6 +37,19 @@ class StateButton extends Button{
         //change states on click
         this.addEventListener(MouseEvent.CLICK, this.nextState);
     }//function new()
+
+
+    /**
+    * Setter for `._currentIdx`
+    * @dispatch <type>ru.stablex.ui.events.WidgetEvent</type>.CHANGE
+    */
+    private function _setCurrentIdx(idx:Int) : Int {
+        if( idx != this._currentIdx ){
+            this._currentIdx = idx;
+            this.dispatchEvent(new WidgetEvent(WidgetEvent.CHANGE));
+        }
+        return idx;
+    }//function _setCurrentIdx()
 
 
     /**

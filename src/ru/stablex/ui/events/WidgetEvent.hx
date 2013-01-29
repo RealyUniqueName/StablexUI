@@ -4,7 +4,7 @@ import nme.events.Event;
 
 
 /**
-* Events on creating / destroying widgets
+* Events dispatched by widgets
 */
 
 class WidgetEvent extends Event{
@@ -17,4 +17,6 @@ class WidgetEvent extends Event{
     static public inline var RESIZE = 'widgetResize';
     //Dispatched when widget is resized and widget.created = false
     static public inline var INITIAL_RESIZE = 'widgetInitialResize';
+    //Dispatched when widget value/state is changed (check boxes, radio buttons, toggles etc.)
+    static public inline var CHANGE = 'widgetChange';
 }//class WidgetEvent
