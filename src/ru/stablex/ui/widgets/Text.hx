@@ -27,7 +27,8 @@ class Text extends Box{
         super();
 
         this.label = cast(this.addChild(new TextField()), TextField);
-        this.label.autoSize = nme.text.TextFieldAutoSize.LEFT;
+        this.label.autoSize  = nme.text.TextFieldAutoSize.LEFT;
+        this.label.multiline = true;
 
         this.format = this.label.defaultTextFormat;
         this.highlightFormat = this.label.defaultTextFormat;
@@ -43,6 +44,10 @@ class Text extends Box{
     override public function refresh() : Void {
         this.label.defaultTextFormat = this.format;
         this.label.setTextFormat(this.format);
+
+        if( !this.autoWidth && this.label.wordWrap ){
+            this.label.width = this._width;
+        }
 
         super.refresh();
     }//function refresh()
@@ -80,11 +85,13 @@ class Text extends Box{
     */
     private function _setText(txt:String) : String {
         this.label.text = txt;
-        if( this.autoWidth ){
+
+        if( this.autoWidth || this.autoHeight ){
             this.refresh();
         }else{
             this.alignElements();
         }
+
         return txt;
     }//function _setText()
 
