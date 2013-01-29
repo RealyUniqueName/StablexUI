@@ -5,7 +5,8 @@ import ru.stablex.ui.misc.RadioGroup;
 
 
 /**
-* Basic "option box" control
+* Basic Tab control
+* This should be used in conjunction with the TabStack, see the sample for how to use it
 *
 */
 class Tab extends Checkbox{

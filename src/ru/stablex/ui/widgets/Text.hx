@@ -50,7 +50,7 @@ class Text extends Box{
     /**
      *  Highlight the widget by setting its format
      */
-    public function highlight () : Void {
+    public function highlightText () : Void {
         if (this.highlightFormat != null) {
             this.label.setTextFormat(this.highlightFormat);
             super.refresh();
