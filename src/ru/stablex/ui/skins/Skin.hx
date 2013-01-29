@@ -9,6 +9,11 @@ import ru.stablex.ui.widgets.Widget;
 *
 */
 class Skin {
+
+    //helper property wich indicates, wether skin should call `.graphics.clear()` on widget
+    public var clear : Bool = true;
+
+
     /**
     * Constructor
     *
@@ -19,10 +24,23 @@ class Skin {
 
     /**
     * Apply skin to specified widget
-    *
+    * This method clears widget.graphics (if this.clear == true) and calls `.draw(w)` (see below)
     */
     public function apply (w:Widget) : Void{
+        if( this.clear ){
+            w.graphics.clear();
+        }
+
+        this.draw(w);
     }//function apply()
+
+
+    /**
+    * Actual drawings on widget.
+    * Override this method to implement custom skin processor.
+    */
+    public function draw (w:Widget) : Void {
+    }//function draw()
 
 
     /**

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Root element of our UI -->
+<VBox w="800" h="600" skin:Paint-border="8" skin:Paint-color="0x005d00" skin:Paint-borderColor="0x003a00" skin:Paint-alpha="0.8" childPadding="20">
+
+    <Button
+        h       = "60"
+        text    = "'Two layers with gradient skins'"
+        padding = "15"
+
+        skin:Layer-behind:Gradient-colors   = "[0xFF00FF, 0xFFFFFF, 0xFF00FF]"
+        skin:Layer-current:Gradient-colors  = "[0x999999, 0xFF44FF, 0x999999]"
+        skin:Layer-current:Gradient-padding = "10"
+
+        skinPressed:Layer-behind:Gradient-colors   = "[0xFF00FF, 0xFFFFFF, 0xFF00FF]"
+        skinPressed:Layer-current:Gradient-colors  = "[0x555555, 0xAA00AA, 0x555555]"
+        skinPressed:Layer-current:Gradient-padding = "10"
+
+    />
+</VBox>

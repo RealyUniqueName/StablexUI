@@ -16,11 +16,11 @@ class Bmp extends Widget{
     public var src : String;
     //Should we use smoothing?
     public var smooth : Bool = true;
-    //set size depending on bitmap size, overrides any width, height settings
+    //set size depending on bitmap size
     public var autoSize (never,_setAutoSize) : Bool;
-    //set width depending on bitmap width, overrides any width settings
+    //set width depending on bitmap width
     public var autoWidth : Bool = true;
-    //set height depending on bitmap height, overrides any height settings
+    //set height depending on bitmap height
     public var autoHeight : Bool = true;
     /**
     * If you want to draw just a portion of the bitmap. Specify top/left corner of

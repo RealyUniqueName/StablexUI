@@ -33,10 +33,10 @@ class Slice3 extends Skin{
 
 
     /**
-    * Apply skin to widget
+    * Draw skin on widget
     *
     */
-    override public function apply (w:Widget) : Void {
+    override public function draw (w:Widget) : Void {
         var bmp : BitmapData = Assets.getBitmapData(this.src);
 
         if( bmp == null ){
@@ -106,7 +106,7 @@ class Slice3 extends Skin{
 
             this._skinDrawSlice(w, bmp, src, dst);
         //}
-    }//function apply()
+    }//function draw()
 
 
     /**

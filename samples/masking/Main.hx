@@ -4,7 +4,6 @@ import nme.display.StageAlign;
 import nme.display.StageScaleMode;
 import nme.Lib;
 import ru.stablex.ui.UIBuilder;
-import ru.stablex.Assets;
 
 
 /**

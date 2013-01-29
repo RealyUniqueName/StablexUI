@@ -18,10 +18,10 @@ import ru.stablex.ui.widgets.Widget;
 class Slice9 extends Slice3{
 
     /**
-    * Apply skin to widget
+    * Draw skin on widget
     *
     */
-    override public function apply (w:Widget) : Void {
+    override public function draw (w:Widget) : Void {
         if( this.slice == null || this.slice.length < 4 ){
             Err.trigger('.slice property should contain 4 integers.');
         }
@@ -31,8 +31,6 @@ class Slice9 extends Slice3{
         if( bmp == null ){
             Err.trigger(this.src == null ? 'Bitmap is not specified' : 'Bitmap data not found: ' + this.src);
         }
-
-        w.graphics.clear();
 
         var src : Rectangle = new Rectangle();
         var dst : Rectangle = new Rectangle();
@@ -162,7 +160,7 @@ class Slice9 extends Slice3{
 
             this._skinDrawSlice(w, bmp, src, dst);
         //}
-    }//function apply()
+    }//function draw()
 
 
 }//class Slice9

@@ -368,6 +368,9 @@ class Button extends Text{
         if( this._appliedSkin != skin && skin != null ){
             skin.apply(this);
             this._appliedSkin = skin;
+        }else if( skin == null && this.skin != null ){
+            this.skin.apply(this);
+            this._appliedSkin = skin;
         }
     }//function _switchSkin()
 

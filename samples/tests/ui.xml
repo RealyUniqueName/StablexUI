@@ -13,6 +13,7 @@
         skin:Paint-color="0xFFFFFF"
         skin:Paint-corners="[20]"
 
+        bar-skin:Gradient-padding = "10"
         bar-skin:Gradient-colors = "[0xFF0000, 0x000000]"
         bar-skin:Gradient-rotation = "0"
         bar-skin:Gradient-corners="[20]"

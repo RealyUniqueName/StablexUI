@@ -4,9 +4,6 @@ import nme.display.StageAlign;
 import nme.display.StageScaleMode;
 import nme.Lib;
 import ru.stablex.ui.UIBuilder;
-import ru.stablex.Assets;
-
-import ru.stablex.ui.widgets.StateButton;
 
 
 /**
@@ -25,7 +22,7 @@ class Main extends nme.display.Sprite{
         //initialize StablexUI
         UIBuilder.init();
 
-        //register skins 
+        //register skins
         UIBuilder.regSkins('assets/ui/skins.xml');
 
         //Create our UI

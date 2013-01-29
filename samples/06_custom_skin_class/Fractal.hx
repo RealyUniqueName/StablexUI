@@ -18,10 +18,10 @@ class Fractal extends ru.stablex.ui.skins.Skin{
 
 
     /**
-    * Apply skin to widget
+    * Draw skin on widget
     *
     */
-    override public function apply (widget:Widget) : Void {
+    override public function draw (widget:Widget) : Void {
         //make sure `step` is valid
         if( this.step <= 0 ) this.step = 10;
 
@@ -33,7 +33,6 @@ class Fractal extends ru.stablex.ui.skins.Skin{
         var x : Int = 0;
         var y : Int = 0;
 
-        widget.graphics.clear();
         widget.graphics.lineStyle(this.lineThickness, this.lineColor);
 
         //draw rectangles
@@ -47,5 +46,5 @@ class Fractal extends ru.stablex.ui.skins.Skin{
             x += this.step;
             y += this.step;
         }//while()
-    }//function apply()
+    }//function draw()
 }//class Fractal
