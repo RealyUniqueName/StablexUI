@@ -114,27 +114,12 @@ class Widget extends TweenSprite{
     private function _setOverflow (o:Bool) : Bool {
         if( !o ){
             this.scrollRect = new Rectangle(0, 0, this._width, this._height);
-            // if( !this.created ){
-            //     this.addUniqueListener(WidgetEvent.INITIAL_RESIZE, this._updateScrollRect);
-            // }
-            // this.addUniqueListener(WidgetEvent.RESIZE, this._updateScrollRect);
         }else{
             this.scrollRect = null;
-            // this.removeEventListener(WidgetEvent.INITIAL_RESIZE, this._updateScrollRect);
-            // this.removeEventListener(WidgetEvent.RESIZE, this._updateScrollRect);
         }
 
         return this.overflow = o;
     }//function _setOverflow()
-
-
-    // /**
-    // * Update `scrollRect` on resize
-    // *
-    // */
-    // private function _updateScrollRect (e:WidgetEvent) : Void {
-    //     this.scrollRect = new Rectangle(0, 0, this._width, this._height);
-    // }//function _updateScrollRect()
 
 
     /**
@@ -859,5 +844,14 @@ class Widget extends TweenSprite{
 
         return ( Std.is(p, cls) ? cast p : null );
     }//function getParentAs()
+
+
+    /**
+    * Cast this instance to specified class
+    *
+    */
+    public inline function as<T> (cls:Class<T>) : Null<T> {
+        return (Std.is(this, cls) ? cast this : null);
+    }//function as()
 
 }//class Widget
