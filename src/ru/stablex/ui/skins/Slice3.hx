@@ -48,6 +48,12 @@ class Slice3 extends Skin{
         var w1 : Int = 0;
         var w2 : Int = 0;
 
+        var scaleX : Float = (w.w >= bmp.width ? 1 : w.w / bmp.width);
+        //do not draw nothing
+        if( scaleX <= 0 ){
+            return;
+        }
+
         //slice two equal size parts
         if( this.slice == null || this.slice.length == 0 ){
             w1 = Std.int(bmp.width / 2);
@@ -73,7 +79,7 @@ class Slice3 extends Skin{
 
             dst.x      = 0;
             dst.y      = 0;
-            dst.width  = w1;
+            dst.width  = w1 * scaleX;
             dst.height = (this.stretch ? w.h : bmp.height);
 
             this._skinDrawSlice(w, bmp, src, dst);
@@ -85,9 +91,9 @@ class Slice3 extends Skin{
             src.width  = w2 - w1;
             src.height = bmp.height;
 
-            dst.x      = w1;
+            dst.x      = w1 * scaleX;
             dst.y      = 0;
-            dst.width  = w.w - w1 - (bmp.width - w2);
+            dst.width  = w.w - (w1 + (bmp.width - w2)) * scaleX;
             dst.height = (this.stretch ? w.h : bmp.height);
 
             this._skinDrawSlice(w, bmp, src, dst);
@@ -99,9 +105,9 @@ class Slice3 extends Skin{
             src.width  = bmp.width - w2;
             src.height = bmp.height;
 
-            dst.x      = w.w - src.width;
+            dst.x      = w.w - src.width * scaleX;
             dst.y      = 0;
-            dst.width  = src.width;
+            dst.width  = src.width * scaleX;
             dst.height = (this.stretch ? w.h : bmp.height);
 
             this._skinDrawSlice(w, bmp, src, dst);

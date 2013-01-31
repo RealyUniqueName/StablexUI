@@ -35,6 +35,33 @@ class Slice9 extends Slice3{
         var src : Rectangle = new Rectangle();
         var dst : Rectangle = new Rectangle();
 
+        var scaleX : Float = (w.w >= bmp.width ? 1 : w.w / bmp.width);
+        var scaleY : Float = (w.h >= bmp.height ? 1 : w.h / bmp.height);
+        //do not draw nothing
+        if( scaleX <= 0 || scaleY <= 0 ){
+            return;
+        }
+
+// if( w.wparent != null && w.wparent.id == 'naughty' ){
+//     // trace({sx:scaleX, sy:scaleY});
+//     var b = new nme.display.Sprite();
+//     var mx = new nme.geom.Matrix();
+//     mx.scale(scaleX, scaleY);
+//     b.graphics.beginBitmapFill(bmp, mx, false, true);
+//     b.graphics.drawRect(0, 0, bmp.width * scaleX, bmp.height * scaleY);
+//     b.graphics.endFill();
+//     b.y = b.x = 200;
+//     nme.Lib.current.addChild(b);
+
+//     var b = new nme.display.Sprite();
+//     b.graphics.beginBitmapFill(bmp, null, false, true);
+//     b.graphics.drawRect(0, 0, bmp.width, bmp.height);
+//     b.graphics.endFill();
+//     b.y = b.x = 300;
+//     b.scaleX = scaleX;
+//     b.scaleY = scaleY;
+//     nme.Lib.current.addChild(b);
+// }
         //top left{
             src.x      = 0;
             src.y      = 0;
@@ -43,8 +70,8 @@ class Slice9 extends Slice3{
 
             dst.x      = 0;
             dst.y      = 0;
-            dst.width  = this.slice[0];
-            dst.height = this.slice[2];
+            dst.width  = this.slice[0] * scaleX;
+            dst.height = this.slice[2] * scaleY;
 
             this._skinDrawSlice(w, bmp, src, dst);
         //}
@@ -55,10 +82,10 @@ class Slice9 extends Slice3{
             src.width  = this.slice[1] - this.slice[0];
             src.height = this.slice[2];
 
-            dst.x      = this.slice[0];
+            dst.x      = this.slice[0] * scaleX;
             dst.y      = 0;
-            dst.width  = w.w - this.slice[0] - (bmp.width - this.slice[1]);
-            dst.height = this.slice[2];
+            dst.width  = w.w - (this.slice[0] + (bmp.width - this.slice[1])) * scaleX;
+            dst.height = this.slice[2] * scaleY;
 
             this._skinDrawSlice(w, bmp, src, dst);
         //}
@@ -69,10 +96,10 @@ class Slice9 extends Slice3{
             src.width  = bmp.width - this.slice[1];
             src.height = this.slice[2];
 
-            dst.x      = w.w - src.width;
+            dst.x      = w.w - src.width * scaleX;
             dst.y      = 0;
-            dst.width  = src.width;
-            dst.height = this.slice[2];
+            dst.width  = src.width * scaleX;
+            dst.height = this.slice[2] * scaleY;
 
             this._skinDrawSlice(w, bmp, src, dst);
         //}
@@ -84,9 +111,9 @@ class Slice9 extends Slice3{
             src.height = this.slice[3] - this.slice[2];
 
             dst.x      = 0;
-            dst.y      = this.slice[2];
-            dst.width  = this.slice[0];
-            dst.height = w.h - this.slice[2] - (bmp.height - this.slice[3]);
+            dst.y      = this.slice[2] * scaleY;
+            dst.width  = this.slice[0] * scaleX;
+            dst.height = w.h - (this.slice[2] + (bmp.height - this.slice[3])) * scaleY;
 
             this._skinDrawSlice(w, bmp, src, dst);
         //}
@@ -97,10 +124,10 @@ class Slice9 extends Slice3{
             src.width  = this.slice[1] - this.slice[0];
             src.height = this.slice[3] - this.slice[2];
 
-            dst.x      = this.slice[0];
-            dst.y      = this.slice[2];
-            dst.width  = w.w - this.slice[0] - (bmp.width - this.slice[1]);
-            dst.height = w.h - this.slice[2] - (bmp.height - this.slice[3]);
+            dst.x      = this.slice[0] * scaleX;
+            dst.y      = this.slice[2] * scaleY;
+            dst.width  = w.w - (this.slice[0] + (bmp.width - this.slice[1])) * scaleX;
+            dst.height = w.h - (this.slice[2] + (bmp.height - this.slice[3])) * scaleY;
 
             this._skinDrawSlice(w, bmp, src, dst);
         //}
@@ -111,10 +138,10 @@ class Slice9 extends Slice3{
             src.width  = bmp.width - this.slice[1];
             src.height = this.slice[3] - this.slice[2];
 
-            dst.x      = w.w - src.width;
-            dst.y      = this.slice[2];
-            dst.width  = src.width;
-            dst.height = w.h - this.slice[2] - (bmp.height - this.slice[3]);
+            dst.x      = w.w - src.width * scaleX;
+            dst.y      = this.slice[2] * scaleY;
+            dst.width  = src.width * scaleX;
+            dst.height = w.h - (this.slice[2] + (bmp.height - this.slice[3])) * scaleY;
 
             this._skinDrawSlice(w, bmp, src, dst);
         //}
@@ -126,9 +153,9 @@ class Slice9 extends Slice3{
             src.height = bmp.height - this.slice[3];
 
             dst.x      = 0;
-            dst.y      = w.h - src.height;
-            dst.width  = this.slice[0];
-            dst.height = src.height;
+            dst.y      = w.h - src.height * scaleY;
+            dst.width  = this.slice[0] * scaleX;
+            dst.height = src.height * scaleY;
 
             this._skinDrawSlice(w, bmp, src, dst);
         //}
@@ -139,10 +166,10 @@ class Slice9 extends Slice3{
             src.width  = this.slice[1] - this.slice[0];
             src.height = bmp.height - this.slice[3];
 
-            dst.x      = this.slice[0];
-            dst.y      = w.h - src.height;
-            dst.width  = w.w - this.slice[0] - (bmp.width - this.slice[1]);
-            dst.height = src.height;
+            dst.x      = this.slice[0] * scaleX;
+            dst.y      = w.h - src.height * scaleY;
+            dst.width  = w.w - (this.slice[0] + (bmp.width - this.slice[1])) * scaleX;
+            dst.height = src.height * scaleY;
 
             this._skinDrawSlice(w, bmp, src, dst);
         //}
@@ -153,10 +180,10 @@ class Slice9 extends Slice3{
             src.width  = bmp.width - this.slice[1];
             src.height = bmp.height - this.slice[3];
 
-            dst.x      = w.w - src.width;
-            dst.y      = w.h - src.height;
-            dst.width  = src.width;
-            dst.height = src.height;
+            dst.x      = w.w - src.width * scaleX;
+            dst.y      = w.h - src.height * scaleY;
+            dst.width  = src.width * scaleX;
+            dst.height = src.height * scaleY;
 
             this._skinDrawSlice(w, bmp, src, dst);
         //}
