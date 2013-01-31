@@ -157,7 +157,7 @@ class Bmp extends Widget{
             var height : Float = (
                 this.autoHeight
                     ? bmp.height
-                    : (this._height > bmp.height - this.xOffset ? bmp.height - this.xOffset : Std.int(this._height))
+                    : (this._height > bmp.height - this.yOffset ? bmp.height - this.yOffset : Std.int(this._height))
             );
 
             //draw zero?

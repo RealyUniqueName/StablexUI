@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Skins>
+    <tabUp:Tile
+        src = "'assets/img/tab.png'"
+    />
+    <tabDown:Tile
+        src = "'assets/img/tab_selected.png'"
+    />
+    <tabPane:Paint
+      color   = "0xd6d6d6"
+      corners = "[20]"
+    />
+</Skins>
