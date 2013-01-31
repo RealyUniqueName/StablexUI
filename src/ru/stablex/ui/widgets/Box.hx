@@ -107,19 +107,9 @@ class Box extends Widget{
         if( this.autoHeight ) this._height = this._calcHeight();
 
         super.refresh();
+
         this.alignElements();
     }//function refresh()
-
-
-    /**
-    * On resize refresh widget if `autoWidth` or `autoHeight` is set.
-    * Otherwise just realign children
-    *
-    */
-    override public function onResize() : Void {
-        super.onResize();
-        this.refresh();
-    }//function onResize()
 
 
     /**

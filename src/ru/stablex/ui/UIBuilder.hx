@@ -268,6 +268,11 @@ class UIBuilder {
         }
         code += UIBuilder._attr2Haxe(element, '__ui__widget' + n);
 
+        //call .onInitialize method to notify widget that it is initialized
+        if( zeroElementCls == null ){
+            code += '\n__ui__widget' + n + '._onInitialize();';
+        }
+
         if( n > 1 ){
             code += '\n__ui__widget' + Std.string(n - 1) + '.addChild(__ui__widget' + n + ');';
         }
@@ -279,7 +284,7 @@ class UIBuilder {
 
         //call .onCreate method to notify widget that it is created
         if( zeroElementCls == null ){
-            code += '\n__ui__widget' + n + '.onCreate();';
+            code += '\n__ui__widget' + n + '._onCreate();';
         }
 
         return code;
@@ -599,7 +604,8 @@ class UIBuilder {
             UIBuilder.apply(obj, properties);
         }
 
-        obj.onCreate();
+        obj._onInitialize();
+        obj._onCreate();
 
         return cast obj;
     }//function create ()

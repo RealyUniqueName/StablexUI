@@ -28,7 +28,9 @@ class Widget extends TweenSprite{
     //Name of section in default settings for this type of widgets
     public var defaults : String = 'Default';
 
-    //Wether this widget creation by <type>UIBuilder</type> is finished
+    //Wether properties were applied to widget on creation by <type>UIBuilder</type> (`.onInitialize()` was called)
+    public var initialized : Bool = false;
+    //Wether this widget creation by <type>UIBuilder</type> is finished (`.onCreate()` was called)
     public var created : Bool = false;
 
     //Widget width in pixels
@@ -381,7 +383,7 @@ class Widget extends TweenSprite{
         this._width           = w;
         this._widthUsePercent = false;
         if( !this._silentResize ){
-            this.onResize();
+            this._onResize();
         }
         return w;
     }//function _setWidth()
@@ -404,7 +406,7 @@ class Widget extends TweenSprite{
         this._height           = h;
         this._heightUsePercent = false;
         if( !this._silentResize ){
-            this.onResize();
+            this._onResize();
         }
         return h;
     }//function _setHeight()
@@ -430,7 +432,7 @@ class Widget extends TweenSprite{
         if( this.wparent != null ){
             this._width = this.wparent._width * wp / 100;
             if( !this._silentResize ){
-                this.onResize();
+                this._onResize();
             }
         }
 
@@ -466,7 +468,7 @@ class Widget extends TweenSprite{
         if( this.wparent != null ){
             this._height = this.wparent._height * hp / 100;
             if( !this._silentResize ){
-                this.onResize();
+                this._onResize();
             }
         }
 
@@ -515,14 +517,36 @@ class Widget extends TweenSprite{
 
 
     /**
+    * This method is called automatically by <type>UIBuilder</type> after properties
+    * were applied to widget and before creating children.
+    * @private
+    */
+    @:final public function _onInitialize() : Void {
+        this.onInitialize();
+        this.initialized = true;
+    }//function _onInitialize()
+
+
+    /**
+    * Override this method to handle initialiazation.
+    * This method is called automatically by <type>UIBuilder</type> after properties
+    * were applied to widget and before creating children.
+    */
+    public function onInitialize() : Void {
+    }//function onInitialize()
+
+
+    /**
     * This method is called automatically after widget was created
     * by <type>UIBuilder</type>.buildFn() or <type>UIBuilder</type>.create()
-    *
+    * @private
     * @dispatch <type>ru.stablex.ui.events.WidgetEvent</type>.CREATE
     */
-    public function onCreate () : Void{
+    @:final public function _onCreate () : Void{
         //remove event listeners used for creation
         this.clearEvent(WidgetEvent.INITIAL_RESIZE);
+
+        this.onCreate();
 
         //refresh widget
         this.refresh();
@@ -530,7 +554,16 @@ class Widget extends TweenSprite{
         this.created = true;
 
         this.dispatchEvent(new WidgetEvent(WidgetEvent.CREATE));
-    }//function onCreationComplete()
+    }//function _onCreate()
+
+
+    /**
+    * Override this method to handle widget creation.
+    * This method is called automatically after widget was created
+    * by <type>UIBuilder</type>.buildFn() or <type>UIBuilder</type>.create()
+    */
+    public function onCreate() : Void {
+    }//function onCreate()
 
 
     /**
@@ -553,7 +586,7 @@ class Widget extends TweenSprite{
     *
     */
     public function applySkin () : Void {
-        if( this.skin != null ){
+        if( this.initialized && this.skin != null ){
             this.skin.apply(this);
         }
     }//function applySkin()
@@ -561,7 +594,7 @@ class Widget extends TweenSprite{
 
     /**
     * Refresh widget. This method is called at least once for every widget (on creation)
-    *
+    * It's also called everytime widget is resized.
     */
     public function refresh() : Void {
         this.applySkin();
@@ -666,17 +699,18 @@ class Widget extends TweenSprite{
             this._height = height;
         }
 
-        this.onResize();
+        this._onResize();
     }//function resize()
 
 
     /**
-    * Called every time this object is resized
+    * Called every time this object is resized. This methods calls `.refresh()` and `.onResize()` wich
+    * can be overriden by user.
     *
     * @dispatch <type>ru.stablex.ui.events.WidgetEvent</type>.RESIZE
     * @dispatch <type>ru.stablex.ui.events.WidgetEvent</type>.INITIAL_RESIZE
     */
-    public function onResize() : Void {
+    @:final private function _onResize() : Void {
         //positioning
         if( this.wparent != null ){
             switch( this._xUse ){
@@ -694,15 +728,28 @@ class Widget extends TweenSprite{
             }//switch()
         }//if()
 
-        //skin
-        this.applySkin();
-
         //handle overflow visibility
         if( !this.overflow ){
             this.scrollRect = new Rectangle(0, 0, this._width, this._height);
         }
 
+        //run user's code
+        if( this.created ){
+            this.onResize();
+        }
+
+        //refresh widget
+        this.refresh();
+
         this.dispatchEvent(new WidgetEvent( this.created ? WidgetEvent.RESIZE : WidgetEvent.INITIAL_RESIZE ));
+    }//function _onResize()
+
+
+    /**
+    * Override this method to handle resizing in your widgets
+    *
+    */
+    public function onResize() : Void {
     }//function onResize()
 
 

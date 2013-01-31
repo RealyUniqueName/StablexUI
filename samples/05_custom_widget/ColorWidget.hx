@@ -34,16 +34,6 @@ class ColorWidget extends ru.stablex.ui.widgets.Widget{
 
 
     /**
-    * This function is called every time widget is resized
-    * For this widget we want to update painted background area on resize.
-    */
-    override public function onResize () : Void {
-        super.onResize();
-        this._paintBackground();
-    }//function onResize()
-
-
-    /**
     * This function fills background with defined by `color` property color
     *
     */
