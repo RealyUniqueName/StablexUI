@@ -14,6 +14,7 @@ class Text extends Box{
     public var label  : TextField;
     //Text format wich will be aplied to label on refresh
     public var format : TextFormat;
+    public var highlightFormat : TextFormat;
     //Getter-setter for text.
     public var text (_getText,_setText) : String;
 
@@ -30,6 +31,7 @@ class Text extends Box{
         this.label.multiline = true;
 
         this.format = this.label.defaultTextFormat;
+        this.highlightFormat = this.label.defaultTextFormat;
 
         this.align    = 'top,left';
     }//function new()
@@ -50,6 +52,23 @@ class Text extends Box{
         super.refresh();
     }//function refresh()
 
+    /**
+     *  Highlight the widget by setting its format
+     */
+    public function highlightText () : Void {
+        if (this.highlightFormat != null) {
+            this.label.setTextFormat(this.highlightFormat);
+            super.refresh();
+        }
+    }//function highlight()
+    
+    /**
+     *  Unhighlight the widget by setting its format back to normal
+     */
+    public function unhighlight () : Void {
+        this.label.setTextFormat(this.format);
+        super.refresh();
+    }//function unhighlight()
 
     /**
     * Text getter
@@ -75,5 +94,7 @@ class Text extends Box{
 
         return txt;
     }//function _setText()
+
+        
 
 }//class Text
