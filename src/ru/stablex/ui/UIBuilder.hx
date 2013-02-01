@@ -494,19 +494,7 @@ class UIBuilder {
             local = '\nvar skin = new ' +  cls + '();';
 
             //apply xml attributes to skin
-            var value : String;
-            for(attr in node.attributes()){
-
-                var value : String = node.get(attr);
-
-                //change '-' to '.', so 'someProp-nestedProp' becomes 'someProp.nestedProp'
-                attr  = StringTools.replace(attr, '-', '.');
-
-                //required code replacements
-                value = UIBuilder._fillCodeShortcuts('skin', value);
-
-                local += '\nskin.' + attr + ' = ' + value + ';';
-            }//for( attr )
+            local += UIBuilder._attr2Haxe(node, 'skin');
 
             code += '\nru.stablex.ui.UIBuilder.skins.set("' + name + '", function():ru.stablex.ui.skins.Skin{' + local + '\nreturn skin;\n});';
         }//for(nodes)
