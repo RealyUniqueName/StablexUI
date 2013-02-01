@@ -569,6 +569,8 @@ class UIBuilder {
 
     /**
     * Creates widgets at runtime.
+    * You can add children like nested tags in xml by setting `properties.children` variable, wich
+    * must be of <type>Array</type>&lt;<type>ru.stablex.ui.widgets.Widget</type>&gt;
     *
     * @param cls - create widget of this class;
     * @param properties - read description of .apply() method below.
@@ -601,12 +603,29 @@ class UIBuilder {
             }
         //}
 
+        //if children are provided{
+            var children : Array<Dynamic> = Reflect.field(properties, 'children');
+            if( children != null ){
+                Reflect.deleteField(properties, 'children');
+            }
+        //}
+
         //apply provided properties
         if( properties != null ){
             UIBuilder.apply(obj, properties);
         }
 
         obj._onInitialize();
+
+        //add children
+        if( children != null ){
+            for(i in 0...children.length){
+                if( Std.is(children[i], Widget) ){
+                    obj.addChild(children[i]);
+                }
+            }
+        }
+
         obj._onCreate();
 
         return cast obj;

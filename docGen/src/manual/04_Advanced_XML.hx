@@ -60,6 +60,7 @@ var widget : ru.stablex.ui.widgets.Widget = ... // UIBuilder actions to create w
 if( widget.skin == null ) widget.skin = new ru.stablex.ui.skins.Paint();
 cast(widget.skin, ru.stablex.ui.skins.Paint).color  = 0x002200;
 cast(widget.skin, ru.stablex.ui.skins.Paint).border = 1;
+widget.onInitialize();
 widget.onCreate();
 </haxe>
 
@@ -83,13 +84,14 @@ haxe compiler:
 
 <haxe>
 var widget : ru.stablex.ui.widgets.Button = ... // UIBuilder actions to create widget object
-var skin = new ru.stablex.ui.skins.Paint();
-skin.color  = 0x002200;
+if( widget.skin == null ) widget.skin = new ru.stablex.ui.skins.Paint();
+cast(widget.skin, ru.stablex.ui.skins.Paint).color  = 0x002200;
 widget.text = 'Click me';
 widget.addEventListener(nme.events.MouseEvent.CLICK, function(event:nme.events.Event){
     trace('Oops! You clicked it again!');'
 })
 widget.skin = skin;
+widget.onInitialize();
 widget.onCreate();
 </haxe>
 
@@ -133,13 +135,14 @@ And this xml will be translated for compiler like this:
 
 <haxe>
 var widget : ru.stablex.ui.widgets.Button = ... // UIBuilder actions to create widget object
-var skin = new ru.stablex.ui.skins.Paint();
-skin.color  = 0x002200;
+if( widget.skin == null ) widget.skin = new ru.stablex.ui.skins.Paint();
+cast(widget.skin, ru.stablex.ui.skins.Paint).color  = 0x002200;
 widget.text    = 'Use mouse wheel over me';
 widget.addEventListener(nme.events.MouseEvent.MOUSE_WHEEL, function(event:nme.events.Event){
     trace('Oops! You wheel it again!');
 });
 widget.skin = skin;
+widget.onInitialize();
 widget.onCreate();
 </haxe>
 */
@@ -180,12 +183,13 @@ Such xml will be translated by StablexUI for haxe compiler like this:
 var widget : ru.stablex.ui.widgets.Widget = ... // UIBuilder actions to create widget object
 widget.w       = 100;
 widget.h       = 200;
-var skin = new ru.stablex.ui.skins.Paint();
-skin.color  = 0x002200;
+if( widget.skin == null ) widget.skin = new ru.stablex.ui.skins.Paint();
+cast(widget.skin, ru.stablex.ui.skins.Paint).color  = 0x002200;
 widget.addEventListener(nme.events.MouseEvent.CLICK, function(event:nme.events.Event){
     trace( widget.w ); //output: 100
 });
 widget.skin = skin;
+widget.onInitialize();
 widget.onCreate();
 </haxe>
 

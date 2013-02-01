@@ -199,6 +199,7 @@ class TabStack extends Box{
     */
     override public function removeChild(child:DisplayObject) : DisplayObject {
         if( Std.is(child, TabPage) ){
+            child.removeEventListener(MouseEvent.CLICK, this._onChange);
             this.tabBar.removeChild(cast(child, TabPage).title);
         }
         return super.removeChild(child);
@@ -212,6 +213,7 @@ class TabStack extends Box{
     override public function removeChildAt(idx:Int) : DisplayObject {
         var child : DisplayObject = super.removeChildAt(idx);
         if( Std.is(child, TabPage) ){
+            child.removeEventListener(MouseEvent.CLICK, this._onChange);
             this.tabBar.removeChild(cast(child, TabPage).title);
         }
         return child;

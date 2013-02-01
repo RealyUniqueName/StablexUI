@@ -1,7 +1,7 @@
 StablexUI
 =========
 
-Macro driven ui engine for Haxe NME.
+Macro driven ui engine for Haxe NME. It's designed to give developer as much freedom as possible in customizing UI.
 
 Supported targets: cpp (iOS, Android, Blackberry, webOS, Windows, Linux, MacOS), flash, html5
 

@@ -22,6 +22,7 @@ var widget : ru.stablex.ui.widgets.Widget = ... // UIBuilder actions to create w
 if( widget.skin == null ) widget.skin = new ru.stablex.ui.skins.Paint(); //create instance of skin class
 cast(widget.skin, ru.stablex.ui.skins.Paint).color  = 0x00FF00;          //skin adjustments
 cast(widget.skin, ru.stablex.ui.skins.Paint).border = 2;
+widget.onInitialize();
 widget.onCreate();  //skin will be applied inside this call
 </haxe>
 */

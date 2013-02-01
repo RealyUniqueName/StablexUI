@@ -60,6 +60,7 @@ var fn : Dynamic->ru.stablex.ui.Widgets.Text = function(arguments:Dynamic = null
     widget.left = 50;
     widget.top  = 100;
     widget.text = 'My first widget!';
+    widget.onInitialize(); //Here widget is notified properties were applied
     widget.onCreate(); //Here widget is notified it is created
     return widget;
 };
@@ -114,6 +115,26 @@ var widget = ru.stablex.ui.UIBuilder.create(ru.stablex.ui.widgets.Text, {
 nme.Lib.current.addChild( widget );
 </haxe>
 
+Also you can add children. E.g. to get the same result as in `Nested widgets` section of this manual,
+use following code:
+
+<haxe>
+var widget = ru.stablex.ui.UIBuilder.create(ru.stablex.ui.widgets.Widget, {
+    w    : 400,
+    h    : 400,
+    left : 50,
+    top  : 50,
+    children : [
+        ru.stablex.ui.UIBuilder.create(ru.stablex.ui.widgets.Text, {
+            left : 50,
+            top  : 100,
+            text : 'My first widget!'
+        })
+    ]
+});
+nme.Lib.current.addChild( widget );
+</haxe>
+
 To dynamically manage widget's children, use ordinary <type>nme.display.DisplayObjectContainer</type> methods:
 
 <haxe>
@@ -122,6 +143,7 @@ widget1.removeChild(widget2);
 widget1.addChildAt(widget2, 0);
 widget1.removeChildAt(0);
 </haxe>
+
 */
 
 /**
