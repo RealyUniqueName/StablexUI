@@ -9,7 +9,7 @@ import nme.Lib;
 
 /**
 * Scroll container.
-* ...IN PROGRESS...
+* First child of this widget will be used as container for scrolled content.
 */
 class Scroll extends Widget{
 
@@ -27,8 +27,11 @@ class Scroll extends Widget{
     public var hScrollKey : String = 'alt';
     //allow scrolling by dragging
     public var dragScroll : Bool = true;
-    //container for content. Content is scrolled by moving this container
-    public var box : Box;
+    /**
+    * Container for content. Content is scrolled by moving this container.
+    * This is always the first child of Scroll widget
+    */
+    public var box (_getBox,never) : Widget;
 
     //scroll position along x axes
     public var scrollX (_getScrollX,_setScrollX) : Float;
@@ -43,9 +46,26 @@ class Scroll extends Widget{
     public function new () : Void {
         super();
         this.overflow = false;
-        this.box = cast super.addChild( UIBuilder.create(Box) );
-        this.box.name = 'scrollContainer';
     }//function new()
+
+
+    /**
+    * Getter for `.box`
+    *
+    */
+    private function _getBox () : Widget {
+        if( this.numChildren == 0 ){
+            Err.trigger('Scroll widget must have at least one child.');
+            return null;
+        }else{
+
+            var child : DisplayObject = this.getChildAt(0);
+            if( !Std.is(child, Widget) ){
+                Err.trigger('Instance of Widget must be the first child for Scroll widget');
+            }
+            return cast(child, Widget);
+        }
+    }//function _getBox()
 
 
     /**
@@ -184,93 +204,6 @@ class Scroll extends Widget{
             this.scrollY += e.delta * 10;
         }
     }//function _wheelScroll()
-
-
-    /**
-    * Destroy widget
-    *
-    */
-    override public function free(r:Bool = true) : Void {
-        if( r ){
-            super.removeChild(this.box);
-            this.box.free(r);
-        }else{
-            super.removeChild(this.box);
-        }
-        super.free(r);
-    }//function free()
-
-
-    /**
-    * Call `.free()` on children
-    *
-    */
-    override public function freeChildren (recursive:Bool = true) : Void {
-        this.box.freeChildren(recursive);
-    }//function freeChildren()
-
-
-    /**
-    * add child to display list. Adds to `.box` display list
-    *
-    */
-    override public function addChild (child:DisplayObject) : DisplayObject {
-        return this.box.addChild(child);
-    }//function addChild()
-
-
-    /**
-    * Add child to display list at specified index. Adds to `.box` display list
-    *
-    */
-    override public function addChildAt (child:DisplayObject, idx:Int) : DisplayObject {
-        return this.box.addChildAt(child, idx);
-    }//function addChildAt()
-
-
-    /**
-    * Remove child from display list. Removes from `.box` display list
-    *
-    */
-    override public function removeChild (child:DisplayObject) : DisplayObject {
-        return this.box.removeChild(child);
-    }//function removeChild()
-
-
-    /**
-    * Remove child from display list at specified index. Removes from `.box` display list
-    *
-    */
-    override public function removeChildAt (idx:Int) : DisplayObject {
-        return this.box.removeChildAt(idx);
-    }//function removeChildAt()
-
-
-    /**
-    * Set child index.
-    *
-    */
-    override public function setChildIndex (child:DisplayObject, idx:Int) : Void {
-        this.box.setChildIndex(child, idx);
-    }//function setChildIndex()
-
-
-    /**
-    * Swap children in display list
-    *
-    */
-    override public function swapChildren (child1:DisplayObject, child2:DisplayObject) : Void {
-        this.box.swapChildren(child1, child2);
-    }//function swapChildren()
-
-
-    /**
-    * Swap children at specified indexes
-    *
-    */
-    override public function swapChildrenAt (idx1:Int, idx2:Int) : Void {
-        this.box.swapChildrenAt(idx1, idx2);
-    }//function swapChildrenAt()
 
 
 }//class Scroll
