@@ -46,9 +46,9 @@ class Floating extends Box{
             }
 
             if( this.parent == Lib.current ){
-                Lib.current.setChildIndex(this, Lib.current.numChildren - 1);
+                Lib.current.stage.setChildIndex(this, Lib.current.stage.numChildren - 1);
             }else{
-                Lib.current.addChild(this);
+                Lib.current.stage.addChild(this);
             }
 
             this._onStageResize();
