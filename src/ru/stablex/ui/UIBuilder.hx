@@ -18,7 +18,7 @@ import ru.stablex.ui.widgets.Widget;
 */
 class UIBuilder {
     //Regexps for checking attribute types and code generation in xml {
-        //checks wether attribute declares event listener
+        //checks whether attribute declares event listener
         @:macro static private var _erEvent    : EReg = ~/^on-(.+)/i;
         //for replacing @someVar with arguments passed to UIBuilder.buildFn()({arguments})
         @:macro static private var _erCodeArg : EReg = ~/@([._a-z0-9]+)/i;
@@ -30,7 +30,7 @@ class UIBuilder {
         @:macro static private var _erCastId  : EReg = new EReg("#([a-z0-9_]+)\\(([a-z0-9_]+)\\)", "i");
         //for replacing `this` keyword with object currently being processed
         @:macro static private var _erThis    : EReg = ~/\$this([^a-z0-9_])/i;
-        //checks wether we need to create object of specified class (second matched group) for this attribute (first matched group)
+        //checks whether we need to create object of specified class (second matched group) for this attribute (first matched group)
         @:macro static private var _erAttrCls : EReg = ~/(([-a-z0-9_]+):([a-z0-9_]+))/i;
     //}
 

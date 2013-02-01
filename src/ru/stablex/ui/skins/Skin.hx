@@ -10,7 +10,7 @@ import ru.stablex.ui.widgets.Widget;
 */
 class Skin {
 
-    //helper property wich indicates, wether skin should call `.graphics.clear()` on widget
+    //helper property wich indicates, whether skin should call `.graphics.clear()` on widget
     public var clear : Bool = true;
 
 

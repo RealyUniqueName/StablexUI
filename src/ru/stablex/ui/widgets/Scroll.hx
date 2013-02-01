@@ -202,6 +202,15 @@ class Scroll extends Widget{
 
 
     /**
+    * Call `.free()` on children
+    *
+    */
+    override public function freeChildren (recursive:Bool = true) : Void {
+        this.box.freeChildren(recursive);
+    }//function freeChildren()
+
+
+    /**
     * add child to display list. Adds to `.box` display list
     *
     */

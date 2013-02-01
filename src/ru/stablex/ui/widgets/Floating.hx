@@ -14,7 +14,7 @@ import nme.Lib;
 */
 class Floating extends Box{
 
-    //wether widget is shown
+    //whether widget is shown
     public var shown (default,null) : Bool = false;
     //Id of widget to render to. By default it's rendered on top of stage.
     public var renderTo : String = null;
@@ -96,7 +96,7 @@ class Floating extends Box{
 
 
     /**
-    * Check wether this widget is sized or positioned in % of parent's size
+    * Check whether this widget is sized or positioned in % of parent's size
     *
     */
     private inline function _usingParentSize () : Bool {

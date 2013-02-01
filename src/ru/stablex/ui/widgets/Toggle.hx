@@ -7,7 +7,7 @@ package ru.stablex.ui.widgets;
 *
 */
 class Toggle extends StateButton{
-    //wether button is in down/selected state
+    //whether button is in down/selected state
     public var selected (_getSelected,_setSelected) : Bool = false;
 
 

@@ -12,7 +12,7 @@ import nme.events.MouseEvent;
 */
 class Button extends Text{
 
-    //wether button is currently pressed
+    //whether button is currently pressed
     public var pressed (default,null) : Bool = false;
     //Wether mouse pointer is currently over this button
     public var hovered (default,null) : Bool = false;
@@ -25,7 +25,7 @@ class Button extends Text{
     //icon for pressed state
     public var icoPressed (_getIcoPressed,_setIcoPressed) : Bmp;
     private var _icoPressed : Bmp;
-    //wether icon should appear before text (on left or on top of text), set to false to move icon to the right (or below) text
+    //whether icon should appear before text (on left or on top of text), set to false to move icon to the right (or below) text
     public var icoBeforeLabel : Bool = true;
     //skin name for hovered state (skin must be registered with <type>UIBuilder</type>.regSkins() )
     public var skinHoveredName (default,_setSkinHoveredName) : String;
@@ -35,7 +35,7 @@ class Button extends Text{
     public var skinPressedName (default,_setSkinPressedName) : String;
     //skin for pressed state
     public var skinPressed : Skin;
-    //to test wether we trying to apply already applied skin
+    //to test whether we trying to apply already applied skin
     private var _appliedSkin : Skin;
     //stick ico and text to opposite borders
     public var apart : Bool = false;

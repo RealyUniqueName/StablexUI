@@ -51,6 +51,8 @@ class Widget extends TweenSprite{
 
     //do not adjust widget position and do not fire event on setting widget size
     private var _silentResize : Bool = false;
+    //whether resizing is in progress
+    private var _resizing : Bool = false;
 
     //Widget id (unique)
     public var id (default, _setId) : String;
@@ -94,7 +96,7 @@ class Widget extends TweenSprite{
     public var skin : Skin;
     //skin name to use. One of registered with <type>ru.stablex.ui.UIBuilder</type>.regSkins()
     public var skinName (default,_setSkinName) : String;
-    //wether widget content out of widgt bounds is visible
+    //whether widget content out of widgt bounds is visible
     public var overflow (default,_setOverflow) : Bool = true;
 
 
@@ -733,13 +735,20 @@ class Widget extends TweenSprite{
             this.scrollRect = new Rectangle(0, 0, this._width, this._height);
         }
 
-        //run user's code
-        if( this.created ){
-            this.onResize();
-        }
+        //to prevent infinite loops
+        if( !this._resizing ){
+            this._resizing = true;
 
-        //refresh widget
-        this.refresh();
+            //run user's code
+            if( this.created ){
+                this.onResize();
+            }
+
+            //refresh widget
+            this.refresh();
+
+            this._resizing = false;
+        }
 
         this.dispatchEvent(new WidgetEvent( this.created ? WidgetEvent.RESIZE : WidgetEvent.INITIAL_RESIZE ));
     }//function _onResize()
