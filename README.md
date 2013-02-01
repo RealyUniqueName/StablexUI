@@ -36,6 +36,7 @@ Currenlty implemented:
 * Scroll container;
 * Progress bar;
 * Tabs;
+* Tooltips;
 * Options box (picker list / drop-down)
 * View stacks (only one visible child at every moment);
 * More will be available soon ;)
