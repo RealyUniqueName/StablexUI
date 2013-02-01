@@ -1,18 +1,14 @@
 package ru.stablex.ui.widgets;
 
 import nme.display.DisplayObject;
-import nme.events.Event;
 import nme.events.MouseEvent;
-
 import ru.stablex.Err;
-import ru.stablex.ui.events.WidgetEvent;
 import ru.stablex.ui.widgets.StateButton;
 import ru.stablex.ui.widgets.ViewStack;
 
 /**
-* The TabStack is comprised of a set of Tabs and a ViewStack.
-* Only one tab can be selected at a time. The corresponding item
-* in the ViewStack will be shown.
+* The TabStack is comprised of a set of <type>TabPage</type>s.
+* Only one tab can be selected at a time.
 *
 */
 
@@ -20,186 +16,291 @@ class TabStack extends Box{
 
     //widget, wich will contain tabs headers
     public var tabBar : Box;
-    // The tab buttons
-    private var _tabButtons : Array<Tab>;
-    // The viewstack
-    private var _viewStack : ViewStack;
-    // The selected index
-    private var _selectedIdx : Int = 0;
-    // The selected index
-    public var selectedIdx(_getSelectedIdx, never) : Int;
     // wrap the stack list or not (for `.next()` calls)
     public var wrap : Bool = false;
+    //group name for tabs' titles
+    private var _radioGroupName : String;
 
 
     /**
-    * Constructor
+    * Constructor. AutoSize is disabled. Default size - 100x100
     *
     */
     public function new() : Void {
         super();
-        // this._tabButtons = new Array<Tab>();
+
+        this.w = this.h = 100;
 
         this.tabBar = UIBuilder.create(Box, {
             widthPt    : 100,
             autoHeight : true,
-            vertical   : true,
+            vertical   : false,
             align      : 'left,bottom'
         });
         this.addChild(this.tabBar);
-
     }//function new()
 
 
     /**
-    * Add child. Only instances of <type>Tab</type> allowed
-    * @throw <type>String</type> if child is not instance of <type>Tab</type>
+    * On initialization is complete
+    * @private
+    */
+    override public function onInitialize() : Void {
+        this._radioGroupName = 'TABSTACK_TITLES_' + this.id;
+        super.onInitialize();
+    }//function onInitialize()
+
+
+
+    /**
+    * On creation is complete, make first tab active
+    *
+    */
+    override public function onCreate() : Void {
+        super.onCreate();
+
+        var child : DisplayObject;
+        for(i in 0...this.numChildren){
+            child = this.getChildAt(i);
+            if( Std.is(child, TabPage) ){
+                cast(child, TabPage).title.selected = true;
+                break;
+            }
+        }
+    }//function onCreate()
+
+
+    /**
+    * Refresh widget. Also refresh `.tabBar`
+    *
+    */
+    override public function refresh() : Void {
+        this.tabBar.refresh();
+
+        //update tabs {
+            var tab   : TabPage;
+            var child : DisplayObject;
+            for(i in 0...this.numChildren){
+                child = this.getChildAt(i);
+                if( Std.is(child, TabPage) ){
+                    tab = cast(child, TabPage);
+
+                    //resize active tab to fit TabStack size
+                    if( tab.title.selected == true ){
+                        tab.visible = true;
+
+                        //resize tab if needed
+                        if(
+                            tab.w != this.w - this.paddingLeft - this.paddingRight
+                            || tab.h != this.h - this.tabBar.h - this.paddingTop - this.paddingBottom
+                        ){
+                            tab.resize(this.w - this.paddingLeft - this.paddingRight, this.h - this.tabBar.h - this.paddingTop - this.paddingBottom);
+                        }
+
+                    //hide inactive tabs
+                    }else{
+                        tab.visible = false;
+                    }
+
+                }//if()
+            }//for( tabs )
+        //}
+
+        super.refresh();
+    }//function refresh()
+
+
+    /**
+    * Returns currently active tab
+    *
+    */
+    public function activeTab() : Null<TabPage> {
+        var tab   : TabPage;
+        var child : DisplayObject;
+
+        for(i in 0...this.numChildren){
+            child = this.getChildAt(i);
+            if( !Std.is(child, TabPage) ) continue;
+
+            tab = cast(child, TabPage) ;
+            if( tab != null && tab.title.selected ){
+                return tab;
+            }
+        }
+
+        return null;
+    }//function activeTab()
+
+
+
+    /**
+    * Handle tabs selection
+    *
+    */
+    private function _onChange(e:MouseEvent) : Void {
+        this.refresh();
+    }//function _onChange()
+
+
+    /**
+    * Add child. Only instances of <type>TabPage</type> allowed.
+    * @throw <type>String</type> if child is not instance of <type>TabPage</type>
     */
     override public function addChild (child:DisplayObject) : DisplayObject {
         if( this.initialized ){
-            if( !Std.is(child, Tab) ){
-                Err.trigger('Only instances of ru.stablex.ui.widgets.Tab can be children of ru.stablex.ui.widgets.TabStack');
+            if( !Std.is(child, TabPage) ){
+                Err.trigger('Only instances of ru.stablex.ui.widgets.TabPage can be children of ru.stablex.ui.widgets.TabStack');
             }
+
             //add tab's title to `.tabBar`
-            var tab : Tab = cast(child, Tab);
+            var tab : TabPage = cast(child, TabPage);
+            tab.visible = false;
             if( tab.title.parent != this.tabBar ){
+                tab.title.group = this._radioGroupName;
                 this.tabBar.addChild(tab.title);
             }
+
             //listen for tab selection
-            tab.title.addUniqueListener(WidgetEvent.CHANGE, this._onChange);
+            tab.title.addUniqueListener(MouseEvent.CLICK, this._onChange);
         }
         return super.addChild(child);
     }//function addChild()
 
 
     /**
-    * Add child at specified index. Adding to index 0 is not allowed (reserved for `.tabBar`).
-    * Only instances of <type>Tab</type> allowed
-    * @throw <type>String</type> if child is not instance of <type>Tab</type>
-    * @throw <type>String</type> if trying to add to 0 index
+    * Add child at specified index.
+    * Only instances of <type>TabPage</type> allowed.
+    * @throw <type>String</type> if child is not instance of <type>TabPage</type>
     */
     override public function addChildAt (child:DisplayObject, idx:Int) : DisplayObject {
         if( this.initialized ){
-            if( !Std.is(child, Tab) ){
+            if( !Std.is(child, TabPage) ){
                 Err.trigger('Only instances of ru.stablex.ui.widgets.Tab can be children of ru.stablex.ui.widgets.TabStack');
             }
+
             //add tab's title to `.tabBar`
-            var tab : Tab = cast(child, Tab);
+            var tab : TabPage = cast(child, TabPage);
+            tab.visible = false;
             if( tab.title.parent != this.tabBar ){
-                this.tabBar.addChildAt(tab.title);
+                tab.title.group = this._radioGroupName;
+                this.tabBar.addChild(tab.title);
             }
+
             //listen for tab selection
-            tab.title.addUniqueListener(WidgetEvent.CHANGE, this._onChange);
+            tab.title.addUniqueListener(MouseEvent.CLICK, this._onChange);
         }
         return super.addChildAt(child, idx);
     }//function addChildAt()
 
 
-
-    // /**
-    // * This method is called automatically after widget was created
-    // * by <type>UIBuilder</type>.buildFn() or <type>UIBuilder</type>.create()
-    // * It populates the list of tabs and tab contents, and then selects
-    // * the first tab
-    // *
-    // */
-    // public override function onCreate () : Void{
-    //     super.onCreate();
-
-    //     if( this.numChildren < 2 ){
-    //         Err.trigger('Not enough children');
-    //     }
-    //     for (i in 0...this.numChildren - 1) {
-    //         var button = cast(this.getChildAt(i), Tab);
-    //         this._tabButtons.push(button);
-    //         button.addEventListener(MouseEvent.CLICK, _selectTab);
-    //     }
-    //     this._viewStack = cast this.getChildAt(this.numChildren - 1);
-    //     this.selectTabIdx(0);
-    // }//function onCreate()
+    /**
+    * Remove child.
+    *
+    */
+    override public function removeChild(child:DisplayObject) : DisplayObject {
+        if( Std.is(child, TabPage) ){
+            this.tabBar.removeChild(cast(child, TabPage).title);
+        }
+        return super.removeChild(child);
+    }//function removeChild()
 
 
-    // /**
-    // * Select the tab and show the content in the ViewStack
-    // *
-    // */
-    // private function _selectTab (ev:Event) {
-    //     var selected = 0;
-    //     for (i in 0...this._tabButtons.length) {
-    //         if (this._tabButtons[i] != cast ev.currentTarget) {
-    //             this._tabButtons[i].selected = false;
-    //         }
-    //         else {
-    //             selected = i;
-    //         }
-    //     }
-    //     this.selectTabIdx(selected);
-    // }//function _selectTab()
+    /**
+    * Remove child at specified index.
+    *
+    */
+    override public function removeChildAt(idx:Int) : DisplayObject {
+        var child : DisplayObject = super.removeChildAt(idx);
+        if( Std.is(child, TabPage) ){
+            this.tabBar.removeChild(cast(child, TabPage).title);
+        }
+        return child;
+    }//function removeChildAt()
 
 
-    // /**
-    // * Shows the tab and content with given child index
-    // *
-    // */
-    // public function selectTabIdx (idx:Int) {
-    //     if (idx >= this._tabButtons.length) {
-    //         Err.trigger('Index is greater than Tabs length');
-    //     }
-    //     if (idx >= this._viewStack.numChildren) {
-    //         Err.trigger('Index is greater than the ViewStack length');
-    //     }
-
-    //     for (i in 0...this._tabButtons.length) {
-    //         if (this._tabButtons[i] != this._tabButtons[idx]) {
-    //             this._tabButtons[i].selected = false;
-    //         }
-    //     }
-    //     this._selectedIdx = idx;
-    //     this._viewStack.showIdx(idx);
-    //     var tab = this._tabButtons[idx];
-    //     tab.selected = true;
-    //     // tab.highlight();
-    // }//function selectTabIdx()
+    /**
+    * Show next tab.
+    * If `.wrap` is true and we are at the end of the stack then
+    * show the first one
+    */
+    public inline function nextTab () : Void {
+        this._showByOrder(true);
+    }//function nextTab()
 
 
-    // /**
-    // * Show next tab.
-    // * If wrap is true and we are at the end of the stack then
-    // * show the first one
-    // */
-    // public function nextTab () {
-    //     var next = this._selectedIdx + 1;
-    //     if (next < this._tabButtons.length) {
-    //         this.selectTabIdx(next);
-    //     }
-    //     else if (wrap) {
-    //         this.selectTabIdx(0);
-    //     }
-    // }//function nextTab()
+    /**
+    * Show previous tab.
+    * If `.wrap` is true and we are at the beginning of the stack then
+    * show the last one.
+    */
+    public inline function previousTab () : Void {
+        this._showByOrder(false);
+    }//function previousTab()
 
 
-    // /**
-    // * Show previous tab.
-    // * If wrap is true and we are at the beginning of the stack then
-    // * show the last one.
-    // */
-    // public function previousTab () {
-    //     var previous = this._selectedIdx - 1;
-    //     if (previous >= 0) {
-    //         this.selectTabIdx(previous);
-    //     }
-    //     else if (wrap) {
-    //         this.selectTabIdx(_tabButtons.length - 1);
-    //     }
-    // }//function previousTab()
+    /**
+    * Show next or previous tab
+    *
+    */
+    private function _showByOrder(next:Bool = true) : Void {
+        //find current tab index
+        var current : TabPage = this.activeTab();
+        var idx : Int = (next ? -1 : this.numChildren);
+        if( current != null ){
+            idx = this.getChildIndex(current);
+        }
+
+        //show next tab
+        if( this.numChildren > 1 ){ //at least one children exists - `.tabBar`. We need another one - TabPage - to iterate through tabs
+            var child : DisplayObject;
+
+            while( true ){
+                idx += (next ? 1 : -1);
+                if( idx >= this.numChildren ){
+                    if( !this.wrap ) break;
+                    idx = 0;
+                }else if( idx < 0 ){
+                    if( !this.wrap ) break;
+                    idx = this.numChildren - 1;
+                }
+
+                child = this.getChildAt(idx);
+                if( Std.is(child, TabPage) ){
+                    cast(child, TabPage).title.selected = true;
+                    this.refresh();
+                    break;
+                }
+            }//while()
+        }//if()
+    }//function _showByOrder()
 
 
-    // /**
-    // * getter for this._selectedIdx
-    // *
-    // */
-    // private function _getSelectedIdx () : Int {
-    //     return this._selectedIdx;
-    // }//function _getSelectedIdx()
+    /**
+    * Show tab with specified name
+    * @return false, if tab with such name was not found
+    */
+    public function showByName(name:String) : Bool {
+        var tab   : TabPage = null;
+        var child : DisplayObject;
 
-}
+        //look for tab with specified name
+        for(i in 0...this.numChildren){
+            child = this.getChildAt(i);
+            if( child.name == name && Std.is(child, TabPage) ){
+                tab = cast(child, TabPage);
+                break;
+            }
+        }
+
+        //if tab was found, show it
+        if( tab == null ){
+            return false;
+        }else{
+            tab.title.selected = true;
+            this.refresh();
+            return true;
+        }
+    }//function showByName()
+
+
+}//class TabStack

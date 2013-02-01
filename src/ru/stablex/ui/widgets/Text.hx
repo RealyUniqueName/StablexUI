@@ -47,7 +47,29 @@ class Text extends Box{
     */
     private function _getHighlightFormat () : TextFormat {
         if( this._hightlightFormat == null ){
-            this._hightlightFormat = new TextFormat();
+            //clone current format
+            this._hightlightFormat = new TextFormat(
+                this.format.font,
+                this.format.size,
+                this.format.color,
+                this.format.bold,
+                this.format.italic,
+                this.format.underline,
+                this.format.url,
+                this.format.target,
+                this.format.align,
+                #if html5
+                    Std.int(this.format.leftMargin),
+                    Std.int(this.format.rightMargin),
+                    Std.int(this.format.indent),
+                    Std.int(this.format.leading)
+                #else
+                    this.format.leftMargin,
+                    this.format.rightMargin,
+                    this.format.indent,
+                    this.format.leading
+                #end
+            );
         }
         return this._hightlightFormat;
     }//function _getHighlightFormat()

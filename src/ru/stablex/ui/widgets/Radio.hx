@@ -24,8 +24,13 @@ class Radio extends Checkbox{
     private function _setGroup (g:String) : String {
         //remove from old group
         if( this.group != null && Radio.groups.exists(this.group) ){
-            Radio.groups.get(this.group).remove(this);
+            var group = Radio.groups.get(this.group);
+            group.remove(this);
             this.selected = false;
+            //destroy group if empty
+            if( group.length == 0 ){
+                Radio.groups.remove(this.group);
+            }
         }
 
         //add to new group

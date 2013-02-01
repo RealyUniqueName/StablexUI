@@ -745,7 +745,9 @@ class Widget extends TweenSprite{
             }
 
             //refresh widget
-            this.refresh();
+            if( this.initialized ){
+                this.refresh();
+            }
 
             this._resizing = false;
         }

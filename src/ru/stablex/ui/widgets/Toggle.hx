@@ -7,6 +7,8 @@ package ru.stablex.ui.widgets;
 *
 */
 class Toggle extends StateButton{
+    //should we `.highlight()` the text when button is toggled?
+    public var highlightOnSelect : Bool = false;
     //whether button is in down/selected state
     public var selected (_getSelected,_setSelected) : Bool = false;
 
@@ -70,4 +72,20 @@ class Toggle extends StateButton{
     public function toggle () : Void {
         this.nextState();
     }//function toggle()
+
+
+    /**
+    * Handle `.highlightOnSelect` on refresh
+    *
+    */
+    override public function refresh() : Void {
+        if( this.highlightOnSelect && this.state == 'down' ){
+            this.highlight();
+        }else if( this.highlightOnSelect ){
+            this.unhighlight();
+        }
+        super.refresh();
+    }//function refresh()
+
+
 }//class Toggle

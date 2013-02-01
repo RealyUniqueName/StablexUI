@@ -1,27 +1,131 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<Widget left="0" top="0" w="800" h="600" >
-  <TabStack id="'tabs'" left="0" top="0"  widthPt="100" heightPt="600" wrap="true">
+<VBox w="800" h="600" childPadding="20">
 
-    <!-- Set states-up-skinName and states-down-skinName to add skins -->
-    <!-- You can also use highlightFormat on the tabs to change the text format -->
-    <Tab id="'tab_one'" left="20" top="0" w="200" h="45" text="'One'" states-up-skinName="'tabUp'" states-down-skinName="'tabDown'" highlightFormat-color="'0xFF0000'" highlightFormat-bold="true" />
-    <Tab id="'tab_two'" left="220" top="0" w="200" h="45" text="'Two'" states-up-skinName="'tabUp'" states-down-skinName="'tabDown'" highlightFormat-color="'0xFF0000'" highlightFormat-bold="true" />
-    <Tab id="'tab_three'" left="420" top="0" w="200" h="45" text="'Three'" states-up-skinName="'tabUp'" states-down-skinName="'tabDown'" highlightFormat-color="'0xFF0000'" highlightFormat-bold="true" />
+    <!-- Structure for TabStack
+        <TabStack>
+            <TabPage />
+            <TabPage />
+            <TabPage />
+            <TabPage />
+        </TabStack>
+    -->
 
-    <ViewStack id="'tab_content'" left="0" top="45" widthPt="100" heightPt="600" wrap="true" skinName="'tabPane'">
-      <Widget id="'tab_content_one'" left="50" top="50" widthPt="100" heightPt="100" >
-        <Text left="0" top="0" text="'Tab one'" />
-      </Widget>
+    <TabStack name="'tabs'" padding="10" widthPt="100" h="225" wrap="true" tabBar-paddingLeft="20" tabBar-childPadding="5">
 
-      <Widget id="'tab_content_two'" left="50" top="50" widthPt="100" heightPt="100" >
-        <Text left="0" top="0" text="'Tab two'" />
-      </Widget>
+        <TabPage
+            skinName      = "'tabPane'"
+            title-padding = "5"
+            title-text    = "'First tab'"
+            title-highlightFormat-color = "0xFF0000"
+            title-highlightFormat-bold  = "true"
+            title-highlightOnSelect     = "true"
+            title-states-up-skinName    = "'tabUp'"
+            title-states-down-skinName  = "'tabDown'"
+        >
+            <HBox widthPt="100" heightPt="100" childPadding="20">
+                <Button skin:Paint-color="0x00AA00" skin:Paint-corners="[10]" text="'Show previous tab'" on-click="$this.getParentAs('tabs', $TabStack).previousTab();"/>
+                <Text text="'Hello world!'"/>
+                <Button skin:Paint-color="0x00AA00" skin:Paint-corners="[10]" text="'Show next tab'" on-click="$this.getParentAs('tabs', $TabStack).nextTab();"/>
+            </HBox>
+        </TabPage>
 
-      <Widget id="'tab_content_three'" left="50" top="50" widthPt="100" heightPt="100" >
-        <Text left="0" top="0" text="'Tab three'" />
-      </Widget>
-    </ViewStack>
+        <TabPage
+            name          = "'second'"
+            skinName      = "'tabPane'"
+            title-padding = "5"
+            title-text    = "'Second tab'"
+            title-highlightFormat-color = "0xFF0000"
+            title-highlightFormat-bold  = "true"
+            title-highlightOnSelect     = "true"
+            title-states-up-skinName    = "'tabUp'"
+            title-states-down-skinName  = "'tabDown'"
+        >
+            <HBox widthPt="100" heightPt="100" childPadding="20">
+                <Button skin:Paint-color="0x00AA00" skin:Paint-corners="[10]" text="'Show previous tab'" on-click="$this.getParentAs('tabs', $TabStack).previousTab();"/>
+                <Text text="'The answer is 42'"/>
+                <Button skin:Paint-color="0x00AA00" skin:Paint-corners="[10]" text="'Show next tab'" on-click="$this.getParentAs('tabs', $TabStack).nextTab();"/>
+            </HBox>
+        </TabPage>
 
-  </TabStack>
-</Widget>
+        <TabPage
+            skinName      = "'tabPane'"
+            title-padding = "5"
+            title-text    = "'Third tab'"
+            title-highlightFormat-color = "0xFF0000"
+            title-highlightFormat-bold  = "true"
+            title-highlightOnSelect     = "true"
+            title-states-up-skinName    = "'tabUp'"
+            title-states-down-skinName  = "'tabDown'"
+        >
+            <HBox widthPt="100" heightPt="100" childPadding="20">
+                <Button skin:Paint-color="0x00AA00" skin:Paint-corners="[10]" text="'Show previous tab'" on-click="$this.getParentAs('tabs', $TabStack).previousTab();"/>
+                <Text text="'Nevermind'"/>
+                <Button skin:Paint-color="0x00AA00" skin:Paint-corners="[10]" text="'Show next tab'" on-click="$this.getParentAs('tabs', $TabStack).nextTab();"/>
+            </HBox>
+        </TabPage>
+
+    </TabStack>
+
+    <!-- show tab by name example -->
+    <Button skin:Paint-color="0xAAAAAA" skin:Paint-corners="[20]" padding="10" text="'Show tab with `.name` == \'second\''" on-click="$this.wparent.getChildAs('tabs', $TabStack).showByName('second');"/>
+
+    <TabStack name="'tabs'" padding="10" widthPt="100" h="225" wrap="true" tabBar-paddingLeft="20" tabBar-childPadding="5" on-create="
+        $this.setChildIndex($this.tabBar, $this.numChildren - 1);
+        $this.refresh();
+    ">
+
+        <TabPage
+            skinName      = "'tabPane'"
+            title-padding = "5"
+            title-text    = "'First tab'"
+            title-highlightFormat-color = "0xFF0000"
+            title-highlightFormat-bold  = "true"
+            title-highlightOnSelect     = "true"
+            title-states-up-skinName    = "'bottomUp'"
+            title-states-down-skinName  = "'bottomDown'"
+        >
+            <HBox widthPt="100" heightPt="100" childPadding="20">
+                <Button skin:Paint-color="0x00AA00" skin:Paint-corners="[10]" text="'Show previous tab'" on-click="$this.getParentAs('tabs', $TabStack).previousTab();"/>
+                <Text text="'Hello world!'"/>
+                <Button skin:Paint-color="0x00AA00" skin:Paint-corners="[10]" text="'Show next tab'" on-click="$this.getParentAs('tabs', $TabStack).nextTab();"/>
+            </HBox>
+        </TabPage>
+
+        <TabPage
+            skinName      = "'tabPane'"
+            title-padding = "5"
+            title-text    = "'Second tab'"
+            title-highlightFormat-color = "0xFF0000"
+            title-highlightFormat-bold  = "true"
+            title-highlightOnSelect     = "true"
+            title-states-up-skinName    = "'bottomUp'"
+            title-states-down-skinName  = "'bottomDown'"
+        >
+            <HBox widthPt="100" heightPt="100" childPadding="20">
+                <Button skin:Paint-color="0x00AA00" skin:Paint-corners="[10]" text="'Show previous tab'" on-click="$this.getParentAs('tabs', $TabStack).previousTab();"/>
+                <Text text="'The answer is 42'"/>
+                <Button skin:Paint-color="0x00AA00" skin:Paint-corners="[10]" text="'Show next tab'" on-click="$this.getParentAs('tabs', $TabStack).nextTab();"/>
+            </HBox>
+        </TabPage>
+
+        <TabPage
+            skinName      = "'tabPane'"
+            title-padding = "5"
+            title-text    = "'Third tab'"
+            title-highlightFormat-color = "0xFF0000"
+            title-highlightFormat-bold  = "true"
+            title-highlightOnSelect     = "true"
+            title-states-up-skinName    = "'bottomUp'"
+            title-states-down-skinName  = "'bottomDown'"
+        >
+            <HBox widthPt="100" heightPt="100" childPadding="20">
+                <Button skin:Paint-color="0x00AA00" skin:Paint-corners="[10]" text="'Show previous tab'" on-click="$this.getParentAs('tabs', $TabStack).previousTab();"/>
+                <Text text="'Nevermind'"/>
+                <Button skin:Paint-color="0x00AA00" skin:Paint-corners="[10]" text="'Show next tab'" on-click="$this.getParentAs('tabs', $TabStack).nextTab();"/>
+            </HBox>
+        </TabPage>
+
+    </TabStack>
+
+</VBox>

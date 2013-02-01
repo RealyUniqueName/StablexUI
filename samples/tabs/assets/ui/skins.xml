@@ -1,11 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <Skins>
-    <tabUp:Tile
-        src = "'assets/img/tab.png'"
+    <tabUp:Slice9
+        src   = "'assets/img/tab.png'"
+        slice = "[8, 10, 9, 10]"
     />
-    <tabDown:Tile
+    <tabDown:Slice9
         src = "'assets/img/tab_selected.png'"
+        slice = "[8, 10, 9, 10]"
+    />
+    <bottomUp:Slice9
+        src   = "'assets/img/tabBottom.png'"
+        slice = "[8, 10, 1, 2]"
+    />
+    <bottomDown:Slice9
+        src = "'assets/img/tabBottom_selected.png'"
+        slice = "[8, 10, 1, 2]"
     />
     <tabPane:Paint
       color   = "0xd6d6d6"
