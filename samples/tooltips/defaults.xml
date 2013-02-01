@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Defaults>
+    <Tip>
+        <Default
+            label-skin:Paint-color   = "0x000000"
+            label-skin:Paint-alpha   = "0.7"
+            label-skin:Paint-corners = "[10]"
+            label-format-color       = "0xFFFFFF"
+            label-format-size        = "14"
+            label-padding            = "5"
+        />
+    </Tip>
+</Defaults>

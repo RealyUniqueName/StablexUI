@@ -99,6 +99,9 @@ class Widget extends TweenSprite{
     //whether widget content out of widgt bounds is visible
     public var overflow (default,_setOverflow) : Bool = true;
 
+    //Tooltip for this widget. See <type>Tip</type> to know how to use it.
+    public var tip (default,_setTip) : Tip;
+
 
     /**
     * Constructor
@@ -516,6 +519,19 @@ class Widget extends TweenSprite{
 
         return id;
     }//function _setId()
+
+
+    /**
+    * Setter for `.tip`
+    *
+    */
+    private function _setTip(tip:Tip) : Tip {
+        if( this.tip != null ){
+            this.tip.free();
+        }
+        tip.bindTo(this);
+        return this.tip = tip;
+    }//function _setTip()
 
 
     /**

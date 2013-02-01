@@ -116,6 +116,7 @@ class UIBuilder {
             UIBuilder.regClass('ru.stablex.ui.widgets.Options');
             UIBuilder.regClass('ru.stablex.ui.widgets.TabStack');
             UIBuilder.regClass('ru.stablex.ui.widgets.TabPage');
+            UIBuilder.regClass('ru.stablex.ui.widgets.Tip');
             UIBuilder.regClass('ru.stablex.ui.events.WidgetEvent');
             UIBuilder.regClass('ru.stablex.ui.skins.Paint');
             UIBuilder.regClass('ru.stablex.ui.skins.Gradient');
@@ -362,6 +363,15 @@ class UIBuilder {
                         props.set(prop, true);
                         code += '\nif(' + prop + ' == null ){';
                         code += '\n     ' + prop + ' = new ' + cls + '();';
+
+                        //if this is a widget, we should do all necessary stuff
+                        code += '\n     if( Std.is(' + prop + ', ru.stablex.ui.widgets.Widget) ){';
+                        code += '\n         var __tmp__ : ru.stablex.ui.widgets.Widget = cast(' + prop + ', ru.stablex.ui.widgets.Widget);';
+                        code += '\n         ru.stablex.ui.UIBuilder.applyDefaults(__tmp__);';
+                        code += '\n         __tmp__._onInitialize();';
+                        code += '\n         __tmp__._onCreate();';
+                        code += '\n     }';
+
                         code += '\n}';
                     }
 
@@ -589,18 +599,7 @@ class UIBuilder {
         //apply defaults  {
             obj.defaults = Reflect.field(properties, 'defaults');
             if( obj.defaults == null ) obj.defaults = 'Default';
-
-            var clsName : String = Type.getClassName(cls);
-            var widgetDefaults : Hash<Widget->Void> = UIBuilder.defaults.get( clsName.substr(clsName.lastIndexOf('.', clsName.length - 1) + 1) );
-            if( widgetDefaults != null ){
-                var defs : Array<String> = obj.defaults.split(',');
-                for(i in 0...defs.length){
-                    var defaultsFn : Widget->Void = widgetDefaults.get(defs[i]);
-                    if( defaultsFn != null ){
-                        defaultsFn(obj);
-                    }
-                }
-            }
+            UIBuilder.applyDefaults(obj);
         //}
 
         //if children are provided{
@@ -666,6 +665,26 @@ class UIBuilder {
 
         }//for(properties)
     }//function apply()
+
+
+    /**
+    * Apply defaults specified by obj.defaults
+    *
+    */
+    static inline public function applyDefaults(obj:Widget) : Void {
+        var clsName : String = Type.getClassName(Type.getClass(obj));
+        var widgetDefaults : Hash<Widget->Void> = UIBuilder.defaults.get( clsName.substr(clsName.lastIndexOf('.', clsName.length - 1) + 1) );
+        if( widgetDefaults != null ){
+            var defs : Array<String> = obj.defaults.split(',');
+            for(i in 0...defs.length){
+                var defaultsFn : Widget->Void = widgetDefaults.get(defs[i]);
+                if( defaultsFn != null ){
+                    defaultsFn(obj);
+                }
+            }
+        }
+    }//function applyDefaults()
+
 
 
     /**

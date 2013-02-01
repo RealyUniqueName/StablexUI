@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Box w="800" h="600">
+    <Button
+        text = "'Roll over me to see tooltip'"
+        w = "300"
+        h = "100"
+        skin:Paint-color = "0x55AA55"
+        skin:Paint-corners = "[20]"
+
+        tip:Tip-text="'I am basic tooltip!'"
+    />
+</Box>
