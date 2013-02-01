@@ -83,6 +83,7 @@ class Tip extends Floating{
         //always render on top of stage
         this.renderTo = null;
 
+        this.refresh();
         this._adjustPosition();
 
         this.show();
@@ -114,8 +115,16 @@ class Tip extends Floating{
     *
     */
     private inline function _adjustPosition() : Void {
-        this.left = Lib.current.mouseX + 10;
-        this.top = Lib.current.mouseY + 10;
+        this.left = (
+            Lib.current.mouseX + 10 + this.w <= Lib.current.stage.stageWidth
+                ? Lib.current.mouseX + 10
+                : Lib.current.stage.stageWidth - this.w
+        );
+        this.top = (
+            Lib.current.mouseY + 10 + this.h <= Lib.current.stage.stageHeight
+                ? Lib.current.mouseY + 10
+                : Lib.current.mouseY - 10 - this.h
+        );
     }//function _adjustPosition()
 
 

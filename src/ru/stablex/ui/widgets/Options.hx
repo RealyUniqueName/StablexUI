@@ -11,7 +11,7 @@ import ru.stablex.ui.skins.Skin;
 
 /**
 * Simple options box.
-* E.g. drop-down. Or list can appear full screen on top of the stage - `phone`-style
+* E.g. drop-down. Or list can appear fullscreen - `phone`-style. See samples/optionsList on github.
 * <type>ru.stablex.ui.widgets.Button</type> widget is used to render options in list.
 */
 class Options extends Button{
@@ -168,29 +168,57 @@ class Options extends Button{
 
         //show list
         }else{
-
             if( this._rebuildList ){
                 this._buildList();
                 this._rebuildList = false;
             }
 
-            var renderTo : DisplayObject = (
-                this.list.renderTo == null
-                    ? Lib.current
-                    : UIBuilder.get(this.list.renderTo)
-            );
-            if( renderTo == null && this.parent != null ){
-                renderTo = this.parent;
+            if( this.alignList ){
+                var rect : Rectangle = this.getRect(Lib.current);
+                this.list.left = rect.x + (this.w - this.list.w) / 2;
+                this.list.top  = rect.y + this.h;
+
+                //keep the list inside stage bounds{
+                    if( this.list.left + this.list.w > Lib.current.stage.stageWidth ){
+                        this.list.left = Lib.current.stage.stageWidth - this.list.w;
+                    }else if( this.list.left < 0 ){
+                        this.list.left = 0;
+                    }
+
+                    if( this.list.top + this.list.h > Lib.current.stage.stageHeight ){
+                        this.list.top = Lib.current.stage.stageHeight - this.list.h;
+                    }else if( this.list.top < 0 ){
+                        this.list.top = 0;
+                    }
+                //}
             }
 
-            if( renderTo != null ){
-                if( this.alignList ){
-                    var rect : Rectangle = this.getRect(renderTo);
-                    this.list.left = rect.x + (this.w - this.list.w) / 2;
-                    this.list.top  = rect.y + this.h;
-                }
-                this.list.show();
-            }
+            //always render list on top of the stage
+            this.list.renderTo = null;
+            this.list.show();
+
+            // if( this._rebuildList ){
+            //     this._buildList();
+            //     this._rebuildList = false;
+            // }
+
+            // var renderTo : DisplayObject = (
+            //     this.list.renderTo == null
+            //         ? Lib.current
+            //         : UIBuilder.get(this.list.renderTo)
+            // );
+            // if( renderTo == null && this.parent != null ){
+            //     renderTo = this.parent;
+            // }
+
+            // if( renderTo != null ){
+            //     if( this.alignList ){
+            //         var rect : Rectangle = this.getRect(renderTo);
+            //         this.list.left = rect.x + (this.w - this.list.w) / 2;
+            //         this.list.top  = rect.y + this.h;
+            //     }
+            //     this.list.show();
+            // }
         }
     }//function toggleList()
 
