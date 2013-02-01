@@ -31,7 +31,7 @@ class ColorWidget extends ru.stablex.ui.widgets.Widget{
 
 
     /**
-    * This function is called at least once - on widget creation is complete.
+    * This method is called at least once - on widget creation is complete.
     * It's also called everytime widget is resized.
     * For this widget we want to update background color on refresh.
     */
@@ -42,7 +42,7 @@ class ColorWidget extends ru.stablex.ui.widgets.Widget{
 
 
     /**
-    * This function fills background with defined by `color` property color
+    * This method fills background with defined by `color` property color
     *
     */
     private function _paintBackground () : Void {

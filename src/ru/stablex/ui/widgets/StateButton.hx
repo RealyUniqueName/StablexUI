@@ -10,7 +10,7 @@ import ru.stablex.ui.skins.Skin;
 /**
 * State button. Iterate through defined states with each click.
 * Simple case: toggle button
-* See samples/stateButtons on <a href="https://github.com/RealyUniqueName/StablexUI" target="_blank">GitHub</a>
+* See samples/toggles on <a href="https://github.com/RealyUniqueName/StablexUI" target="_blank">GitHub</a>
 */
 class StateButton extends Button{
 
