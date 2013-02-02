@@ -37,7 +37,7 @@ class InputText extends Text{
     override private function _getText() : String {
         return (
             this.label.type == nme.text.TextFieldType.INPUT
-                ? Reflect.field(this.label, 'nmeGraphics').nmeSurface.innerHTML
+                ? StringTools.replace( Reflect.field(this.label, 'nmeGraphics').nmeSurface.innerHTML, '&nbsp;', ' ' )
                 : this.label.text
         );
     }//function _getText()
