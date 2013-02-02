@@ -196,29 +196,6 @@ class Options extends Button{
             //always render list on top of the stage
             this.list.renderTo = null;
             this.list.show();
-
-            // if( this._rebuildList ){
-            //     this._buildList();
-            //     this._rebuildList = false;
-            // }
-
-            // var renderTo : DisplayObject = (
-            //     this.list.renderTo == null
-            //         ? Lib.current
-            //         : UIBuilder.get(this.list.renderTo)
-            // );
-            // if( renderTo == null && this.parent != null ){
-            //     renderTo = this.parent;
-            // }
-
-            // if( renderTo != null ){
-            //     if( this.alignList ){
-            //         var rect : Rectangle = this.getRect(renderTo);
-            //         this.list.left = rect.x + (this.w - this.list.w) / 2;
-            //         this.list.top  = rect.y + this.h;
-            //     }
-            //     this.list.show();
-            // }
         }
     }//function toggleList()
 

@@ -72,10 +72,10 @@ class Floating extends Box{
             * Bug in nme-3.5.4: on html5 if container.visible = false, than on first
             * show canvases are added to dom in wrong order
             */
-            this.parent.addChild(this);
-            for(i in 0...this.numChildren){
-                this.addChild(this.getChildAt(0));
-            }
+            // this.parent.addChild(this);
+            // for(i in 0...this.numChildren){
+            //     this.addChild(this.getChildAt(0));
+            // }
         #end
     }//function show()
 
@@ -113,7 +113,7 @@ class Floating extends Box{
     *
     */
     private function _onStageResize (e:Event = null) : Void{
-        if( this.parent != Lib.current ) return;
+        if( this.parent != Lib.current.stage ) return;
 
         var width  : Float = Lib.current.stage.stageWidth;
         var height : Float = Lib.current.stage.stageHeight;
