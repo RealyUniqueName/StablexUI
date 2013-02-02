@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Root element of our UI -->
+<HBox w="800" h="600" skin:Paint-border="8" skin:Paint-color="0x005d00" skin:Paint-borderColor="0x003a00" skin:Paint-alpha="0.8" childPadding="50">
+
+    <Slider
+        w  = "400"
+        h  = "50"
+
+        min   = "-100"
+        max   = "100"
+        value = "0"
+
+        vertical = "false"
+
+        skin:Paint-border="2"
+        skin:Paint-color="0xFFFFFF"
+        skin:Paint-corners="[20]"
+
+        slider-w        = "50"
+        slider-heightPt = "100"
+
+        slider-skin:Gradient-colors = "[0xFF0000, 0x000000]"
+        slider-skin:Gradient-corners="[20]"
+    />
+
+    <Slider
+        w="50"
+        h="400"
+
+        min   = "-100"
+        max   = "100"
+        value = "0"
+
+        vertical = "true"
+
+        skin:Paint-border="2"
+        skin:Paint-color="0xFFFFFF"
+        skin:Paint-corners="[20]"
+
+        slider-widthPt  = "100"
+        slider-h = "50"
+
+        slider-skin:Gradient-colors = "[0xFF0000, 0x000000]"
+        slider-skin:Gradient-corners="[20]"
+    />
+
+</HBox>

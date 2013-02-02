@@ -120,7 +120,7 @@ class Slice3 extends Skin{
     *
     */
     private function _skinDrawSlice(w:Widget, bmp:BitmapData, src:Rectangle, dst:Rectangle) : Void {
-        var fill:BitmapData = new BitmapData(Std.int(src.width), Std.int(src.height), true,  0x00FFFFFF);
+        var fill:BitmapData = new BitmapData(Std.int(src.width), Std.int(src.height), true);
         fill.copyPixels(bmp, src, new Point(0, 0));
 
         var mx : Matrix = new Matrix();
