@@ -94,6 +94,11 @@ class Widget extends TweenSprite{
 
     //Skin processor (see ru.stablex.ui.skins package)
     public var skin : Skin;
+    /**
+    * Flag for <type>UIBuilder</type>. Do not modify this.
+    * @private
+    */
+    public var _skinQueued : Bool = false;
     //skin name to use. One of registered with <type>ru.stablex.ui.UIBuilder</type>.regSkins()
     public var skinName (default,_setSkinName) : String;
     //whether widget content out of widgt bounds is visible
@@ -615,7 +620,7 @@ class Widget extends TweenSprite{
     * It's also called everytime widget is resized.
     */
     public function refresh() : Void {
-        this.applySkin();
+        UIBuilder.queueSkin(this);
     }//function refresh()
 
 

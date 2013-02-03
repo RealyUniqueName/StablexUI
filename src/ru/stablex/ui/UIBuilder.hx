@@ -53,6 +53,9 @@ class UIBuilder {
 
     //For id generator
     static private var _nextId : Int = 0;
+
+    //list of widgets waiting for skin applying
+    static private var _skinQueue : List<Widget> = new List();
 #end
 
 
@@ -80,7 +83,8 @@ class UIBuilder {
     * @param defaultsXmlFile - path to xml file with default settings for widgets
     */
     @:macro static public function init(defaultsXmlFile:String = null) : Expr {
-        var code : String = 'true';
+        var code : String = '\nnme.Lib.current.stage.removeEventListener(nme.events.Event.ENTER_FRAME, ru.stablex.ui.UIBuilder.skinQueue);';
+        code += '\nnme.Lib.current.stage.addEventListener(nme.events.Event.ENTER_FRAME, ru.stablex.ui.UIBuilder.skinQueue);';
 
         if( !UIBuilder._initialized ){
             UIBuilder._initialized = true;
@@ -134,7 +138,6 @@ class UIBuilder {
 
             //If provided with file for defaults, generate closures for applying defaults to widgets
             if( defaultsXmlFile != null ){
-                code = '';
                 var root : Xml = Xml.parse( File.getContent(defaultsXmlFile) ).firstElement();
                 for(widget in root.elements()){
                     code += '\nif( !ru.stablex.ui.UIBuilder.defaults.exists("' + widget.nodeName + '") ) ru.stablex.ui.UIBuilder.defaults.set("' + widget.nodeName + '", new Hash());';
@@ -144,10 +147,12 @@ class UIBuilder {
                         code += '\n});';
                     }
                 }
-
-                code = '(function() : Void {' + code + '})()';
-                UIBuilder._saveCode(defaultsXmlFile, code);
             }
+        }
+
+        code = '(function() : Void {' + code + '})()';
+        if( defaultsXmlFile != null ){
+            UIBuilder._saveCode(defaultsXmlFile, code);
         }
 
         return UIBuilder._parse((defaultsXmlFile == null ? 'UIBuilder.hx' : defaultsXmlFile), code);
@@ -729,5 +734,39 @@ class UIBuilder {
     static public inline function forget (id:String) : Void{
         UIBuilder._objects.remove(id);
     }//function forget()
+
+
+    /**
+    * Add widget to `apply skin` queue. Skin applied once per frame
+    * @private
+    */
+    static public inline function queueSkin (w:Widget) : Void {
+        if( w.skin != null && !w._skinQueued ){
+            UIBuilder._skinQueue.add(w);
+            w._skinQueued = true;
+        }
+    }//function queueSkin()
+
+
+    /**
+    * Process skin UIBuilder._skinQueue
+    * @private
+    */
+    static public function skinQueue (e:nme.events.Event = null) : Void {
+        //if there is something to render in queue
+        if( UIBuilder._skinQueue.length > 0 ){
+            //get list we're going to process
+            var lst : List<Widget> = UIBuilder._skinQueue;
+            //create new list for next queue
+            UIBuilder._skinQueue = new List();
+
+            for(w in lst){
+                w.applySkin();
+                w._skinQueued = false;
+            }
+
+        }//if()
+    }//function skinQueue()
+
 #end
 }//class UIBuilder
