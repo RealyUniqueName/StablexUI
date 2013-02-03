@@ -129,6 +129,7 @@ class UIBuilder {
             UIBuilder.regClass('ru.stablex.ui.skins.Slice3');
             UIBuilder.regClass('ru.stablex.ui.skins.Slice9');
             UIBuilder.regClass('ru.stablex.ui.skins.Layer');
+            UIBuilder.regClass('ru.stablex.ui.skins.Img');
             UIBuilder.regClass('ru.stablex.ui.UIBuilder');
             UIBuilder.regClass('ru.stablex.TweenSprite');
             UIBuilder.regClass('ru.stablex.Assets');

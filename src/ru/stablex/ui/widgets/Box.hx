@@ -2,6 +2,7 @@ package ru.stablex.ui.widgets;
 
 import nme.display.DisplayObject;
 import ru.stablex.Err;
+import ru.stablex.ui.events.WidgetEvent;
 
 
 /**
@@ -105,6 +106,9 @@ class Box extends Widget{
     override public function refresh() : Void {
         if( this.autoWidth ) this._width = this._calcWidth();
         if( this.autoHeight ) this._height = this._calcHeight();
+        // if( this.autoWidth || this.autoHeight ){
+        //     this.dispatchEvent(new WidgetEvent(WidgetEvent.RESIZE));
+        // }
 
         super.refresh();
 
@@ -461,6 +465,77 @@ class Box extends Widget{
         }
     }//function _hAlignCenter()
 
+
+
+    // /**
+    // * Add child
+    // *
+    // */
+    // override public function addChild (child:DisplayObject) : DisplayObject {
+    //     super.addChild(child);
+    //     if( Std.is(child, Widget) ){
+    //         cast(child, Widget).addUniqueListener(WidgetEvent.RESIZE, this._onChildResize);
+    //         this._onChildResize();
+    //     }
+    //     return child;
+    // }//function addChild()
+
+
+    // /**
+    // * Add child at specified index
+    // *
+    // */
+    // override public function addChildAt (child:DisplayObject, idx:Int) : DisplayObject {
+    //     super.addChildAt(child, idx);
+    //     if( Std.is(child, Widget) ){
+    //         cast(child, Widget).addUniqueListener(WidgetEvent.RESIZE, this._onChildResize);
+    //         this._onChildResize();
+    //     }
+    //     return child;
+    // }//function addChildAt()
+
+
+    // /**
+    // * Remove child
+    // *
+    // */
+    // override public function removeChild (child:DisplayObject) : DisplayObject {
+    //     super.removeChild(child);
+    //     child.removeEventListener(WidgetEvent.RESIZE, this._onChildResize);
+    //     if( !this.destroyed ){
+    //         this._onChildResize();
+    //     }
+    //     return child;
+    // }//function removeChild()
+
+
+    // /**
+    // * Remove child at specified index
+    // *
+    // */
+    // override public function removeChildAt (idx:Int) : DisplayObject {
+    //     var child : DisplayObject = super.removeChildAt(idx);
+    //     child.removeEventListener(WidgetEvent.RESIZE, this._onChildResize);
+    //     if( !this.destroyed ){
+    //         this._onChildResize();
+    //     }
+    //     return child;
+    // }//function removeChild()
+
+
+    // /**
+    // * Handle child resizing
+    // *
+    // */
+    // private function _onChildResize (e:WidgetEvent = null) : Void {
+    //     if( this.created ){
+    //         if( this.autoWidth || this.autoHeight ){
+    //             this.refresh();
+    //         }else{
+    //             this.alignElements();
+    //         }
+    //     }
+    // }//function _onChildResize()
 
 
     /**

@@ -32,6 +32,8 @@ class Widget extends TweenSprite{
     public var initialized : Bool = false;
     //Wether this widget creation by <type>UIBuilder</type> is finished (`.onCreate()` was called)
     public var created : Bool = false;
+    //If this is true, than `.free` was called
+    public var destroyed : Bool = false;
 
     //Widget width in pixels
     public var w (_getWidth,_setWidth)   : Float;
@@ -595,6 +597,7 @@ class Widget extends TweenSprite{
     * @dispatch <type>ru.stablex.ui.events.WidgetEvent</type>.FREE
     */
     override public function free (recursive:Bool = true) : Void{
+        this.destroyed = true;
         this.dispatchEvent(new WidgetEvent(WidgetEvent.FREE));
 
         super.free(recursive);
