@@ -260,7 +260,9 @@ class Box extends Widget{
             for(i in 0...this.numChildren){
                 child = this.getChildAt(i);
                 if( Std.is(child, Widget) ){
+                    cast(child, Widget).removeEventListener(WidgetEvent.RESIZE, this._onChildResize);
                     cast(child, Widget).resize(childWidth, childHeight);
+                    cast(child, Widget).addUniqueListener(WidgetEvent.RESIZE, this._onChildResize);
                 }
             }
 
@@ -272,7 +274,9 @@ class Box extends Widget{
             for(i in 0...this.numChildren){
                 child = this.getChildAt(i);
                 if( Std.is(child, Widget) ){
+                    cast(child, Widget).removeEventListener(WidgetEvent.RESIZE, this._onChildResize);
                     cast(child, Widget).resize(childWidth, childHeight);
+                    cast(child, Widget).addUniqueListener(WidgetEvent.RESIZE, this._onChildResize);
                 }
             }
         }
