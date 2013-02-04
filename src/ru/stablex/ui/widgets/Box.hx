@@ -104,11 +104,18 @@ class Box extends Widget{
     *
     */
     override public function refresh() : Void {
-        if( this.autoWidth ) this._width = this._calcWidth();
-        if( this.autoHeight ) this._height = this._calcHeight();
-        // if( this.autoWidth || this.autoHeight ){
-        //     this.dispatchEvent(new WidgetEvent(WidgetEvent.RESIZE));
-        // }
+        if( this.autoWidth || this.autoHeight ){
+            var w : Float = (this.autoWidth ? this._calcWidth() : this._width);
+            var h : Float = (this.autoHeight ? this._calcHeight() : this._height);
+
+            if( this._width != w || this._height != h ){
+
+                this._width = w;
+                this._height = h;
+
+                this.dispatchEvent(new WidgetEvent(WidgetEvent.RESIZE));
+            }
+        }//if( autoSize )
 
         super.refresh();
 
@@ -466,76 +473,85 @@ class Box extends Widget{
     }//function _hAlignCenter()
 
 
-
-    // /**
-    // * Add child
-    // *
-    // */
-    // override public function addChild (child:DisplayObject) : DisplayObject {
-    //     super.addChild(child);
-    //     if( Std.is(child, Widget) ){
-    //         cast(child, Widget).addUniqueListener(WidgetEvent.RESIZE, this._onChildResize);
-    //         this._onChildResize();
-    //     }
-    //     return child;
-    // }//function addChild()
-
-
-    // /**
-    // * Add child at specified index
-    // *
-    // */
-    // override public function addChildAt (child:DisplayObject, idx:Int) : DisplayObject {
-    //     super.addChildAt(child, idx);
-    //     if( Std.is(child, Widget) ){
-    //         cast(child, Widget).addUniqueListener(WidgetEvent.RESIZE, this._onChildResize);
-    //         this._onChildResize();
-    //     }
-    //     return child;
-    // }//function addChildAt()
+    /**
+    * Add child
+    *
+    */
+    override public function addChild (child:DisplayObject) : DisplayObject {
+        super.addChild(child);
+        if( Std.is(child, Widget) ){
+            cast(child, Widget).addUniqueListener(WidgetEvent.RESIZE, this._onChildResize);
+            this._onChildResize();
+        }
+        return child;
+    }//function addChild()
 
 
-    // /**
-    // * Remove child
-    // *
-    // */
-    // override public function removeChild (child:DisplayObject) : DisplayObject {
-    //     super.removeChild(child);
-    //     child.removeEventListener(WidgetEvent.RESIZE, this._onChildResize);
-    //     if( !this.destroyed ){
-    //         this._onChildResize();
-    //     }
-    //     return child;
-    // }//function removeChild()
+    /**
+    * Add child at specified index
+    *
+    */
+    override public function addChildAt (child:DisplayObject, idx:Int) : DisplayObject {
+        super.addChildAt(child, idx);
+        if( Std.is(child, Widget) ){
+            cast(child, Widget).addUniqueListener(WidgetEvent.RESIZE, this._onChildResize);
+            this._onChildResize();
+        }
+        return child;
+    }//function addChildAt()
 
 
-    // /**
-    // * Remove child at specified index
-    // *
-    // */
-    // override public function removeChildAt (idx:Int) : DisplayObject {
-    //     var child : DisplayObject = super.removeChildAt(idx);
-    //     child.removeEventListener(WidgetEvent.RESIZE, this._onChildResize);
-    //     if( !this.destroyed ){
-    //         this._onChildResize();
-    //     }
-    //     return child;
-    // }//function removeChild()
+    /**
+    * Remove child
+    *
+    */
+    override public function removeChild (child:DisplayObject) : DisplayObject {
+        super.removeChild(child);
+        child.removeEventListener(WidgetEvent.RESIZE, this._onChildResize);
+        if( !this.destroyed ){
+            this._onChildResize();
+        }
+        return child;
+    }//function removeChild()
 
 
-    // /**
-    // * Handle child resizing
-    // *
-    // */
-    // private function _onChildResize (e:WidgetEvent = null) : Void {
-    //     if( this.created ){
-    //         if( this.autoWidth || this.autoHeight ){
-    //             this.refresh();
-    //         }else{
-    //             this.alignElements();
-    //         }
-    //     }
-    // }//function _onChildResize()
+    /**
+    * Remove child at specified index
+    *
+    */
+    override public function removeChildAt (idx:Int) : DisplayObject {
+        var child : DisplayObject = super.removeChildAt(idx);
+        child.removeEventListener(WidgetEvent.RESIZE, this._onChildResize);
+        if( !this.destroyed ){
+            this._onChildResize();
+        }
+        return child;
+    }//function removeChild()
+
+
+    /**
+    * Handle child resizing
+    *
+    */
+    private function _onChildResize (e:WidgetEvent = null) : Void {
+        if( this.created ){
+            if( this.autoWidth || this.autoHeight ){
+                if( e != null ){
+                    if(
+                        Std.is(e.currentTarget, Widget)
+                        && !(this.autoWidth && cast(e.currentTarget, Widget)._widthUsePercent)
+                        && !(this.autoHeight && cast(e.currentTarget, Widget)._heightUsePercent)
+                    ){
+                        this.refresh();
+                    }
+                }else{
+                    this.refresh();
+                }
+            }else{
+                this.alignElements();
+            }
+        }
+    }//function _onChildResize()
 
 
     /**
