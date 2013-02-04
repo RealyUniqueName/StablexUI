@@ -8,6 +8,10 @@
         h           = "500"
         skin:Paint-color  = "0xAAAAAA"
         skin:Paint-border = "4"
+        vBar-slider-skin:Paint-color="0x002200"
+        hBar-slider-skin:Paint-color="0x002200"
+        hBar-skin:Paint-color="0x777777"
+        vBar-skin:Paint-color="0x777777"
         on-display="
             $this.scrollX = $this.w / 2 - $this.box.w / 2;
             $this.scrollY  = $this.h / 2 - $this.box.h / 2;
@@ -25,6 +29,8 @@
         h                 = "500"
         skin:Paint-color  = "0xAAAAAA"
         skin:Paint-border = "4"
+        vBar-slider-skin:Paint-color="0x002200"
+        hBar-visible = "false"
         on-display = "
             $this.scrollY  = $this.h / 2 - $this.box.h / 2;
         "

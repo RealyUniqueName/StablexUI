@@ -4,6 +4,7 @@ import nme.display.DisplayObject;
 import nme.events.Event;
 import nme.events.MouseEvent;
 import nme.Lib;
+import ru.stablex.ui.events.WidgetEvent;
 
 
 
@@ -37,6 +38,10 @@ class Scroll extends Widget{
     public var scrollX (_getScrollX,_setScrollX) : Float;
     //scroll position along y axes
     public var scrollY (_getScrollY,_setScrollY) : Float;
+    //vertical scroll bar
+    public var vBar : Slider;
+    //horizontal scroll bar
+    public var hBar : Slider;
 
 
     /**
@@ -46,6 +51,23 @@ class Scroll extends Widget{
     public function new () : Void {
         super();
         this.overflow = false;
+
+        this.vBar = UIBuilder.create(Slider, {
+            vertical : true,
+            right    : 0,
+            top      : 0,
+            heightPt : 100,
+            w        : 10,
+            slider   : {widthPt : 100}
+        });
+        this.hBar = UIBuilder.create(Slider, {
+            vertical : false,
+            bottom   : 0,
+            left     : 0,
+            widthPt  : 100,
+            h        : 10,
+            slider   : {heightPt : 100}
+        });
     }//function new()
 
 
@@ -75,7 +97,12 @@ class Scroll extends Widget{
     private function _setScrollX (x:Float) : Float {
         if( x > 0 ) x = 0;
         if( x + this.box._width < this._width ) x = this._width - this.box._width;
-        return this.box.left = x;
+
+        this.box.left = x;
+
+        if( this.hBar != null && Math.abs(this.hBar.value + x) >= 1 ) this.hBar.value = -x;
+
+        return x;
     }//function _setScrollX()
 
 
@@ -95,7 +122,12 @@ class Scroll extends Widget{
     private function _setScrollY (y:Float) : Float {
         if( y > 0 ) y = 0;
         if( y + this.box._height < this._height ) y = this._height - this.box._height;
-        return this.box.top = y;
+
+        this.box.top = y;
+
+        if( this.vBar != null && Math.abs(this.vBar.value - y) >= 1 ) this.vBar.value = y;
+
+        return y;
     }//function _setScrollY()
 
 
@@ -116,20 +148,67 @@ class Scroll extends Widget{
         this.box.refresh();
         super.refresh();
 
+        //vertical bar
+        if( this.vBar != null ){
+            this.addChildAt(this.vBar, 1);
+            this.vBar.min = (this.h - this.box.h < 0 ? this.h - this.box.h : 0);
+            this.vBar.max = 0;
+            var k : Float = this.vBar.h / this.box.h;
+            if( k > 1 ) k = 1;
+            this.vBar.slider.h = this.h * k;
+            this.vBar.refresh();
+            this.vBar.addUniqueListener(WidgetEvent.CHANGE, this._onVBarChange);
+        }
+        //verticalhorizontal bar
+        if( this.hBar != null ){
+            this.addChildAt(this.hBar, 1);
+            this.hBar.max = -(this.w - this.box.w < 0 ? this.w - this.box.w : 0);
+            this.hBar.min = 0;
+            var k : Float = this.hBar.w / this.box.w;
+            if( k > 1 ) k = 1;
+            this.hBar.slider.w = this.hBar.w * k;
+            this.hBar.refresh();
+            this.hBar.addUniqueListener(WidgetEvent.CHANGE, this._onHBarChange);
+        }
+
         //mouse wheel scrolling
         if( this.wheelScroll ){
-            this.addUniqueListener(MouseEvent.MOUSE_WHEEL, this._wheelScroll);
+            this.box.addUniqueListener(MouseEvent.MOUSE_WHEEL, this._wheelScroll);
         }else{
-            this.removeEventListener(MouseEvent.MOUSE_WHEEL, this._wheelScroll);
+            this.box.removeEventListener(MouseEvent.MOUSE_WHEEL, this._wheelScroll);
         }
 
         //dragging
         if( this.dragScroll ){
-            this.addUniqueListener(MouseEvent.MOUSE_DOWN, this._dragScroll);
+            this.box.addUniqueListener(MouseEvent.MOUSE_DOWN, this._dragScroll);
         }else{
-            this.removeEventListener(MouseEvent.MOUSE_DOWN, this._dragScroll);
+            this.box.removeEventListener(MouseEvent.MOUSE_DOWN, this._dragScroll);
         }
     }//function refresh()
+
+
+    /**
+    * On `.vBar` value change
+    *
+    */
+    private function _onVBarChange (e:WidgetEvent) : Void {
+        if( Math.abs(this.scrollY - this.vBar.value) >= 1 ){
+            this.tweenStop();
+            this.scrollY = this.vBar.value;
+        }
+    }//function _onVBarChange()
+
+
+    /**
+    * On `.hBar` value change
+    *
+    */
+    private function _onHBarChange (e:WidgetEvent) : Void {
+        if( Math.abs(this.scrollX + this.hBar.value) >= 1 ){
+            this.tweenStop();
+            this.scrollX = -this.hBar.value;
+        }
+    }//function _onHBarChange()
 
 
     /**
