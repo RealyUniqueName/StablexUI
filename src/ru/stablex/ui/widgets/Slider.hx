@@ -183,12 +183,8 @@ class Slider extends Widget{
         //release `.slider` on MOUSE_UP
         var fnRelease : MouseEvent->Void = null;
         fnRelease = function(e:MouseEvent) : Void {
-            // this._value = (1 - this.slider.top / (this._height - this.slider._height)) * (this.max - this.min) + this.min;
-
             this.removeEventListener(Event.ENTER_FRAME, fn);
             Lib.current.stage.removeEventListener(MouseEvent.MOUSE_UP, fnRelease);
-
-            // this.dispatchEvent(new WidgetEvent(WidgetEvent.CHANGE));
         };
 
         //listen for MOUSE_UP
@@ -225,12 +221,8 @@ class Slider extends Widget{
         //release `.slider` on MOUSE_UP
         var fnRelease : MouseEvent->Void = null;
         fnRelease = function(e:MouseEvent) : Void {
-            // this._value = this.slider.left / (this._width - this.slider._width) * (this.max - this.min) + this.min;
-
             this.removeEventListener(Event.ENTER_FRAME, fn);
             Lib.current.stage.removeEventListener(MouseEvent.MOUSE_UP, fnRelease);
-
-            // this.dispatchEvent(new WidgetEvent(WidgetEvent.CHANGE));
         };
 
         //listen for MOUSE_UP
