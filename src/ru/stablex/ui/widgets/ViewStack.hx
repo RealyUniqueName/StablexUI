@@ -1,6 +1,7 @@
 package ru.stablex.ui.widgets;
 
 import nme.display.DisplayObject;
+import ru.stablex.ui.transitions.Transition;
 
 
 /**
@@ -17,6 +18,8 @@ class ViewStack extends Widget{
     public var currentIdx (_getCurrentIdx,never) : Int;
     // wrap the stack list or not (for `.next()` calls)
     public var wrap : Bool = false;
+    //transition for changing children
+    public var trans : Transition = null;
 
 
     /**
@@ -36,6 +39,13 @@ class ViewStack extends Widget{
     */
     override public function refresh () : Void{
         super.refresh();
+
+        //hide everything
+        for(i in 0...this.numChildren){
+            this.getChildAt(i).visible = false;
+        }
+
+        //show current
         this.showIdx(this.currentIdx, true);
     }//function refresh()
 
@@ -46,12 +56,16 @@ class ViewStack extends Widget{
     */
     public function showIdx (idx:Int, ignoreHistory:Bool = false) : Void{
         if( idx < this.numChildren ){
+            var toHide : DisplayObject = this.getChildAt(this.currentIdx);
+            var toShow : DisplayObject = this.getChildAt(idx);
 
-            for(i in 0...this.numChildren){
-                this.getChildAt(i).visible = false;
+            //should we use transition?
+            if( toHide != toShow && this.trans != null ){
+                this.trans.change(this, toHide, toShow);
+            }else{
+                toHide.visible = false;
+                toShow.visible = true;
             }
-
-            this.getChildAt(idx).visible = true;
 
             if( !ignoreHistory ){
                 this._history.push(idx);
@@ -65,18 +79,19 @@ class ViewStack extends Widget{
     *
     */
     public function show (name:String, ignoreHistory:Bool = false) : Void {
-        var child : DisplayObject;
+        var toHide : DisplayObject = this.getChildAt(this.currentIdx);
+        var toShow : DisplayObject = this.getChildByName(name);
 
-        for(i in 0...this.numChildren){
-            child = this.getChildAt(i);
-
-            if( child.name == name ){
-                child.visible = true;
-                if( !ignoreHistory ){
-                    this._history.push(i);
-                }
+        if( toShow != null ){
+            if( toHide != toShow && this.trans != null ){
+                this.trans.change(this, toHide, toShow);
             }else{
-                child.visible = false;
+                toHide.visible = false;
+                toShow.visible = true;
+            }
+
+            if( !ignoreHistory ){
+                this._history.push( this.getChildIndex(toShow) );
             }
         }
     }//function show()

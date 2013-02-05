@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<VBox id="'root'" w="800" h="600">
+
+    <!-- ViewStack to demonstrate transitions -->
+    <ViewStack id="'vs'" wrap="true" widthPt="100" h="500" trans:Fade-duration="1" overflow="false">
+        <Widget name="'red'" skin:Paint-color="0xFF0000" widthPt="100" heightPt="100"/>
+        <Widget name="'green'" skin:Paint-color="0x00FF00" widthPt="100" heightPt="100"/>
+        <Widget name="'blue'" skin:Paint-color="0x0000FF" widthPt="100" heightPt="100"/>
+    </ViewStack>
+
+    <!-- Buttons to set transitions -->
+    <HBox id="'buttons'" childPadding="10" widthPt="100" h="100" padding="10" skin:Paint-color="0xFFFFFF">
+        <Button
+            padding      = "10"
+            format-color = "0xFFFFFF"
+            format-size  = "20"
+            text         = "'Fade'"
+            skin:Paint-color   = "0xFF0000"
+            skin:Paint-corners = "[20]"
+            on-click="
+                var vs = #ViewStack(vs);
+                if( !Std.is(vs.trans, $Fade) ){
+                    vs.trans = new $Fade();
+                    vs.trans.duration = 1;
+                }
+                vs.next();
+            "
+        />
+        <Button
+            padding      = "10"
+            format-color = "0xFFFFFF"
+            format-size  = "20"
+            text         = "'Slide left'"
+            skin:Paint-color   = "0xFF0000"
+            skin:Paint-corners = "[20]"
+            on-click="
+                var vs = #ViewStack(vs);
+                if( !Std.is(vs.trans, $Slide) ){
+                    vs.trans = new $Slide();
+                    vs.trans.duration = 0.2;
+                }
+                vs.trans.as($Slide).direction = 'left';
+                vs.next();
+            "
+        />
+        <Button
+            padding      = "10"
+            format-color = "0xFFFFFF"
+            format-size  = "20"
+            text         = "'Slide right'"
+            skin:Paint-color   = "0xFF0000"
+            skin:Paint-corners = "[20]"
+            on-click="
+                var vs = #ViewStack(vs);
+                if( !Std.is(vs.trans, $Slide) ){
+                    vs.trans = new $Slide();
+                    vs.trans.duration = 0.2;
+                }
+                vs.trans.as($Slide).direction = 'right';
+                vs.next();
+            "
+        />
+        <Button
+            padding      = "10"
+            format-color = "0xFFFFFF"
+            format-size  = "20"
+            text         = "'Slide top'"
+            skin:Paint-color   = "0xFF0000"
+            skin:Paint-corners = "[20]"
+            on-click="
+                var vs = #ViewStack(vs);
+                if( !Std.is(vs.trans, $Slide) ){
+                    vs.trans = new $Slide();
+                    vs.trans.duration = 0.2;
+                }
+                vs.trans.as($Slide).direction = 'top';
+                vs.next();
+            "
+        />
+        <Button
+            padding      = "10"
+            format-color = "0xFFFFFF"
+            format-size  = "20"
+            text         = "'Slide bottom'"
+            skin:Paint-color   = "0xFF0000"
+            skin:Paint-corners = "[20]"
+            on-click="
+                var vs = #ViewStack(vs);
+                if( !Std.is(vs.trans, $Slide) ){
+                    vs.trans = new $Slide();
+                    vs.trans.duration = 0.2;
+                }
+                vs.trans.as($Slide).direction = 'bottom';
+                vs.next();
+            "
+        />
+    </HBox>
+</VBox>

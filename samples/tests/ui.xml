@@ -93,7 +93,7 @@
     </HBox>
 
 
-    <ViewStack id="'vs'" wrap="true" w="100" h="100">
+    <ViewStack id="'vs'" wrap="true" w="100" h="100" trans:Slide-duration="0.2" trans:Slide-direction="'bottom'" overflow="false">
         <Widget name="'red'" skin:Paint-color="0xFF0000" widthPt="100" heightPt="100"/>
         <Widget name="'green'" skin:Paint-color="0x00FF00" widthPt="100" heightPt="100"/>
         <Widget name="'blue'" skin:Paint-color="0x0000FF" widthPt="100" heightPt="100"/>

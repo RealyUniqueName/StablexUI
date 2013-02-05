@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 
-<Floating id="'root'" widthPt="100" heightPt="100">
+<Floating id="'root'" widthPt="100" heightPt="100" skin:Paint-color="0x000000" skin:Paint-alpha="0.7">
 
 </Floating>
