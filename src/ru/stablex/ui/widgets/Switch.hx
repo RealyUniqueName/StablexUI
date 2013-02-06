@@ -126,10 +126,17 @@ class Switch extends Widget{
     *
     */
     private inline function _slide (e:MouseEvent) : Void {
-        var dx : Float = this.mouseX - this.slider.left;
+        var dx     : Float = this.mouseX - this.slider.left;
+        var startX : Float = this.mouseX;
+        //indicate user is actually moving slider
+        var slided : Bool = false;
 
         //make `.slider` follow mouse pointer
         var fn : Event->Void = function(e:Event) : Void {
+            if( Math.abs(startX - this.mouseX) >= 2){
+                slided = true;
+            }
+
             this.slider.left = (
                 this.mouseX - dx < 0
                     ? 0
@@ -145,9 +152,22 @@ class Switch extends Widget{
         //release `.slider` on MOUSE_UP
         var fnRelease : MouseEvent->Void = null;
         fnRelease = function(e:MouseEvent) : Void {
-            if( this.mouseX < 0 || this.mouseX > this.w || this.mouseY < 0 || this.mouseY > h ){
+            //if user did not move slider, toggle state
+            if( !slided ){
+                if( this.selected ){
+                    this._selected = false;
+                    this.slider.tween(0.25, {left:0}, 'Quad.easeOut');
+                }else{
+                    this._selected = true;
+                    this.slider.tween(0.25, {right:0}, 'Quad.easeOut');
+                }
+
+            //if user moved slider, set state ccording to position of the slider
+            }else if( this.mouseX < 0 || this.mouseX > this.w || this.mouseY < 0 || this.mouseY > h ){
                 this._onRelease(e);
             }
+
+            //remove listeners
             this.removeEventListener(Event.ENTER_FRAME, fn);
             Lib.current.stage.removeEventListener(MouseEvent.MOUSE_UP, fnRelease);
         };
