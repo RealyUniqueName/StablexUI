@@ -142,6 +142,7 @@ class Widget extends TweenSprite{
     */
     private function _setSkinName(sn:String) : String {
         this.skin = UIBuilder.skin(sn)();
+        if( this.created ) UIBuilder.queueSkin(this);
         return this.skinName = sn;
     }//function _setSkinName()
 

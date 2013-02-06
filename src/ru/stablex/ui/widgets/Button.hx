@@ -175,9 +175,9 @@ class Button extends Text{
     *
     */
     public dynamic function onPress (e:MouseEvent) : Void {
-        var btn : Button = cast(e.currentTarget, Button);
+        // var btn : Button = cast(e.currentTarget, Button);
 
-        btn.y ++;
+        // btn.y ++;
     }//function onPress()
 
 
@@ -186,9 +186,9 @@ class Button extends Text{
     *
     */
     public dynamic function onRelease (e:MouseEvent) : Void {
-        var btn : Button = cast(e.currentTarget, Button);
+        // var btn : Button = cast(e.currentTarget, Button);
 
-        btn.y --;
+        // btn.y --;
     }//function onRelease()
 
 
@@ -395,10 +395,10 @@ class Button extends Text{
     *
     */
     override public function alignElements () : Void {
+        super.alignElements();
+
         if( this.apart ){
             this._moveApart();
-        }else{
-            super.alignElements();
         }
     }//function alignElements()
 

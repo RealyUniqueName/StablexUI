@@ -39,9 +39,9 @@ class Scroll extends Widget{
     //scroll position along y axes
     public var scrollY (_getScrollY,_setScrollY) : Float;
     //vertical scroll bar
-    public var vBar : Slider;
+    public var vBar (default,_setVBar) : Slider;
     //horizontal scroll bar
-    public var hBar : Slider;
+    public var hBar (default,_setHBar) : Slider;
 
 
     /**
@@ -141,6 +141,30 @@ class Scroll extends Widget{
 
 
     /**
+    * Setter for '.vBar'
+    *
+    */
+    private function _setVBar(bar:Slider) : Slider {
+        if( bar == null && this.vBar != null ){
+            this.vBar.free();
+        }
+        return this.vBar = bar;
+    }//function _setVBar()
+
+
+    /**
+    * Setter for '.hBar'
+    *
+    */
+    private function _setHBar(bar:Slider) : Slider {
+        if( bar == null && this.hBar != null ){
+            this.hBar.free();
+        }
+        return this.hBar = bar;
+    }//function _setHBar()
+
+
+    /**
     * Refresh container too
     *
     */
@@ -173,16 +197,16 @@ class Scroll extends Widget{
 
         //mouse wheel scrolling
         if( this.wheelScroll ){
-            this.box.addUniqueListener(MouseEvent.MOUSE_WHEEL, this._wheelScroll);
+            this.addUniqueListener(MouseEvent.MOUSE_WHEEL, this._wheelScroll);
         }else{
-            this.box.removeEventListener(MouseEvent.MOUSE_WHEEL, this._wheelScroll);
+            this.removeEventListener(MouseEvent.MOUSE_WHEEL, this._wheelScroll);
         }
 
         //dragging
         if( this.dragScroll ){
-            this.box.addUniqueListener(MouseEvent.MOUSE_DOWN, this._dragScroll);
+            this.addUniqueListener(MouseEvent.MOUSE_DOWN, this._dragScroll);
         }else{
-            this.box.removeEventListener(MouseEvent.MOUSE_DOWN, this._dragScroll);
+            this.removeEventListener(MouseEvent.MOUSE_DOWN, this._dragScroll);
         }
     }//function refresh()
 
@@ -216,8 +240,8 @@ class Scroll extends Widget{
     *
     */
     private function _dragScroll (e:MouseEvent) : Void {
-        var dx : Float = this.mouseX - this.scrollX;
-        var dy : Float = this.mouseY - this.scrollY;
+        var dx       : Float = this.mouseX - this.scrollX;
+        var dy       : Float = this.mouseY - this.scrollY;
         var lastX    : Float = this.mouseX;
         var lastY    : Float = this.mouseY;
         var lastDx   : Float = 0;
@@ -225,22 +249,27 @@ class Scroll extends Widget{
         var startX   : Float = this.mouseX;
         var startY   : Float = this.mouseY;
         var scrolled : Bool = false;
+        //allowed scroll directions
+        var vScroll : Bool = (this.vScroll && this.box.h > this.h);
+        var hScroll : Bool = (this.hScroll && this.box.w > this.w);
 
         //stop previous scrolling
-        this.tweenStop();
+        this.tweenStop(null, false, true);
 
+        //follow mouse pointer
         var fn = function(e:Event) : Void {
-            if( this.hScroll ) this.scrollX = this.mouseX - dx;
-            if( this.vScroll ) this.scrollY = this.mouseY - dy;
+            if( hScroll ) this.scrollX = this.mouseX - dx;
+            if( vScroll ) this.scrollY = this.mouseY - dy;
 
             //if user realy wants to scroll instead of interacting with content,
             //disable processing mouse events by children
             if(
-                (this.hScroll && !scrolled && Math.abs(this.mouseX - startX) >= 5)
-                || (this.vScroll && !scrolled && Math.abs(this.mouseY - startY) >= 5)
+                (hScroll && !scrolled && Math.abs(this.mouseX - startX) >= 5)
+                || (vScroll && !scrolled && Math.abs(this.mouseY - startY) >= 5)
             ){
                 scrolled = true;
                 this.box.mouseChildren = false;
+                this.dispatchEvent(new WidgetEvent(WidgetEvent.SCROLL_START));
             }
 
             lastDx = this.mouseX - lastX;
@@ -253,23 +282,28 @@ class Scroll extends Widget{
         //follow pointer
         this.addUniqueListener(Event.ENTER_FRAME, fn);
 
+        //stop following
         var fnStop : MouseEvent->Void = null;
         fnStop = function(e:MouseEvent) : Void {
             this.removeEventListener(Event.ENTER_FRAME, fn);
             Lib.current.stage.removeEventListener(MouseEvent.MOUSE_UP, fnStop);
 
+            var finish : Void->Void = function() : Void {
+                if( scrolled ){
+                    this.dispatchEvent(new WidgetEvent(WidgetEvent.SCROLL_STOP));
+                }
+            };
+
             //go-go!
-            if( this.vScroll && this.hScroll ){
-                this.tween(2, {scrollX:this.scrollX + lastDx * 20, scrollY:this.scrollY + lastDy * 20}, 'Expo.easeOut');
-            }else if( this.vScroll ){
-                this.tween(2, {scrollY:this.scrollY + lastDy * 20}, 'Expo.easeOut');
+            if( vScroll && hScroll ){
+                this.tween(2, {scrollX:this.scrollX + lastDx * 20, scrollY:this.scrollY + lastDy * 20}, 'Expo.easeOut').onComplete(finish);
+            }else if( vScroll ){
+                this.tween(2, {scrollY:this.scrollY + lastDy * 20}, 'Expo.easeOut').onComplete(finish);
             }else{
-                this.tween(2, {scrollX:this.scrollX + lastDx * 20}, 'Expo.easeOut');
+                this.tween(2, {scrollX:this.scrollX + lastDx * 20}, 'Expo.easeOut').onComplete(finish);
             }
 
-            if( scrolled ){
-                this.box.mouseChildren = true;
-            }
+            if(scrolled) this.box.mouseChildren = true;
         }
 
         //stop scrolling

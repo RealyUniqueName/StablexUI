@@ -32,7 +32,6 @@ class ViewStack extends Widget{
     }//function new()
 
 
-
     /**
     * Refresh widget. On refresh show currently active child
     *
@@ -102,8 +101,10 @@ class ViewStack extends Widget{
     * Goes back through history log and removes the last entry from log.
     */
     public inline function back() : Void {
-        this._history.pop();
-        this.showIdx(this._history.pop());
+        if( this._history.length >= 2 ){
+            this.showIdx(this._history[ this._history.length - 2 ], true);
+            this._history.pop();
+        }
     }//function back()
 
 
@@ -162,6 +163,15 @@ class ViewStack extends Widget{
     private function _getCurrentIdx() : Int {
         return this._history[ this._history.length - 1 ];
     }//function _getCurrentIdx()
+
+
+    /**
+    * Clear history log
+    *
+    */
+    public function clearHistory() : Void {
+        this._history = [this.currentIdx];
+    }//function clearHistory()
 
 
 }//class ViewStack

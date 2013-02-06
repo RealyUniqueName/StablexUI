@@ -90,15 +90,17 @@ class UIBuilder {
             UIBuilder._initialized = true;
 
             //registering frequently used events
-            UIBuilder.regEvent('enterFrame','nme.events.Event.ENTER_FRAME');
-            UIBuilder.regEvent('click',     'nme.events.MouseEvent.CLICK');
-            UIBuilder.regEvent('mouseDown', 'nme.events.MouseEvent.MOUSE_DOWN');
-            UIBuilder.regEvent('mouseUp',   'nme.events.MouseEvent.MOUSE_UP');
-            UIBuilder.regEvent('display',   'nme.events.Event.ADDED_TO_STAGE');
-            UIBuilder.regEvent('create',    'ru.stablex.ui.events.WidgetEvent.CREATE');
-            UIBuilder.regEvent('free',      'ru.stablex.ui.events.WidgetEvent.FREE');
-            UIBuilder.regEvent('resize',    'ru.stablex.ui.events.WidgetEvent.RESIZE');
-            UIBuilder.regEvent('change',    'ru.stablex.ui.events.WidgetEvent.CHANGE');
+            UIBuilder.regEvent('enterFrame',  'nme.events.Event.ENTER_FRAME');
+            UIBuilder.regEvent('click',       'nme.events.MouseEvent.CLICK');
+            UIBuilder.regEvent('mouseDown',   'nme.events.MouseEvent.MOUSE_DOWN');
+            UIBuilder.regEvent('mouseUp',     'nme.events.MouseEvent.MOUSE_UP');
+            UIBuilder.regEvent('display',     'nme.events.Event.ADDED_TO_STAGE');
+            UIBuilder.regEvent('create',      'ru.stablex.ui.events.WidgetEvent.CREATE');
+            UIBuilder.regEvent('free',        'ru.stablex.ui.events.WidgetEvent.FREE');
+            UIBuilder.regEvent('resize',      'ru.stablex.ui.events.WidgetEvent.RESIZE');
+            UIBuilder.regEvent('change',      'ru.stablex.ui.events.WidgetEvent.CHANGE');
+            UIBuilder.regEvent('scrollStart', 'ru.stablex.ui.events.WidgetEvent.SCROLL_START');
+            UIBuilder.regEvent('scrollStop',  'ru.stablex.ui.events.WidgetEvent.SCROLL_STOP');
 
             //registering frequently used classes
             UIBuilder.regClass('ru.stablex.ui.widgets.Text');
@@ -286,10 +288,6 @@ class UIBuilder {
             code += '\n__ui__widget' + n + '._onInitialize();';
         }
 
-        if( n > 1 ){
-            code += '\n__ui__widget' + Std.string(n - 1) + '.addChild(__ui__widget' + n + ');';
-        }
-
         //if we have nested widgets, generate code for them
         for(node in element.elements()){
             code += '\n' + UIBuilder.construct(node, n + 1);
@@ -298,6 +296,11 @@ class UIBuilder {
         //call .onCreate method to notify widget that it is created
         if( zeroElementCls == null ){
             code += '\n__ui__widget' + n + '._onCreate();';
+        }
+
+        //add to parent's display list
+        if( n > 1 ){
+            code += '\n__ui__widget' + Std.string(n - 1) + '.addChild(__ui__widget' + n + ');';
         }
 
         return code;
