@@ -218,10 +218,13 @@ class Scroll extends Widget{
     private function _dragScroll (e:MouseEvent) : Void {
         var dx : Float = this.mouseX - this.scrollX;
         var dy : Float = this.mouseY - this.scrollY;
-        var lastX  : Float = this.mouseX;
-        var lastY  : Float = this.mouseY;
-        var lastDx : Float = 0;
-        var lastDy : Float = 0;
+        var lastX    : Float = this.mouseX;
+        var lastY    : Float = this.mouseY;
+        var lastDx   : Float = 0;
+        var lastDy   : Float = 0;
+        var startX   : Float = this.mouseX;
+        var startY   : Float = this.mouseY;
+        var scrolled : Bool = false;
 
         //stop previous scrolling
         this.tweenStop();
@@ -229,6 +232,16 @@ class Scroll extends Widget{
         var fn = function(e:Event) : Void {
             if( this.hScroll ) this.scrollX = this.mouseX - dx;
             if( this.vScroll ) this.scrollY = this.mouseY - dy;
+
+            //if user realy wants to scroll instead of interacting with content,
+            //disable processing mouse events by children
+            if(
+                (this.hScroll && !scrolled && Math.abs(this.mouseX - startX) >= 5)
+                || (this.vScroll && !scrolled && Math.abs(this.mouseY - startY) >= 5)
+            ){
+                scrolled = true;
+                this.box.mouseChildren = false;
+            }
 
             lastDx = this.mouseX - lastX;
             lastDy = this.mouseY - lastY;
@@ -252,6 +265,10 @@ class Scroll extends Widget{
                 this.tween(2, {scrollY:this.scrollY + lastDy * 20}, 'Expo.easeOut');
             }else{
                 this.tween(2, {scrollX:this.scrollX + lastDx * 20}, 'Expo.easeOut');
+            }
+
+            if( scrolled ){
+                this.box.mouseChildren = true;
             }
         }
 

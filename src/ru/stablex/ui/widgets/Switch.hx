@@ -133,7 +133,7 @@ class Switch extends Widget{
 
         //make `.slider` follow mouse pointer
         var fn : Event->Void = function(e:Event) : Void {
-            if( Math.abs(startX - this.mouseX) >= 2){
+            if( Math.abs(startX - this.mouseX) >= 5){
                 slided = true;
             }
 
