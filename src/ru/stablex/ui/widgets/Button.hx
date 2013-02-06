@@ -162,6 +162,10 @@ class Button extends Text{
         this.addEventListener(MouseEvent.MOUSE_DOWN, Button._onPress);
         this.addEventListener(MouseEvent.MOUSE_OUT, Button._onRelease);
         this.addEventListener(MouseEvent.MOUSE_UP, Button._onRelease);
+        #if mobile
+            this.addEventListener(nme.events.TouchEvent.TOUCH_OUT, Button._onHout);
+            this.addEventListener(nme.events.TouchEvent.TOUCH_OUT, Button._onRelease);
+        #end
 
         this.pressed = false;
         this.hovered = false;

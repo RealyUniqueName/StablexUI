@@ -12,9 +12,9 @@ import ru.stablex.ui.events.WidgetEvent;
 class Switch extends Widget{
 
     //label to the left from slider
-    public var on : Text;
+    public var labelOn : Text;
     //label to ther right from slider
-    public var off : Text;
+    public var labelOff : Text;
     //Slider element
     public var slider : Widget;
     //Indicates switch state. `true` for `on`-state, `false` for `off`-state. `true` by default
@@ -35,7 +35,7 @@ class Switch extends Widget{
         this.slider = UIBuilder.create(Widget, {right:0});
         this.addChild(this.slider);
 
-        this.on  = UIBuilder.create(Text, {
+        this.labelOn  = UIBuilder.create(Text, {
             text          : 'ON',
             mouseEnabled  : false,
             mouseChildren : false,
@@ -43,7 +43,7 @@ class Switch extends Widget{
             rightPt       : 100,
             align         : 'right,middle'
         });
-        this.off = UIBuilder.create(Text, {
+        this.labelOff = UIBuilder.create(Text, {
             text          : 'OFF',
             mouseEnabled  : false,
             mouseChildren : false,
@@ -83,8 +83,8 @@ class Switch extends Widget{
     */
     override public function onInitialize() : Void {
         super.onInitialize();
-        this.slider.addChild(this.on);
-        this.slider.addChild(this.off);
+        this.slider.addChild(this.labelOn);
+        this.slider.addChild(this.labelOff);
     }//function onInitialize()
 
 
@@ -95,8 +95,8 @@ class Switch extends Widget{
     override public function refresh () : Void {
         super.refresh();
         this.slider.refresh();
-        this.on.refresh();
-        this.off.refresh();
+        this.labelOn.refresh();
+        this.labelOff.refresh();
     }//function refresh()
 
 

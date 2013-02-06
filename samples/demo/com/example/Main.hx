@@ -17,7 +17,7 @@ class Main extends ru.stablex.ui.widgets.Widget{
     */
     static public function main () : Void{
 
-#if !debug throw 'DEMO IS NOT READY YET'; #end
+// ... IN PROGRESS ...
 
         Lib.current.stage.align     = StageAlign.TOP_LEFT;
         Lib.current.stage.scaleMode = StageScaleMode.NO_SCALE;
@@ -32,6 +32,17 @@ class Main extends ru.stablex.ui.widgets.Widget{
 
         //Create our UI
         UIBuilder.buildFn('index.xml')().show();
+
+        // меряем FPS {
+            var fps : nme.display.FPS = cast Lib.current.stage.addChild(new nme.display.FPS());
+            var format = new nme.text.TextFormat (nme.Assets.getFont ("ui/android/fonts/regular.ttf").fontName, 12, 0xFFFFFF);
+            fps.defaultTextFormat = format;
+            fps.selectable = false;
+            fps.embedFonts = true;
+            fps.x = 0;
+            fps.y = 0;
+            fps.mouseEnabled = false;
+        //}
     }//function main()
 
 
