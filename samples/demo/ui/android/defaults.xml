@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Defaults>
+
+    <Text>
+        <Default
+            format-font      = "$Assets.getFont('ui/android/fonts/regular.ttf').fontName"
+            format-size      = "12"
+            format-color     = "0xFFFFFF"
+            label-selectable = "false"
+        />
+        <H1 format-size="22" padding="10"/>
+    </Text>
+
+
+    <Scroll>
+        <!-- Screen container -->
+        <Screen
+            widthPt      = "100"
+            heightPt     = "100"
+            hScroll      = "false"
+            hBar         = "null"
+            vBar-visible = "false"
+            vBar-w       = "5"
+            vBar-right   = "2"
+
+            skin:Paint-color = "0x111111"
+
+            on-scrollStart = "$this.vBar.visible = true;"
+            on-scrollStop  = "$this.vBar.visible = false;"
+        />
+        <!-- skin:Gradient-colors = "[0x000000, 0x2b3034]" -->
+    </Scroll>
+
+
+    <Slider>
+        <Default
+            w = "5"
+            h = "5"
+            skin:Paint-color   = "0x969696"
+            skin:Paint-padding = "2"
+            slider-skin:Paint-color   = "0x33b5e5"
+            slider-skin:Paint-corners = "[3]"
+        />
+    </Slider>
+
+
+    <HBox>
+        <!-- Top menu -->
+        <TopMenu
+            widthPt       = "100"
+            align         = "'left,middle'"
+            padding       = "5"
+            skin:Layer-current:Paint-color="0x000000"
+            skin:Layer-current:Paint-paddingBottom="3"
+            skin:Layer-behind:Paint-color="0x33b5e5"
+        />
+        <!-- Bottom menu -->
+        <BottomMenu
+            widthPt       = "100"
+            align         = "'top,center'"
+            padding       = "5"
+            unifyChildren = "true"
+            skin:Paint-color="0x000000"
+        />
+    </HBox>
+
+
+    <VBox>
+        <Menu widthPt="100" childPadding="2" paddingTop="4" paddingBottom="4"/>
+    </VBox>
+
+
+    <Button>
+        <MainBack ico-src="'ui/android/img/ico/light/mainBack.png'" />
+        <MainHome ico-src="'ui/android/img/ico/light/mainHome.png'" />
+        <MainRecent ico-src="'ui/android/img/ico/light/mainRecent.png'" />
+
+        <MenuItem
+            align          = "'middle'"
+            h              = "44"
+            widthPt        = "100"
+            padding        = "5"
+            format-font    = "$Assets.getFont('ui/android/fonts/regular.ttf').fontName"
+            format-size    = "16"
+            format-color   = "0xFFFFFF"
+            apart          = "true"
+            ico-src        = "'ui/android/img/ico/light/next.png'"
+            icoBeforeLabel = "false"
+            skin:Paint-color = "0x111111"
+            skinPressed:Paint-color = "0x257390"
+        />
+    </Button>
+
+
+    <Widget>
+        <HR
+            skin:Paint-color="0x282828"
+            skin:Paint-paddingLeft="10"
+            skin:Paint-paddingRight="10" h="1"
+            widthPt="100"
+        />
+    </Widget>
+</Defaults>

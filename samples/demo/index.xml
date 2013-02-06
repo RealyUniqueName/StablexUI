@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- root element for our UI -->
+<Floating id="'root'" widthPt="100" heightPt="100" skin:Paint-color="0x000000" on-resize="#screens.h = $this.h - #bottomMenu.h - #topMenu.h;">
+
+    <!-- Header -->
+    <HBox id="'topMenu'" defaults="'TopMenu'">
+        <Bmp src="'ui/android/img/ico/light/settings.png'" />
+        <Text defaults="'Default,H1'" text="'StablexUI'"/>
+    </HBox>
+
+    <!-- Screens holder -->
+    <ViewStack id="'screens'" widthPt="100" trans:Slide-direction="'left'" trans:Slide-duration="0.2">
+
+        <!-- Initial screen -->
+        <Scroll name="'main'" defaults="'Screen'">
+            <VBox defaults="'Menu'">
+
+                <Button text="'Buttons'" defaults="'MenuItem'" on-click="#ViewStack(screens).show('buttons');"/>
+                <Widget defaults="'HR'"/>
+
+                <Button text="'Text fields'" defaults="'MenuItem'"/>
+                <Widget defaults="'HR'"/>
+
+                <Button text="'Toggles'" defaults="'MenuItem'"/>
+                <Widget defaults="'HR'"/>
+
+                <Button text="'Progress bar'" defaults="'MenuItem'"/>
+                <Widget defaults="'HR'"/>
+
+                <Button text="'Options list'" defaults="'MenuItem'"/>
+                <Widget defaults="'HR'"/>
+
+                <Button text="'Sliders'" defaults="'MenuItem'"/>
+                <Widget defaults="'HR'"/>
+
+                <Button text="'Tabs'" defaults="'MenuItem'"/>
+                <Widget defaults="'HR'"/>
+
+                <Button text="'Progress bar'" defaults="'MenuItem'"/>
+                <Widget defaults="'HR'"/>
+
+                <Button text="'View stack'" defaults="'MenuItem'"/>
+                <Widget defaults="'HR'"/>
+
+                <Button text="'Fake item 1'" defaults="'MenuItem'" ico="null"/>
+                <Widget defaults="'HR'"/>
+
+                <Button text="'Fake item 2'" defaults="'MenuItem'" ico="null"/>
+                <Widget defaults="'HR'"/>
+
+                <Button text="'Fake item 3'" defaults="'MenuItem'" ico="null"/>
+                <Widget defaults="'HR'"/>
+
+                <Button text="'Fake item 4'" defaults="'MenuItem'" ico="null"/>
+                <Widget defaults="'HR'"/>
+
+                <Button text="'Fake item 5'" defaults="'MenuItem'" ico="null"/>
+                <Widget defaults="'HR'"/>
+
+                <Button text="'Fake item 6'" defaults="'MenuItem'" ico="null"/>
+                <Widget defaults="'HR'"/>
+
+                <Button text="'Fake item 7'" defaults="'MenuItem'" ico="null"/>
+                <Widget defaults="'HR'"/>
+
+                <Button text="'Fake item 8'" defaults="'MenuItem'" ico="null"/>
+                <Widget defaults="'HR'"/>
+
+                <Button text="'Fake item 9'" defaults="'MenuItem'" ico="null"/>
+                <Widget defaults="'HR'"/>
+
+                <Button text="'Fake item 10'" defaults="'MenuItem'" ico="null"/>
+
+            </VBox>
+        </Scroll>
+
+        <!-- Buttons demo -->
+        <Scroll name="'buttons'" defaults="'Screen'">
+            <VBox widthPt="100" heightPt="100">
+                <Button text="'Simple button'" format-color="0xFFFFFF" />
+                <!-- <Toggle text="'Toggle button'" />
+                <StateButton text="'Multi-state button'" /> -->
+            </VBox>
+        </Scroll>
+
+    </ViewStack>
+
+    <!-- Main menu -->
+    <HBox id="'bottomMenu'" defaults="'BottomMenu'">
+        <!-- back button -->
+        <Button defaults="'MainBack'" on-click="
+            var vs = #ViewStack(screens);
+
+            //change transition to slide back
+            var transition     = vs.trans;
+            vs.trans           = new $Slide();
+            vs.trans.duration  = 0.2;
+            vs.trans.as($Slide).direction = 'right';
+
+            //return previous screen
+            vs.back();
+
+            //recover default transition
+            vs.trans = transition;
+        "/>
+        <!-- home button -->
+        <Button defaults="'MainHome'" on-click="
+            var vs = #ViewStack(screens);
+
+            //change transition to slide back
+            var transition     = vs.trans;
+            vs.trans           = new $Slide();
+            vs.trans.duration  = 0.2;
+            vs.trans.as($Slide).direction = 'right';
+
+            //show main screen
+            vs.show('main');
+            vs.clearHistory();
+
+            //recover default transition
+            vs.trans = transition;
+        "/>
+        <!-- recent button -->
+        <Button defaults="'MainRecent'" on-click=""/>
+    </HBox>
+</Floating>

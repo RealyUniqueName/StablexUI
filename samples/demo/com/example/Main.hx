@@ -17,19 +17,21 @@ class Main extends ru.stablex.ui.widgets.Widget{
     */
     static public function main () : Void{
 
-throw 'DEMO IS NOT READY YET';
+#if !debug throw 'DEMO IS NOT READY YET'; #end
 
         Lib.current.stage.align     = StageAlign.TOP_LEFT;
         Lib.current.stage.scaleMode = StageScaleMode.NO_SCALE;
 
+        UIBuilder.saveCodeTo('_genCode_');
+
         //initialize StablexUI
-        UIBuilder.init('ui/defaults.xml');
+        UIBuilder.init('ui/android/defaults.xml');
 
         //register skins
-        UIBuilder.regSkins('ui/skins.xml');
+        UIBuilder.regSkins('ui/android/skins.xml');
 
         //Create our UI
-        UIBuilder.buildFn('ui/index.xml')().show();
+        UIBuilder.buildFn('index.xml')().show();
     }//function main()
 
 
