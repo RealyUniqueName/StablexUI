@@ -38,7 +38,7 @@ Using these two files is equal to using single file like this:
 </xml>
 
 meta:include is useful if you need to reuse same parts for different UIs. It's also useful
-if you want to divide one large xml file into several smaller to make it easer to maintain.
+if you want to divide one large xml file into several smaller to make it easier to maintain.
 */
 
 /**
@@ -63,7 +63,7 @@ Here is how to create meta processor:
     */
     static public function createMetas() : haxe.macro.Expr {
         //create meta for `createChildren`
-        ru.stablex.ui.UIBuilder.meta.set('createChildren', function(node:Xml, parentWidget:String) : String{
+        ru.stablex.ui.UIBuilder.meta.set('createChildren', function(node:<type>Xml</type>, parentWidget:<type>String</type>) : <type>String</type>{
             //how many children need to create?
             var amount = node.get('amount');
             //create code for that
