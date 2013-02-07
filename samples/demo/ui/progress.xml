@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Progress bars demo -->
+<Scroll name="'progressBars'" defaults="'Screen,Level1'">
+    <VBox widthPt="100" heightPt="100">
+        <Text text="'Progress bar'" />
+    </VBox>
+</Scroll>

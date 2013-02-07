@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<!-- Initial screen -->
+<Scroll name="'main'" defaults="'Screen'">
+    <VBox defaults="'Menu'">
+
+        <Button text="'Buttons'" defaults="'MenuItem'" on-click="#ViewStack(screens).show('buttons');"/>
+        <Widget defaults="'HR'"/>
+
+        <Button text="'Text fields'" defaults="'MenuItem'" on-click="#ViewStack(screens).show('textFields');"/>
+        <Widget defaults="'HR'"/>
+
+        <Button text="'Toggles'" defaults="'MenuItem'" on-click="#ViewStack(screens).show('toggles');"/>
+        <Widget defaults="'HR'"/>
+
+        <Button text="'Progress bar'" defaults="'MenuItem'" on-click="#ViewStack(screens).show('progressBars');"/>
+        <Widget defaults="'HR'"/>
+
+        <Button text="'Options list'" defaults="'MenuItem'" on-click="#ViewStack(screens).show('options');"/>
+        <Widget defaults="'HR'"/>
+
+        <Button text="'Sliders'" defaults="'MenuItem'" on-click="#ViewStack(screens).show('sliders');"/>
+        <Widget defaults="'HR'"/>
+
+        <Button text="'TabStack'" defaults="'MenuItem'" on-click="#ViewStack(screens).show('tabs');"/>
+        <Widget defaults="'HR'"/>
+
+        <Button text="'View stack transitions'" defaults="'MenuItem'" on-click="#ViewStack(screens).show('viewStack');"/>
+        <Widget defaults="'HR'"/>
+
+        <Button text="'Fake item 1'" defaults="'MenuItem'" ico="null"/>
+        <Widget defaults="'HR'"/>
+
+        <Button text="'Fake item 2'" defaults="'MenuItem'" ico="null"/>
+        <Widget defaults="'HR'"/>
+
+        <Button text="'Fake item 3'" defaults="'MenuItem'" ico="null"/>
+        <Widget defaults="'HR'"/>
+
+        <Button text="'Fake item 4'" defaults="'MenuItem'" ico="null"/>
+        <Widget defaults="'HR'"/>
+
+        <Button text="'Fake item 5'" defaults="'MenuItem'" ico="null"/>
+        <Widget defaults="'HR'"/>
+
+        <Button text="'Fake item 6'" defaults="'MenuItem'" ico="null"/>
+        <Widget defaults="'HR'"/>
+
+        <Button text="'Fake item 7'" defaults="'MenuItem'" ico="null"/>
+        <Widget defaults="'HR'"/>
+
+        <Button text="'Fake item 8'" defaults="'MenuItem'" ico="null"/>
+        <Widget defaults="'HR'"/>
+
+        <Button text="'Fake item 9'" defaults="'MenuItem'" ico="null"/>
+        <Widget defaults="'HR'"/>
+
+        <Button text="'Fake item 10'" defaults="'MenuItem'" ico="null"/>
+
+    </VBox>
+</Scroll>

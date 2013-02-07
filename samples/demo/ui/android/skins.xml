@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <Skins>
+    <Black1:Paint color="0x111111"/>
+    <BlackGradient1:Gradient colors="[0x000000, 0x2b3034]"/>
+    <BlackBlueStripe:Layer
+        current:Paint-color         = "0x000000"
+        current:Paint-paddingBottom = "3"
+        behind:Paint-color          = "0x33b5e5"
+    />
 </Skins>

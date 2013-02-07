@@ -21,21 +21,16 @@ __ui__widget1.hBar = null;
 __ui__widget1.hScroll = false;
 __ui__widget1.vBar.w = 5;
 __ui__widget1.vBar.visible = false;
+__ui__widget1.skinName = 'Black1';
 __ui__widget1.vBar.right = 2;
 __ui__widget1.addEventListener(ru.stablex.ui.events.WidgetEvent.SCROLL_STOP, function(event:nme.events.Event){__ui__widget1.vBar.visible = false;});
 __ui__widget1.widthPt = 100;
 __ui__widget1.heightPt = 100;
 __ui__widget1.addEventListener(ru.stablex.ui.events.WidgetEvent.SCROLL_START, function(event:nme.events.Event){__ui__widget1.vBar.visible = true;});
-if(__ui__widget1.skin == null ){
-     __ui__widget1.skin = new ru.stablex.ui.skins.Paint();
-     if( Std.is(__ui__widget1.skin, ru.stablex.ui.widgets.Widget) ){
-         var __tmp__ : ru.stablex.ui.widgets.Widget = cast(__ui__widget1.skin, ru.stablex.ui.widgets.Widget);
-         ru.stablex.ui.UIBuilder.applyDefaults(__tmp__);
-         __tmp__._onInitialize();
-         __tmp__._onCreate();
-     }
-}
-cast(__ui__widget1.skin, ru.stablex.ui.skins.Paint).color = 0x111111;
+});
+ru.stablex.ui.UIBuilder.defaults.get("Scroll").set("Level1", function(__ui__widget0:ru.stablex.ui.widgets.Widget) : Void {
+var __ui__widget1 : ru.stablex.ui.widgets.Scroll = cast(__ui__widget0, ru.stablex.ui.widgets.Scroll);
+__ui__widget1.skinName = 'BlackGradient1';
 });
 if( !ru.stablex.ui.UIBuilder.defaults.exists("Slider") ) ru.stablex.ui.UIBuilder.defaults.set("Slider", new Hash());
 ru.stablex.ui.UIBuilder.defaults.get("Slider").set("Default", function(__ui__widget0:ru.stablex.ui.widgets.Widget) : Void {
@@ -69,38 +64,9 @@ if( !ru.stablex.ui.UIBuilder.defaults.exists("HBox") ) ru.stablex.ui.UIBuilder.d
 ru.stablex.ui.UIBuilder.defaults.get("HBox").set("TopMenu", function(__ui__widget0:ru.stablex.ui.widgets.Widget) : Void {
 var __ui__widget1 : ru.stablex.ui.widgets.HBox = cast(__ui__widget0, ru.stablex.ui.widgets.HBox);
 __ui__widget1.padding = 5;
+__ui__widget1.skinName = 'BlackBlueStripe';
 __ui__widget1.align = 'left,middle';
 __ui__widget1.widthPt = 100;
-if(__ui__widget1.skin == null ){
-     __ui__widget1.skin = new ru.stablex.ui.skins.Layer();
-     if( Std.is(__ui__widget1.skin, ru.stablex.ui.widgets.Widget) ){
-         var __tmp__ : ru.stablex.ui.widgets.Widget = cast(__ui__widget1.skin, ru.stablex.ui.widgets.Widget);
-         ru.stablex.ui.UIBuilder.applyDefaults(__tmp__);
-         __tmp__._onInitialize();
-         __tmp__._onCreate();
-     }
-}
-if(cast(__ui__widget1.skin, ru.stablex.ui.skins.Layer).current == null ){
-     cast(__ui__widget1.skin, ru.stablex.ui.skins.Layer).current = new ru.stablex.ui.skins.Paint();
-     if( Std.is(cast(__ui__widget1.skin, ru.stablex.ui.skins.Layer).current, ru.stablex.ui.widgets.Widget) ){
-         var __tmp__ : ru.stablex.ui.widgets.Widget = cast(cast(__ui__widget1.skin, ru.stablex.ui.skins.Layer).current, ru.stablex.ui.widgets.Widget);
-         ru.stablex.ui.UIBuilder.applyDefaults(__tmp__);
-         __tmp__._onInitialize();
-         __tmp__._onCreate();
-     }
-}
-cast(cast(__ui__widget1.skin, ru.stablex.ui.skins.Layer).current, ru.stablex.ui.skins.Paint).paddingBottom = 3;
-cast(cast(__ui__widget1.skin, ru.stablex.ui.skins.Layer).current, ru.stablex.ui.skins.Paint).color = 0x000000;
-if(cast(__ui__widget1.skin, ru.stablex.ui.skins.Layer).behind == null ){
-     cast(__ui__widget1.skin, ru.stablex.ui.skins.Layer).behind = new ru.stablex.ui.skins.Paint();
-     if( Std.is(cast(__ui__widget1.skin, ru.stablex.ui.skins.Layer).behind, ru.stablex.ui.widgets.Widget) ){
-         var __tmp__ : ru.stablex.ui.widgets.Widget = cast(cast(__ui__widget1.skin, ru.stablex.ui.skins.Layer).behind, ru.stablex.ui.widgets.Widget);
-         ru.stablex.ui.UIBuilder.applyDefaults(__tmp__);
-         __tmp__._onInitialize();
-         __tmp__._onCreate();
-     }
-}
-cast(cast(__ui__widget1.skin, ru.stablex.ui.skins.Layer).behind, ru.stablex.ui.skins.Paint).color = 0x33b5e5;
 });
 ru.stablex.ui.UIBuilder.defaults.get("HBox").set("BottomMenu", function(__ui__widget0:ru.stablex.ui.widgets.Widget) : Void {
 var __ui__widget1 : ru.stablex.ui.widgets.HBox = cast(__ui__widget0, ru.stablex.ui.widgets.HBox);

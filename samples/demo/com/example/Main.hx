@@ -31,7 +31,7 @@ class Main extends ru.stablex.ui.widgets.Widget{
         UIBuilder.regSkins('ui/android/skins.xml');
 
         //Create our UI
-        UIBuilder.buildFn('index.xml')().show();
+        UIBuilder.buildFn('ui/index.xml')().show();
 
         // меряем FPS {
             var fps : nme.display.FPS = cast Lib.current.stage.addChild(new nme.display.FPS());

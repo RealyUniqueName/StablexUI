@@ -23,13 +23,12 @@
             vBar-visible = "false"
             vBar-w       = "5"
             vBar-right   = "2"
-
-            skin:Paint-color = "0x111111"
+            skinName     = "'Black1'"
 
             on-scrollStart = "$this.vBar.visible = true;"
             on-scrollStop  = "$this.vBar.visible = false;"
         />
-        <!-- skin:Gradient-colors = "[0x000000, 0x2b3034]" -->
+        <Level1 skinName="'BlackGradient1'"/>
     </Scroll>
 
 
@@ -48,12 +47,10 @@
     <HBox>
         <!-- Top menu -->
         <TopMenu
-            widthPt       = "100"
-            align         = "'left,middle'"
-            padding       = "5"
-            skin:Layer-current:Paint-color="0x000000"
-            skin:Layer-current:Paint-paddingBottom="3"
-            skin:Layer-behind:Paint-color="0x33b5e5"
+            widthPt  = "100"
+            align    = "'left,middle'"
+            padding  = "5"
+            skinName = "'BlackBlueStripe'"
         />
         <!-- Bottom menu -->
         <BottomMenu
@@ -90,6 +87,7 @@
             skin:Paint-color = "0x111111"
             skinPressed:Paint-color = "0x257390"
         />
+        <!-- skinHovered:Paint-color = "0x2c94ba" -->
     </Button>
 
 

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Options lists demo -->
+<Scroll name="'options'" defaults="'Screen,Level1'">
+    <VBox widthPt="100" heightPt="100">
+        <Text text="'Options lists'" />
+    </VBox>
+</Scroll>

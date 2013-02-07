@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- root element for our UI -->
+<Floating id="'root'" widthPt="100" heightPt="100" skin:Paint-color="0x000000" on-resize="#screens.h = $this.h - #bottomMenu.h - #topMenu.h;">
+
+    <!-- Header -->
+    <HBox id="'topMenu'" defaults="'TopMenu'">
+        <Bmp src="'ui/android/img/ico/light/settings.png'" />
+        <Text defaults="'Default,H1'" text="'StablexUI'"/>
+    </HBox>
+
+    <!-- Screens holder -->
+    <ViewStack id="'screens'" widthPt="100" trans:Slide-direction="'left'" trans:Slide-duration="0.2">
+
+        <!-- Initial screen -->
+        <meta:include src="ui/main.xml"/>
+
+        <!-- Buttons demo -->
+        <meta:include src="ui/buttons.xml"/>
+
+        <!-- Text fields demo -->
+        <meta:include src="ui/textFields.xml"/>
+
+        <!-- Toggles demo -->
+        <meta:include src="ui/toggles.xml"/>
+
+        <!-- Progress bars demo -->
+        <meta:include src="ui/progress.xml"/>
+
+        <!-- Options lists demo -->
+        <meta:include src="ui/options.xml"/>
+
+        <!-- Sliders demo -->
+        <meta:include src="ui/sliders.xml"/>
+
+        <!-- Tabs demo -->
+        <meta:include src="ui/tabs.xml"/>
+
+        <!-- ViewStack transitions demo -->
+        <meta:include src="ui/viewStack.xml"/>
+
+    </ViewStack>
+
+    <!-- Main menu -->
+    <HBox id="'bottomMenu'" defaults="'BottomMenu'">
+        <!-- back button -->
+        <Button defaults="'MainBack'" on-click="
+            var vs = #ViewStack(screens);
+
+            //change transition to slide back
+            var transition     = vs.trans;
+            vs.trans           = new $Slide();
+            vs.trans.duration  = 0.2;
+            vs.trans.as($Slide).direction = 'right';
+
+            //return previous screen
+            vs.back();
+
+            //recover default transition
+            vs.trans = transition;
+        "/>
+        <!-- home button -->
+        <Button defaults="'MainHome'" on-click="
+            var vs = #ViewStack(screens);
+
+            //change transition to slide back
+            var transition     = vs.trans;
+            vs.trans           = new $Slide();
+            vs.trans.duration  = 0.2;
+            vs.trans.as($Slide).direction = 'right';
+
+            //show main screen
+            vs.show('main');
+            vs.clearHistory();
+
+            //recover default transition
+            vs.trans = transition;
+        "/>
+        <!-- recent button -->
+        <Button defaults="'MainRecent'" on-click=""/>
+    </HBox>
+</Floating>
