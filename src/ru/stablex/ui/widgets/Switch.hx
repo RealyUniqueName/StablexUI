@@ -32,7 +32,7 @@ class Switch extends Widget{
         super();
         this.overflow = false;
 
-        this.slider = UIBuilder.create(Widget, {right:0});
+        this.slider = UIBuilder.create(Widget, {right:0, heightPt:100});
         this.addChild(this.slider);
 
         this.labelOn  = UIBuilder.create(Text, {
@@ -63,7 +63,9 @@ class Switch extends Widget{
     */
     private function _setSelected(s:Bool) : Bool {
         this.selected = s;
-        this.dispatchEvent(new WidgetEvent(WidgetEvent.CHANGE));
+        if( this.created ){
+            this.dispatchEvent(new WidgetEvent(WidgetEvent.CHANGE));
+        }
         return s;
     }//function _setSelected()
 
@@ -105,9 +107,7 @@ class Switch extends Widget{
     *
     */
     private function _onRelease(e:MouseEvent) : Void {
-        if( e.target == this.slider ){
-            this._selected = (this.slider.left > this.slider.right);
-        }else{
+        if( e.target != this.slider && !(this.mouseX < 0 || this.mouseX > this.w || this.mouseY < 0 || this.mouseY > h) ){
             this._selected = !this._selected;
         }
 
@@ -154,18 +154,14 @@ class Switch extends Widget{
         fnRelease = function(e:MouseEvent) : Void {
             //if user did not move slider, toggle state
             if( !slided ){
-                if( this.selected ){
-                    this._selected = false;
-                    this.slider.tween(0.25, {left:0}, 'Quad.easeOut');
-                }else{
-                    this._selected = true;
-                    this.slider.tween(0.25, {right:0}, 'Quad.easeOut');
-                }
+                this._selected = !this._selected;
 
-            //if user moved slider, set state ccording to position of the slider
-            }else if( this.mouseX < 0 || this.mouseX > this.w || this.mouseY < 0 || this.mouseY > h ){
-                this._onRelease(e);
+            //if user moved slider, set state according to position of the slider
+            }else{
+                this._selected = (this.slider.left > this.slider.right);
             }
+
+            this._onRelease(e);
 
             //remove listeners
             this.removeEventListener(Event.ENTER_FRAME, fn);
