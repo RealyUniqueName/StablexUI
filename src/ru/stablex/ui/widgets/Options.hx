@@ -27,18 +27,8 @@ class Options extends Button{
     public var box : Box;
     //Currently selected value. If you try to set value wich is not in the `.options`, than `.value` won't be changed
     public var value (_getValue,_setValue) : Dynamic;
-    //skin to use for options in list
-    public var skinOption : Skin;
-    //set skin for options by skin name
-    public var skinOptionName (default,_setSkinOptionName) : String;
-    //skin to use for selected option in list
-    public var skinSelected : Skin;
-    //set skin for selected option by skin name
-    public var skinSelectedName (default,_setSkinSelectedName) : String;
-    //defaults for options in list
-    public var defaultsOption : String = 'Default';
-    //defaults for selected option in list
-    public var defaultsSelected : String = 'Default';
+    //defaults for options in list (each option is a <type>Toggle</type> widget)
+    public var optionDefaults : String = 'Default';
     //If this is true. List position will be overriden to make list appear under this control
     public var alignList : Bool = true;
 
@@ -101,26 +91,6 @@ class Options extends Button{
 
         return this.options = o;
     }//function _setOptions()
-
-
-    /**
-    * Setter for `.skinOptionName`
-    *
-    */
-    private function _setSkinOptionName (s:String) : String {
-        this.skinOption = UIBuilder.skin(s)();
-        return this.skinOptionName = s;
-    }//function _setSkinOptionName()
-
-
-    /**
-    * Setter for `.skinSelectedName`
-    *
-    */
-    private function _setSkinSelectedName (s:String) : String {
-        this.skinSelected = UIBuilder.skin(s)();
-        return this.skinSelectedName = s;
-    }//function _setSkinSelectedName()
 
 
     /**
@@ -210,9 +180,9 @@ class Options extends Button{
         this.box.freeChildren();
 
         for(i in 0...this.options.length){
-            this.box.addChild(UIBuilder.create(Button, {
-                skin     : (this._selectedIdx == i ? this.skinSelected : this.skinOption),
-                defaults : (this._selectedIdx == i ? this.defaultsSelected : this.defaultsOption),
+            this.box.addChild(UIBuilder.create(Toggle, {
+                defaults : this.optionDefaults,
+                selected : (this._selectedIdx == i),
                 name     : Std.string(i),
                 text     : this.options[i][0],
             })).addEventListener(MouseEvent.CLICK, this._onSelectOption);
