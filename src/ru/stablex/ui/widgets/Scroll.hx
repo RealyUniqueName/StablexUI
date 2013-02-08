@@ -14,6 +14,11 @@ import ru.stablex.ui.events.WidgetEvent;
 */
 class Scroll extends Widget{
 
+    /**
+    * :TODO:
+    * On cpp application segfaults if scrolling is performed while resizing scroll widget
+    */
+
     //allow vertical scrolling
     public var vScroll : Bool = true;
     //allow horizontal scrolling
