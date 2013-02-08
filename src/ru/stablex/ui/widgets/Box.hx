@@ -541,10 +541,11 @@ class Box extends Widget{
         if( this.created ){
             if( this.autoWidth || this.autoHeight ){
                 if( e != null ){
+                    var child : Widget = (Std.is(e.currentTarget, Widget) ? cast(e.currentTarget, Widget) : null);
                     if(
-                        Std.is(e.currentTarget, Widget)
-                        && !(this.autoWidth && cast(e.currentTarget, Widget)._widthUsePercent)
-                        && !(this.autoHeight && cast(e.currentTarget, Widget)._heightUsePercent)
+                        child != null && child.visible != false
+                        && !(this.autoWidth && child._widthUsePercent)
+                        && !(this.autoHeight && child._heightUsePercent)
                     ){
                         this.refresh();
                     }

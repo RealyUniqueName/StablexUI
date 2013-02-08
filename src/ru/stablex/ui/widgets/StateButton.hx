@@ -88,7 +88,7 @@ class StateButton extends Button{
             this._currentIdx ++;
         }
 
-        this.refresh();
+        this._updateState();
     }//function nextState()
 
 
@@ -109,16 +109,16 @@ class StateButton extends Button{
         }
 
         if( this.created ){
-            this.refresh();
+            this._updateState();
         }
     }//function set()
 
 
     /**
-    * Refresh button
+    * Apply icon/text/skin of current state
     *
     */
-    override public function refresh () : Void {
+    private function _updateState() : Void {
         //if order is not defined, do nothing
         if( this.order != null && this.order.length > 0 ){
             var state : BtnState = this.states.get(this.state);
@@ -130,8 +130,22 @@ class StateButton extends Button{
             if( state._ico != null ){
                 this.ico = state._ico;
             }
-        }
 
-        super.refresh();
-    }//function refresh()
+            if( this.created ){
+                this.refresh();
+            }
+        }
+    }//function _updateState()
+
+
+    /**
+    * On initialization is complete, set first state
+    *
+    */
+    override public function onInitialize() : Void {
+        this._updateState();
+        super.onInitialize();
+    }//function onInitialize()
+
+
 }//class StateButton
