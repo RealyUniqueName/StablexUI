@@ -37,6 +37,30 @@ skin.padding = 1;
 skin.corners = [5];
 return skin;
 });
+ru.stablex.ui.UIBuilder.skins.set("switchSliderDayNight", function():ru.stablex.ui.skins.Skin{
+var skin = new ru.stablex.ui.skins.Gradient();
+skin.colors = [0xAAAAAA, 0x333333];
+skin.padding = 2;
+skin.borderColor = 0x333333;
+skin.corners = [20];
+skin.border = 1;
+skin.rotation = 0;
+return skin;
+});
+ru.stablex.ui.UIBuilder.skins.set("progress", function():ru.stablex.ui.skins.Skin{
+var skin = new ru.stablex.ui.skins.Gradient();
+skin.colors = [0x9c9e9c, 0x737573, 0x5a5d5a, 0x737173];
+skin.corners = [15];
+skin.ratios = [0, 127, 190, 255];
+return skin;
+});
+ru.stablex.ui.UIBuilder.skins.set("progressBar", function():ru.stablex.ui.skins.Skin{
+var skin = new ru.stablex.ui.skins.Paint();
+skin.color = 0xFFFF00;
+skin.corners = [15];
+skin.alpha = 0.7;
+return skin;
+});
 ru.stablex.ui.UIBuilder.skins.set("popup", function():ru.stablex.ui.skins.Skin{
 var skin = new ru.stablex.ui.skins.Paint();
 skin.color = 0x000000;

@@ -17,7 +17,7 @@
             <Toggle states-up-text="'Toggle up'" states-down-text="'Toggle down'"/>
             <Button defaults="'Default,Settings'" on-click="
                 var popup = $Main.alert({
-                    msg:'Toggle button has the same settings as simple one.\nPlus it has separate skin/icon/text for each state.'
+                    msg:'Toggle button has the same settings as simple one. Plus it has separate skin / icon / text for each state.'
                 });
                 popup.show();
             "/>
@@ -34,7 +34,7 @@
             />
             <Button defaults="'Default,Settings'" on-click="
                 var popup = $Main.alert({
-                    msg:'Multi-state button has the same settings as simple one.\nPlus it has separate skin/icon/text for each state.'
+                    msg:'Multi-state button has the same settings as simple one. Plus it has separate skin / icon / text for each state.'
                 });
                 popup.show();
             "/>

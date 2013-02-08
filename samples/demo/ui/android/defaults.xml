@@ -11,6 +11,7 @@
         />
         <Dark format-color="0x111111"/>
         <DarkTip format-color="0x7f7f7f" format-size="12" label-wordWrap="true" widthPt="100"/>
+        <LightTip format-color="0xbbbbbb" format-size="12" label-wordWrap="true" widthPt="100"/>
         <H1 format-size="22" padding="10"/>
 
     </Text>
@@ -38,12 +39,36 @@
 
     <Slider>
         <Default
-            w = "5"
-            h = "5"
+            w = "20"
+            h = "20"
             skin:Paint-color   = "0x969696"
             skin:Paint-padding = "2"
             slider-skin:Paint-color   = "0x33b5e5"
-            slider-skin:Paint-corners = "[3]"
+            slider-skin:Paint-corners = "[10]"
+        />
+
+        <Settings
+            w = "20"
+            h = "20"
+            slider-w = "20"
+            slider-h = "20"
+            skin:Paint-color   = "0x969696"
+            skin:Paint-corners = "[20]"
+            skin:Paint-padding="8"
+            slider-skin:Paint-color   = "0x33b5e5"
+            slider-skin:Paint-corners = "[20]"
+        />
+
+        <Haxe
+            w = "20"
+            h = "20"
+            slider-w = "20"
+            slider-h = "20"
+            skin:Paint-color   = "0x969696"
+            skin:Paint-corners = "[20]"
+            skin:Paint-padding="8"
+            slider-top = "-2"
+            slider-skin:Img-src = "'ui/android/img/haxe24.png'"
         />
     </Slider>
 
@@ -85,9 +110,11 @@
         />
 
         <Settings
-            ico-src="'ui/android/img/ico/dark/settings.png'"
-            autoWidth="true"
-            childPadding="0"
+            ico-src        = "'ui/android/img/ico/dark/settings.png'"
+            autoWidth      = "true"
+            childPadding   = "0"
+            icoBeforeLabel = "false"
+            apart          = "true"
         />
 
         <MainBack ico-src="'ui/android/img/ico/light/mainBack.png'" />
@@ -192,6 +219,56 @@
                 }
             "
         />
+        <Dark skin:Paint-alpha="0.6" />
+        <Classic
+            w        = "97"
+            h        = "24"
+            skinName = "'switch'"
+            slider-w = "47"
+            slider-skinName = "'switchSliderOn'"
+            labelOn-format-color = "0x33b5e5"
+        />
+        <DayNight
+            labelOn-format-color="0xFFFFFF"
+            labelOff-format-color="0x999999"
+            w        = "97"
+            h        = "24"
+            skinName = "'switch'"
+            slider-w = "47"
+            slider-skinName = "'switchSliderDayNight'"
+        />
     </Switch>
 
+
+    <Checkbox>
+        <Default
+            format-font  = "$Assets.getFont('ui/android/fonts/regular.ttf').fontName"
+            format-size  = "14"
+            format-color = "0xFFFFFF"
+
+            states-up-ico-src   = "'ui/android/img/checkbox.png'"
+            states-down-ico-src = "'ui/android/img/checkboxChecked.png'"
+        />
+    </Checkbox>
+
+    <Radio>
+        <Default
+            format-font  = "$Assets.getFont('ui/android/fonts/regular.ttf').fontName"
+            format-size  = "14"
+            format-color = "0xFFFFFF"
+
+            states-up-ico-src   = "'ui/android/img/radio.png'"
+            states-down-ico-src = "'ui/android/img/radioChecked.png'"
+        />
+    </Radio>
+
+
+    <Progress>
+        <Default
+            h = "20"
+            w = "100"
+            skinName     = "'progress'"
+            bar-skinName = "'progressBar'"
+        />
+    </Progress>
 </Defaults>

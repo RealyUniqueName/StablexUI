@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Skins demo -->
+<Scroll name="'skins'" defaults="'Screen,Level1'">
+    <VBox widthPt="100" childPadding="20" paddingTop="20">
+        <VBox widthPt="100">
+            <Text text="'BASIC SKINS'" />
+            <Text defaults="'Default,LightTip'" text="'There are more skins + you can implement custom skin'" widthPt="100" align="'center,middle'" />
+            <Widget defaults="'HR'" />
+        </VBox>
+
+        <Button text="'Paint'" defaults="'Default,Settings'" w="185" on-click="#ViewStack(screens).show('paintSkin');" />
+        <Button text="'Gradient'" defaults="'Default,Settings'" w="185" on-click="#ViewStack(screens).show('gradientSkin');" />
+        <Button text="'Tile'" defaults="'Default,Settings'" w="185" on-click="#ViewStack(screens).show('tileSkin');" />
+        <Button text="'Slice9'" defaults="'Default,Settings'" w="185" on-click="#ViewStack(screens).show('scale9Skin');" />
+
+    </VBox>
+</Scroll>

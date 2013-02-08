@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- settings for gradient skin -->
+<Scroll name="'gradientSkin'" defaults="'Screen,Level2'">
+    <VBox widthPt="100" childPadding="10" paddingTop="20">
+        <VBox widthPt="100">
+            <Text defaults="'Default,Dark'" text="'Gradient skin options'" widthPt="100" align="'center,middle'"/>
+            <Text defaults="'Default,DarkTip'" text="'There are more settings described in docs'" widthPt="100" align="'center,middle'" />
+            <Widget defaults="'HRLight'" />
+        </VBox>
+
+        <!-- Colors -->
+        <HBox widthPt="100" align="'middle,center'" unifyChildren="true">
+            <Text defaults="'Default,Dark'" text="'First color'" />
+            <Slider defaults="'Settings'" min="0x000000" max="0xFFFFFF" on-change="
+                var colors = #gex.skin.as($Gradient).colors;
+                colors[0] = Std.int($this.value);
+                colors[1] = colors[0] + Std.int((colors[2] - colors[0]) / 2);
+                #gex.refresh();
+            "/>
+        </HBox>
+        <HBox widthPt="100" align="'middle,center'" unifyChildren="true">
+            <Text defaults="'Default,Dark'" text="'Last color'" />
+            <Slider defaults="'Settings'" min="0x000000" max="0xFFFFFF" value="0xFFFFFF" on-change="
+                var colors = #gex.skin.as($Gradient).colors;
+                colors[2] = Std.int($this.value);
+                colors[1] = colors[0] + Std.int((colors[2] - colors[0]) / 2);
+                #gex.refresh();
+            "/>
+        </HBox>
+        <Text defaults="'Default,DarkTip'" h="5" text="'Gradient skin can take any amount of colors'" widthPt="100" align="'left,bottom'" />
+        <Widget defaults="'HRLight'" />
+
+        <!-- Ratio -->
+        <HBox widthPt="100" align="'middle,center'" unifyChildren="true">
+            <Text defaults="'Default,Dark'" text="'Ratio'" />
+            <Slider defaults="'Settings'" min="0" max="255" value="127" on-change="
+                #gex.skin.as($Gradient).ratios[1] = Std.int($this.value);
+                #gex.refresh();
+            "/>
+        </HBox>
+        <Widget defaults="'HRLight'" />
+
+        <!-- Rotation -->
+        <HBox widthPt="100" align="'middle,center'" unifyChildren="true">
+            <Text defaults="'Default,Dark'" text="'Rotation'" />
+            <Slider defaults="'Settings'" min="0" max="Math.PI" value="Math.PI/2" on-change="
+                #gex.skin.as($Gradient).rotation = $this.value;
+                #gex.refresh();
+            "/>
+        </HBox>
+        <Widget defaults="'HRLight'" />
+
+        <Widget h="5" />
+
+        <Widget id="'gex'" widthPt="90" h="80" skin:Gradient-colors="[0x000000, 0x888888, 0xFFFFFF]"/>
+    </VBox>
+</Scroll>

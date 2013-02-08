@@ -10,7 +10,15 @@
     <switch:Paint color="0x555555" alpha="0.3"/>
     <switchSliderOff:Paint color="0x555555" padding="1" corners="[5]"/>
     <switchSliderOn:Paint color="0x0099cc" padding="1" corners="[5]"/>
+    <switchSliderDayNight:Gradient colors="[0xAAAAAA, 0x333333]" rotation="0" border="1" padding="2" corners="[20]" borderColor="0x333333" />
 
+    <!-- progress bar -->
+    <progress:Gradient
+        colors  = "[0x9c9e9c, 0x737573, 0x5a5d5a, 0x737173]"
+        ratios  = "[0, 127, 190, 255]"
+        corners = "[15]"
+    />
+    <progressBar:Paint color="0xFFFF00" corners="[15]" alpha="0.7" />
 
     <!-- popups -->
     <popup:Paint color="0x000000" alpha="0.5" />

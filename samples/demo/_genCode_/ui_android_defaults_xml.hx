@@ -20,6 +20,13 @@ __ui__widget1.format.color = 0x7f7f7f;
 __ui__widget1.format.size = 12;
 __ui__widget1.widthPt = 100;
 });
+ru.stablex.ui.UIBuilder.defaults.get("Text").set("LightTip", function(__ui__widget0:ru.stablex.ui.widgets.Widget) : Void {
+var __ui__widget1 : ru.stablex.ui.widgets.Text = cast(__ui__widget0, ru.stablex.ui.widgets.Text);
+__ui__widget1.label.wordWrap = true;
+__ui__widget1.format.color = 0xbbbbbb;
+__ui__widget1.format.size = 12;
+__ui__widget1.widthPt = 100;
+});
 ru.stablex.ui.UIBuilder.defaults.get("Text").set("H1", function(__ui__widget0:ru.stablex.ui.widgets.Widget) : Void {
 var __ui__widget1 : ru.stablex.ui.widgets.Text = cast(__ui__widget0, ru.stablex.ui.widgets.Text);
 __ui__widget1.padding = 10;
@@ -59,8 +66,8 @@ cast(__ui__widget1.skin, ru.stablex.ui.skins.Paint).color = 0xf2f2f2;
 if( !ru.stablex.ui.UIBuilder.defaults.exists("Slider") ) ru.stablex.ui.UIBuilder.defaults.set("Slider", new Hash());
 ru.stablex.ui.UIBuilder.defaults.get("Slider").set("Default", function(__ui__widget0:ru.stablex.ui.widgets.Widget) : Void {
 var __ui__widget1 : ru.stablex.ui.widgets.Slider = cast(__ui__widget0, ru.stablex.ui.widgets.Slider);
-__ui__widget1.h = 5;
-__ui__widget1.w = 5;
+__ui__widget1.h = 20;
+__ui__widget1.w = 20;
 if(__ui__widget1.slider.skin == null ){
      __ui__widget1.slider.skin = new ru.stablex.ui.skins.Paint();
      if( Std.is(__ui__widget1.slider.skin, ru.stablex.ui.widgets.Widget) ){
@@ -82,7 +89,67 @@ if(__ui__widget1.skin == null ){
 }
 cast(__ui__widget1.skin, ru.stablex.ui.skins.Paint).color = 0x969696;
 cast(__ui__widget1.skin, ru.stablex.ui.skins.Paint).padding = 2;
-cast(__ui__widget1.slider.skin, ru.stablex.ui.skins.Paint).corners = [3];
+cast(__ui__widget1.slider.skin, ru.stablex.ui.skins.Paint).corners = [10];
+});
+ru.stablex.ui.UIBuilder.defaults.get("Slider").set("Settings", function(__ui__widget0:ru.stablex.ui.widgets.Widget) : Void {
+var __ui__widget1 : ru.stablex.ui.widgets.Slider = cast(__ui__widget0, ru.stablex.ui.widgets.Slider);
+__ui__widget1.h = 20;
+__ui__widget1.w = 20;
+__ui__widget1.slider.h = 20;
+__ui__widget1.slider.w = 20;
+if(__ui__widget1.slider.skin == null ){
+     __ui__widget1.slider.skin = new ru.stablex.ui.skins.Paint();
+     if( Std.is(__ui__widget1.slider.skin, ru.stablex.ui.widgets.Widget) ){
+         var __tmp__ : ru.stablex.ui.widgets.Widget = cast(__ui__widget1.slider.skin, ru.stablex.ui.widgets.Widget);
+         ru.stablex.ui.UIBuilder.applyDefaults(__tmp__);
+         __tmp__._onInitialize();
+         __tmp__._onCreate();
+     }
+}
+cast(__ui__widget1.slider.skin, ru.stablex.ui.skins.Paint).color = 0x33b5e5;
+if(__ui__widget1.skin == null ){
+     __ui__widget1.skin = new ru.stablex.ui.skins.Paint();
+     if( Std.is(__ui__widget1.skin, ru.stablex.ui.widgets.Widget) ){
+         var __tmp__ : ru.stablex.ui.widgets.Widget = cast(__ui__widget1.skin, ru.stablex.ui.widgets.Widget);
+         ru.stablex.ui.UIBuilder.applyDefaults(__tmp__);
+         __tmp__._onInitialize();
+         __tmp__._onCreate();
+     }
+}
+cast(__ui__widget1.skin, ru.stablex.ui.skins.Paint).color = 0x969696;
+cast(__ui__widget1.skin, ru.stablex.ui.skins.Paint).padding = 8;
+cast(__ui__widget1.skin, ru.stablex.ui.skins.Paint).corners = [20];
+cast(__ui__widget1.slider.skin, ru.stablex.ui.skins.Paint).corners = [20];
+});
+ru.stablex.ui.UIBuilder.defaults.get("Slider").set("Haxe", function(__ui__widget0:ru.stablex.ui.widgets.Widget) : Void {
+var __ui__widget1 : ru.stablex.ui.widgets.Slider = cast(__ui__widget0, ru.stablex.ui.widgets.Slider);
+__ui__widget1.h = 20;
+__ui__widget1.w = 20;
+__ui__widget1.slider.h = 20;
+__ui__widget1.slider.w = 20;
+__ui__widget1.slider.top = -2;
+if(__ui__widget1.skin == null ){
+     __ui__widget1.skin = new ru.stablex.ui.skins.Paint();
+     if( Std.is(__ui__widget1.skin, ru.stablex.ui.widgets.Widget) ){
+         var __tmp__ : ru.stablex.ui.widgets.Widget = cast(__ui__widget1.skin, ru.stablex.ui.widgets.Widget);
+         ru.stablex.ui.UIBuilder.applyDefaults(__tmp__);
+         __tmp__._onInitialize();
+         __tmp__._onCreate();
+     }
+}
+cast(__ui__widget1.skin, ru.stablex.ui.skins.Paint).color = 0x969696;
+cast(__ui__widget1.skin, ru.stablex.ui.skins.Paint).padding = 8;
+if(__ui__widget1.slider.skin == null ){
+     __ui__widget1.slider.skin = new ru.stablex.ui.skins.Img();
+     if( Std.is(__ui__widget1.slider.skin, ru.stablex.ui.widgets.Widget) ){
+         var __tmp__ : ru.stablex.ui.widgets.Widget = cast(__ui__widget1.slider.skin, ru.stablex.ui.widgets.Widget);
+         ru.stablex.ui.UIBuilder.applyDefaults(__tmp__);
+         __tmp__._onInitialize();
+         __tmp__._onCreate();
+     }
+}
+cast(__ui__widget1.slider.skin, ru.stablex.ui.skins.Img).src = 'ui/android/img/haxe24.png';
+cast(__ui__widget1.skin, ru.stablex.ui.skins.Paint).corners = [20];
 });
 if( !ru.stablex.ui.UIBuilder.defaults.exists("HBox") ) ru.stablex.ui.UIBuilder.defaults.set("HBox", new Hash());
 ru.stablex.ui.UIBuilder.defaults.get("HBox").set("TopMenu", function(__ui__widget0:ru.stablex.ui.widgets.Widget) : Void {
@@ -132,8 +199,10 @@ __ui__widget1.skinName = 'button';
 ru.stablex.ui.UIBuilder.defaults.get("Button").set("Settings", function(__ui__widget0:ru.stablex.ui.widgets.Widget) : Void {
 var __ui__widget1 : ru.stablex.ui.widgets.Button = cast(__ui__widget0, ru.stablex.ui.widgets.Button);
 __ui__widget1.childPadding = 0;
+__ui__widget1.apart = true;
 __ui__widget1.autoWidth = true;
 __ui__widget1.ico.src = 'ui/android/img/ico/dark/settings.png';
+__ui__widget1.icoBeforeLabel = false;
 });
 ru.stablex.ui.UIBuilder.defaults.get("Button").set("MainBack", function(__ui__widget0:ru.stablex.ui.widgets.Widget) : Void {
 var __ui__widget1 : ru.stablex.ui.widgets.Button = cast(__ui__widget0, ru.stablex.ui.widgets.Button);
@@ -268,4 +337,62 @@ __ui__widget1.skinName = 'switch';
 __ui__widget1.labelOn.top = 0;
 __ui__widget1.labelOn.align = 'center,middle';
 __ui__widget1.labelOff.left = 0;
+});
+ru.stablex.ui.UIBuilder.defaults.get("Switch").set("Dark", function(__ui__widget0:ru.stablex.ui.widgets.Widget) : Void {
+var __ui__widget1 : ru.stablex.ui.widgets.Switch = cast(__ui__widget0, ru.stablex.ui.widgets.Switch);
+if(__ui__widget1.skin == null ){
+     __ui__widget1.skin = new ru.stablex.ui.skins.Paint();
+     if( Std.is(__ui__widget1.skin, ru.stablex.ui.widgets.Widget) ){
+         var __tmp__ : ru.stablex.ui.widgets.Widget = cast(__ui__widget1.skin, ru.stablex.ui.widgets.Widget);
+         ru.stablex.ui.UIBuilder.applyDefaults(__tmp__);
+         __tmp__._onInitialize();
+         __tmp__._onCreate();
+     }
+}
+cast(__ui__widget1.skin, ru.stablex.ui.skins.Paint).alpha = 0.6;
+});
+ru.stablex.ui.UIBuilder.defaults.get("Switch").set("Classic", function(__ui__widget0:ru.stablex.ui.widgets.Widget) : Void {
+var __ui__widget1 : ru.stablex.ui.widgets.Switch = cast(__ui__widget0, ru.stablex.ui.widgets.Switch);
+__ui__widget1.slider.skinName = 'switchSliderOn';
+__ui__widget1.h = 24;
+__ui__widget1.w = 97;
+__ui__widget1.labelOn.format.color = 0x33b5e5;
+__ui__widget1.slider.w = 47;
+__ui__widget1.skinName = 'switch';
+});
+ru.stablex.ui.UIBuilder.defaults.get("Switch").set("DayNight", function(__ui__widget0:ru.stablex.ui.widgets.Widget) : Void {
+var __ui__widget1 : ru.stablex.ui.widgets.Switch = cast(__ui__widget0, ru.stablex.ui.widgets.Switch);
+__ui__widget1.slider.skinName = 'switchSliderDayNight';
+__ui__widget1.h = 24;
+__ui__widget1.w = 97;
+__ui__widget1.labelOn.format.color = 0xFFFFFF;
+__ui__widget1.slider.w = 47;
+__ui__widget1.skinName = 'switch';
+__ui__widget1.labelOff.format.color = 0x999999;
+});
+if( !ru.stablex.ui.UIBuilder.defaults.exists("Checkbox") ) ru.stablex.ui.UIBuilder.defaults.set("Checkbox", new Hash());
+ru.stablex.ui.UIBuilder.defaults.get("Checkbox").set("Default", function(__ui__widget0:ru.stablex.ui.widgets.Widget) : Void {
+var __ui__widget1 : ru.stablex.ui.widgets.Checkbox = cast(__ui__widget0, ru.stablex.ui.widgets.Checkbox);
+__ui__widget1.states.down.ico.src = 'ui/android/img/checkboxChecked.png';
+__ui__widget1.format.color = 0xFFFFFF;
+__ui__widget1.format.font = ru.stablex.Assets.getFont('ui/android/fonts/regular.ttf').fontName;
+__ui__widget1.states.up.ico.src = 'ui/android/img/checkbox.png';
+__ui__widget1.format.size = 14;
+});
+if( !ru.stablex.ui.UIBuilder.defaults.exists("Radio") ) ru.stablex.ui.UIBuilder.defaults.set("Radio", new Hash());
+ru.stablex.ui.UIBuilder.defaults.get("Radio").set("Default", function(__ui__widget0:ru.stablex.ui.widgets.Widget) : Void {
+var __ui__widget1 : ru.stablex.ui.widgets.Radio = cast(__ui__widget0, ru.stablex.ui.widgets.Radio);
+__ui__widget1.states.down.ico.src = 'ui/android/img/radioChecked.png';
+__ui__widget1.format.color = 0xFFFFFF;
+__ui__widget1.format.font = ru.stablex.Assets.getFont('ui/android/fonts/regular.ttf').fontName;
+__ui__widget1.states.up.ico.src = 'ui/android/img/radio.png';
+__ui__widget1.format.size = 14;
+});
+if( !ru.stablex.ui.UIBuilder.defaults.exists("Progress") ) ru.stablex.ui.UIBuilder.defaults.set("Progress", new Hash());
+ru.stablex.ui.UIBuilder.defaults.get("Progress").set("Default", function(__ui__widget0:ru.stablex.ui.widgets.Widget) : Void {
+var __ui__widget1 : ru.stablex.ui.widgets.Progress = cast(__ui__widget0, ru.stablex.ui.widgets.Progress);
+__ui__widget1.bar.skinName = 'progressBar';
+__ui__widget1.h = 20;
+__ui__widget1.w = 100;
+__ui__widget1.skinName = 'progress';
 });})()

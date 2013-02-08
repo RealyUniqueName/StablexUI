@@ -2,7 +2,18 @@
 
 <!-- Sliders demo -->
 <Scroll name="'sliders'" defaults="'Screen,Level1'">
-    <VBox widthPt="100" heightPt="100">
-        <Text text="'Sliders'" />
+    <VBox widthPt="100" childPadding="30" paddingTop="20">
+        <Slider defaults="'Settings'" widthPt="90" h="18"/>
+        <Slider
+            defaults="'Settings'"
+            widthPt="90"
+            skin:Paint-padding="0"
+            skin:Paint-corners="null"
+            slider-w="50"
+            slider-skin:Paint-color="0x222222"
+            slider-skin:Paint-padding="2"
+            slider-skin:Paint-corners="null"
+        />
+        <Slider defaults="'Haxe'" widthPt="90"/>
     </VBox>
 </Scroll>

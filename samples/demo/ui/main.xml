@@ -8,11 +8,15 @@
         <Button text="'Buttons'" defaults="'MenuItem'" on-click="#ViewStack(screens).show('buttons');"/>
         <Widget defaults="'HR'"/>
 
-        <Button text="'Text fields'" defaults="'MenuItem'" on-click="#ViewStack(screens).show('textFields');"/>
+        <Button text="'Radio & Checkboxes'" defaults="'MenuItem'" on-click="#ViewStack(screens).show('toggles');"/>
         <Widget defaults="'HR'"/>
 
-        <Button text="'Toggles'" defaults="'MenuItem'" on-click="#ViewStack(screens).show('toggles');"/>
+        <Button text="'Skins'" defaults="'MenuItem'" on-click="#ViewStack(screens).show('skins');"/>
         <Widget defaults="'HR'"/>
+
+        <!-- Sorry, no text fields demo. I'm so bored creating this app... -->
+        <!-- <Button text="'Text fields'" defaults="'MenuItem'" on-click="#ViewStack(screens).show('textFields');"/>
+        <Widget defaults="'HR'"/> -->
 
         <Button text="'Progress bar'" defaults="'MenuItem'" on-click="#ViewStack(screens).show('progressBars');"/>
         <Widget defaults="'HR'"/>

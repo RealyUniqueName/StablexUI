@@ -2,7 +2,23 @@
 
 <!-- Toggles demo -->
 <Scroll name="'toggles'" defaults="'Screen,Level1'">
-    <VBox widthPt="100" heightPt="100">
-        <Text text="'Toggles'" />
+    <VBox widthPt="100" align="''">
+
+        <!-- CHECKBOXES -->
+        <VBox childPadding="20" padding="15" align="'left,top'" left="0">
+            <Checkbox selected="true" text="'static text'"/>
+            <Checkbox states-up-text="'check me'" states-down-text="'uncheck me'"/>
+            <Switch defaults="'Default,Dark'"/>
+            <Switch defaults="'Classic,Dark'"/>
+            <Switch defaults="'DayNight,Dark'" labelOn-text="'day'" labelOff-text="'night'"/>
+        </VBox>
+
+        <!-- OPTIONS -->
+        <VBox padding="15" childPadding="20" right="0" align="'right,top'">
+            <Radio selected="true" group="'demo'" text="'radio 1'" icoBeforeLabel="false"/>
+            <Radio group="'demo'" text="'radio 2'" icoBeforeLabel="false"/>
+            <Radio group="'demo'" states-up-text="'radio?'" states-down-text="'radio!'" icoBeforeLabel="false"/>
+        </VBox>
+
     </VBox>
 </Scroll>

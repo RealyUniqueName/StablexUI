@@ -3,6 +3,9 @@
 <!-- Progress bars demo -->
 <Scroll name="'progressBars'" defaults="'Screen,Level1'">
     <VBox widthPt="100" heightPt="100">
-        <Text text="'Progress bar'" />
+        <Progress max="200" widthPt="95" on-enterFrame="
+            $this.value ++;
+            if( $this.value > $this.max ) $this.value = 0;
+        "/>
     </VBox>
 </Scroll>

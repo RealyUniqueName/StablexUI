@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- settings for simple button -->
+<Scroll name="'paintSkin'" defaults="'Screen,Level2'">
+    <VBox widthPt="100" childPadding="10" paddingTop="20">
+        <VBox widthPt="100">
+            <Text defaults="'Default,Dark'" text="'Paint skin options'" widthPt="100" align="'center,middle'"/>
+            <Text defaults="'Default,DarkTip'" text="'There are more settings described in docs'" widthPt="100" align="'center,middle'" />
+            <Widget defaults="'HRLight'" />
+        </VBox>
+
+        <!-- Corners -->
+        <HBox widthPt="100" align="'middle,center'" unifyChildren="true">
+            <Text defaults="'Default,Dark'" text="'Corners elipse width'" />
+            <Slider defaults="'Settings'" min="1" max="300" value="50" on-change="
+                #pex.skin.as($Paint).corners[0] = $this.value;
+                #pex.refresh();
+            "/>
+        </HBox>
+        <HBox widthPt="100" align="'middle,center'" unifyChildren="true">
+            <Text defaults="'Default,Dark'" text="'Corners elipse height'" />
+            <Slider defaults="'Settings'" min="1" max="80" value="50" on-change="
+                #pex.skin.as($Paint).corners[1] = $this.value;
+                #pex.refresh();
+            "/>
+        </HBox>
+        <Widget defaults="'HRLight'" />
+
+        <!-- Color -->
+        <HBox widthPt="100" align="'middle,center'" unifyChildren="true">
+            <Text defaults="'Default,Dark'" text="'Color'" />
+            <Slider defaults="'Settings'" min="0x000000" max="0xFFFFFF" value="0xAAAAAA" on-change="
+                #pex.skin.as($Paint).color = Std.int($this.value);
+                #pex.refresh();
+            "/>
+        </HBox>
+        <HBox widthPt="100" align="'middle,center'" unifyChildren="true">
+            <Text defaults="'Default,Dark'" text="'Alpha'" />
+            <Slider defaults="'Settings'" min="0" max="1" value="1" on-change="
+                #pex.skin.as($Paint).alpha = $this.value;
+                #pex.refresh();
+            "/>
+        </HBox>
+        <Widget defaults="'HRLight'" />
+
+        <!-- Border -->
+        <HBox widthPt="100" align="'middle,center'" unifyChildren="true">
+            <Text defaults="'Default,Dark'" text="'Border width'" />
+            <Slider defaults="'Settings'" min="0" max="20" value="2" on-change="
+                #pex.skin.as($Paint).border = $this.value;
+                #pex.refresh();
+            "/>
+        </HBox>
+        <HBox widthPt="100" align="'middle,center'" unifyChildren="true">
+            <Text defaults="'Default,Dark'" text="'Border color'" />
+            <Slider defaults="'Settings'" min="0x000000" max="0xFFFFFF" on-change="
+                #pex.skin.as($Paint).borderColor = Std.int($this.value);
+                #pex.refresh();
+            "/>
+        </HBox>
+        <Widget defaults="'HRLight'" />
+
+        <Widget h="5" />
+
+        <Widget id="'pex'" widthPt="90" h="80" skin:Paint-color="0xAAAAAA" skin:Paint-corners="[50, 50]" skin:Paint-border="2"/>
+    </VBox>
+</Scroll>

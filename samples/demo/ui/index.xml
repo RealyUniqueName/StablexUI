@@ -19,11 +19,18 @@
         <meta:include src="ui/buttons.xml"/>
         <meta:include src="ui/simpleButtonSettings.xml"/>
 
-        <!-- Text fields demo -->
-        <meta:include src="ui/textFields.xml"/>
-
         <!-- Toggles demo -->
         <meta:include src="ui/toggles.xml"/>
+
+        <!-- Skins demo -->
+        <meta:include src="ui/skins.xml"/>
+        <meta:include src="ui/paintSkin.xml"/>
+        <meta:include src="ui/gradientSkin.xml"/>
+        <meta:include src="ui/tileSkin.xml"/>
+        <meta:include src="ui/scale9Skin.xml"/>
+
+        <!-- Text fields demo -->
+        <meta:include src="ui/textFields.xml"/>
 
         <!-- Progress bars demo -->
         <meta:include src="ui/progress.xml"/>
