@@ -26,7 +26,7 @@ class Button extends Text{
     public var icoPressed (_getIcoPressed,_setIcoPressed) : Bmp;
     private var _icoPressed : Bmp;
     //whether icon should appear before text (on left or on top of text), set to false to move icon to the right (or below) text
-    public var icoBeforeLabel : Bool = true;
+    public var icoBeforeLabel (default,_setIcoBeforeLabel) : Bool = true;
     //skin name for hovered state (skin must be registered with <type>UIBuilder</type>.regSkins() )
     public var skinHoveredName (default,_setSkinHoveredName) : String;
     //skin for hovered state
@@ -212,6 +212,20 @@ class Button extends Text{
     public dynamic function onHout (e:MouseEvent) : Void {
 
     }//function onHout()
+
+
+    /**
+    * Setter for `.icoBeforeLabel`
+    *
+    */
+    private function _setIcoBeforeLabel(ibl:Bool) : Bool {
+        if( ibl ){
+            this.setChildIndex(this.label, this.numChildren - 1);
+        }else{
+            this.setChildIndex(this.label, 0);
+        }
+        return this.icoBeforeLabel = ibl;
+    }//function _setIcoBeforeLabel()
 
 
     /**

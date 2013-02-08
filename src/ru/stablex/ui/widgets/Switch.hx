@@ -62,7 +62,13 @@ class Switch extends Widget{
     *
     */
     private function _setSelected(s:Bool) : Bool {
-        this.selected = s;
+        this._selected = s;
+        if( s ){
+            this.slider.right = 0;
+        }else{
+            this.slider.left = 0;
+        }
+
         if( this.created ){
             this.dispatchEvent(new WidgetEvent(WidgetEvent.CHANGE));
         }
