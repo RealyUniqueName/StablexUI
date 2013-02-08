@@ -2,7 +2,6 @@ package ru.stablex.ui.transitions;
 
 import nme.display.DisplayObject;
 import ru.stablex.ui.widgets.ViewStack;
-import com.eclecticdesignstudio.motion.Actuate;
 import ru.stablex.ui.widgets.Widget;
 
 

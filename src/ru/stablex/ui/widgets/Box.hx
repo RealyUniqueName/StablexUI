@@ -563,6 +563,8 @@ class Box extends Widget{
     * Strange bug: on html5 TextField.width (.height) reported is less than TextField.textWidth (.textHeight).
     * While on other targets .width (.height) is bigger by approximately 4 pixels.
     * That's why we need these functions.
+    * Another one bug on cpp target:
+    * While textField.parent(.parent(...parent).visible == false, textField.width (.height) reported is wrong
     * {
     */
 
@@ -571,7 +573,7 @@ class Box extends Widget{
         *
         */
         static private inline function _objWidth (obj:DisplayObject) : Float {
-            #if html5
+            // #if html5
                 if( Std.is(obj, Widget) ){
                     return cast(obj, Widget).w;
                 }else if( Std.is(obj, nme.text.TextField) ){
@@ -579,9 +581,9 @@ class Box extends Widget{
                 }else{
                     return obj.width;
                 }
-            #else
-                return (Std.is(obj, Widget) ? cast(obj, Widget).w : obj.width);
-            #end
+            // #else
+            //     return (Std.is(obj, Widget) ? cast(obj, Widget).w : obj.width);
+            // #end
         }//function _objWidth()
 
 
@@ -590,7 +592,7 @@ class Box extends Widget{
         *
         */
         static private inline function _objHeight (obj:DisplayObject) : Float {
-            #if html5
+            // #if html5
                 if( Std.is(obj, Widget) ){
                     return cast(obj, Widget).h;
                 }else if( Std.is(obj, nme.text.TextField) ){
@@ -598,9 +600,9 @@ class Box extends Widget{
                 }else{
                     return obj.height;
                 }
-            #else
-                return (Std.is(obj, Widget) ? cast(obj, Widget).h : obj.height);
-            #end
+            // #else
+            //     return (Std.is(obj, Widget) ? cast(obj, Widget).h : obj.height);
+            // #end
         }//function _objHeight()
 
 

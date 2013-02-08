@@ -22,19 +22,4 @@ class Checkbox extends Toggle{
         this.mouseChildren = true;
     }//function new()
 
-
-    /**
-    * Process pressing.
-    *
-    */
-    override public dynamic function onPress (e:MouseEvent) : Void {
-    }//function onPress()
-
-
-    /**
-    * Process releasing.
-    *
-    */
-    override public dynamic function onRelease (e:MouseEvent) : Void {
-    }//function onRelease()
 }//class Checkbox

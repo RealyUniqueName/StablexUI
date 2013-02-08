@@ -82,15 +82,15 @@ class ViewStack extends Widget{
         var toShow : DisplayObject = this.getChildByName(name);
 
         if( toShow != null ){
+            if( !ignoreHistory ){
+                this._history.push( this.getChildIndex(toShow) );
+            }
+
             if( toHide != toShow && this.trans != null ){
                 this.trans.change(this, toHide, toShow);
             }else{
                 toHide.visible = false;
                 toShow.visible = true;
-            }
-
-            if( !ignoreHistory ){
-                this._history.push( this.getChildIndex(toShow) );
             }
         }
     }//function show()

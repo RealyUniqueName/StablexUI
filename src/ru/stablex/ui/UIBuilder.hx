@@ -146,6 +146,7 @@ class UIBuilder {
             UIBuilder.regClass('ru.stablex.ui.skins.Img');
             UIBuilder.regClass('ru.stablex.ui.transitions.Fade');
             UIBuilder.regClass('ru.stablex.ui.transitions.Slide');
+            UIBuilder.regClass('ru.stablex.ui.transitions.Scale');
             UIBuilder.regClass('ru.stablex.ui.UIBuilder');
             UIBuilder.regClass('ru.stablex.TweenSprite');
             UIBuilder.regClass('ru.stablex.Assets');
