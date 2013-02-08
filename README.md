@@ -5,10 +5,11 @@ Macro driven ui engine for Haxe NME. It's designed to give developer as much fre
 
 Supported targets: cpp (iOS, Android, Blackberry, webOS, Windows, Linux, MacOS), flash, html5, neko
 
-online docs on API and basic features: http://stablex.ru/ui/doc
+Online docs for API and basic features: http://stablex.ru/ui/doc
 
 Features:
 ---------------
+* Easy integration with any project. Just addChild StablexUI to any Sprite or Stage.
 * Separate "view" from "controller". Create all UI via xml (but you still can create ui with plain haxe);
 * No xml parsing at runtime. All xmls are preprocessed at compile time, so your app is loading faster. Also everything is still strictly typed ;)
 * Custom meta tags for xml to implement functionality you need, but wich is not implemented in StablexUI;
