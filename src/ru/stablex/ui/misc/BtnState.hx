@@ -24,7 +24,7 @@ class BtnState {
     * Constructor
     *
     */
-    public function new () : Void {        
+    public function new () : Void {
     }//function new()
 
 

@@ -61,7 +61,23 @@ class Slider extends Widget{
     *
     */
     private function _setValue (v:Float) : Float {
-        var pt : Float = (v - this.min) / (this.max - this.min);
+        this._value = v;
+        this._updateSliderPos();
+
+        if( this.created ){
+            this.dispatchEvent(new WidgetEvent(WidgetEvent.CHANGE));
+        }
+
+        return v;
+    }//function _setValue()
+
+
+    /**
+    * Update slider position according to `.value`
+    *
+    */
+    private inline function _updateSliderPos() : Void {
+        var pt : Float = (this._value - this.min) / (this.max - this.min);
 
         if( pt < 0 ){
             pt = 0;
@@ -74,14 +90,7 @@ class Slider extends Widget{
         }else{
             this.slider.left = (this._width - this.slider._width) * pt;
         }
-
-        this._value = v;
-        if( this.created ){
-            this.dispatchEvent(new WidgetEvent(WidgetEvent.CHANGE));
-        }
-
-        return v;
-    }//function _setValue()
+    }//function _updateSliderPos()
 
 
     /**
@@ -93,9 +102,7 @@ class Slider extends Widget{
         this.slider.refresh();
 
         //update slider position on first refresh
-        if( !this.created ){
-            this.value = this._value;
-        }
+        this._updateSliderPos();
     }//function refresh()
 
 

@@ -147,6 +147,8 @@ class Bmp extends Widget{
     * @throw <type>String</type> if asset for bitmap was not found
     */
     private inline function _draw(bmp:BitmapData) : Void {
+        this.graphics.clear();
+
         //draw just part of image
         if( this.drawPortion ){
             var width : Float = (
