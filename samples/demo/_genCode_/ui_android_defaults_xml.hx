@@ -184,6 +184,40 @@ __ui__widget1.childPadding = 2;
 __ui__widget1.widthPt = 100;
 __ui__widget1.paddingTop = 4;
 });
+ru.stablex.ui.UIBuilder.defaults.get("VBox").set("LightGray", function(__ui__widget0:ru.stablex.ui.widgets.Widget) : Void {
+var __ui__widget1 : ru.stablex.ui.widgets.VBox = cast(__ui__widget0, ru.stablex.ui.widgets.VBox);
+__ui__widget1.padding = 5;
+__ui__widget1.childPadding = 10;
+__ui__widget1.widthPt = 100;
+__ui__widget1.heightPt = 100;
+if(__ui__widget1.skin == null ){
+     __ui__widget1.skin = new ru.stablex.ui.skins.Paint();
+     if( Std.is(__ui__widget1.skin, ru.stablex.ui.widgets.Widget) ){
+         var __tmp__ : ru.stablex.ui.widgets.Widget = cast(__ui__widget1.skin, ru.stablex.ui.widgets.Widget);
+         ru.stablex.ui.UIBuilder.applyDefaults(__tmp__);
+         __tmp__._onInitialize();
+         __tmp__._onCreate();
+     }
+}
+cast(__ui__widget1.skin, ru.stablex.ui.skins.Paint).color = 0x555555;
+});
+ru.stablex.ui.UIBuilder.defaults.get("VBox").set("DarkGray", function(__ui__widget0:ru.stablex.ui.widgets.Widget) : Void {
+var __ui__widget1 : ru.stablex.ui.widgets.VBox = cast(__ui__widget0, ru.stablex.ui.widgets.VBox);
+__ui__widget1.padding = 5;
+__ui__widget1.childPadding = 10;
+__ui__widget1.widthPt = 100;
+__ui__widget1.heightPt = 100;
+if(__ui__widget1.skin == null ){
+     __ui__widget1.skin = new ru.stablex.ui.skins.Paint();
+     if( Std.is(__ui__widget1.skin, ru.stablex.ui.widgets.Widget) ){
+         var __tmp__ : ru.stablex.ui.widgets.Widget = cast(__ui__widget1.skin, ru.stablex.ui.widgets.Widget);
+         ru.stablex.ui.UIBuilder.applyDefaults(__tmp__);
+         __tmp__._onInitialize();
+         __tmp__._onCreate();
+     }
+}
+cast(__ui__widget1.skin, ru.stablex.ui.skins.Paint).color = 0x222222;
+});
 if( !ru.stablex.ui.UIBuilder.defaults.exists("Button") ) ru.stablex.ui.UIBuilder.defaults.set("Button", new Hash());
 ru.stablex.ui.UIBuilder.defaults.get("Button").set("Default", function(__ui__widget0:ru.stablex.ui.widgets.Widget) : Void {
 var __ui__widget1 : ru.stablex.ui.widgets.Button = cast(__ui__widget0, ru.stablex.ui.widgets.Button);
@@ -395,4 +429,29 @@ __ui__widget1.bar.skinName = 'progressBar';
 __ui__widget1.h = 20;
 __ui__widget1.w = 100;
 __ui__widget1.skinName = 'progress';
+});
+if( !ru.stablex.ui.UIBuilder.defaults.exists("Options") ) ru.stablex.ui.UIBuilder.defaults.set("Options", new Hash());
+ru.stablex.ui.UIBuilder.defaults.get("Options").set("Default", function(__ui__widget0:ru.stablex.ui.widgets.Widget) : Void {
+var __ui__widget1 : ru.stablex.ui.widgets.Options = cast(__ui__widget0, ru.stablex.ui.widgets.Options);
+__ui__widget1.skinHoveredName = 'buttonHovered';
+__ui__widget1.format.color = 0xFFFFFF;
+__ui__widget1.skinPressedName = 'buttonPressed';
+__ui__widget1.format.font = ru.stablex.Assets.getFont('ui/android/fonts/regular.ttf').fontName;
+__ui__widget1.format.size = 14;
+__ui__widget1.box.skinName = 'optionsBg';
+__ui__widget1.box.padding = 15;
+__ui__widget1.box.childPadding = 5;
+__ui__widget1.h = 40;
+__ui__widget1.w = 185;
+__ui__widget1.skinName = 'button';
+__ui__widget1.apart = true;
+__ui__widget1.ico.src = 'ui/android/img/options.png';
+__ui__widget1.icoBeforeLabel = false;
+});
+ru.stablex.ui.UIBuilder.defaults.get("Options").set("Picker", function(__ui__widget0:ru.stablex.ui.widgets.Widget) : Void {
+var __ui__widget1 : ru.stablex.ui.widgets.Options = cast(__ui__widget0, ru.stablex.ui.widgets.Options);
+__ui__widget1.list.widthPt = 100;
+__ui__widget1.alignList = false;
+__ui__widget1.list.skinName = 'popup';
+__ui__widget1.list.heightPt = 100;
 });})()

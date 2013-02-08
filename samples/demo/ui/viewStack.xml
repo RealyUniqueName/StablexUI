@@ -2,7 +2,87 @@
 
 <!-- ViewStack transitions demo -->
 <Scroll name="'viewStack'" defaults="'Screen,Level1'">
-    <VBox widthPt="100" heightPt="100">
-        <Text text="'ViewStack transitions'" />
-    </VBox>
+
+    <ViewStack id="'vs'" widthPt="100" heightPt="100">
+        <VBox name="'page1'" defaults="'DarkGray'">
+            <VBox widthPt="100">
+                <Text text="'ViewStack transitions'" />
+                <Text defaults="'Default,LightTip'" text="'Also you can implement custom transitions.'" widthPt="100" align="'center,middle'" />
+                <Widget defaults="'HR'" />
+            </VBox>
+
+            <Button text="'Fade'" on-click="
+                var trans : $Fade = new $Fade();
+                trans.duration = 0.25;
+
+                #ViewStack(vs).trans = trans;
+                #ViewStack(vs).show('page2');
+            "/>
+            <Button text="'Random slide'" on-click="
+                var direction : Array<String> = ['left', 'right', 'top', 'bottom'];
+                var trans     : $Slide = new $Slide();
+                trans.duration  = 0.25;
+                trans.direction = direction[ Std.random(direction.length) ];
+
+                #ViewStack(vs).trans = trans;
+                #ViewStack(vs).show('page2');
+            "/>
+            <Button text="'Scale up'" on-click="
+                var trans : $Scale = new $Scale();
+                trans.duration = 0.25;
+                trans.scaleUp  = true;
+
+                #ViewStack(vs).trans = trans;
+                #ViewStack(vs).show('page2');
+            "/>
+            <Button name="'btn'" text="'Scale down'" on-click="
+                var trans : $Scale = new $Scale();
+                trans.duration = 0.25;
+                trans.scaleUp  = false;
+
+                #ViewStack(vs).trans = trans;
+                #ViewStack(vs).show('page2');
+            "/>
+        </VBox>
+
+        <VBox name="'page2'" defaults="'LightGray'">
+            <HBox childPadding="10" unifyChildren="true" paddingLeft="10" paddingRight="10" widthPt="100">
+                <Button text="'Fade'" on-click="
+                    var trans : $Fade = new $Fade();
+                    trans.duration = 0.25;
+
+                    #ViewStack(vs).trans = trans;
+                    #ViewStack(vs).show('page1');
+                "/>
+                <Button text="'Random slide'" on-click="
+                    var direction : Array<String> = ['left', 'right', 'top', 'bottom'];
+                    var trans     : $Slide = new $Slide();
+                    trans.duration  = 0.25;
+                    trans.direction = direction[ Std.random(direction.length) ];
+
+                    #ViewStack(vs).trans = trans;
+                    #ViewStack(vs).show('page1');
+                "/>
+            </HBox>
+            <HBox childPadding="10" unifyChildren="true" paddingLeft="10" paddingRight="10" widthPt="100">
+                <Button text="'Scale up'" on-click="
+                    var trans : $Scale = new $Scale();
+                    trans.duration = 0.25;
+                    trans.scaleUp  = true;
+
+                    #ViewStack(vs).trans = trans;
+                    #ViewStack(vs).show('page1');
+                "/>
+                <Button name="'btn'" text="'Scale down'" on-click="
+                    var trans : $Scale = new $Scale();
+                    trans.duration = 0.25;
+                    trans.scaleUp  = false;
+
+                    #ViewStack(vs).trans = trans;
+                    #ViewStack(vs).show('page1');
+                "/>
+            </HBox>
+        </VBox>
+    </ViewStack>
+
 </Scroll>

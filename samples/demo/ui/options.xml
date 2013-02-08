@@ -2,7 +2,21 @@
 
 <!-- Options lists demo -->
 <Scroll name="'options'" defaults="'Screen,Level1'">
-    <VBox widthPt="100" heightPt="100">
-        <Text text="'Options lists'" />
+    <VBox widthPt="100" heightPt="100" align="'top,center'" childPadding="20" paddingTop="10">
+        <VBox widthPt="100">
+            <Text text="'Options list'" />
+            <Text defaults="'Default,LightTip'" text="'Here are two most common cases for options list.'" widthPt="100" align="'center,middle'" />
+            <Widget defaults="'HR'" />
+        </VBox>
+
+        <!-- Picker list -->
+        <Options
+            defaults = "'Default,Picker'"
+            options = "[['apple', 'wow'], ['pancakes', 'yay'], ['peanut butter', 'doh']]"
+        />
+
+        <!-- Drop down -->
+        <Options options = "[['lion', 1], ['camel', 2], ['elephant', 3]]"/>
+
     </VBox>
 </Scroll>

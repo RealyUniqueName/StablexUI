@@ -27,10 +27,10 @@
         <Button text="'Sliders'" defaults="'MenuItem'" on-click="#ViewStack(screens).show('sliders');"/>
         <Widget defaults="'HR'"/>
 
-        <Button text="'TabStack'" defaults="'MenuItem'" on-click="#ViewStack(screens).show('tabs');"/>
+        <Button text="'View stack transitions'" defaults="'MenuItem'" on-click="#ViewStack(screens).show('viewStack');"/>
         <Widget defaults="'HR'"/>
 
-        <Button text="'View stack transitions'" defaults="'MenuItem'" on-click="#ViewStack(screens).show('viewStack');"/>
+        <Button text="'TabStack'" defaults="'MenuItem'" on-click="#ViewStack(screens).show('tabs');"/>
         <Widget defaults="'HR'"/>
 
         <Button text="'Fake item 1'" defaults="'MenuItem'" ico="null"/>

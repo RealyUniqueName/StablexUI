@@ -8,7 +8,16 @@ if( ru.stablex.ui.UIBuilder.defaults.exists("Floating") ){
          if( defaultsFn != null ) defaultsFn(__ui__widget1);
      }
 }
-__ui__widget1.addEventListener(ru.stablex.ui.events.WidgetEvent.RESIZE, function(event:nme.events.Event){ru.stablex.ui.UIBuilder.get("screens").h = __ui__widget1.h - ru.stablex.ui.UIBuilder.get("bottomMenu").h - ru.stablex.ui.UIBuilder.get("topMenu").h;});
+__ui__widget1.addEventListener(ru.stablex.ui.events.WidgetEvent.RESIZE, function(event:nme.events.Event){
+        ru.stablex.ui.UIBuilder.get("screens").h = __ui__widget1.h - ru.stablex.ui.UIBuilder.get("bottomMenu").h - ru.stablex.ui.UIBuilder.get("topMenu").h;
+
+        if( nme.Lib.current.stage.stageWidth < 320 || nme.Lib.current.stage.stageHeight < 480 ){
+            var popup = com.example.Main.alert({
+                msg:'This app is designed for at least 320x480 screens. You may proceed but some things may go wrong.'
+            });
+            popup.show();
+        }
+    });
 __ui__widget1.id = 'root';
 __ui__widget1.widthPt = 100;
 __ui__widget1.heightPt = 100;
@@ -308,8 +317,8 @@ if( ru.stablex.ui.UIBuilder.defaults.exists("Button") ){
          if( defaultsFn != null ) defaultsFn(__ui__widget3);
      }
 }
-__ui__widget3.text = 'TabStack';
-__ui__widget3.addEventListener(nme.events.MouseEvent.CLICK, function(event:nme.events.Event){ru.stablex.ui.UIBuilder.getAs("screens", ru.stablex.ui.widgets.ViewStack).show('tabs');});
+__ui__widget3.text = 'View stack transitions';
+__ui__widget3.addEventListener(nme.events.MouseEvent.CLICK, function(event:nme.events.Event){ru.stablex.ui.UIBuilder.getAs("screens", ru.stablex.ui.widgets.ViewStack).show('viewStack');});
 __ui__widget3.defaults = 'MenuItem';
 __ui__widget3._onInitialize();
 __ui__widget3._onCreate();
@@ -338,8 +347,8 @@ if( ru.stablex.ui.UIBuilder.defaults.exists("Button") ){
          if( defaultsFn != null ) defaultsFn(__ui__widget3);
      }
 }
-__ui__widget3.text = 'View stack transitions';
-__ui__widget3.addEventListener(nme.events.MouseEvent.CLICK, function(event:nme.events.Event){ru.stablex.ui.UIBuilder.getAs("screens", ru.stablex.ui.widgets.ViewStack).show('viewStack');});
+__ui__widget3.text = 'TabStack';
+__ui__widget3.addEventListener(nme.events.MouseEvent.CLICK, function(event:nme.events.Event){ru.stablex.ui.UIBuilder.getAs("screens", ru.stablex.ui.widgets.ViewStack).show('tabs');});
 __ui__widget3.defaults = 'MenuItem';
 __ui__widget3._onInitialize();
 __ui__widget3._onCreate();
@@ -3191,20 +3200,97 @@ if( ru.stablex.ui.UIBuilder.defaults.exists("VBox") ){
          if( defaultsFn != null ) defaultsFn(__ui__widget2);
      }
 }
+__ui__widget2.childPadding = 20;
+__ui__widget2.align = 'top,center';
 __ui__widget2.widthPt = 100;
 __ui__widget2.heightPt = 100;
+__ui__widget2.paddingTop = 10;
 __ui__widget2._onInitialize();
 
-var __ui__widget3 : ru.stablex.ui.widgets.Text = new ru.stablex.ui.widgets.Text();
-if( ru.stablex.ui.UIBuilder.defaults.exists("Text") ){
+var __ui__widget3 : ru.stablex.ui.widgets.VBox = new ru.stablex.ui.widgets.VBox();
+if( ru.stablex.ui.UIBuilder.defaults.exists("VBox") ){
      var defs = "Default".split(",");
-     var defFns = ru.stablex.ui.UIBuilder.defaults.get("Text");
+     var defFns = ru.stablex.ui.UIBuilder.defaults.get("VBox");
      for(i in 0...defs.length){
          var defaultsFn : ru.stablex.ui.widgets.Widget->Void = defFns.get(defs[i]);
          if( defaultsFn != null ) defaultsFn(__ui__widget3);
      }
 }
-__ui__widget3.text = 'Options lists';
+__ui__widget3.widthPt = 100;
+__ui__widget3._onInitialize();
+
+var __ui__widget4 : ru.stablex.ui.widgets.Text = new ru.stablex.ui.widgets.Text();
+if( ru.stablex.ui.UIBuilder.defaults.exists("Text") ){
+     var defs = "Default".split(",");
+     var defFns = ru.stablex.ui.UIBuilder.defaults.get("Text");
+     for(i in 0...defs.length){
+         var defaultsFn : ru.stablex.ui.widgets.Widget->Void = defFns.get(defs[i]);
+         if( defaultsFn != null ) defaultsFn(__ui__widget4);
+     }
+}
+__ui__widget4.text = 'Options list';
+__ui__widget4._onInitialize();
+__ui__widget4._onCreate();
+__ui__widget3.addChild(__ui__widget4);
+
+var __ui__widget4 : ru.stablex.ui.widgets.Text = new ru.stablex.ui.widgets.Text();
+if( ru.stablex.ui.UIBuilder.defaults.exists("Text") ){
+     var defs = 'Default,LightTip'.split(",");
+     var defFns = ru.stablex.ui.UIBuilder.defaults.get("Text");
+     for(i in 0...defs.length){
+         var defaultsFn : ru.stablex.ui.widgets.Widget->Void = defFns.get(defs[i]);
+         if( defaultsFn != null ) defaultsFn(__ui__widget4);
+     }
+}
+__ui__widget4.text = 'Here are two most common cases for options list.';
+__ui__widget4.align = 'center,middle';
+__ui__widget4.defaults = 'Default,LightTip';
+__ui__widget4.widthPt = 100;
+__ui__widget4._onInitialize();
+__ui__widget4._onCreate();
+__ui__widget3.addChild(__ui__widget4);
+
+var __ui__widget4 : ru.stablex.ui.widgets.Widget = new ru.stablex.ui.widgets.Widget();
+if( ru.stablex.ui.UIBuilder.defaults.exists("Widget") ){
+     var defs = 'HR'.split(",");
+     var defFns = ru.stablex.ui.UIBuilder.defaults.get("Widget");
+     for(i in 0...defs.length){
+         var defaultsFn : ru.stablex.ui.widgets.Widget->Void = defFns.get(defs[i]);
+         if( defaultsFn != null ) defaultsFn(__ui__widget4);
+     }
+}
+__ui__widget4.defaults = 'HR';
+__ui__widget4._onInitialize();
+__ui__widget4._onCreate();
+__ui__widget3.addChild(__ui__widget4);
+__ui__widget3._onCreate();
+__ui__widget2.addChild(__ui__widget3);
+
+var __ui__widget3 : ru.stablex.ui.widgets.Options = new ru.stablex.ui.widgets.Options();
+if( ru.stablex.ui.UIBuilder.defaults.exists("Options") ){
+     var defs = 'Default,Picker'.split(",");
+     var defFns = ru.stablex.ui.UIBuilder.defaults.get("Options");
+     for(i in 0...defs.length){
+         var defaultsFn : ru.stablex.ui.widgets.Widget->Void = defFns.get(defs[i]);
+         if( defaultsFn != null ) defaultsFn(__ui__widget3);
+     }
+}
+__ui__widget3.options = [['apple', 'wow'], ['pancakes', 'yay'], ['peanut butter', 'doh']];
+__ui__widget3.defaults = 'Default,Picker';
+__ui__widget3._onInitialize();
+__ui__widget3._onCreate();
+__ui__widget2.addChild(__ui__widget3);
+
+var __ui__widget3 : ru.stablex.ui.widgets.Options = new ru.stablex.ui.widgets.Options();
+if( ru.stablex.ui.UIBuilder.defaults.exists("Options") ){
+     var defs = "Default".split(",");
+     var defFns = ru.stablex.ui.UIBuilder.defaults.get("Options");
+     for(i in 0...defs.length){
+         var defaultsFn : ru.stablex.ui.widgets.Widget->Void = defFns.get(defs[i]);
+         if( defaultsFn != null ) defaultsFn(__ui__widget3);
+     }
+}
+__ui__widget3.options = [['lion', 1], ['camel', 2], ['elephant', 3]];
 __ui__widget3._onInitialize();
 __ui__widget3._onCreate();
 __ui__widget2.addChild(__ui__widget3);
@@ -3383,30 +3469,320 @@ __ui__widget1.name = 'viewStack';
 __ui__widget1.defaults = 'Screen,Level1';
 __ui__widget1._onInitialize();
 
-var __ui__widget2 : ru.stablex.ui.widgets.VBox = new ru.stablex.ui.widgets.VBox();
-if( ru.stablex.ui.UIBuilder.defaults.exists("VBox") ){
+var __ui__widget2 : ru.stablex.ui.widgets.ViewStack = new ru.stablex.ui.widgets.ViewStack();
+if( ru.stablex.ui.UIBuilder.defaults.exists("ViewStack") ){
      var defs = "Default".split(",");
-     var defFns = ru.stablex.ui.UIBuilder.defaults.get("VBox");
+     var defFns = ru.stablex.ui.UIBuilder.defaults.get("ViewStack");
      for(i in 0...defs.length){
          var defaultsFn : ru.stablex.ui.widgets.Widget->Void = defFns.get(defs[i]);
          if( defaultsFn != null ) defaultsFn(__ui__widget2);
      }
 }
+__ui__widget2.id = 'vs';
 __ui__widget2.widthPt = 100;
 __ui__widget2.heightPt = 100;
 __ui__widget2._onInitialize();
 
-var __ui__widget3 : ru.stablex.ui.widgets.Text = new ru.stablex.ui.widgets.Text();
-if( ru.stablex.ui.UIBuilder.defaults.exists("Text") ){
-     var defs = "Default".split(",");
-     var defFns = ru.stablex.ui.UIBuilder.defaults.get("Text");
+var __ui__widget3 : ru.stablex.ui.widgets.VBox = new ru.stablex.ui.widgets.VBox();
+if( ru.stablex.ui.UIBuilder.defaults.exists("VBox") ){
+     var defs = 'DarkGray'.split(",");
+     var defFns = ru.stablex.ui.UIBuilder.defaults.get("VBox");
      for(i in 0...defs.length){
          var defaultsFn : ru.stablex.ui.widgets.Widget->Void = defFns.get(defs[i]);
          if( defaultsFn != null ) defaultsFn(__ui__widget3);
      }
 }
-__ui__widget3.text = 'ViewStack transitions';
+__ui__widget3.name = 'page1';
+__ui__widget3.defaults = 'DarkGray';
 __ui__widget3._onInitialize();
+
+var __ui__widget4 : ru.stablex.ui.widgets.VBox = new ru.stablex.ui.widgets.VBox();
+if( ru.stablex.ui.UIBuilder.defaults.exists("VBox") ){
+     var defs = "Default".split(",");
+     var defFns = ru.stablex.ui.UIBuilder.defaults.get("VBox");
+     for(i in 0...defs.length){
+         var defaultsFn : ru.stablex.ui.widgets.Widget->Void = defFns.get(defs[i]);
+         if( defaultsFn != null ) defaultsFn(__ui__widget4);
+     }
+}
+__ui__widget4.widthPt = 100;
+__ui__widget4._onInitialize();
+
+var __ui__widget5 : ru.stablex.ui.widgets.Text = new ru.stablex.ui.widgets.Text();
+if( ru.stablex.ui.UIBuilder.defaults.exists("Text") ){
+     var defs = "Default".split(",");
+     var defFns = ru.stablex.ui.UIBuilder.defaults.get("Text");
+     for(i in 0...defs.length){
+         var defaultsFn : ru.stablex.ui.widgets.Widget->Void = defFns.get(defs[i]);
+         if( defaultsFn != null ) defaultsFn(__ui__widget5);
+     }
+}
+__ui__widget5.text = 'ViewStack transitions';
+__ui__widget5._onInitialize();
+__ui__widget5._onCreate();
+__ui__widget4.addChild(__ui__widget5);
+
+var __ui__widget5 : ru.stablex.ui.widgets.Text = new ru.stablex.ui.widgets.Text();
+if( ru.stablex.ui.UIBuilder.defaults.exists("Text") ){
+     var defs = 'Default,LightTip'.split(",");
+     var defFns = ru.stablex.ui.UIBuilder.defaults.get("Text");
+     for(i in 0...defs.length){
+         var defaultsFn : ru.stablex.ui.widgets.Widget->Void = defFns.get(defs[i]);
+         if( defaultsFn != null ) defaultsFn(__ui__widget5);
+     }
+}
+__ui__widget5.text = 'Also you can implement custom transitions.';
+__ui__widget5.align = 'center,middle';
+__ui__widget5.defaults = 'Default,LightTip';
+__ui__widget5.widthPt = 100;
+__ui__widget5._onInitialize();
+__ui__widget5._onCreate();
+__ui__widget4.addChild(__ui__widget5);
+
+var __ui__widget5 : ru.stablex.ui.widgets.Widget = new ru.stablex.ui.widgets.Widget();
+if( ru.stablex.ui.UIBuilder.defaults.exists("Widget") ){
+     var defs = 'HR'.split(",");
+     var defFns = ru.stablex.ui.UIBuilder.defaults.get("Widget");
+     for(i in 0...defs.length){
+         var defaultsFn : ru.stablex.ui.widgets.Widget->Void = defFns.get(defs[i]);
+         if( defaultsFn != null ) defaultsFn(__ui__widget5);
+     }
+}
+__ui__widget5.defaults = 'HR';
+__ui__widget5._onInitialize();
+__ui__widget5._onCreate();
+__ui__widget4.addChild(__ui__widget5);
+__ui__widget4._onCreate();
+__ui__widget3.addChild(__ui__widget4);
+
+var __ui__widget4 : ru.stablex.ui.widgets.Button = new ru.stablex.ui.widgets.Button();
+if( ru.stablex.ui.UIBuilder.defaults.exists("Button") ){
+     var defs = "Default".split(",");
+     var defFns = ru.stablex.ui.UIBuilder.defaults.get("Button");
+     for(i in 0...defs.length){
+         var defaultsFn : ru.stablex.ui.widgets.Widget->Void = defFns.get(defs[i]);
+         if( defaultsFn != null ) defaultsFn(__ui__widget4);
+     }
+}
+__ui__widget4.text = 'Fade';
+__ui__widget4.addEventListener(nme.events.MouseEvent.CLICK, function(event:nme.events.Event){
+                var trans : ru.stablex.ui.transitions.Fade = new ru.stablex.ui.transitions.Fade();
+                trans.duration = 0.25;
+
+                ru.stablex.ui.UIBuilder.getAs("vs", ru.stablex.ui.widgets.ViewStack).trans = trans;
+                ru.stablex.ui.UIBuilder.getAs("vs", ru.stablex.ui.widgets.ViewStack).show('page2');
+            });
+__ui__widget4._onInitialize();
+__ui__widget4._onCreate();
+__ui__widget3.addChild(__ui__widget4);
+
+var __ui__widget4 : ru.stablex.ui.widgets.Button = new ru.stablex.ui.widgets.Button();
+if( ru.stablex.ui.UIBuilder.defaults.exists("Button") ){
+     var defs = "Default".split(",");
+     var defFns = ru.stablex.ui.UIBuilder.defaults.get("Button");
+     for(i in 0...defs.length){
+         var defaultsFn : ru.stablex.ui.widgets.Widget->Void = defFns.get(defs[i]);
+         if( defaultsFn != null ) defaultsFn(__ui__widget4);
+     }
+}
+__ui__widget4.text = 'Random slide';
+__ui__widget4.addEventListener(nme.events.MouseEvent.CLICK, function(event:nme.events.Event){
+                var direction : Array<String> = ['left', 'right', 'top', 'bottom'];
+                var trans     : ru.stablex.ui.transitions.Slide = new ru.stablex.ui.transitions.Slide();
+                trans.duration  = 0.25;
+                trans.direction = direction[ Std.random(direction.length) ];
+
+                ru.stablex.ui.UIBuilder.getAs("vs", ru.stablex.ui.widgets.ViewStack).trans = trans;
+                ru.stablex.ui.UIBuilder.getAs("vs", ru.stablex.ui.widgets.ViewStack).show('page2');
+            });
+__ui__widget4._onInitialize();
+__ui__widget4._onCreate();
+__ui__widget3.addChild(__ui__widget4);
+
+var __ui__widget4 : ru.stablex.ui.widgets.Button = new ru.stablex.ui.widgets.Button();
+if( ru.stablex.ui.UIBuilder.defaults.exists("Button") ){
+     var defs = "Default".split(",");
+     var defFns = ru.stablex.ui.UIBuilder.defaults.get("Button");
+     for(i in 0...defs.length){
+         var defaultsFn : ru.stablex.ui.widgets.Widget->Void = defFns.get(defs[i]);
+         if( defaultsFn != null ) defaultsFn(__ui__widget4);
+     }
+}
+__ui__widget4.text = 'Scale up';
+__ui__widget4.addEventListener(nme.events.MouseEvent.CLICK, function(event:nme.events.Event){
+                var trans : ru.stablex.ui.transitions.Scale = new ru.stablex.ui.transitions.Scale();
+                trans.duration = 0.25;
+                trans.scaleUp  = true;
+
+                ru.stablex.ui.UIBuilder.getAs("vs", ru.stablex.ui.widgets.ViewStack).trans = trans;
+                ru.stablex.ui.UIBuilder.getAs("vs", ru.stablex.ui.widgets.ViewStack).show('page2');
+            });
+__ui__widget4._onInitialize();
+__ui__widget4._onCreate();
+__ui__widget3.addChild(__ui__widget4);
+
+var __ui__widget4 : ru.stablex.ui.widgets.Button = new ru.stablex.ui.widgets.Button();
+if( ru.stablex.ui.UIBuilder.defaults.exists("Button") ){
+     var defs = "Default".split(",");
+     var defFns = ru.stablex.ui.UIBuilder.defaults.get("Button");
+     for(i in 0...defs.length){
+         var defaultsFn : ru.stablex.ui.widgets.Widget->Void = defFns.get(defs[i]);
+         if( defaultsFn != null ) defaultsFn(__ui__widget4);
+     }
+}
+__ui__widget4.name = 'btn';
+__ui__widget4.text = 'Scale down';
+__ui__widget4.addEventListener(nme.events.MouseEvent.CLICK, function(event:nme.events.Event){
+                var trans : ru.stablex.ui.transitions.Scale = new ru.stablex.ui.transitions.Scale();
+                trans.duration = 0.25;
+                trans.scaleUp  = false;
+
+                ru.stablex.ui.UIBuilder.getAs("vs", ru.stablex.ui.widgets.ViewStack).trans = trans;
+                ru.stablex.ui.UIBuilder.getAs("vs", ru.stablex.ui.widgets.ViewStack).show('page2');
+            });
+__ui__widget4._onInitialize();
+__ui__widget4._onCreate();
+__ui__widget3.addChild(__ui__widget4);
+__ui__widget3._onCreate();
+__ui__widget2.addChild(__ui__widget3);
+
+var __ui__widget3 : ru.stablex.ui.widgets.VBox = new ru.stablex.ui.widgets.VBox();
+if( ru.stablex.ui.UIBuilder.defaults.exists("VBox") ){
+     var defs = 'LightGray'.split(",");
+     var defFns = ru.stablex.ui.UIBuilder.defaults.get("VBox");
+     for(i in 0...defs.length){
+         var defaultsFn : ru.stablex.ui.widgets.Widget->Void = defFns.get(defs[i]);
+         if( defaultsFn != null ) defaultsFn(__ui__widget3);
+     }
+}
+__ui__widget3.name = 'page2';
+__ui__widget3.defaults = 'LightGray';
+__ui__widget3._onInitialize();
+
+var __ui__widget4 : ru.stablex.ui.widgets.HBox = new ru.stablex.ui.widgets.HBox();
+if( ru.stablex.ui.UIBuilder.defaults.exists("HBox") ){
+     var defs = "Default".split(",");
+     var defFns = ru.stablex.ui.UIBuilder.defaults.get("HBox");
+     for(i in 0...defs.length){
+         var defaultsFn : ru.stablex.ui.widgets.Widget->Void = defFns.get(defs[i]);
+         if( defaultsFn != null ) defaultsFn(__ui__widget4);
+     }
+}
+__ui__widget4.paddingLeft = 10;
+__ui__widget4.unifyChildren = true;
+__ui__widget4.childPadding = 10;
+__ui__widget4.paddingRight = 10;
+__ui__widget4.widthPt = 100;
+__ui__widget4._onInitialize();
+
+var __ui__widget5 : ru.stablex.ui.widgets.Button = new ru.stablex.ui.widgets.Button();
+if( ru.stablex.ui.UIBuilder.defaults.exists("Button") ){
+     var defs = "Default".split(",");
+     var defFns = ru.stablex.ui.UIBuilder.defaults.get("Button");
+     for(i in 0...defs.length){
+         var defaultsFn : ru.stablex.ui.widgets.Widget->Void = defFns.get(defs[i]);
+         if( defaultsFn != null ) defaultsFn(__ui__widget5);
+     }
+}
+__ui__widget5.text = 'Fade';
+__ui__widget5.addEventListener(nme.events.MouseEvent.CLICK, function(event:nme.events.Event){
+                    var trans : ru.stablex.ui.transitions.Fade = new ru.stablex.ui.transitions.Fade();
+                    trans.duration = 0.25;
+
+                    ru.stablex.ui.UIBuilder.getAs("vs", ru.stablex.ui.widgets.ViewStack).trans = trans;
+                    ru.stablex.ui.UIBuilder.getAs("vs", ru.stablex.ui.widgets.ViewStack).show('page1');
+                });
+__ui__widget5._onInitialize();
+__ui__widget5._onCreate();
+__ui__widget4.addChild(__ui__widget5);
+
+var __ui__widget5 : ru.stablex.ui.widgets.Button = new ru.stablex.ui.widgets.Button();
+if( ru.stablex.ui.UIBuilder.defaults.exists("Button") ){
+     var defs = "Default".split(",");
+     var defFns = ru.stablex.ui.UIBuilder.defaults.get("Button");
+     for(i in 0...defs.length){
+         var defaultsFn : ru.stablex.ui.widgets.Widget->Void = defFns.get(defs[i]);
+         if( defaultsFn != null ) defaultsFn(__ui__widget5);
+     }
+}
+__ui__widget5.text = 'Random slide';
+__ui__widget5.addEventListener(nme.events.MouseEvent.CLICK, function(event:nme.events.Event){
+                    var direction : Array<String> = ['left', 'right', 'top', 'bottom'];
+                    var trans     : ru.stablex.ui.transitions.Slide = new ru.stablex.ui.transitions.Slide();
+                    trans.duration  = 0.25;
+                    trans.direction = direction[ Std.random(direction.length) ];
+
+                    ru.stablex.ui.UIBuilder.getAs("vs", ru.stablex.ui.widgets.ViewStack).trans = trans;
+                    ru.stablex.ui.UIBuilder.getAs("vs", ru.stablex.ui.widgets.ViewStack).show('page1');
+                });
+__ui__widget5._onInitialize();
+__ui__widget5._onCreate();
+__ui__widget4.addChild(__ui__widget5);
+__ui__widget4._onCreate();
+__ui__widget3.addChild(__ui__widget4);
+
+var __ui__widget4 : ru.stablex.ui.widgets.HBox = new ru.stablex.ui.widgets.HBox();
+if( ru.stablex.ui.UIBuilder.defaults.exists("HBox") ){
+     var defs = "Default".split(",");
+     var defFns = ru.stablex.ui.UIBuilder.defaults.get("HBox");
+     for(i in 0...defs.length){
+         var defaultsFn : ru.stablex.ui.widgets.Widget->Void = defFns.get(defs[i]);
+         if( defaultsFn != null ) defaultsFn(__ui__widget4);
+     }
+}
+__ui__widget4.paddingLeft = 10;
+__ui__widget4.unifyChildren = true;
+__ui__widget4.childPadding = 10;
+__ui__widget4.paddingRight = 10;
+__ui__widget4.widthPt = 100;
+__ui__widget4._onInitialize();
+
+var __ui__widget5 : ru.stablex.ui.widgets.Button = new ru.stablex.ui.widgets.Button();
+if( ru.stablex.ui.UIBuilder.defaults.exists("Button") ){
+     var defs = "Default".split(",");
+     var defFns = ru.stablex.ui.UIBuilder.defaults.get("Button");
+     for(i in 0...defs.length){
+         var defaultsFn : ru.stablex.ui.widgets.Widget->Void = defFns.get(defs[i]);
+         if( defaultsFn != null ) defaultsFn(__ui__widget5);
+     }
+}
+__ui__widget5.text = 'Scale up';
+__ui__widget5.addEventListener(nme.events.MouseEvent.CLICK, function(event:nme.events.Event){
+                    var trans : ru.stablex.ui.transitions.Scale = new ru.stablex.ui.transitions.Scale();
+                    trans.duration = 0.25;
+                    trans.scaleUp  = true;
+
+                    ru.stablex.ui.UIBuilder.getAs("vs", ru.stablex.ui.widgets.ViewStack).trans = trans;
+                    ru.stablex.ui.UIBuilder.getAs("vs", ru.stablex.ui.widgets.ViewStack).show('page1');
+                });
+__ui__widget5._onInitialize();
+__ui__widget5._onCreate();
+__ui__widget4.addChild(__ui__widget5);
+
+var __ui__widget5 : ru.stablex.ui.widgets.Button = new ru.stablex.ui.widgets.Button();
+if( ru.stablex.ui.UIBuilder.defaults.exists("Button") ){
+     var defs = "Default".split(",");
+     var defFns = ru.stablex.ui.UIBuilder.defaults.get("Button");
+     for(i in 0...defs.length){
+         var defaultsFn : ru.stablex.ui.widgets.Widget->Void = defFns.get(defs[i]);
+         if( defaultsFn != null ) defaultsFn(__ui__widget5);
+     }
+}
+__ui__widget5.name = 'btn';
+__ui__widget5.text = 'Scale down';
+__ui__widget5.addEventListener(nme.events.MouseEvent.CLICK, function(event:nme.events.Event){
+                    var trans : ru.stablex.ui.transitions.Scale = new ru.stablex.ui.transitions.Scale();
+                    trans.duration = 0.25;
+                    trans.scaleUp  = false;
+
+                    ru.stablex.ui.UIBuilder.getAs("vs", ru.stablex.ui.widgets.ViewStack).trans = trans;
+                    ru.stablex.ui.UIBuilder.getAs("vs", ru.stablex.ui.widgets.ViewStack).show('page1');
+                });
+__ui__widget5._onInitialize();
+__ui__widget5._onCreate();
+__ui__widget4.addChild(__ui__widget5);
+__ui__widget4._onCreate();
+__ui__widget3.addChild(__ui__widget4);
 __ui__widget3._onCreate();
 __ui__widget2.addChild(__ui__widget3);
 __ui__widget2._onCreate();

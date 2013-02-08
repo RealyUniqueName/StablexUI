@@ -37,6 +37,7 @@
     </Scroll>
 
 
+
     <Slider>
         <Default
             w = "20"
@@ -94,6 +95,8 @@
 
     <VBox>
         <Menu widthPt="100" childPadding="2" paddingTop="4" paddingBottom="4"/>
+        <LightGray skin:Paint-color="0x555555" widthPt="100" heightPt="100" childPadding="10" padding="5"/>
+        <DarkGray skin:Paint-color="0x222222" widthPt="100" heightPt="100" childPadding="10" padding="5"/>
     </VBox>
 
 
@@ -271,4 +274,31 @@
             bar-skinName = "'progressBar'"
         />
     </Progress>
+
+
+    <Options>
+        <Default
+            w                = "185"
+            h                = "40"
+            format-size      = "14"
+            format-color     = "0xFFFFFF"
+            format-font      = "$Assets.getFont('ui/android/fonts/regular.ttf').fontName"
+            skinName         = "'button'"
+            skinHoveredName  = "'buttonHovered'"
+            skinPressedName  = "'buttonPressed'"
+            ico-src          = "'ui/android/img/options.png'"
+            icoBeforeLabel   = "false"
+            apart            = "true"
+            box-skinName     = "'optionsBg'"
+            box-padding      = "15"
+            box-childPadding = "5"
+        />
+        <Picker
+            alignList     = "false"
+            list-skinName = "'popup'"
+            list-widthPt  = "100"
+            list-heightPt = "100"
+        />
+    </Options>
+
 </Defaults>

@@ -21,10 +21,13 @@
     <progressBar:Paint color="0xFFFF00" corners="[15]" alpha="0.7" />
 
     <!-- popups -->
-    <popup:Paint color="0x000000" alpha="0.5" />
+    <popup:Paint color="0x000000" alpha="0.8" />
 
     <!-- HR lines -->
     <hr:Paint color="0x282828" paddingLeft="10" paddingRight="10" />
+
+    <!-- options -->
+    <optionsBg:Paint color="0x444444" />
 
     <Black1:Paint color="0x111111"/>
     <BlackGradient1:Gradient colors="[0x000000, 0x2b3034]"/>

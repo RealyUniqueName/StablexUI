@@ -64,7 +64,7 @@ return skin;
 ru.stablex.ui.UIBuilder.skins.set("popup", function():ru.stablex.ui.skins.Skin{
 var skin = new ru.stablex.ui.skins.Paint();
 skin.color = 0x000000;
-skin.alpha = 0.5;
+skin.alpha = 0.8;
 return skin;
 });
 ru.stablex.ui.UIBuilder.skins.set("hr", function():ru.stablex.ui.skins.Skin{
@@ -72,6 +72,11 @@ var skin = new ru.stablex.ui.skins.Paint();
 skin.color = 0x282828;
 skin.paddingLeft = 10;
 skin.paddingRight = 10;
+return skin;
+});
+ru.stablex.ui.UIBuilder.skins.set("optionsBg", function():ru.stablex.ui.skins.Skin{
+var skin = new ru.stablex.ui.skins.Paint();
+skin.color = 0x444444;
 return skin;
 });
 ru.stablex.ui.UIBuilder.skins.set("Black1", function():ru.stablex.ui.skins.Skin{
