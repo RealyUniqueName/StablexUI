@@ -1,6 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <Skins>
+    <!-- buttons -->
+    <button:Paint color="0x999999" corners="[5]" />
+    <buttonHovered:Paint color="0x33b5e5" corners="[5]" />
+    <buttonPressed:Paint color="0x257390" corners="[5]" />
+
+    <!-- on/off switches -->
+    <switch:Paint color="0x555555" alpha="0.3"/>
+    <switchSliderOff:Paint color="0x555555" padding="1" corners="[5]"/>
+    <switchSliderOn:Paint color="0x0099cc" padding="1" corners="[5]"/>
+
+
+    <!-- popups -->
+    <popup:Paint color="0x000000" alpha="0.5" />
+
+    <!-- HR lines -->
+    <hr:Paint color="0x282828" paddingLeft="10" paddingRight="10" />
+
     <Black1:Paint color="0x111111"/>
     <BlackGradient1:Gradient colors="[0x000000, 0x2b3034]"/>
     <BlackBlueStripe:Layer

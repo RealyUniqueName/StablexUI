@@ -17,6 +17,7 @@
 
         <!-- Buttons demo -->
         <meta:include src="ui/buttons.xml"/>
+        <meta:include src="ui/simpleButtonSettings.xml"/>
 
         <!-- Text fields demo -->
         <meta:include src="ui/textFields.xml"/>

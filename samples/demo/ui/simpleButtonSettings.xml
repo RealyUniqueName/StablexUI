@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- settings for simple button -->
+<Scroll name="'simpleButtonSettings'" defaults="'Screen,Level2'">
+    <VBox widthPt="100" childPadding="2" paddingTop="20">
+        <Text defaults="'Default,Dark'" text="'Basic settings for button'" widthPt="100" align="'center,middle'"/>
+        <Text defaults="'Default,DarkTip'" text="'There are more settings described in docs'" widthPt="100" align="'center,middle'" />
+        <Widget defaults="'HRLight'" />
+
+        <!--Icon on/off -->
+        <HBox widthPt="100" align="'middle'">
+            <VBox left="10" align="'left,middle'" widthPt="60">
+                <Text defaults="'Default,Dark'" text="'Enable icon'" />
+                <Text defaults="'Default,DarkTip'" text="'It\'s also possible to set separate icon for each state'" />
+            </VBox>
+
+            <Switch right="10" selected="false" on-change="
+                var btn = #Button(simpleButton);
+
+                if( $this.selected ){
+                    btn.ico.src = 'ui/android/img/ico/light/star.png';
+                }else{
+                    btn.ico = null;
+                }
+
+                btn.refresh();
+            "/>
+        </HBox>
+        <Widget defaults="'HRLight'" />
+
+
+        <!-- Vertical -->
+        <HBox widthPt="100" align="'middle'">
+            <VBox left="10" align="'left,middle'" widthPt="60">
+                <Text defaults="'Default,Dark'" text="'Vertical'" />
+                <Text defaults="'Default,DarkTip'" text="'Whether label and icon should be placed top to bottom or left to right'" />
+            </VBox>
+
+            <Switch right="10" selected="false" on-change="
+                var btn = #Button(simpleButton);
+
+                if( $this.selected ){
+                    btn.vertical = true;
+                }else{
+                    btn.vertical = false;
+                }
+
+                btn.alignElements();
+            "/>
+        </HBox>
+        <Widget defaults="'HRLight'" />
+
+
+        <!-- Ico position relative to label -->
+        <HBox widthPt="100" align="'middle'">
+            <VBox left="10" align="'left,middle'" widthPt="60">
+                <Text defaults="'Default,Dark'" text="'Icon before label'" />
+            </VBox>
+
+            <Switch right="10" on-change="
+                var btn = #Button(simpleButton);
+
+                if( $this.selected ){
+                    btn.icoBeforeLabel = true;
+                }else{
+                    btn.icoBeforeLabel = false;
+                }
+
+                btn.alignElements();
+            "/>
+        </HBox>
+        <Widget defaults="'HRLight'" />
+
+
+        <!-- Apart on/off -->
+        <HBox widthPt="100" align="'middle'">
+            <VBox left="10" align="'left,middle'" widthPt="60">
+                <Text defaults="'Default,Dark'" text="'Move apart'" />
+                <Text defaults="'Default,DarkTip'" text="'Stick ico and text to opposite borders'" />
+            </VBox>
+
+            <Switch right="10" selected="false" on-change="
+                var btn = #Button(simpleButton);
+
+                if( $this.selected ){
+                    btn.apart = true;
+                }else{
+                    btn.apart = false;
+                }
+
+                btn.alignElements();
+            "/>
+        </HBox>
+        <Widget defaults="'HRLight'" />
+    </VBox>
+</Scroll>

@@ -5,11 +5,14 @@
     <Text>
         <Default
             format-font      = "$Assets.getFont('ui/android/fonts/regular.ttf').fontName"
-            format-size      = "12"
+            format-size      = "14"
             format-color     = "0xFFFFFF"
             label-selectable = "false"
         />
+        <Dark format-color="0x111111"/>
+        <DarkTip format-color="0x7f7f7f" format-size="12" label-wordWrap="true" widthPt="100"/>
         <H1 format-size="22" padding="10"/>
+
     </Text>
 
 
@@ -29,6 +32,7 @@
             on-scrollStop  = "$this.vBar.visible = false;"
         />
         <Level1 skinName="'BlackGradient1'"/>
+        <Level2 skin:Paint-color="0xf2f2f2"/>
     </Scroll>
 
 
@@ -69,34 +73,125 @@
 
 
     <Button>
+        <Default
+            w                = "185"
+            h                = "40"
+            format-size      = "14"
+            format-color     = "0xFFFFFF"
+            format-font      = "$Assets.getFont('ui/android/fonts/regular.ttf').fontName"
+            skinName         = "'button'"
+            skinHoveredName  = "'buttonHovered'"
+            skinPressedName  = "'buttonPressed'"
+        />
+
+        <Settings
+            ico-src="'ui/android/img/ico/dark/settings.png'"
+            autoWidth="true"
+            childPadding="0"
+        />
+
         <MainBack ico-src="'ui/android/img/ico/light/mainBack.png'" />
         <MainHome ico-src="'ui/android/img/ico/light/mainHome.png'" />
         <MainRecent ico-src="'ui/android/img/ico/light/mainRecent.png'" />
 
         <MenuItem
-            align          = "'middle'"
-            h              = "44"
-            widthPt        = "100"
-            padding        = "5"
-            format-font    = "$Assets.getFont('ui/android/fonts/regular.ttf').fontName"
-            format-size    = "16"
-            format-color   = "0xFFFFFF"
-            apart          = "true"
-            ico-src        = "'ui/android/img/ico/light/next.png'"
-            icoBeforeLabel = "false"
+            align            = "'middle'"
+            h                = "44"
+            widthPt          = "100"
+            padding          = "5"
+            format-font      = "$Assets.getFont('ui/android/fonts/regular.ttf').fontName"
+            format-size      = "16"
+            format-color     = "0xFFFFFF"
+            apart            = "true"
+            ico-src          = "'ui/android/img/ico/light/next.png'"
+            icoBeforeLabel   = "false"
             skin:Paint-color = "0x111111"
             skinPressed:Paint-color = "0x257390"
         />
-        <!-- skinHovered:Paint-color = "0x2c94ba" -->
     </Button>
 
 
-    <Widget>
-        <HR
-            skin:Paint-color="0x282828"
-            skin:Paint-paddingLeft="10"
-            skin:Paint-paddingRight="10" h="1"
-            widthPt="100"
+    <Toggle>
+        <Default
+            w                = "185"
+            h                = "40"
+            format-size      = "14"
+            format-color     = "0xFFFFFF"
+            format-font      = "$Assets.getFont('ui/android/fonts/regular.ttf').fontName"
+            skinName         = "'button'"
+            skinHoveredName  = "'buttonHovered'"
+            skinPressedName  = "'buttonPressed'"
+
+            states-up-skinName   = "'button'"
+            states-down-skinName = "'buttonPressed'"
         />
+    </Toggle>
+
+
+    <StateButton>
+        <Default
+            w                = "185"
+            h                = "40"
+            format-size      = "14"
+            format-color     = "0xFFFFFF"
+            format-font      = "$Assets.getFont('ui/android/fonts/regular.ttf').fontName"
+            skinName         = "'button'"
+            skinHoveredName  = "'buttonHovered'"
+            skinPressedName  = "'buttonPressed'"
+        />
+    </StateButton>
+
+
+    <Widget>
+        <HR skinName="'hr'" h="1" widthPt="100"/>
+        <HRLight skinName="'hr'" h="1" widthPt="100" skin:Paint-color="0xa9a9a9"/>
     </Widget>
+
+
+    <Switch>
+        <Default
+            w        = "97"
+            h        = "24"
+            skinName = "'switch'"
+
+            slider-w = "47"
+
+            labelOff-left = "0"
+            labelOn-left  = "0"
+            labelOff-top  = "0"
+            labelOn-top   = "0"
+
+            labelOn-widthPt   = "100"
+            labelOff-widthPt  = "100"
+            labelOn-heightPt  = "100"
+            labelOff-heightPt = "100"
+
+            labelOn-align  = "'center,middle'"
+            labelOff-align = "'center,middle'"
+
+            on-create = "
+                if( $this.selected ){
+                    $this.labelOn.visible = true;
+                    $this.labelOff.visible = false;
+                    $this.slider.skinName = 'switchSliderOn';
+                }else{
+                    $this.labelOff.visible = true;
+                    $this.labelOn.visible = false;
+                    $this.slider.skinName = 'switchSliderOff';
+                }
+            "
+            on-change = "
+                if( $this.selected ){
+                    $this.labelOn.visible = true;
+                    $this.labelOff.visible = false;
+                    $this.slider.skinName = 'switchSliderOn';
+                }else{
+                    $this.labelOff.visible = true;
+                    $this.labelOn.visible = false;
+                    $this.slider.skinName = 'switchSliderOff';
+                }
+            "
+        />
+    </Switch>
+
 </Defaults>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Alert box -->
+<Floating name="'popup'" widthPt="100" heightPt="100" skinName="'popup'">
+    <VBox widthPt="90" childPadding="10" padding="10" skin:Paint-color="0x333333" skin:Paint-corners="[10]">
+
+        <Text widthPt="90" label-wordWrap="true" text="@msg" />
+
+        <Button text="'OK'" on-click="$this.getParent('popup').free();"/>
+
+    </VBox>
+</Floating>

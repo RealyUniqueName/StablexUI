@@ -2,7 +2,42 @@
 
 <!-- Buttons demo -->
 <Scroll name="'buttons'" defaults="'Screen,Level1'">
-    <VBox widthPt="100" heightPt="100">
-        <Text text="'Buttons'" />
+    <VBox widthPt="100" childPadding="20" paddingTop="20">
+
+        <!-- simple button -->
+        <HBox childPadding="10">
+            <Button id="'simpleButton'" text="'Simple'" h="60"/>
+            <Button defaults="'Default,Settings'" on-click="
+                #ViewStack(screens).show('simpleButtonSettings');
+            "/>
+        </HBox>
+
+        <!-- Toggle button -->
+        <HBox childPadding="10">
+            <Toggle states-up-text="'Toggle up'" states-down-text="'Toggle down'"/>
+            <Button defaults="'Default,Settings'" on-click="
+                var popup = $Main.alert({
+                    msg:'Toggle button has the same settings as simple one.\nPlus it has separate skin/icon/text for each state.'
+                });
+                popup.show();
+            "/>
+        </HBox>
+
+        <!-- Multi-state button -->
+        <HBox childPadding="10">
+            <StateButton
+                order = "['first', 'second', 'third', 'fourth']"
+                states-first-text  = "'Multi-state button'"
+                states-second-text = "'Second state'"
+                states-third-text  = "'Third state'"
+                states-fourth-text = "'Fourth state'"
+            />
+            <Button defaults="'Default,Settings'" on-click="
+                var popup = $Main.alert({
+                    msg:'Multi-state button has the same settings as simple one.\nPlus it has separate skin/icon/text for each state.'
+                });
+                popup.show();
+            "/>
+        </HBox>
     </VBox>
 </Scroll>
