@@ -301,4 +301,28 @@
         />
     </Options>
 
+
+    <TabStack>
+        <Default
+            tabBar-skin:Paint-color = "0x474747"
+            tabBar-unifyChildren = "true"
+            tabBar-childPadding  = "1"
+            widthPt  = "100"
+            heightPt = "100"
+            wrap     = "true"
+        />
+    </TabStack>
+
+
+    <TabPage>
+        <Default
+            title-w = "120"
+            title-h = "48"
+            title-states-up-ico        = "null"
+            title-states-down-ico      = "null"
+            title-skinPressedName      = "'tabPressed'"
+            title-states-up-skinName   = "'tab'"
+            title-states-down-skinName = "'tabActive'"
+        />
+    </TabPage>
 </Defaults>

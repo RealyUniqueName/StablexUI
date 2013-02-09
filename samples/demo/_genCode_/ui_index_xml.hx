@@ -3203,7 +3203,6 @@ if( ru.stablex.ui.UIBuilder.defaults.exists("VBox") ){
 __ui__widget2.childPadding = 20;
 __ui__widget2.align = 'top,center';
 __ui__widget2.widthPt = 100;
-__ui__widget2.heightPt = 100;
 __ui__widget2.paddingTop = 10;
 __ui__widget2._onInitialize();
 
@@ -3421,30 +3420,213 @@ __ui__widget1.name = 'tabs';
 __ui__widget1.defaults = 'Screen,Level1';
 __ui__widget1._onInitialize();
 
-var __ui__widget2 : ru.stablex.ui.widgets.VBox = new ru.stablex.ui.widgets.VBox();
-if( ru.stablex.ui.UIBuilder.defaults.exists("VBox") ){
+var __ui__widget2 : ru.stablex.ui.widgets.TabStack = new ru.stablex.ui.widgets.TabStack();
+if( ru.stablex.ui.UIBuilder.defaults.exists("TabStack") ){
      var defs = "Default".split(",");
-     var defFns = ru.stablex.ui.UIBuilder.defaults.get("VBox");
+     var defFns = ru.stablex.ui.UIBuilder.defaults.get("TabStack");
      for(i in 0...defs.length){
          var defaultsFn : ru.stablex.ui.widgets.Widget->Void = defFns.get(defs[i]);
          if( defaultsFn != null ) defaultsFn(__ui__widget2);
      }
 }
-__ui__widget2.widthPt = 100;
-__ui__widget2.heightPt = 100;
+__ui__widget2.name = 'tabs';
 __ui__widget2._onInitialize();
 
-var __ui__widget3 : ru.stablex.ui.widgets.Text = new ru.stablex.ui.widgets.Text();
-if( ru.stablex.ui.UIBuilder.defaults.exists("Text") ){
+var __ui__widget3 : ru.stablex.ui.widgets.TabPage = new ru.stablex.ui.widgets.TabPage();
+if( ru.stablex.ui.UIBuilder.defaults.exists("TabPage") ){
      var defs = "Default".split(",");
-     var defFns = ru.stablex.ui.UIBuilder.defaults.get("Text");
+     var defFns = ru.stablex.ui.UIBuilder.defaults.get("TabPage");
      for(i in 0...defs.length){
          var defaultsFn : ru.stablex.ui.widgets.Widget->Void = defFns.get(defs[i]);
          if( defaultsFn != null ) defaultsFn(__ui__widget3);
      }
 }
-__ui__widget3.text = 'Tabs';
+__ui__widget3.title.text = 'First tab';
 __ui__widget3._onInitialize();
+
+var __ui__widget4 : ru.stablex.ui.widgets.VBox = new ru.stablex.ui.widgets.VBox();
+if( ru.stablex.ui.UIBuilder.defaults.exists("VBox") ){
+     var defs = "Default".split(",");
+     var defFns = ru.stablex.ui.UIBuilder.defaults.get("VBox");
+     for(i in 0...defs.length){
+         var defaultsFn : ru.stablex.ui.widgets.Widget->Void = defFns.get(defs[i]);
+         if( defaultsFn != null ) defaultsFn(__ui__widget4);
+     }
+}
+__ui__widget4.widthPt = 100;
+__ui__widget4.heightPt = 100;
+__ui__widget4._onInitialize();
+
+var __ui__widget5 : ru.stablex.ui.widgets.VBox = new ru.stablex.ui.widgets.VBox();
+if( ru.stablex.ui.UIBuilder.defaults.exists("VBox") ){
+     var defs = "Default".split(",");
+     var defFns = ru.stablex.ui.UIBuilder.defaults.get("VBox");
+     for(i in 0...defs.length){
+         var defaultsFn : ru.stablex.ui.widgets.Widget->Void = defFns.get(defs[i]);
+         if( defaultsFn != null ) defaultsFn(__ui__widget5);
+     }
+}
+__ui__widget5.childPadding = 10;
+__ui__widget5.align = 'left,middle';
+__ui__widget5._onInitialize();
+
+var __ui__widget6 : ru.stablex.ui.widgets.Radio = new ru.stablex.ui.widgets.Radio();
+if( ru.stablex.ui.UIBuilder.defaults.exists("Radio") ){
+     var defs = "Default".split(",");
+     var defFns = ru.stablex.ui.UIBuilder.defaults.get("Radio");
+     for(i in 0...defs.length){
+         var defaultsFn : ru.stablex.ui.widgets.Widget->Void = defFns.get(defs[i]);
+         if( defaultsFn != null ) defaultsFn(__ui__widget6);
+     }
+}
+__ui__widget6.text = 'Bottom tabs';
+__ui__widget6.addEventListener(ru.stablex.ui.events.WidgetEvent.CHANGE, function(event:nme.events.Event){
+                        if( !__ui__widget6.selected ) return;
+
+                        var ts = __ui__widget6.getParentAs('tabs', ru.stablex.ui.widgets.TabStack);
+                        ts.setChildIndex(ts.tabBar, ts.numChildren - 1);
+
+                        //change tabs skins
+                        var tab : ru.stablex.ui.widgets.TabPage;
+                        for(i in 0...ts.numChildren){
+                            tab = ( Std.is(ts.getChildAt(i), ru.stablex.ui.widgets.TabPage) ? cast(ts.getChildAt(i), ru.stablex.ui.widgets.TabPage) : null);
+                            if( tab != null ){
+                                tab.title.states.down.skinName = 'tabBottomActive';
+                                tab.title.skinPressedName = 'tabBottomPressed';
+                                tab.title.updateState();
+                            }
+                        }
+
+                        ts.refresh();
+                    });
+__ui__widget6.group = 'tabsPos';
+__ui__widget6._onInitialize();
+__ui__widget6._onCreate();
+__ui__widget5.addChild(__ui__widget6);
+
+var __ui__widget6 : ru.stablex.ui.widgets.Radio = new ru.stablex.ui.widgets.Radio();
+if( ru.stablex.ui.UIBuilder.defaults.exists("Radio") ){
+     var defs = "Default".split(",");
+     var defFns = ru.stablex.ui.UIBuilder.defaults.get("Radio");
+     for(i in 0...defs.length){
+         var defaultsFn : ru.stablex.ui.widgets.Widget->Void = defFns.get(defs[i]);
+         if( defaultsFn != null ) defaultsFn(__ui__widget6);
+     }
+}
+__ui__widget6.text = 'Top tabs';
+__ui__widget6.addEventListener(ru.stablex.ui.events.WidgetEvent.CHANGE, function(event:nme.events.Event){
+                        if( !__ui__widget6.selected ) return;
+
+                        var ts = __ui__widget6.getParentAs('tabs', ru.stablex.ui.widgets.TabStack);
+                        ts.setChildIndex(ts.tabBar, 0);
+
+                        //change tabs skins
+                        var tab : ru.stablex.ui.widgets.TabPage;
+                        for(i in 0...ts.numChildren){
+                            tab = ( Std.is(ts.getChildAt(i), ru.stablex.ui.widgets.TabPage) ? cast(ts.getChildAt(i), ru.stablex.ui.widgets.TabPage) : null);
+                            if( tab != null ){
+                                tab.title.states.down.skinName = 'tabActive';
+                                tab.title.skinPressedName = 'tabPressed';
+                                tab.title.updateState();
+                            }
+                        }
+
+                        ts.refresh();
+                    });
+__ui__widget6.group = 'tabsPos';
+__ui__widget6._onInitialize();
+__ui__widget6._onCreate();
+__ui__widget5.addChild(__ui__widget6);
+__ui__widget5._onCreate();
+__ui__widget4.addChild(__ui__widget5);
+__ui__widget4._onCreate();
+__ui__widget3.addChild(__ui__widget4);
+__ui__widget3._onCreate();
+__ui__widget2.addChild(__ui__widget3);
+
+var __ui__widget3 : ru.stablex.ui.widgets.TabPage = new ru.stablex.ui.widgets.TabPage();
+if( ru.stablex.ui.UIBuilder.defaults.exists("TabPage") ){
+     var defs = "Default".split(",");
+     var defFns = ru.stablex.ui.UIBuilder.defaults.get("TabPage");
+     for(i in 0...defs.length){
+         var defaultsFn : ru.stablex.ui.widgets.Widget->Void = defFns.get(defs[i]);
+         if( defaultsFn != null ) defaultsFn(__ui__widget3);
+     }
+}
+__ui__widget3.title.text = 'NME';
+__ui__widget3._onInitialize();
+
+var __ui__widget4 : ru.stablex.ui.widgets.VBox = new ru.stablex.ui.widgets.VBox();
+if( ru.stablex.ui.UIBuilder.defaults.exists("VBox") ){
+     var defs = "Default".split(",");
+     var defFns = ru.stablex.ui.UIBuilder.defaults.get("VBox");
+     for(i in 0...defs.length){
+         var defaultsFn : ru.stablex.ui.widgets.Widget->Void = defFns.get(defs[i]);
+         if( defaultsFn != null ) defaultsFn(__ui__widget4);
+     }
+}
+__ui__widget4.widthPt = 100;
+__ui__widget4.heightPt = 100;
+__ui__widget4._onInitialize();
+
+var __ui__widget5 : ru.stablex.ui.widgets.Bmp = new ru.stablex.ui.widgets.Bmp();
+if( ru.stablex.ui.UIBuilder.defaults.exists("Bmp") ){
+     var defs = "Default".split(",");
+     var defFns = ru.stablex.ui.UIBuilder.defaults.get("Bmp");
+     for(i in 0...defs.length){
+         var defaultsFn : ru.stablex.ui.widgets.Widget->Void = defFns.get(defs[i]);
+         if( defaultsFn != null ) defaultsFn(__ui__widget5);
+     }
+}
+__ui__widget5.src = 'ui/android/img/nme.png';
+__ui__widget5._onInitialize();
+__ui__widget5._onCreate();
+__ui__widget4.addChild(__ui__widget5);
+__ui__widget4._onCreate();
+__ui__widget3.addChild(__ui__widget4);
+__ui__widget3._onCreate();
+__ui__widget2.addChild(__ui__widget3);
+
+var __ui__widget3 : ru.stablex.ui.widgets.TabPage = new ru.stablex.ui.widgets.TabPage();
+if( ru.stablex.ui.UIBuilder.defaults.exists("TabPage") ){
+     var defs = "Default".split(",");
+     var defFns = ru.stablex.ui.UIBuilder.defaults.get("TabPage");
+     for(i in 0...defs.length){
+         var defaultsFn : ru.stablex.ui.widgets.Widget->Void = defFns.get(defs[i]);
+         if( defaultsFn != null ) defaultsFn(__ui__widget3);
+     }
+}
+__ui__widget3.title.text = 'HAXE';
+__ui__widget3._onInitialize();
+
+var __ui__widget4 : ru.stablex.ui.widgets.VBox = new ru.stablex.ui.widgets.VBox();
+if( ru.stablex.ui.UIBuilder.defaults.exists("VBox") ){
+     var defs = "Default".split(",");
+     var defFns = ru.stablex.ui.UIBuilder.defaults.get("VBox");
+     for(i in 0...defs.length){
+         var defaultsFn : ru.stablex.ui.widgets.Widget->Void = defFns.get(defs[i]);
+         if( defaultsFn != null ) defaultsFn(__ui__widget4);
+     }
+}
+__ui__widget4.widthPt = 100;
+__ui__widget4.heightPt = 100;
+__ui__widget4._onInitialize();
+
+var __ui__widget5 : ru.stablex.ui.widgets.Bmp = new ru.stablex.ui.widgets.Bmp();
+if( ru.stablex.ui.UIBuilder.defaults.exists("Bmp") ){
+     var defs = "Default".split(",");
+     var defFns = ru.stablex.ui.UIBuilder.defaults.get("Bmp");
+     for(i in 0...defs.length){
+         var defaultsFn : ru.stablex.ui.widgets.Widget->Void = defFns.get(defs[i]);
+         if( defaultsFn != null ) defaultsFn(__ui__widget5);
+     }
+}
+__ui__widget5.src = 'ui/android/img/haxe.png';
+__ui__widget5._onInitialize();
+__ui__widget5._onCreate();
+__ui__widget4.addChild(__ui__widget5);
+__ui__widget4._onCreate();
+__ui__widget3.addChild(__ui__widget4);
 __ui__widget3._onCreate();
 __ui__widget2.addChild(__ui__widget3);
 __ui__widget2._onCreate();
@@ -3493,7 +3675,9 @@ if( ru.stablex.ui.UIBuilder.defaults.exists("VBox") ){
      }
 }
 __ui__widget3.name = 'page1';
+__ui__widget3.align = 'center,top';
 __ui__widget3.defaults = 'DarkGray';
+__ui__widget3.paddingTop = 10;
 __ui__widget3._onInitialize();
 
 var __ui__widget4 : ru.stablex.ui.widgets.VBox = new ru.stablex.ui.widgets.VBox();

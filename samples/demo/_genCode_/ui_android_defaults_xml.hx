@@ -454,4 +454,34 @@ __ui__widget1.list.widthPt = 100;
 __ui__widget1.alignList = false;
 __ui__widget1.list.skinName = 'popup';
 __ui__widget1.list.heightPt = 100;
+});
+if( !ru.stablex.ui.UIBuilder.defaults.exists("TabStack") ) ru.stablex.ui.UIBuilder.defaults.set("TabStack", new Hash());
+ru.stablex.ui.UIBuilder.defaults.get("TabStack").set("Default", function(__ui__widget0:ru.stablex.ui.widgets.Widget) : Void {
+var __ui__widget1 : ru.stablex.ui.widgets.TabStack = cast(__ui__widget0, ru.stablex.ui.widgets.TabStack);
+__ui__widget1.wrap = true;
+__ui__widget1.widthPt = 100;
+__ui__widget1.heightPt = 100;
+__ui__widget1.tabBar.childPadding = 1;
+__ui__widget1.tabBar.unifyChildren = true;
+if(__ui__widget1.tabBar.skin == null ){
+     __ui__widget1.tabBar.skin = new ru.stablex.ui.skins.Paint();
+     if( Std.is(__ui__widget1.tabBar.skin, ru.stablex.ui.widgets.Widget) ){
+         var __tmp__ : ru.stablex.ui.widgets.Widget = cast(__ui__widget1.tabBar.skin, ru.stablex.ui.widgets.Widget);
+         ru.stablex.ui.UIBuilder.applyDefaults(__tmp__);
+         __tmp__._onInitialize();
+         __tmp__._onCreate();
+     }
+}
+cast(__ui__widget1.tabBar.skin, ru.stablex.ui.skins.Paint).color = 0x474747;
+});
+if( !ru.stablex.ui.UIBuilder.defaults.exists("TabPage") ) ru.stablex.ui.UIBuilder.defaults.set("TabPage", new Hash());
+ru.stablex.ui.UIBuilder.defaults.get("TabPage").set("Default", function(__ui__widget0:ru.stablex.ui.widgets.Widget) : Void {
+var __ui__widget1 : ru.stablex.ui.widgets.TabPage = cast(__ui__widget0, ru.stablex.ui.widgets.TabPage);
+__ui__widget1.title.states.up.skinName = 'tab';
+__ui__widget1.title.states.down.ico = null;
+__ui__widget1.title.h = 48;
+__ui__widget1.title.w = 120;
+__ui__widget1.title.states.up.ico = null;
+__ui__widget1.title.skinPressedName = 'tabPressed';
+__ui__widget1.title.states.down.skinName = 'tabActive';
 });})()

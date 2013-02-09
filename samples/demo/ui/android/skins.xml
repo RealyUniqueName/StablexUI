@@ -29,6 +29,29 @@
     <!-- options -->
     <optionsBg:Paint color="0x444444" />
 
+    <!-- tabs -->
+    <tab:Paint color="0x333333" />
+    <tabActive:Layer
+        current:Paint-color = "0x333333"
+        current:Paint-paddingBottom = "6"
+        behind:Paint-color = "0x33b5e5"
+    />
+    <tabPressed:Layer
+        current:Paint-color = "0x33819d"
+        current:Paint-paddingBottom = "6"
+        behind:Paint-color = "0x33b5e5"
+    />
+    <tabBottomActive:Layer
+        current:Paint-color = "0x333333"
+        current:Paint-paddingTop = "6"
+        behind:Paint-color = "0x33b5e5"
+    />
+    <tabBottomPressed:Layer
+        current:Paint-color = "0x33819d"
+        current:Paint-paddingTop = "6"
+        behind:Paint-color = "0x33b5e5"
+    />
+
     <Black1:Paint color="0x111111"/>
     <BlackGradient1:Gradient colors="[0x000000, 0x2b3034]"/>
     <BlackBlueStripe:Layer

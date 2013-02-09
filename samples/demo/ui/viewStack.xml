@@ -4,7 +4,7 @@
 <Scroll name="'viewStack'" defaults="'Screen,Level1'">
 
     <ViewStack id="'vs'" widthPt="100" heightPt="100">
-        <VBox name="'page1'" defaults="'DarkGray'">
+        <VBox name="'page1'" defaults="'DarkGray'" align="'center,top'" paddingTop="10">
             <VBox widthPt="100">
                 <Text text="'ViewStack transitions'" />
                 <Text defaults="'Default,LightTip'" text="'Also you can implement custom transitions.'" widthPt="100" align="'center,middle'" />

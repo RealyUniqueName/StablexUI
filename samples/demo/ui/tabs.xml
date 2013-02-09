@@ -2,7 +2,64 @@
 
 <!-- Tabs demo -->
 <Scroll name="'tabs'" defaults="'Screen,Level1'">
-    <VBox widthPt="100" heightPt="100">
-        <Text text="'Tabs'" />
-    </VBox>
+    <TabStack name="'tabs'">
+
+        <TabPage title-text="'First tab'">
+            <VBox widthPt="100" heightPt="100">
+                <VBox align="'left,middle'" childPadding="10">
+                    <Radio group="'tabsPos'" text="'Bottom tabs'" on-change="
+                        if( !$this.selected ) return;
+
+                        var ts = $this.getParentAs('tabs', $TabStack);
+                        ts.setChildIndex(ts.tabBar, ts.numChildren - 1);
+
+                        //change tabs skins
+                        var tab : $TabPage;
+                        for(i in 0...ts.numChildren){
+                            tab = ( Std.is(ts.getChildAt(i), $TabPage) ? cast(ts.getChildAt(i), $TabPage) : null);
+                            if( tab != null ){
+                                tab.title.states.down.skinName = 'tabBottomActive';
+                                tab.title.skinPressedName = 'tabBottomPressed';
+                                tab.title.updateState();
+                            }
+                        }
+
+                        ts.refresh();
+                    "/>
+                    <Radio group="'tabsPos'" text="'Top tabs'" on-change="
+                        if( !$this.selected ) return;
+
+                        var ts = $this.getParentAs('tabs', $TabStack);
+                        ts.setChildIndex(ts.tabBar, 0);
+
+                        //change tabs skins
+                        var tab : $TabPage;
+                        for(i in 0...ts.numChildren){
+                            tab = ( Std.is(ts.getChildAt(i), $TabPage) ? cast(ts.getChildAt(i), $TabPage) : null);
+                            if( tab != null ){
+                                tab.title.states.down.skinName = 'tabActive';
+                                tab.title.skinPressedName = 'tabPressed';
+                                tab.title.updateState();
+                            }
+                        }
+
+                        ts.refresh();
+                    "/>
+                </VBox>
+            </VBox>
+        </TabPage>
+
+        <TabPage title-text="'NME'">
+            <VBox widthPt="100" heightPt="100">
+                <Bmp src="'ui/android/img/nme.png'"/>
+            </VBox>
+        </TabPage>
+
+        <TabPage title-text="'HAXE'">
+            <VBox widthPt="100" heightPt="100">
+                <Bmp src="'ui/android/img/haxe.png'"/>
+            </VBox>
+        </TabPage>
+
+    </TabStack>
 </Scroll>
