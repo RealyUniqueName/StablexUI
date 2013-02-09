@@ -7,6 +7,8 @@ Supported targets: cpp (iOS, Android, Blackberry, webOS, Windows, Linux, MacOS),
 
 Online docs for API and basic features: http://stablex.ru/ui/doc
 
+Flash demo with android-4.x-like theme: http://stablex.ru/ui/demo/demo_flash/
+
 Features:
 ---------------
 * Easy integration with any project. Just addChild StablexUI to any Sprite or Stage.
