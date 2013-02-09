@@ -26,7 +26,7 @@ class Main extends ru.stablex.ui.widgets.Widget{
         Lib.current.stage.align     = StageAlign.TOP_LEFT;
         Lib.current.stage.scaleMode = StageScaleMode.NO_SCALE;
 
-        UIBuilder.saveCodeTo('_genCode_');
+        // UIBuilder.saveCodeTo('_genCode_');
 
         //register main class to access it's methods and properties in xml
         UIBuilder.regClass('com.example.Main');
@@ -43,16 +43,16 @@ class Main extends ru.stablex.ui.widgets.Widget{
         //Create our UI
         UIBuilder.buildFn('ui/index.xml')().show();
 
-        // FPS counter {
-            var fps : nme.display.FPS = cast Lib.current.stage.addChild(new nme.display.FPS());
-            var format = new nme.text.TextFormat (nme.Assets.getFont ("ui/android/fonts/regular.ttf").fontName, 12, 0xFFFFFF);
-            fps.defaultTextFormat = format;
-            fps.selectable = false;
-            fps.embedFonts = true;
-            fps.x = 0;
-            fps.y = 0;
-            fps.mouseEnabled = false;
-        //}
+        // // FPS counter {
+        //     var fps : nme.display.FPS = cast Lib.current.stage.addChild(new nme.display.FPS());
+        //     var format = new nme.text.TextFormat (nme.Assets.getFont ("ui/android/fonts/regular.ttf").fontName, 12, 0xFFFFFF);
+        //     fps.defaultTextFormat = format;
+        //     fps.selectable = false;
+        //     fps.embedFonts = true;
+        //     fps.x = 0;
+        //     fps.y = 0;
+        //     fps.mouseEnabled = false;
+        // //}
     }//function main()
 
 
