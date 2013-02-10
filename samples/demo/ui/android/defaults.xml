@@ -8,6 +8,7 @@
             format-size      = "14"
             format-color     = "0xFFFFFF"
             label-selectable = "false"
+            label-embedFonts = "true"
         />
         <Dark format-color="0x111111"/>
         <DarkTip format-color="0x7f7f7f" format-size="12" label-wordWrap="true" widthPt="100"/>
@@ -104,6 +105,7 @@
         <Default
             w                = "185"
             h                = "40"
+            label-embedFonts = "true"
             format-size      = "14"
             format-color     = "0xFFFFFF"
             format-font      = "$Assets.getFont('ui/android/fonts/regular.ttf').fontName"
@@ -129,6 +131,7 @@
             h                = "44"
             widthPt          = "100"
             padding          = "5"
+            label-embedFonts = "true"
             format-font      = "$Assets.getFont('ui/android/fonts/regular.ttf').fontName"
             format-size      = "16"
             format-color     = "0xFFFFFF"
@@ -148,6 +151,7 @@
             format-size      = "14"
             format-color     = "0xFFFFFF"
             format-font      = "$Assets.getFont('ui/android/fonts/regular.ttf').fontName"
+            label-embedFonts = "true"
             skinName         = "'button'"
             skinHoveredName  = "'buttonHovered'"
             skinPressedName  = "'buttonPressed'"
@@ -165,6 +169,7 @@
             format-size      = "14"
             format-color     = "0xFFFFFF"
             format-font      = "$Assets.getFont('ui/android/fonts/regular.ttf').fontName"
+            label-embedFonts = "true"
             skinName         = "'button'"
             skinHoveredName  = "'buttonHovered'"
             skinPressedName  = "'buttonPressed'"
@@ -195,33 +200,36 @@
             labelOff-widthPt  = "100"
             labelOn-heightPt  = "100"
             labelOff-heightPt = "100"
+            labelOff-visible  = "false"
 
             labelOn-align  = "'center,middle'"
             labelOff-align = "'center,middle'"
 
             on-create = "
                 if( $this.selected ){
-                    $this.labelOn.visible = true;
-                    $this.labelOff.visible = false;
+                    $this.labelOn.text = 'ON';
+                    //$this.labelOff.visible = false;
                     $this.slider.skinName = 'switchSliderOn';
                 }else{
-                    $this.labelOff.visible = true;
-                    $this.labelOn.visible = false;
+                    //$this.labelOff.visible = true;
+                    $this.labelOn.text = 'OFF';
                     $this.slider.skinName = 'switchSliderOff';
                 }
             "
             on-change = "
                 if( $this.selected ){
-                    $this.labelOn.visible = true;
-                    $this.labelOff.visible = false;
+                    $this.labelOn.text = 'ON';
+                    //$this.labelOff.visible = false;
                     $this.slider.skinName = 'switchSliderOn';
                 }else{
-                    $this.labelOff.visible = true;
-                    $this.labelOn.visible = false;
+                    //$this.labelOff.visible = true;
+                    $this.labelOn.text = 'OFF';
                     $this.slider.skinName = 'switchSliderOff';
                 }
             "
         />
+
+            
         <Dark skin:Paint-alpha="0.6" />
         <Classic
             w        = "97"

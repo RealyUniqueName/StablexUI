@@ -7,26 +7,91 @@
     y    = "10"
     w    = "$Lib.current.stage.stageWidth - 20"
     h    = "$Lib.current.stage.stageHeight - 20"
-    skin:Slice9-src   = "'assets/img/winxp.png'"
-    skin:Slice9-slice = "[5, 10, 32, 48]"
-    on-display=" haxe.Timer.delay(#mask.onResize, 10); "
 >
+    
 
-    <HBox widthPt="100" top="40" childPadding="20">
-        <Button skin:Paint-color="0x999999" skin:Paint-border="1" text="'remove object with scrollRect'" on-click=" #cont.removeChild(#mask); "/>
-        <Button skin:Paint-color="0x999999" skin:Paint-border="1" text="'add object with scrollRect'" on-click=" #cont.addChild(#mask); "/>
-        <Button skin:Paint-color="0x999999" skin:Paint-border="1" text="'scrollRect = null'" on-click=" #mask.scrollRect = null; "/>
-        <Button skin:Paint-color="0x999999" skin:Paint-border="1" text="'set scrollRect'" on-click=" #mask.onResize(); "/>
-    </HBox>
-
-    <Widget id="'cont'" widthPt="90" h="500" leftPt="5" bottom="10" skin:Paint-border="1" skin:Paint-color="0xAAAAAA" on-click="
-        if( event.target != #mask && event.target != #panel ){
-            #mask.tween(0.5, {left:$this.mouseX - #mask.w / 2, top:$this.mouseY - #mask.h / 2});
+    <Widget name="'gray'" id="'gray'" widthPt="100" heightPt="100" skin:Paint-border="1" skin:Paint-color="0xAAAAAA" on-click="
+        if( event.target != #white && event.target != #red && event.target != #green ){
+            #white.tween(0.5, {left:$this.mouseX - #white.w / 2, top:$this.mouseY - #white.h / 2});
+        }else if( event.target == #white ){
+            #red.tween(0.5, {left:#white.mouseX - #red.w / 2, top:#white.mouseY - #red.h / 2});
         }
     ">
-        <Widget id="'mask'" widthPt="100" heightPt="100" overflow="false">
-            <Widget id="'panel'" skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[40]" w="300" h="300" left="-50" top="-50" />
+        <Text widthPt="100" label-wordWrap="true" text="'Blue and white are children of gray. Red and green are children of white. Click gray to move white. Click white to move red. White.scrollRect != null.'" />
+        <Widget id="'white'" left="200" top="200" w="400" h="400" overflow="false" skin:Paint-border="2" skin:Paint-color="0xFFFFFF">
+            <Widget id="'red'" skin:Paint-border="1" skin:Paint-color="0xFF0000" w="300" h="300" right="50" bottom="50" >
+                <Text text="'I AM CHILD OF CHILD OF RED'" top="20" left="20"/>
+            </Widget>
+
+            <Widget id="'green'" skin:Paint-color="0x00FF00" skin:Paint-border="1" w="200" h="200" left="-50" top="-50">
+                <Text text="'I AM CHILD OF CHILD OF GREEN'" bottom="20" right="10"/>
+            </Widget>
         </Widget>
+
+        <Widget id="'blue'" left="100" top="100" w="200" h="200" skin:Paint-border="1" skin:Paint-color="0x0000FF"/>
     </Widget>
 
+
+    <VBox id="'buttons'" childPadding="10" padding="5" widthPt="100" bottom="0" skin:Paint-color="0xDDDDDD" skin:Paint-border="2">
+        <HBox childPadding="10">
+            <Button text="'remove object with scrollRect (white)'" on-click=" #gray.removeChild(#white); "/>
+            <Button text="'add object with scrollRect (white)'" on-click=" #gray.addChild(#white); "/>
+            <Button text="'white.scrollRect = null'" on-click=" #white.overflow = true; "/>
+            <Button text="'set white.scrollRect'" on-click=" #white.overflow = false; "/>        
+            <Button text="'toggle white.visible'" on-click=" #white.visible = !#white.visible; "/>        
+        </HBox>
+        <HBox childPadding="10">
+            <Button text="'white.removeChild(green)'" on-click=" if( #green.parent == #white )  #white.removeChild(#green); "/>
+            <Button text="'white.removeChild(red)'" on-click=" if( #red.parent == #white ) #white.removeChild(#red); "/>
+            <Button text="'white.addChild(green)'" on-click=" if( #green.parent != #white ) #white.addChild(#green); "/>
+            <Button text="'white.addChild(red)'" on-click=" if( #red.parent != #white ) #white.addChild(#red); "/>            
+        </HBox>
+        <HBox childPadding="10">
+            <Button text="'white.addChildAt(green, 0) or white.setChildIndex(green, 0)'" on-click=" 
+                if( #green.parent != #white ) { 
+                    #white.addChildAt(#green, 0);
+                }else{
+                    #white.setChildIndex(#green, 0);
+                } 
+            "/>
+            <Button text="'white.addChildAt(red, 0) or white.setChildIndex(red, 0)'" on-click=" 
+                if( #red.parent != #white ) { 
+                    #white.addChildAt(#red, 0);
+                }else{
+                    #white.setChildIndex(#red, 0);
+                } 
+            "/>
+            <Button text="'white.swapChildren(red, green)'" on-click=" if( #red.parent == #white && #green.parent == #white ) #white.swapChildren(#red, #green); "/>
+        </HBox>
+        <HBox childPadding="10">
+            <Button text="'gray.addChild(green)'" on-click=" 
+                if( #green.parent != #gray ) { 
+                    #gray.addChild(#green);
+                } 
+            "/>            
+            <Button text="'gray.removeChild(blue)'" on-click=" 
+                if( #blue.parent != #gray ) { 
+                    #gray.removeChild(#blue);
+                } 
+            "/>
+            <Button text="'gray.addChild(blue)'" on-click=" 
+                if( #blue.parent != #gray ) { 
+                    #gray.addChild(#blue);
+                } 
+            "/>
+            <Button text="'gray.swapChildren(white, blue)'" on-click=" if( #white.parent == #gray && #blue.parent == #gray ) #gray.swapChildren(#white, #blue); "/>                        
+        </HBox>
+        <HBox childPadding="10">
+            <Button text="'remove gray'" on-click=" 
+                if( #gray.parent == #root ) { 
+                    #root.removeChild(#gray);
+                } 
+            "/>            
+            <Button text="'add gray'" on-click=" 
+                if( #gray.parent != #root ) { 
+                    #root.addChildAt(#gray, 0);
+                } 
+            "/>
+        </HBox>
+    </VBox>
 </Main>

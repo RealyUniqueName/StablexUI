@@ -2,7 +2,7 @@
 
 
 <!-- Initial screen -->
-<Scroll name="'main'" defaults="'Screen'">
+<Scroll defaults="'Screen'">
     <VBox defaults="'Menu'">
 
         <Button text="'Buttons'" defaults="'MenuItem'" on-click="#ViewStack(screens).show('buttons');"/>

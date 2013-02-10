@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<Defaults>
+    <Button>
+        <Default
+            skin:Paint-color="0xBBBBBB" 
+            skin:Paint-border="1"
+            skinPressed:Paint-color="0x999999"
+            skinPressed:Paint-border="1"
+        />
+    </Button>
+</Defaults>

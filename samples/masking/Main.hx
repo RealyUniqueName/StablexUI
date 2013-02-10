@@ -23,7 +23,7 @@ class Main extends ru.stablex.ui.widgets.Widget{
         UIBuilder.regClass("Main");
 
         //initialize StablexUI
-        UIBuilder.init();
+        UIBuilder.init('assets/ui/defaults.xml');
 
         //Create our UI
         Lib.current.addChild( UIBuilder.buildFn('assets/ui/mask.xml')() );

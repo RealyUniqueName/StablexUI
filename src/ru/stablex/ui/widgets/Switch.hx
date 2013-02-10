@@ -29,7 +29,7 @@ class Switch extends Widget{
     *
     */
     public function new() : Void {
-        super();
+        super();        
         this.overflow = false;
 
         this.slider = UIBuilder.create(Widget, {right:0, heightPt:100});

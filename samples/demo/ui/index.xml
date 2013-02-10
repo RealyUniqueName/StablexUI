@@ -41,7 +41,7 @@
         <meta:include src="ui/scale9Skin.xml"/>
 
         <!-- Text fields demo -->
-        <meta:include src="ui/textFields.xml"/>
+        <!-- <meta:include src="ui/textFields.xml"/> -->
 
         <!-- Progress bars demo -->
         <meta:include src="ui/progress.xml"/>
@@ -57,7 +57,6 @@
 
         <!-- ViewStack transitions demo -->
         <meta:include src="ui/viewStack.xml"/>
-
     </ViewStack>
 
     <!-- Main menu -->

@@ -39,13 +39,18 @@ class ViewStack extends Widget{
     override public function refresh () : Void{
         super.refresh();
 
-        //hide everything
+        //hide everything except current
+        var idx : Int = this.currentIdx;
         for(i in 0...this.numChildren){
-            this.getChildAt(i).visible = false;
+            if( idx != i ){
+                this.getChildAt(i).visible = false;
+            }else{
+                this.getChildAt(i).visible = true;
+            }
         }
 
-        //show current
-        this.showIdx(this.currentIdx, true);
+        // //show current
+        // this.showIdx(this.currentIdx, true);
     }//function refresh()
 
 

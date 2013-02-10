@@ -33,7 +33,7 @@ class Text extends Box{
         this.label = cast(this.addChild(new TextField()), TextField);
         this.label.autoSize   = nme.text.TextFieldAutoSize.LEFT;
         this.label.multiline  = true;
-        this.label.embedFonts = true;
+        // this.label.embedFonts = true;
 
         this.format = this.label.defaultTextFormat;
 
