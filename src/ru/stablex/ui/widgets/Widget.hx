@@ -906,7 +906,7 @@ class Widget extends TweenSprite{
     public inline function getParent(name:String) : Widget {
         var p : Widget = this.wparent;
 
-        while( p.name != name && p != null ){
+        while( p != null && p.name != name ){
             p = p.wparent;
         }
 
@@ -921,7 +921,7 @@ class Widget extends TweenSprite{
     public inline function getParentAs<T>(name:String, cls:Class<T>) : Null<T> {
         var p : Widget = this.wparent;
 
-        while( p.name != name && p != null ){
+        while( p != null && p.name != name  ){
             p = p.wparent;
         }
 

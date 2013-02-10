@@ -26,7 +26,7 @@
 
                         ts.refresh();
                     "/>
-                    <Radio group="'tabsPos'" text="'Top tabs'" on-change="
+                    <Radio group="'tabsPos'" selected="true" text="'Top tabs'" on-change="
                         if( !$this.selected ) return;
 
                         var ts = $this.getParentAs('tabs', $TabStack);

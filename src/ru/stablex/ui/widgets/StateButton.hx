@@ -46,7 +46,9 @@ class StateButton extends Button{
     private function _setCurrentIdx(idx:Int) : Int {
         if( idx != this._currentIdx ){
             this._currentIdx = idx;
-            this.dispatchEvent(new WidgetEvent(WidgetEvent.CHANGE));
+            if( this.created ){
+                this.dispatchEvent(new WidgetEvent(WidgetEvent.CHANGE));
+            }
         }
         return idx;
     }//function _setCurrentIdx()
