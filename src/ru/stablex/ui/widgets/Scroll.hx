@@ -3,6 +3,7 @@ package ru.stablex.ui.widgets;
 import nme.display.DisplayObject;
 import nme.events.Event;
 import nme.events.MouseEvent;
+import nme.events.TouchEvent;
 import nme.Lib;
 import ru.stablex.ui.events.WidgetEvent;
 
@@ -186,7 +187,7 @@ class Scroll extends Widget{
             if( k > 1 ) k = 1;
             this.vBar.slider.h = this.h * k;
             this.vBar.refresh();
-            this.vBar.addUniqueListener(WidgetEvent.CHANGE, this._onVBarChange);
+            // this.vBar.addUniqueListener(WidgetEvent.CHANGE, this._onVBarChange);
         }
         //verticalhorizontal bar
         if( this.hBar != null ){
@@ -197,7 +198,7 @@ class Scroll extends Widget{
             if( k > 1 ) k = 1;
             this.hBar.slider.w = this.hBar.w * k;
             this.hBar.refresh();
-            this.hBar.addUniqueListener(WidgetEvent.CHANGE, this._onHBarChange);
+            // this.hBar.addUniqueListener(WidgetEvent.CHANGE, this._onHBarChange);
         }
 
         //mouse wheel scrolling
@@ -244,7 +245,7 @@ class Scroll extends Widget{
     * Start scroll by drag
     *
     */
-    private function _dragScroll (e:MouseEvent) : Void {
+    private function _dragScroll_old (e:MouseEvent) : Void {
         var dx       : Float = this.mouseX - this.scrollX;
         var dy       : Float = this.mouseY - this.scrollY;
         var lastX    : Float = this.mouseX;
@@ -314,7 +315,7 @@ class Scroll extends Widget{
         //stop scrolling
         Lib.current.stage.removeEventListener(MouseEvent.MOUSE_UP, fnStop);
         Lib.current.stage.addEventListener(MouseEvent.MOUSE_UP, fnStop);
-    }//function _dragScroll()
+    }//function _dragScroll_old()
 
 
     /**
@@ -339,6 +340,146 @@ class Scroll extends Widget{
             this.scrollY += e.delta * 10;
         }
     }//function _wheelScroll()
+
+
+    private var _dx       : Float = 0;
+    private var _dy       : Float = 0;
+    private var _velX     : Array<Float>;
+    private var _velY     : Array<Float>;
+    private var _prevVelX : Float = 0;
+    private var _prevVelY : Float = 0;
+    private var _prevTime : Int = 0;
+    private var _lastX    : Float = 0;
+    private var _lastY    : Float = 0;
+    private var _stopped  : Bool = false;
+    private var _finished : Bool = false;
+
+
+    /**
+    * Start drag scroll
+    *
+    */
+    private function _dragScroll(e:MouseEvent) : Void {
+        this._dx = this.mouseX - this.box.left;
+        this._dy = this.mouseY - this.box.top;
+
+        this._prevTime = Lib.getTimer();
+
+        this._velX = [];
+        this._velY = [];
+
+        this._lastX = this.mouseX;
+        this._lastY = this.mouseY;
+
+        this._prevVelX = this._prevVelY = 0;
+
+        this._finished = this._stopped = false;
+
+        // this.addUniqueListener(Event.ENTER_FRAME, this._followDrag);
+        this.addUniqueListener(MouseEvent.MOUSE_MOVE, this._updateDrag);
+        this.addUniqueListener(TouchEvent.TOUCH_MOVE, this._updateDrag);
+        Lib.current.stage.removeEventListener(MouseEvent.MOUSE_UP, this._stopDrag);
+        Lib.current.stage.addEventListener(MouseEvent.MOUSE_UP, this._stopDrag);
+    }//function _dragScroll()
+
+
+    private static inline var _ACCEL = 0.0001;
+
+    /**
+    * Stop dragging
+    *
+    */
+    private function _stopDrag(e:Event) : Void {
+        this._stopped = true;
+
+        this._updateDrag(e);
+
+        //count starting inertial velocities {
+            var weight      : Float = 2;
+            var totalWeight : Float = 0;
+            this._prevVelX = 0;
+            while( this._velX.length > 0 ){
+                this._prevVelX += this._velX.shift() * weight;
+                totalWeight += weight;
+                weight *= 0.83;
+            }
+            this._prevVelX /= totalWeight;
+            this._accelX = (this._prevVelX > 0 ? -_ACCEL : _ACCEL);
+
+            var weight      : Float = 50;
+            var totalWeight : Float = 0;
+            this._prevVelY = 0;
+            while( this._velY.length > 0 ){
+                this._prevVelY += this._velY.shift() * weight;
+                totalWeight += weight;
+                weight *= 0.83;
+            }
+            this._prevVelY /= totalWeight;
+            this._accelY = (this._prevVelY > 0 ? -_ACCEL : _ACCEL);
+        //}
+
+        this.addUniqueListener(Event.ENTER_FRAME, this._followDrag);
+        this.removeEventListener(MouseEvent.MOUSE_MOVE, this._updateDrag);
+        this.removeEventListener(TouchEvent.TOUCH_MOVE, this._updateDrag);
+        Lib.current.stage.removeEventListener(MouseEvent.MOUSE_UP, this._stopDrag);
+    }//function _stopDrag()
+
+
+
+    /**
+    * Update scrolling vars
+    *
+    */
+    private function _updateDrag(e:Event) : Void {
+        var tm : Int = Lib.getTimer();
+        if( tm - this._prevTime == 0 ) return;
+
+        //add current velocity
+        this._velX.unshift(this._prevVelX);
+        this._velY.unshift(this._prevVelY);
+
+        //keep velocity stack length <= 10
+        if( this._velX.length > 10 ) this._velX.pop();
+        if( this._velY.length > 10 ) this._velY.pop();
+
+        //calc current velocity
+        this._prevVelX = (this.mouseX - this._lastX) / (tm - this._prevTime);
+        this._prevVelY = (this.mouseY - this._lastY) / (tm - this._prevTime);
+
+        //save last position
+        this._lastX = this.mouseX;
+        this._lastY = this.mouseY;
+
+        //move scrolled content
+        this.scrollX = this._lastX - this._dx;
+        this.scrollY = this._lastY - this._dy;
+    }//function _updateDrag()
+
+
+    private var _accelX : Float = 0;
+    private var _accelY : Float = 0;
+
+
+    /**
+    * Follow dragging
+    *
+    */
+    private function _followDrag(e:Event) : Void {
+        trace(this._prevVelY);
+
+        var tm : Int = Lib.getTimer();
+
+        this.scrollY += this._prevVelY * (tm - this._prevTime);
+        // this._prevVelY += this._accelY * (tm - this._prevTime);
+        this._prevVelY *= 0.8;
+        this._prevTime = tm;
+
+        trace(this._prevVelY);
+
+        if( Math.abs(this._prevVelY) < 1e-3 ){
+            this.removeEventListener(Event.ENTER_FRAME, this._followDrag);
+        }
+    }//function _followDrag()
 
 
 }//class Scroll
