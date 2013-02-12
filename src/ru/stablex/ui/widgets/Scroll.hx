@@ -1,6 +1,7 @@
 package ru.stablex.ui.widgets;
 
 import nme.display.DisplayObject;
+import nme.display.Sprite;
 import nme.events.Event;
 import nme.events.MouseEvent;
 import nme.events.TouchEvent;
@@ -48,6 +49,11 @@ class Scroll extends Widget{
     public var vBar (default,_setVBar) : Slider;
     //horizontal scroll bar
     public var hBar (default,_setHBar) : Slider;
+    /**
+    * For neko and html5 targets onMouseDown dispatched several times (depends on display list depth)
+    * We want to process it only once
+    */
+    private var _processingDrag : Bool = false;
 
 
     /**
@@ -187,7 +193,7 @@ class Scroll extends Widget{
             if( k > 1 ) k = 1;
             this.vBar.slider.h = this.h * k;
             this.vBar.refresh();
-            // this.vBar.addUniqueListener(WidgetEvent.CHANGE, this._onVBarChange);
+            this.vBar.addUniqueListener(WidgetEvent.CHANGE, this._onVBarChange);
         }
         //verticalhorizontal bar
         if( this.hBar != null ){
@@ -198,7 +204,7 @@ class Scroll extends Widget{
             if( k > 1 ) k = 1;
             this.hBar.slider.w = this.hBar.w * k;
             this.hBar.refresh();
-            // this.hBar.addUniqueListener(WidgetEvent.CHANGE, this._onHBarChange);
+            this.hBar.addUniqueListener(WidgetEvent.CHANGE, this._onHBarChange);
         }
 
         //mouse wheel scrolling
@@ -210,9 +216,9 @@ class Scroll extends Widget{
 
         //dragging
         if( this.dragScroll ){
-            this.addUniqueListener(MouseEvent.MOUSE_DOWN, this._dragScroll);
+            this.box.addUniqueListener(MouseEvent.MOUSE_DOWN, this._dragScroll);
         }else{
-            this.removeEventListener(MouseEvent.MOUSE_DOWN, this._dragScroll);
+            this.box.removeEventListener(MouseEvent.MOUSE_DOWN, this._dragScroll);
         }
     }//function refresh()
 
@@ -245,7 +251,11 @@ class Scroll extends Widget{
     * Start scroll by drag
     *
     */
-    private function _dragScroll_old (e:MouseEvent) : Void {
+    private function _dragScroll (e:MouseEvent) : Void {
+
+        if( this._processingDrag ) return;
+        this._processingDrag = true;
+
         var dx       : Float = this.mouseX - this.scrollX;
         var dy       : Float = this.mouseY - this.scrollY;
         var lastX    : Float = this.mouseX;
@@ -260,20 +270,31 @@ class Scroll extends Widget{
         var hScroll : Bool = (this.hScroll && this.box.w > this.w);
 
         //stop previous scrolling
-        this.tweenStop(null, false, true);
+        this.tweenStop(["scrollX", "scrollY"], false, true);
+
+        //Looks like html5 target does not respect .mouseChildren
+        #if html5
+            var blocker : Sprite = new Sprite();
+            blocker.graphics.beginFill(0x000000, 0);
+            blocker.graphics.drawRect(0, 0, this.w, this.h);
+            blocker.graphics.endFill();
+        #end
 
         //follow mouse pointer
         var fn = function(e:Event) : Void {
-            if( hScroll ) this.scrollX = this.mouseX - dx;
-            if( vScroll ) this.scrollY = this.mouseY - dy;
+            if( scrolled ){
+                if( hScroll ) this.scrollX = this.mouseX - dx;
+                if( vScroll ) this.scrollY = this.mouseY - dy;
 
             //if user realy wants to scroll instead of interacting with content,
             //disable processing mouse events by children
-            if(
+            }else if(
                 (hScroll && !scrolled && Math.abs(this.mouseX - startX) >= 5)
                 || (vScroll && !scrolled && Math.abs(this.mouseY - startY) >= 5)
             ){
+                #if html5 this.addChild(blocker); #end
                 scrolled = true;
+                this.box.mouseEnabled = false;
                 this.box.mouseChildren = false;
                 this.dispatchEvent(new WidgetEvent(WidgetEvent.SCROLL_START));
             }
@@ -283,7 +304,7 @@ class Scroll extends Widget{
 
             lastX = this.mouseX;
             lastY = this.mouseY;
-        }
+        }//fn()
 
         //follow pointer
         this.addUniqueListener(Event.ENTER_FRAME, fn);
@@ -291,31 +312,35 @@ class Scroll extends Widget{
         //stop following
         var fnStop : MouseEvent->Void = null;
         fnStop = function(e:MouseEvent) : Void {
+            this._processingDrag = false;
+
             this.removeEventListener(Event.ENTER_FRAME, fn);
             Lib.current.stage.removeEventListener(MouseEvent.MOUSE_UP, fnStop);
 
-            var finish : Void->Void = function() : Void {
-                if( scrolled ){
+            if( scrolled ){
+                var finish : Void->Void = function() : Void {
                     this.dispatchEvent(new WidgetEvent(WidgetEvent.SCROLL_STOP));
+                };
+
+                //go-go!
+                if( vScroll && hScroll ){
+                    this.tween(2, {scrollX:this.scrollX + lastDx * 20, scrollY:this.scrollY + lastDy * 20}, 'Expo.easeOut').onComplete(finish);
+                }else if( vScroll ){
+                    this.tween(2, {scrollY:this.scrollY + lastDy * 20}, 'Expo.easeOut').onComplete(finish);
+                }else{
+                    this.tween(2, {scrollX:this.scrollX + lastDx * 20}, 'Expo.easeOut').onComplete(finish);
                 }
-            };
 
-            //go-go!
-            if( vScroll && hScroll ){
-                this.tween(2, {scrollX:this.scrollX + lastDx * 20, scrollY:this.scrollY + lastDy * 20}, 'Expo.easeOut').onComplete(finish);
-            }else if( vScroll ){
-                this.tween(2, {scrollY:this.scrollY + lastDy * 20}, 'Expo.easeOut').onComplete(finish);
-            }else{
-                this.tween(2, {scrollX:this.scrollX + lastDx * 20}, 'Expo.easeOut').onComplete(finish);
+                #if html5 if( blocker.parent == this) this.removeChild(blocker); #end
+                this.box.mouseEnabled  = true;
+                this.box.mouseChildren = true;
             }
-
-            if(scrolled) this.box.mouseChildren = true;
-        }
+        }//fnStop()
 
         //stop scrolling
         Lib.current.stage.removeEventListener(MouseEvent.MOUSE_UP, fnStop);
         Lib.current.stage.addEventListener(MouseEvent.MOUSE_UP, fnStop);
-    }//function _dragScroll_old()
+    }//function _dragScroll()
 
 
     /**
@@ -340,146 +365,6 @@ class Scroll extends Widget{
             this.scrollY += e.delta * 10;
         }
     }//function _wheelScroll()
-
-
-    private var _dx       : Float = 0;
-    private var _dy       : Float = 0;
-    private var _velX     : Array<Float>;
-    private var _velY     : Array<Float>;
-    private var _prevVelX : Float = 0;
-    private var _prevVelY : Float = 0;
-    private var _prevTime : Int = 0;
-    private var _lastX    : Float = 0;
-    private var _lastY    : Float = 0;
-    private var _stopped  : Bool = false;
-    private var _finished : Bool = false;
-
-
-    /**
-    * Start drag scroll
-    *
-    */
-    private function _dragScroll(e:MouseEvent) : Void {
-        this._dx = this.mouseX - this.box.left;
-        this._dy = this.mouseY - this.box.top;
-
-        this._prevTime = Lib.getTimer();
-
-        this._velX = [];
-        this._velY = [];
-
-        this._lastX = this.mouseX;
-        this._lastY = this.mouseY;
-
-        this._prevVelX = this._prevVelY = 0;
-
-        this._finished = this._stopped = false;
-
-        // this.addUniqueListener(Event.ENTER_FRAME, this._followDrag);
-        this.addUniqueListener(MouseEvent.MOUSE_MOVE, this._updateDrag);
-        this.addUniqueListener(TouchEvent.TOUCH_MOVE, this._updateDrag);
-        Lib.current.stage.removeEventListener(MouseEvent.MOUSE_UP, this._stopDrag);
-        Lib.current.stage.addEventListener(MouseEvent.MOUSE_UP, this._stopDrag);
-    }//function _dragScroll()
-
-
-    private static inline var _ACCEL = 0.0001;
-
-    /**
-    * Stop dragging
-    *
-    */
-    private function _stopDrag(e:Event) : Void {
-        this._stopped = true;
-
-        this._updateDrag(e);
-
-        //count starting inertial velocities {
-            var weight      : Float = 2;
-            var totalWeight : Float = 0;
-            this._prevVelX = 0;
-            while( this._velX.length > 0 ){
-                this._prevVelX += this._velX.shift() * weight;
-                totalWeight += weight;
-                weight *= 0.83;
-            }
-            this._prevVelX /= totalWeight;
-            this._accelX = (this._prevVelX > 0 ? -_ACCEL : _ACCEL);
-
-            var weight      : Float = 50;
-            var totalWeight : Float = 0;
-            this._prevVelY = 0;
-            while( this._velY.length > 0 ){
-                this._prevVelY += this._velY.shift() * weight;
-                totalWeight += weight;
-                weight *= 0.83;
-            }
-            this._prevVelY /= totalWeight;
-            this._accelY = (this._prevVelY > 0 ? -_ACCEL : _ACCEL);
-        //}
-
-        this.addUniqueListener(Event.ENTER_FRAME, this._followDrag);
-        this.removeEventListener(MouseEvent.MOUSE_MOVE, this._updateDrag);
-        this.removeEventListener(TouchEvent.TOUCH_MOVE, this._updateDrag);
-        Lib.current.stage.removeEventListener(MouseEvent.MOUSE_UP, this._stopDrag);
-    }//function _stopDrag()
-
-
-
-    /**
-    * Update scrolling vars
-    *
-    */
-    private function _updateDrag(e:Event) : Void {
-        var tm : Int = Lib.getTimer();
-        if( tm - this._prevTime == 0 ) return;
-
-        //add current velocity
-        this._velX.unshift(this._prevVelX);
-        this._velY.unshift(this._prevVelY);
-
-        //keep velocity stack length <= 10
-        if( this._velX.length > 10 ) this._velX.pop();
-        if( this._velY.length > 10 ) this._velY.pop();
-
-        //calc current velocity
-        this._prevVelX = (this.mouseX - this._lastX) / (tm - this._prevTime);
-        this._prevVelY = (this.mouseY - this._lastY) / (tm - this._prevTime);
-
-        //save last position
-        this._lastX = this.mouseX;
-        this._lastY = this.mouseY;
-
-        //move scrolled content
-        this.scrollX = this._lastX - this._dx;
-        this.scrollY = this._lastY - this._dy;
-    }//function _updateDrag()
-
-
-    private var _accelX : Float = 0;
-    private var _accelY : Float = 0;
-
-
-    /**
-    * Follow dragging
-    *
-    */
-    private function _followDrag(e:Event) : Void {
-        trace(this._prevVelY);
-
-        var tm : Int = Lib.getTimer();
-
-        this.scrollY += this._prevVelY * (tm - this._prevTime);
-        // this._prevVelY += this._accelY * (tm - this._prevTime);
-        this._prevVelY *= 0.8;
-        this._prevTime = tm;
-
-        trace(this._prevVelY);
-
-        if( Math.abs(this._prevVelY) < 1e-3 ){
-            this.removeEventListener(Event.ENTER_FRAME, this._followDrag);
-        }
-    }//function _followDrag()
 
 
 }//class Scroll

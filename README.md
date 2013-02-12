@@ -7,7 +7,9 @@ Supported targets: cpp (iOS, Android, Blackberry, webOS, Windows, Linux, MacOS),
 
 Online docs for API and basic features: http://stablex.ru/ui/doc
 
-Flash demo with android-4.x-like theme (written completely in xml): http://stablex.ru/ui/demo/demo_flash/
+Demo with android-4.x-like theme (written completely in xml):
+* flash: http://stablex.ru/ui/demo/demo_flash/
+* html5: http://stablex.ru/ui/demo/demo_html5/
 
 Another example:
 * flash: http://stablex.ru/ui/demo/handlers.swf
