@@ -2,9 +2,7 @@ StablexUI
 =========
 
 Macro driven ui engine for Haxe NME. It's designed to give developer as much freedom as possible in customizing UI.
-
-Supported targets: cpp (iOS, Android, Blackberry, webOS, Windows, Linux, MacOS), flash, html5, neko
-
+Supported targets: cpp (iOS, Android, Blackberry, webOS, Windows, Linux, MacOS), flash, html5, neko.
 Online docs for API and basic features: http://stablex.ru/ui/doc
 
 Demo with android-4.x-like theme (written completely in xml):
