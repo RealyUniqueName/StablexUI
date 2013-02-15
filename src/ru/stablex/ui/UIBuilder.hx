@@ -35,7 +35,7 @@ class UIBuilder {
     //}
 
     @:macro static private var _events  : Hash<String> = new Hash();
-    @:macor static private var _imports : Hash<String> = new Hash();
+    @:macro static private var _imports : Hash<String> = new Hash();
 
     @:macro static private var _initialized : Bool = false;
     //all generated code will be saved in this direcory (see .init() method for details)
@@ -67,7 +67,7 @@ class UIBuilder {
     * @param String - variable name of widget, wich has a parent tag for currently processed meta tag
     * @return - valid haxe code to inject in generated code
     */
-    @:macor static public var meta : Hash<Xml->String->String> = new Hash();
+    @:macro static public var meta : Hash<Xml->String->String> = new Hash();
 
 
     /**
