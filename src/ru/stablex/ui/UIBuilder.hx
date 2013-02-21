@@ -250,6 +250,18 @@ class UIBuilder {
 
             return '\n//>>>> include ' + xmlFile + ' >>>>\n' + code + '\n//<<<< include ' + xmlFile + ' <<<<\n';
         });
+
+        /**
+        * <meta:inject /> - insert haxe code
+        * attributes:
+        *   code - haxe code to inject
+        */
+        UIBuilder.meta.set('inject', function(node:Xml, parentWidget:String) : String {
+            var code : String = node.get('code');
+            if( code == null ) Err.trigger('meta:inject - code is not specified');
+
+            return '\n' + UIBuilder.fillCodeShortcuts(parentWidget, code);
+        });
     }//function _createCoreMeta()
 
 
