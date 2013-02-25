@@ -28,11 +28,23 @@ class Progress extends Widget{
 
 
     /**
+    * Set initial bar size on creation is complete.
+    *
+    */
+    override public function onCreate () : Void {
+        super.onCreate();
+        this._setBarWidth(this.value, this.max);
+    }//function onCreate()
+
+
+    /**
     * Setter for `.max`
     *
     */
     private function _setMax (m:Float) : Float {
-        this._setBarWidth(this.value, m);
+        if( this.created ){
+            this._setBarWidth(this.value, m);
+        }
         return this.max = m;
     }//function _setMax()
 
