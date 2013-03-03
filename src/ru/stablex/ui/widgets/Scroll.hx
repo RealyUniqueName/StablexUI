@@ -41,6 +41,9 @@ class Scroll extends Widget{
     */
     public var box (_getBox,never) : Widget;
 
+    //determine how far mouse wheel deltas will scroll the content
+    public var wheelScrollSpeed : Float = 10;
+
     //scroll position along x axes
     public var scrollX (_getScrollX,_setScrollX) : Float;
     //scroll position along y axes
@@ -358,11 +361,11 @@ class Scroll extends Widget{
             )
         ){
             this.tweenStop();
-            this.scrollX += e.delta * 10;
+            this.scrollX += e.delta * wheelScrollSpeed;
         //scroll vertically
         }else if( this.vScroll ){
             this.tweenStop();
-            this.scrollY += e.delta * 10;
+            this.scrollY += e.delta * wheelScrollSpeed;
         }
     }//function _wheelScroll()
 
