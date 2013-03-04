@@ -10,6 +10,10 @@ Demo with android-4.x-like theme (written completely in xml):
 * flash: http://stablex.ru/ui/demo/demo_flash/
 * html5: http://stablex.ru/ui/demo/demo_html5/
 
+Simple game with simple ui and screen transitions:
+* flash: http://stablex.ru/ui/demo/untwist/flash
+* html5: http://stablex.ru/ui/demo/untwist/html5
+
 Another example:
 * flash: http://stablex.ru/ui/demo/handlers.swf
 * html5: http://stablex.ru/ui/demo/handlers/
