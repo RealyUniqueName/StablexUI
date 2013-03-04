@@ -173,7 +173,7 @@ div.content{
     border-left: 1px dashed #666666;
     margin-left: 20px;
     padding-left: 20px;
-    background-color: #d2d2d2;
+    background-color: white;
 }
 
 .content .manual .placeholder{
@@ -200,7 +200,7 @@ div.content{
     border-left: 1px dashed #666666;
     margin-left: 20px;
     padding-left: 20px;
-    background-color: #d2d2d2;
+    background-color: white;
     color: #3b4344;
 }
 
@@ -209,7 +209,7 @@ div.content{
     margin:0px;
     margin-left: 20px;
     padding: 10px 0px 10px 10px;
-    background-color: #d2d2d2;
+    background-color: white;
 }
 
 .content .manual a{
