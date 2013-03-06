@@ -11,7 +11,7 @@ import ru.stablex.ui.events.WidgetEvent;
 */
 class Clock extends Text{
 
-    //Count seconds forward or bacward (to zero)
+    //Count seconds forward or backward (to zero)
     public var forward : Bool = true;
     //current amount of seconds
     public var value (default,set_value) : Int = 0;
