@@ -19,8 +19,6 @@ class Clock extends Text{
     public var leadingZero : Bool = true;
     //timer object
     private var _timer : Timer;
-    //is it allowed to overflow zero value ? E.g. can seconds be negative if `.startValue` > 0
-    public var zeroOverflow : Bool = false;
     /**
     * text format.
     * %h, %m, %s - hours, minutes, seconds respectively, without leading zeroes
