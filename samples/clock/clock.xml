@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<VBox w="$Lib.current.stage.stageWidth" w="$Lib.current.stage.stageHeight" childPadding="20">
+
+    <!-- Count backward -->
+    <Clock value="60*60*2" format="'Countdown: %H:%M:%S'" forward="false" on-display="$this.run();"/>
+
+    <!-- Count forward -->
+    <Clock on-display="$this.run();"/>
+
+    <!-- Without seconds -->
+    <Clock value="Std.int(60*90)" timeFormat="'%H:%M'"/>
+
+    <!-- Seconds only -->
+    <Clock timeFormat="'Self destruction in %s seconds...'" forward="false" value="60"
+        on-display="$this.run();"
+        on-change=" if( $this.value == 0 ) $this.free(); "
+    />
+
+</VBox>

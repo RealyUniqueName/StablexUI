@@ -26,7 +26,6 @@ Features:
 * Custom meta tags for xml to implement functionality you need, but wich is not implemented in StablexUI;
 * Writing handlers (plain haxe code) right in xml;
 * Really crossplatform! Works in cpp, flash, html5;
-* Only parts of framework you use are compiled to your binaries. For example if you don't use buttons, their classes won't be compilled.
 * Relative positioning (you can define position  by any border of element - left, right, top, bottom in pixels or percentage of parent's size. Define width/height in percentage etc);
 * You can write haxe code right in attributes in xml to acces anything from anywhere! For example:
 ```xml
@@ -55,6 +54,7 @@ Implemented widgets:
 * Switch (on/off toggle);
 * Options box (picker list / drop-down)
 * View stacks (only one visible child at every moment);
+* Clock (display time, display constant time value, countdown);
 * More will be available soon ;)
 
 

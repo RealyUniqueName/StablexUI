@@ -136,6 +136,7 @@ class UIBuilder {
             UIBuilder.regClass('ru.stablex.ui.widgets.Tip');
             UIBuilder.regClass('ru.stablex.ui.widgets.Slider');
             UIBuilder.regClass('ru.stablex.ui.widgets.Switch');
+            UIBuilder.regClass('ru.stablex.ui.widgets.Clock');
             UIBuilder.regClass('ru.stablex.ui.events.WidgetEvent');
             UIBuilder.regClass('ru.stablex.ui.skins.Paint');
             UIBuilder.regClass('ru.stablex.ui.skins.Gradient');
