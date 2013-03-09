@@ -11,8 +11,8 @@ Demo with android-4.x-like theme (written completely in xml):
 * html5: http://stablex.ru/ui/demo/demo_html5/
 
 Games prototypes:
-* Untwist: simple game with simple ui and screen transitions - http://stablex.ru/ui/demo/untwist/
 * The Tale of Ladybird: all objects in this game are StablexUI widgets - http://stablex.ru/ui/demo/untwist/html5
+* Untwist: simple game with simple ui and screen transitions - http://stablex.ru/ui/demo/untwist/
 
 Another example:
 * flash: http://stablex.ru/ui/demo/handlers.swf
