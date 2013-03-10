@@ -110,12 +110,14 @@ class Scroll extends Widget{
     *
     */
     private function _setScrollX (x:Float) : Float {
-        if( x > 0 ) x = 0;
-        if( x + this.box._width < this._width ) x = this._width - this.box._width;
+        if( this.box._width > this._width ){
+            if( x > 0 ) x = 0;
+            if( x + this.box._width < this._width ) x = this._width - this.box._width;
 
-        this.box.left = x;
+            this.box.left = x;
 
-        if( this.hBar != null && Math.abs(this.hBar.value + x) >= 1 ) this.hBar.value = -x;
+            if( this.hBar != null && Math.abs(this.hBar.value + x) >= 1 ) this.hBar.value = -x;
+        }
 
         return x;
     }//function _setScrollX()
@@ -135,12 +137,14 @@ class Scroll extends Widget{
     *
     */
     private function _setScrollY (y:Float) : Float {
-        if( y > 0 ) y = 0;
-        if( y + this.box._height < this._height ) y = this._height - this.box._height;
+        if( this.box._height > this._height ){
+            if( y > 0 ) y = 0;
+            if( y + this.box._height < this._height ) y = this._height - this.box._height;
 
-        this.box.top = y;
+            this.box.top = y;
 
-        if( this.vBar != null && Math.abs(this.vBar.value - y) >= 1 ) this.vBar.value = y;
+            if( this.vBar != null && Math.abs(this.vBar.value - y) >= 1 ) this.vBar.value = y;
+        }
 
         return y;
     }//function _setScrollY()
