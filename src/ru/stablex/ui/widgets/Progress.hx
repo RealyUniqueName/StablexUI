@@ -1,5 +1,10 @@
 package ru.stablex.ui.widgets;
 
+import nme.events.Event;
+import nme.events.MouseEvent;
+import nme.Lib;
+import ru.stablex.ui.events.WidgetEvent;
+
 
 
 /**
@@ -14,6 +19,8 @@ class Progress extends Widget{
     private var _value : Float = 0;
     //bar
     public var bar : Widget;
+    //Whether user can click/tap/slide progress bar to change value
+    public var interactive (default,set_interactive) : Bool = false;
 
 
     /**
@@ -75,5 +82,51 @@ class Progress extends Widget{
     private inline function _setBarWidth (value:Float, max:Float) : Void {
         this.bar.widthPt = 100 * (max <= 0 || value <= 0 ? 0 : value / max);
     }//function _setBarWidth()
+
+
+    /**
+    * Setter `interactive`.
+    *
+    */
+    private function set_interactive (interactive:Bool) : Bool {
+        if( interactive ){
+            this.addUniqueListener(MouseEvent.MOUSE_DOWN, this._slide);
+        }else{
+            this.removeEventListener(MouseEvent.MOUSE_DOWN, this._slide);
+        }
+        return this.interactive = interactive;
+    }//function set_interactive
+
+
+
+    /**
+    * Change value on click/tap/slide
+    *
+    */
+    private function _slide (e:MouseEvent) : Void {
+        var dx : Float = this.mouseX;
+
+        var fn : Event->Void = function(e:Event) : Void {
+            var newValue:Float = Math.min((this.mouseX / this._width) * this.max, this.max);
+            if( newValue != this.value ){
+                if( newValue < 0 ){
+                    newValue = 0;
+                }else if( newValue > this.max ){
+                    newValue = max;
+                }
+                this.value = newValue;
+                this.dispatchEvent(new WidgetEvent(WidgetEvent.CHANGE));
+            }
+        };
+
+        var fnRelease : MouseEvent->Void = null;
+        fnRelease = function(e:MouseEvent) : Void {
+            this.removeEventListener(Event.ENTER_FRAME, fn);
+            Lib.current.stage.removeEventListener(MouseEvent.MOUSE_UP, fnRelease);
+        };
+
+        this.addEventListener(Event.ENTER_FRAME, fn);
+        Lib.current.stage.addEventListener(MouseEvent.MOUSE_UP, fnRelease);
+    }//function _slide()
 
 }//class Progress
