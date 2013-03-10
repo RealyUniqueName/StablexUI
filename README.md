@@ -18,6 +18,9 @@ Another example:
 * flash: http://stablex.ru/ui/demo/handlers.swf
 * html5: http://stablex.ru/ui/demo/handlers/
 
+More simple demoes: http://stablex.ru/ui/demo
+
+
 Features:
 ---------------
 * Easy integration with any project. Just addChild StablexUI to any Sprite or Stage.
