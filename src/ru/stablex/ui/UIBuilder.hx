@@ -236,33 +236,7 @@ class UIBuilder {
     *
     */
     static private function _createCoreMeta() : Void {
-        /**
-        * <meta:include /> - replace this meta tag with content of another xml file
-        * attributes:
-        *   src - path to xml file to include
-        */
-        UIBuilder.meta.set('include', function(node:Xml, parentWidget:String) : String {
-            var xmlFile : String = node.get('src');
-            if( xmlFile == null ) Err.trigger('meta:include - file is not specified');
-
-            var code : String = UIBuilder.construct( Xml.parse( File.getContent(xmlFile) ).firstElement() );
-            code += '\nreturn __ui__widget1;';
-            code = '\n' + parentWidget + '.addChild((function() : ru.stablex.ui.widgets.Widget {' + code + '})());';
-
-            return '\n//>>>> include ' + xmlFile + ' >>>>\n' + code + '\n//<<<< include ' + xmlFile + ' <<<<\n';
-        });
-
-        /**
-        * <meta:inject /> - insert haxe code
-        * attributes:
-        *   code - haxe code to inject
-        */
-        UIBuilder.meta.set('inject', function(node:Xml, parentWidget:String) : String {
-            var code : String = node.get('code');
-            if( code == null ) Err.trigger('meta:inject - code is not specified');
-
-            return '\n' + UIBuilder.fillCodeShortcuts(parentWidget, code);
-        });
+        MetaTags.create();
     }//function _createCoreMeta()
 
 
@@ -271,7 +245,7 @@ class UIBuilder {
     *
     * @throw <type>String</type> if one of used in xml widgets, classes or events was not registered by .regClass() or .regEvent()
     */
-    static public function construct (element:Xml, n:Int = 1, zeroElementCls:String = null) : String{
+    static public function construct (element:Xml, n:Int = 1, zeroElementCls:String = null, wname:String = "__ui__widget") : String{
         //get class for widget
         var cls  : String = UIBuilder._imports.get(zeroElementCls == null ? element.nodeName : zeroElementCls);
         if( cls == null ) Err.trigger('Widget class is not registered: ' + (zeroElementCls == null ? element.nodeName : zeroElementCls));
@@ -279,11 +253,11 @@ class UIBuilder {
         var code : String = '';
 
         if( zeroElementCls != null ){
-            code = '\nvar __ui__widget' + n + ' : ' + cls + ' = cast(__ui__widget0, ' + cls + ');';
+            code = '\nvar '+ wname + n + ' : ' + cls + ' = cast('+ wname +'0, ' + cls + ');';
 
         //special properties
         }else{
-            code += '\nvar __ui__widget' + n + ' : ' + cls + ' = new ' + cls + '();';
+            code += '\nvar '+ wname + n + ' : ' + cls + ' = new ' + cls + '();';
 
             //default settings {
                 var defaults : String = element.get('defaults');
@@ -296,16 +270,21 @@ class UIBuilder {
                 code += '\n     var defFns = ru.stablex.ui.UIBuilder.defaults.get("' + element.nodeName + '");';
                 code += '\n     for(i in 0...defs.length){';
                 code += '\n         var defaultsFn : ru.stablex.ui.widgets.Widget->Void = defFns.get(defs[i]);';
-                code += '\n         if( defaultsFn != null ) defaultsFn(__ui__widget' + n + ');';
+                code += '\n         if( defaultsFn != null ) defaultsFn('+ wname + n + ');';
                 code += '\n     }';
                 code += '\n}';
+
+                // if( defaults != null ){
+                //     code += "\n" + wname + n + ".defaults = " + defaults + ";";
+                // }
+                // code += "\nru.stablex.ui.UIBuilder.applyDefaults(" + wname + n + ");";
             //}
         }
-        code += UIBuilder.attr2Haxe(element, '__ui__widget' + n);
+        code += UIBuilder.attr2Haxe(element, wname + n);
 
         //call .onInitialize method to notify widget that it is initialized
         if( zeroElementCls == null ){
-            code += '\n__ui__widget' + n + '._onInitialize();';
+            code += '\n'+ wname + n + '._onInitialize();';
         }
 
         //if we have nested widgets, generate code for them
@@ -316,22 +295,22 @@ class UIBuilder {
                 var fn   : Xml->String->String = UIBuilder.meta.get(meta);
                 if( fn == null ) Err.trigger('Meta processor not found: ' + meta);
 
-                code += fn(node, '__ui__widget' + n);
+                code += fn(node, wname + n);
 
             //continue ordinary code generation
             }else{
-                code += '\n' + UIBuilder.construct(node, n + 1);
+                code += '\n' + UIBuilder.construct(node, n + 1, null, wname);
             }
         }
 
         //call .onCreate method to notify widget that it is created
         if( zeroElementCls == null ){
-            code += '\n__ui__widget' + n + '._onCreate();';
+            code += '\n'+ wname + n + '._onCreate();';
         }
 
         //add to parent's display list
         if( n > 1 ){
-            code += '\n__ui__widget' + Std.string(n - 1) + '.addChild(__ui__widget' + n + ');';
+            code += '\n'+ wname + Std.string(n - 1) + '.addChild('+ wname +'' + n + ');';
         }
 
         return code;

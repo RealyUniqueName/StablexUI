@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<VBox w="300">
+
+    <!-- repeat 10 times -->
+    <meta:repeat counter="cnt" times="10">
+        <Text text="'text' + cnt" widthPt="100" h="30" skin:Paint-color="cnt % 2 == 1 ? 0x555555 : 0xAAAAAA" align="'center,middle'"/>
+    </meta:repeat>
+
+</VBox>
