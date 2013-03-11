@@ -132,7 +132,7 @@ function genDoc($fname, $imports = array()){
                 $definition = preg_replace('/\{|;/', '', $lines[$i + 1]);
                 $doc .= definition($definition, $imports) . comment($comment, $imports);
             #classes
-            }elseif( $comment && $i + 1 < $cLines && preg_match('/class|interface/', $lines[$i + 1]) ){
+            }elseif( $comment && $i + 1 < $cLines && preg_match('/class|interface/', $lines[$i + 1]) && !preg_match('/\}/', $lines[$i + 1]) ){
                 if( $classOpened ) $doc .="</div>\n";
 
                 $definition = preg_replace('/\{|;/', '', $lines[$i + 1]);
