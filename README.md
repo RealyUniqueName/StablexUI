@@ -35,7 +35,7 @@ Features:
 <Text text="'Hello world!'" x="nme.Lib.current.stage.stageWidth/2" />
 ```
 * Easy skinning with 3-slice-scaling, 9-slice-scaling, tiling with texture, filling with color, gradient fill or your own custom skin processor;
-* Flexible layour system (including custom layouts);
+* Flexible layout system (including custom layouts);
 * Don't worry about forgotten eventListeners. Just use widget.free() method to let GC destroy the object;
 * Ability to create custom classes for skinning, transitions, tooltips, etc;
 * There is more! Some features are described in docs: http://stablex.ru/ui/doc;
