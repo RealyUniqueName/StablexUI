@@ -5,6 +5,7 @@ import nme.display.DisplayObjectContainer;
 import nme.geom.Rectangle;
 import ru.stablex.TweenSprite;
 import ru.stablex.ui.events.WidgetEvent;
+import ru.stablex.ui.layouts.Layout;
 import ru.stablex.ui.UIBuilder;
 import ru.stablex.ui.skins.Skin;
 
@@ -108,6 +109,9 @@ class Widget extends TweenSprite{
 
     //Tooltip for this widget. See <type>Tip</type> to know how to use it.
     public var tip (default,_setTip) : Tip;
+
+    //layout manager
+    public var layout : Layout;
 
 
     /**
@@ -620,11 +624,23 @@ class Widget extends TweenSprite{
 
 
     /**
+    * Apply layout settings defined by `.layout` property
+    *
+    */
+    public function applyLayout () : Void {
+        if( this.layout != null ){
+            this.layout.arrangeChildren(this);
+        }
+    }//function applyLayout()
+
+
+    /**
     * Refresh widget. This method is called at least once for every widget (on creation)
     * It's also called everytime widget is resized.
     */
     public function refresh() : Void {
         UIBuilder.queueSkin(this);
+        this.applyLayout();
     }//function refresh()
 
 

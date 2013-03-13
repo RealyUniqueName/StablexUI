@@ -1,7 +1,5 @@
 package;
 
-import nme.display.StageAlign;
-import nme.display.StageScaleMode;
 import nme.Lib;
 import ru.stablex.ui.UIBuilder;
 
@@ -16,11 +14,6 @@ class Main extends nme.display.Sprite{
     *
     */
     static public function main () : Void{
-        Lib.current.stage.align     = StageAlign.TOP_LEFT;
-        Lib.current.stage.scaleMode = StageScaleMode.NO_SCALE;
-
-        UIBuilder.regClass("ru.stablex.ui.widgets.Holder");
-
         //initialize StablexUI
         UIBuilder.init();
 

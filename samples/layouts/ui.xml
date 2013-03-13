@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<VBox w="800" h="600" childPadding="20">
+
+    <!-- Column layout demo -->
+    <Widget id="'demo'" w="600" h="400" layout:Column-cols="[100, -2, -1, 0.1]">
+        <Text text="'100px'" skin:Paint-color="0x777777"/>
+        <Text text="'2/3 of free space'" skin:Paint-color="0xAAAAAA"/>
+        <Text text="'1/3 of free space'" skin:Paint-color="0x777777"/>
+        <Text text="'10%'" skin:Paint-color="0xAAAAAA"/>
+    </Widget>
+
+    <!-- adjust demo width -->
+    <Slider
+        widthPt = "100"
+        h       = "50"
+
+        min   = "400"
+        max   = "800"
+        value = "600"
+
+        skin:Paint-border="2"
+        skin:Paint-color="0xFFFFFF"
+        skin:Paint-corners="[20]"
+
+        slider-w        = "50"
+        slider-heightPt = "100"
+
+        slider-skin:Gradient-colors = "[0xFF0000, 0x000000]"
+        slider-skin:Gradient-corners="[20]"
+
+        on-change="#demo.w = $this.value;"
+    />
+</VBox>

@@ -1,101 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- Root element of our UI -->
-<VBox id="'root'" w="800" h="600" skin:Paint-border="8" skin:Paint-color="0x005d00" skin:Paint-borderColor="0x003a00" skin:Paint-alpha="0.8" childPadding="20">
+<!-- Column layout demo -->
+<Widget w="800" h="600" layout:Column-cols="[100, -2, -1, 0.5]">
 
-    <Progress
-        w="500"
-        h="50"
+    <Text text="'0'" skin:Paint-color="0x777777" on-resize="
+        $this.text = 'My width: ' + $this.w + 'px';
+    "/>
 
-        max="1000"
+    <Text text="'0'" skin:Paint-color="0xAAAAAA" on-resize="
+        $this.text = 'My width: ' + $this.w + 'px';
+    "/>
 
-        skin:Paint-border="2"
-        skin:Paint-color="0xFFFFFF"
-        skin:Paint-corners="[20]"
+    <Text text="'0'" skin:Paint-color="0x777777" on-resize="
+        $this.text = 'My width: ' + $this.w + 'px';
+    "/>
 
-        bar-skin:Gradient-padding = "10"
-        bar-skin:Gradient-colors = "[0xFF0000, 0x000000]"
-        bar-skin:Gradient-rotation = "0"
-        bar-skin:Gradient-corners="[20]"
+    <Text text="'0'" skin:Paint-color="0xAAAAAA" on-resize="
+        $this.text = 'My width: ' + $this.w + 'px';
+    "/>
 
-        on-enterFrame="
-            if( $this.value >= $this.max ){
-                $this.value = 0;
-            }else{
-                $this.value ++;
-            }
-        "
-    />
-
-    <HBox id="'box'" childPadding="5" skin:Paint-color="0x55FF55" padding="10"/>
-    <HBox childPadding="20">
-        <Button
-            w            = "200"
-            h            = "50"
-            format-color = "0xFFFFFF"
-            format-size  = "20"
-            text         = "'Add child'"
-            skin:Gradient-colors = "[0x000000, 0xFFFFFF]"
-            skin:Gradient-corners="[20]"
-            on-click="
-                var skin : $Paint = new $Paint();
-                skin.color = 0x000000;
-                #box.addChild($UIBuilder.create($Widget,{
-                    w    : 100 * Math.random(),
-                    h    : 100 * Math.random(),
-                    skin : skin
-                }));
-            "
-        />
-        <Button
-            w            = "200"
-            h            = "50"
-            format-color = "0xFFFFFF"
-            format-size  = "20"
-            text         = "'Remove child'"
-            skin:Gradient-colors = "[0x000000, 0xFFFFFF]"
-            skin:Gradient-corners="[20]"
-            on-click="
-                if( #box.numChildren > 0 ){
-                    #box.removeChildAt( Std.random(#box.numChildren) );
-                }
-            "
-        />
-    </HBox>
-
-
-
-    <HBox childPadding="20">
-        <Button
-            w            = "200"
-            h            = "50"
-            format-color = "0xFFFFFF"
-            format-size  = "20"
-            text         = "'Previous color'"
-            skin:Gradient-colors = "[0x000000, 0xFFFFFF]"
-            skin:Gradient-corners="[20]"
-            on-click="
-                #ViewStack(vs).previous();
-            "
-        />
-        <Button
-            w            = "200"
-            h            = "50"
-            format-color = "0xFFFFFF"
-            format-size  = "20"
-            text         = "'Next color'"
-            skin:Gradient-colors = "[0x000000, 0xFFFFFF]"
-            skin:Gradient-corners="[20]"
-            on-click="
-                #ViewStack(vs).next();
-            "
-        />
-    </HBox>
-
-
-    <ViewStack id="'vs'" wrap="true" w="100" h="100" trans:Slide-duration="0.2" trans:Slide-direction="'bottom'" overflow="false">
-        <Widget name="'red'" skin:Paint-color="0xFF0000" widthPt="100" heightPt="100"/>
-        <Widget name="'green'" skin:Paint-color="0x00FF00" widthPt="100" heightPt="100"/>
-        <Widget name="'blue'" skin:Paint-color="0x0000FF" widthPt="100" heightPt="100"/>
-    </ViewStack>
-</VBox>
+</Widget>

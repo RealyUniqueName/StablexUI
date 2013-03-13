@@ -1,6 +1,6 @@
 package ru.stablex.ui.layouts;
 
-import ru.stablex.ui.widgets.Holder;
+import ru.stablex.ui.widgets.Widget;
 
 
 /**
@@ -22,10 +22,18 @@ class Layout {
 *******************************************************************************/
 
     /**
+    * Constructor
+    *
+    */
+    public function new () : Void {
+    }//function new()
+
+
+    /**
     * Position children of provided widget according to layout logic
     *
     */
-    public function arrangeChildren(holder:Holder) : Void {
+    public function arrangeChildren(Widget:Widget) : Void {
 
     }//function arrangeChildren()
 

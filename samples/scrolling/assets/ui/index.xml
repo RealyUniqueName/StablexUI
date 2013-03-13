@@ -36,65 +36,9 @@
         "
     >
         <Box widthPt="100" childPadding="5" paddingTop="10" paddingBottom="10"> <!-- this widget will be taken by Scroll widget as scrolled content -->
-
-            <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
-            <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
-            <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
-            <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
-            <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
-            <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
-            <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
-            <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
-            <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
-            <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
-            <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
-            <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
-            <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
-            <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
-            <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
-            <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
-            <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
-            <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
-            <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
-            <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
-            <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
-            <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
-            <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
-            <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
-            <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
-            <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
-            <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
-            <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
-            <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
-            <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
-            <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
-            <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
-            <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
-            <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
-            <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
-            <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
-            <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
-            <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
-            <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
-            <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
-            <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
-            <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
-            <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
-            <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
-            <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
-            <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
-            <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
-            <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
-            <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
-            <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
-            <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
-            <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
-            <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
-            <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
-            <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
-            <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
-            <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
-            <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
+            <meta:repeat times="40">
+                <Widget skin:Tile-border="4" skin:Tile-src="'assets/img/nme.png'" skin:Tile-corners="[20]" widthPt="100" h="50"/>
+            </meta:repeat>
         </Box>
     </Scroll>
 </HBox>

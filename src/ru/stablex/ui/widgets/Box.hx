@@ -119,7 +119,9 @@ class Box extends Widget{
 
         super.refresh();
 
-        this.alignElements();
+        if( this.layout == null ){
+            this.alignElements();
+        }
     }//function refresh()
 
 
