@@ -112,6 +112,9 @@ class UIBuilder {
             UIBuilder.regEvent('change',      'ru.stablex.ui.events.WidgetEvent.CHANGE');
             UIBuilder.regEvent('scrollStart', 'ru.stablex.ui.events.WidgetEvent.SCROLL_START');
             UIBuilder.regEvent('scrollStop',  'ru.stablex.ui.events.WidgetEvent.SCROLL_STOP');
+            UIBuilder.regEvent('drag',        'ru.stablex.ui.events.DndEvent.DRAG');
+            UIBuilder.regEvent('drop',        'ru.stablex.ui.events.DndEvent.DROP');
+            UIBuilder.regEvent('receiveDrop', 'ru.stablex.ui.events.DndEvent.RECEIVE');
 
             //registering frequently used classes
             UIBuilder.regClass('ru.stablex.ui.widgets.Text');
@@ -138,6 +141,7 @@ class UIBuilder {
             UIBuilder.regClass('ru.stablex.ui.widgets.Switch');
             UIBuilder.regClass('ru.stablex.ui.widgets.Clock');
             UIBuilder.regClass('ru.stablex.ui.events.WidgetEvent');
+            UIBuilder.regClass('ru.stablex.ui.events.DndEvent');
             UIBuilder.regClass('ru.stablex.ui.skins.Paint');
             UIBuilder.regClass('ru.stablex.ui.skins.Gradient');
             UIBuilder.regClass('ru.stablex.ui.skins.Tile');
@@ -151,6 +155,7 @@ class UIBuilder {
             UIBuilder.regClass('ru.stablex.ui.transitions.Slide');
             UIBuilder.regClass('ru.stablex.ui.transitions.Scale');
             UIBuilder.regClass('ru.stablex.ui.UIBuilder');
+            UIBuilder.regClass('ru.stablex.ui.Dnd');
             UIBuilder.regClass('ru.stablex.TweenSprite');
             UIBuilder.regClass('ru.stablex.Assets');
             UIBuilder.regClass('nme.events.Event');

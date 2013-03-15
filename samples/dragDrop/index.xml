@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Widget w="800" h="600">
+
+    <!-- Drop area 1 -->
+    <Widget w="200" heightPt="100" skin:Paint-color="0x00FF00" on-receiveDrop="
+        cast(event, $DndEvent).accept($this);
+    ">
+        <!-- Droppable object -->
+        <Widget left="50" top="50" w="100" h="100" skin:Paint-color="0x888888" on-mouseDown="
+            $Dnd.drag($this, $Lib.current.stage);
+        "/>
+    </Widget>
+
+
+    <Text text="'Drag`n`drop gray square. Drop targets are green'" widthPt="100" align="'center'"/>
+
+
+    <!-- Drop area 2 -->
+    <Widget w="200" heightPt="100" right="0" skin:Paint-color="0x00FF00" on-receiveDrop="
+        cast(event, $DndEvent).accept($this);
+    "/>
+</Widget>
