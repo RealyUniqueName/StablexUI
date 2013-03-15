@@ -33,10 +33,7 @@ class DndEvent extends Event{
         private var _mouseEnabled : Bool = false;
         private var _mouseChildren : Bool = false;
     //}
-    /**
-    * If dropped object was accepted by some other object, this will be equal `true`.
-    * Otherwise dropped object will be returned to `.srcPosition` before it was dragged.
-    */
+    //If dropped object was accepted by some other object, this will be equal `true`.
     public var accepted (default,null) : Bool = false;
 
 /*******************************************************************************
@@ -51,7 +48,7 @@ class DndEvent extends Event{
 
     /**
     * Constructor
-    *
+    * @private
     */
     public function new(type:String, obj:Widget, dragArea:DisplayObjectContainer, bubble:Bool = false, cloned:Bool = false) : Void {
         //store required data
@@ -149,7 +146,7 @@ class DndEvent extends Event{
 
     /**
     * Clone current event, but with another type
-    * @private
+    *
     */
     public function cloneWithType(type:String) : DndEvent {
         var e : DndEvent = new DndEvent(type, this.obj, this.obj.parent, this.bubbles, true);

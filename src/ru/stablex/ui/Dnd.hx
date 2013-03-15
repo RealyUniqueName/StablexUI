@@ -24,7 +24,7 @@ class Dnd {
     /**
     * Start dragging specified widget
     * @param w - widget to drag
-    * @param dragArea - widget will be added to this contianer display list for dragging
+    * @param dragArea - widget will be added to dragArea's display list for dragging
     */
     static public function drag(w:Widget, dragArea:DisplayObjectContainer = null) : Void {
         //if we still did not drop previousely dragged widget
@@ -90,7 +90,7 @@ class Dnd {
 
     /**
     * Cleaning
-    *
+    * @private
     */
     static public function finish(e:DndEvent) : Void {
         if( Dnd.current != null && Dnd.current.obj == e.obj ){
