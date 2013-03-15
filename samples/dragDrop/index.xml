@@ -22,18 +22,31 @@
         <meta:repeat counter="cnt" times="10">
             <Text text="'drag me #' + cnt" w="100" h="50" skin:Paint-border="2" skin:Paint-color="cnt % 2 == 1 ? 0x555555 : 0xAAAAAA" align="'center,middle'"
                 on-mouseDown="
-                    //grab this object and keep it on top of the stage while dragging
-                    $Dnd.drag($this, $Lib.current.stage);
+                    //grab this object and keep it on top of the stage while dragging. Also assign a key depending on object's position in list.
+                    $Dnd.drag($this, $Lib.current.stage, (cnt % 2 == 1 ? 'odd' : 'even'));
                 "
             />
         </meta:repeat>
     </VBox>
 
+
+    <Text text="'Only odd objects will be accepted by green rectangle'" widthPt="100" align="'center'"/>
+
+
     <!-- Drop area 2 -->
     <Widget name="'dndTarget'" right="0" w="250" heightPt="100" skin:Paint-color="0x00FF00"
         on-receiveDrop="
-            //indicate d'n'd was successful and add object to this container
-            cast(event, $DndEvent).accept($this);
+            var e = cast(event, $DndEvent);
+
+            //accept only some of dropped widgets
+            if( e.key == 'odd' ){
+                //indicate d'n'd was successful and add object to this container
+                e.accept($this);
+
+            //anything else return to initial position
+            }else{
+                e.drop(true);
+            }
         "
     />
 </Widget>

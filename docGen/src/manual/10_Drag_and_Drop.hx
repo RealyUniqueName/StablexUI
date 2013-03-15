@@ -15,6 +15,7 @@ Here is how to drop:
 <Widget w="100" h="100" on-mouseDown="cast(event, $DndEvent).accept($this);" />
 </xml>
 
+See <type>ru.stablex.ui.Dnd</type>.drag() for more options like filtering dropped objects, dropping on mouseDown etc.
 More complex example:
 
 <xml>
@@ -23,15 +24,15 @@ More complex example:
 <Widget w="800" h="600">
 
     <!-- Objects to drag -->
-    <Bmp name="'cool'" src="'assets/cool_pic.png'" on-mouseDown="$Dnd.drag($this);" />
-    <Bmp name="'another'" src="'assets/another_pic.png'" top="100" on-mouseDown="$Dnd.drag($this);" />
+    <Bmp src="'assets/cool_pic.png'" on-mouseDown="$Dnd.drag($this, null, 'cool');" />
+    <Bmp src="'assets/another_pic.png'" top="100" on-mouseDown="$Dnd.drag($this);" />
 
     <!-- Drop area -->
     <Widget w="200" heightPt="100" right="0" skin:Paint-color="0x00FF00" on-receiveDrop="
         var e = cast(event, $DndEvent);
 
         //we will accept only cool pictures
-        if( e.obj.name == 'cool' ){
+        if( e.key == 'cool' ){
             e.accept($this);
 
         //other objects will be sent back

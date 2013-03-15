@@ -1,4 +1,4 @@
-package com.example;
+package ;
 
 import nme.Lib;
 import ru.stablex.ui.UIBuilder;

@@ -35,6 +35,8 @@ class DndEvent extends Event{
     //}
     //If dropped object was accepted by some other object, this will be equal `true`.
     public var accepted (default,null) : Bool = false;
+    //Value passed to <type>Dnd</type>.drag() as third argument. Use it to filter dopped objects on <type>ru.stablex.ui.events.DndEvent</type>.RECEIVE.
+    public var key : String = null;
 
 /*******************************************************************************
 *   STATIC METHODS
@@ -50,9 +52,10 @@ class DndEvent extends Event{
     * Constructor
     * @private
     */
-    public function new(type:String, obj:Widget, dragArea:DisplayObjectContainer, bubble:Bool = false, cloned:Bool = false) : Void {
+    public function new(type:String, obj:Widget, dragArea:DisplayObjectContainer, bubble:Bool = false, cloned:Bool = false, key:String = null) : Void {
         //store required data
         if( !cloned ){
+            this.key            = key;
             this.obj            = obj;
             this.srcPos         = new Point(this.obj.left, this.obj.top);
             this.srcParent      = this.obj.parent;
@@ -151,6 +154,7 @@ class DndEvent extends Event{
     public function cloneWithType(type:String) : DndEvent {
         var e : DndEvent = new DndEvent(type, this.obj, this.obj.parent, this.bubbles, true);
 
+        e.key            = this.key;
         e.obj            = this.obj;
         e.srcParent      = this.srcParent;
         e.srcPos         = this.srcPos;

@@ -14,8 +14,10 @@ import com.eclecticdesignstudio.motion.actuators.GenericActuator;
 *
 */
 class Dnd {
-
+    //currently processed drag'n'drop event (exists since drag until drop)
     static public var current (default, null) : DndEvent;
+    //required for proper dropping processing on mouseDown
+    static private var _skipMouseDown : Bool = false;
 
 /*******************************************************************************
 *   STATIC METHODS
@@ -25,14 +27,17 @@ class Dnd {
     * Start dragging specified widget
     * @param w - widget to drag
     * @param dragArea - widget will be added to dragArea's display list for dragging
+    * @param key - key to filter dopped objects on <type>ru.stablex.ui.events.DndEvent</type>.RECEIVE. Any string you wish.
+    * @param dropOnRelease - if true, <type>ru.stablex.ui.events.DndEvent</type>.RECEIVE will be dispatched on next <type>nme.events.MouseEvent</type>.MOUSE_UP.
+    *                        If false, <type>ru.stablex.ui.events.DndEvent</type>.RECEIVE will be dispatched on next <type>nme.events.MouseEvent</type>.MOUSE_DOWN.
     */
-    static public function drag(w:Widget, dragArea:DisplayObjectContainer = null) : Void {
+    static public function drag(w:Widget, dragArea:DisplayObjectContainer = null, key:String = null, dropOnRelease:Bool = true) : Void {
         //if we still did not drop previousely dragged widget
         if( Dnd.current != null ){
             Dnd.current.drop(true);
         }
 
-        Dnd.current = new DndEvent(DndEvent.DRAG, w, dragArea, true);
+        Dnd.current = new DndEvent(DndEvent.DRAG, w, dragArea, true, false, key);
         w.dispatchEvent(Dnd.current);
 
         Dnd.current.obj.mouseEnabled = Dnd.current.obj.mouseChildren = false;
@@ -52,7 +57,13 @@ class Dnd {
 
         //Start listening for mouse up
         Lib.current.stage.removeEventListener(MouseEvent.MOUSE_UP, Dnd._onDrop);
-        Lib.current.stage.addEventListener(MouseEvent.MOUSE_UP, Dnd._onDrop);
+        Lib.current.stage.removeEventListener(MouseEvent.MOUSE_DOWN, Dnd._onDrop);
+        if( dropOnRelease ){
+            Lib.current.stage.addEventListener(MouseEvent.MOUSE_UP, Dnd._onDrop);
+        }else{
+            Dnd._skipMouseDown = true;
+            Lib.current.stage.addEventListener(MouseEvent.MOUSE_DOWN, Dnd._onDrop);
+        }
     }//function drag()
 
 
@@ -61,6 +72,14 @@ class Dnd {
     *
     */
     static private function _onDrop(e:MouseEvent) : Void {
+        if( e.type == MouseEvent.MOUSE_DOWN && Dnd._skipMouseDown ){
+            Dnd._skipMouseDown = false;
+            return;
+        }
+
+        Lib.current.stage.removeEventListener(MouseEvent.MOUSE_UP, Dnd._onDrop);
+        Lib.current.stage.removeEventListener(MouseEvent.MOUSE_DOWN, Dnd._onDrop);
+
         if( Dnd.current != null ){
             Lib.current.stage.removeEventListener(DndEvent.RECEIVE, Dnd._onStageReceive);
             Lib.current.stage.addEventListener(DndEvent.RECEIVE, Dnd._onStageReceive);
@@ -71,8 +90,6 @@ class Dnd {
             Dnd.current.obj.dispatchEvent( drop );
             e.target.dispatchEvent( receive );
         }
-
-        Lib.current.stage.removeEventListener(MouseEvent.MOUSE_UP, Dnd._onDrop);
     }//function _onDrop()
 
 
