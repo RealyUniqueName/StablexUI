@@ -34,10 +34,6 @@ More complex example:
         //we will accept only cool pictures
         if( e.key == 'cool' ){
             e.accept($this);
-
-        //other objects will be sent back
-        }else{
-            e.drop(true);
         }
     "/>
 

@@ -27,7 +27,7 @@ class Dnd {
     * Start dragging specified widget
     * @param w - widget to drag
     * @param dragArea - widget will be added to dragArea's display list for dragging
-    * @param key - key to filter dopped objects on <type>ru.stablex.ui.events.DndEvent</type>.RECEIVE. Any string you wish.
+    * @param key - key to filter dropped objects on <type>ru.stablex.ui.events.DndEvent</type>.RECEIVE. Any string you wish.
     * @param dropOnRelease - if true, <type>ru.stablex.ui.events.DndEvent</type>.RECEIVE will be dispatched on next <type>nme.events.MouseEvent</type>.MOUSE_UP.
     *                        If false, <type>ru.stablex.ui.events.DndEvent</type>.RECEIVE will be dispatched on next <type>nme.events.MouseEvent</type>.MOUSE_DOWN.
     */

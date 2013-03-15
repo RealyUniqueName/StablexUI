@@ -35,7 +35,7 @@ class DndEvent extends Event{
     //}
     //If dropped object was accepted by some other object, this will be equal `true`.
     public var accepted (default,null) : Bool = false;
-    //Value passed to <type>Dnd</type>.drag() as third argument. Use it to filter dopped objects on <type>ru.stablex.ui.events.DndEvent</type>.RECEIVE.
+    //Value passed to <type>Dnd</type>.drag() as third argument. Use it to filter dropped objects on <type>ru.stablex.ui.events.DndEvent</type>.RECEIVE.
     public var key : String = null;
 
 /*******************************************************************************
