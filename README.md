@@ -41,7 +41,6 @@ Features:
 * Ability to create custom classes for skinning, transitions, tooltips, etc;
 * There is more! Some features are described in docs: http://stablex.ru/ui/doc;
 
-Few elements are implemented now. But i found that's enough for majority of mobile and web games, so i've decided to publish StablexUI.
 
 Implemented widgets:
 ---------------
