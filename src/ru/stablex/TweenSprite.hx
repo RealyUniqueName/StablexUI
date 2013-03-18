@@ -1,21 +1,21 @@
 package ru.stablex;
 
-import com.eclecticdesignstudio.motion.Actuate;
-import com.eclecticdesignstudio.motion.actuators.GenericActuator;
-import com.eclecticdesignstudio.motion.easing.Quad;
-import com.eclecticdesignstudio.motion.easing.Expo;
-import com.eclecticdesignstudio.motion.easing.Bounce;
-import com.eclecticdesignstudio.motion.easing.Linear;
-import com.eclecticdesignstudio.motion.easing.Quint;
-import com.eclecticdesignstudio.motion.easing.Elastic;
-import com.eclecticdesignstudio.motion.easing.IEasing;
-import com.eclecticdesignstudio.motion.easing.Back;
-import com.eclecticdesignstudio.motion.easing.Quart;
-import com.eclecticdesignstudio.motion.easing.Cubic;
-import com.eclecticdesignstudio.motion.easing.Sine;
-
+import motion.Actuate;
+import motion.actuators.GenericActuator;
+import motion.easing.Quad;
+import motion.easing.Expo;
+import motion.easing.Bounce;
+import motion.easing.Linear;
+import motion.easing.Quint;
+import motion.easing.Elastic;
+import motion.easing.IEasing;
+import motion.easing.Back;
+import motion.easing.Quart;
+import motion.easing.Cubic;
+import motion.easing.Sine;
 import nme.display.DisplayObject;
 import nme.display.Sprite;
+import haxe.ds.StringMap;
 
 
 /**
@@ -26,7 +26,7 @@ import nme.display.Sprite;
 class TweenSprite extends Sprite{
 
     //registered event listeners
-    private var _listeners : Hash<List<Dynamic->Void>>;
+    private var _listeners : StringMap<List<Dynamic->Void>>;
 
 
     /**
@@ -36,7 +36,7 @@ class TweenSprite extends Sprite{
     override public function addEventListener (type:String, listener:Dynamic->Void, useCapture:Bool = false, priority:Int = 0, useWeakReference:Bool = false) : Void{
         //if listeners list is not created
         if( this._listeners == null ){
-            this._listeners = new Hash();
+            this._listeners = new StringMap();
         }
 
         var listeners : List<Dynamic->Void> = this._listeners.get(type);

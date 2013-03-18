@@ -2,6 +2,7 @@ package ru.stablex.ui.widgets;
 
 import nme.events.MouseEvent;
 import ru.stablex.ui.misc.RadioGroup;
+import haxe.ds.StringMap;
 
 
 /**
@@ -10,18 +11,18 @@ import ru.stablex.ui.misc.RadioGroup;
 */
 class Radio extends Checkbox{
     //all registered groups
-    static public var groups : Hash<RadioGroup> = new Hash();
+    static public var groups : StringMap<RadioGroup> = new StringMap();
 
 
     //group name for this control
-    public var group (default,_setGroup) : String;
+    public var group (default,set) : String;
 
 
     /**
     * Setter for `.group`
     *
     */
-    private function _setGroup (g:String) : String {
+    private function set_group (g:String) : String {
         //remove from old group
         if( this.group != null && Radio.groups.exists(this.group) ){
             var group = Radio.groups.get(this.group);
@@ -50,7 +51,7 @@ class Radio extends Checkbox{
         }
 
         return g;
-    }//function _setGroup()
+    }//function set_group()
 
 
     /**

@@ -13,14 +13,14 @@ import ru.stablex.ui.events.WidgetEvent;
 */
 class Progress extends Widget{
     //Maximum value.
-    public var max (default,_setMax) : Float = 100;
+    public var max (default,set) : Float = 100;
     //current value
-    public var value (_getValue,_setValue) : Float = 0;
+    public var value (get,set) : Float;
     private var _value : Float = 0;
     //bar
     public var bar : Widget;
     //Whether user can click/tap/slide progress bar to change value
-    public var interactive (default,set_interactive) : Bool = false;
+    public var interactive (default,set) : Bool = false;
 
 
     /**
@@ -40,7 +40,7 @@ class Progress extends Widget{
     */
     override public function onCreate () : Void {
         super.onCreate();
-        this._setBarWidth(this.value, this.max);
+        this.set_barWidth(this.value, this.max);
     }//function onCreate()
 
 
@@ -48,40 +48,40 @@ class Progress extends Widget{
     * Setter for `.max`
     *
     */
-    private function _setMax (m:Float) : Float {
+    private function set_max (m:Float) : Float {
         if( this.created ){
-            this._setBarWidth(this.value, m);
+            this.set_barWidth(this.value, m);
         }
         return this.max = m;
-    }//function _setMax()
+    }//function set_max()
 
 
     /**
     * Setter for `.value`
     *
     */
-    private function _setValue (v:Float) : Float {
-        this._setBarWidth(v, this.max);
+    private function set_value (v:Float) : Float {
+        this.set_barWidth(v, this.max);
         return this._value = v;
-    }//function _setValue()
+    }//function set_value()
 
 
     /**
     * Getter for `.value`
     *
     */
-    private function _getValue () : Float {
+    private function get_value () : Float {
         return this._value;
-    }//function _setValue()
+    }//function set_value()
 
 
     /**
     * Set bar width based on provided values
     *
     */
-    private inline function _setBarWidth (value:Float, max:Float) : Void {
+    private inline function set_barWidth (value:Float, max:Float) : Void {
         this.bar.widthPt = 100 * (max <= 0 || value <= 0 ? 0 : value / max);
-    }//function _setBarWidth()
+    }//function set_barWidth()
 
 
     /**
