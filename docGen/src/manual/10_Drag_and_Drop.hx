@@ -12,7 +12,7 @@ Here is how to drag:
 Here is how to drop:
 
 <xml>
-<Widget w="100" h="100" on-mouseDown="cast(event, $DndEvent).accept($this);" />
+<Widget w="100" h="100" on-receiveDrop="cast(event, $DndEvent).accept($this);" />
 </xml>
 
 See <type>ru.stablex.ui.Dnd</type>.drag() for more options like filtering dropped objects, dropping on mouseDown etc.
