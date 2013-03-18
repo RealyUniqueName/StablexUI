@@ -1,21 +1,21 @@
 package ru.stablex;
 
-import com.eclecticdesignstudio.motion.Actuate;
-import com.eclecticdesignstudio.motion.actuators.GenericActuator;
-import com.eclecticdesignstudio.motion.easing.Quad;
-import com.eclecticdesignstudio.motion.easing.Expo;
-import com.eclecticdesignstudio.motion.easing.Bounce;
-import com.eclecticdesignstudio.motion.easing.Linear;
-import com.eclecticdesignstudio.motion.easing.Quint;
-import com.eclecticdesignstudio.motion.easing.Elastic;
-import com.eclecticdesignstudio.motion.easing.IEasing;
-import com.eclecticdesignstudio.motion.easing.Back;
-import com.eclecticdesignstudio.motion.easing.Quart;
-import com.eclecticdesignstudio.motion.easing.Cubic;
-import com.eclecticdesignstudio.motion.easing.Sine;
-
+import motion.Actuate;
+import motion.actuators.GenericActuator;
+import motion.easing.Quad;
+import motion.easing.Expo;
+import motion.easing.Bounce;
+import motion.easing.Linear;
+import motion.easing.Quint;
+import motion.easing.Elastic;
+import motion.easing.IEasing;
+import motion.easing.Back;
+import motion.easing.Quart;
+import motion.easing.Cubic;
+import motion.easing.Sine;
 import nme.display.DisplayObject;
 import nme.display.Sprite;
+import haxe.ds.StringMap;
 
 
 /**
