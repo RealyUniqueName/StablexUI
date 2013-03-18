@@ -1,5 +1,6 @@
 package ru.stablex;
 
+import haxe.ds.StringMap;
 
 /**
 * List of any objects. Once requested, objects become accessible as properties of this list
@@ -11,7 +12,7 @@ class DynamicList<T> implements Dynamic<T>{
     //class for objects in this list
     private var _cls : Class<T>;
     //description
-    private var _hash : Hash<T>;
+    private var _hash : StringMap<T>;
 
 
     /**
@@ -19,7 +20,7 @@ class DynamicList<T> implements Dynamic<T>{
     * @param cls - class to use for new objects in list
     */
     public function new (cls:Class<T>) : Void {        
-        this._hash = new Hash();
+        this._hash = new StringMap();
         this._cls = cls;
     }//function new()
 

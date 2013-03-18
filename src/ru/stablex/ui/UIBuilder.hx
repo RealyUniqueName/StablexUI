@@ -2,6 +2,7 @@ package ru.stablex.ui;
 
 import haxe.macro.Context;
 import haxe.macro.Expr;
+import haxe.ds.StringMap;
 #if macro
 import sys.FileSystem;
 import sys.io.File;
@@ -12,44 +13,45 @@ import nme.text.TextField;
 import ru.stablex.ui.widgets.Widget;
 #end
 
-
 /**
 * Core class. All macro magic lives here
 */
 class UIBuilder {
+#if macro
     //Regexps for checking attribute types and code generation in xml {
         //checks whether attribute declares event listener
-        @:macro static private var _erEvent    : EReg = ~/^on-(.+)/i;
+        static private var _erEvent    : EReg = ~/^on-(.+)/i;
         //for replacing @someVar with arguments passed to UIBuilder.buildFn()({arguments})
-        @:macro static private var _erCodeArg : EReg = ~/@([._a-z0-9]+)/i;
+        static private var _erCodeArg : EReg = ~/@([._a-z0-9]+)/i;
         //for replacing $ClassName with classes registered through UIBuilder.regClass('fully qualified class name')
-        @:macro static private var _erCls     : EReg = ~/\$([a-z0-9_]+)([^a-z0-9_])/i;
+        static private var _erCls     : EReg = ~/\$([a-z0-9_]+)([^a-z0-9_])/i;
         //for replacing #someId with UIBuilder.get('someId')
-        @:macro static private var _erId      : EReg = new EReg("#([a-z0-9_]+)([^a-z0-9_])", "i");
+        static private var _erId      : EReg = new EReg("#([a-z0-9_]+)([^a-z0-9_])", "i");
         //for replacing #SomeClass(someId) with UIBuilder.getAs('someId', SomeClass)
-        @:macro static private var _erCastId  : EReg = new EReg("#([a-z0-9_]+)\\(([a-z0-9_]+)\\)", "i");
+        static private var _erCastId  : EReg = new EReg("#([a-z0-9_]+)\\(([a-z0-9_]+)\\)", "i");
         //for replacing `this` keyword with object currently being processed
-        @:macro static private var _erThis    : EReg = ~/\$this([^a-z0-9_])/i;
+        static private var _erThis    : EReg = ~/\$this([^a-z0-9_])/i;
         //checks whether we need to create object of specified class (second matched group) for this attribute (first matched group)
-        @:macro static private var _erAttrCls : EReg = ~/(([-a-z0-9_]+):([a-z0-9_]+))/i;
+        static private var _erAttrCls : EReg = ~/(([-a-z0-9_]+):([a-z0-9_]+))/i;
     //}
 
-    @:macro static private var _events  : Hash<String> = new Hash();
-    @:macro static private var _imports : Hash<String> = new Hash();
+    static private var _events  : StringMap<String> = new StringMap();
+    static private var _imports : StringMap<String> = new StringMap();
 
-    @:macro static private var _initialized : Bool = false;
+    static private var _initialized : Bool = false;
     //all generated code will be saved in this direcory (see .init() method for details)
-    @:macro static private var _generatedCodeDir : String = null;
+    static private var _generatedCodeDir : String = null;
+    #end
 
 #if !macro
     //Closures for applaying default settings to widgets. Closures created with UIBuilder.init('defaults.xml')
-    static public var defaults : Hash<Hash<Widget->Void>> = new Hash();
+    static public var defaults : StringMap<StringMap<Widget->Void>> = new StringMap();
 
     //Widgets created with UIBuilder.buildFn() or UIBuilder.create()
-    static private var _objects : Hash<Widget> = new Hash();
+    static private var _objects : StringMap<Widget> = new StringMap();
 
     //registered skins
-    static public var skins : Hash<Void->Skin> = new Hash();
+    static public var skins : StringMap<Void->Skin> = new StringMap();
 
     //For id generator
     static private var _nextId : Int = 0;
@@ -172,7 +174,7 @@ class UIBuilder {
         if( defaultsXmlFile != null ){
             var root : Xml = Xml.parse( File.getContent(defaultsXmlFile) ).firstElement();
             for(widget in root.elements()){
-                code += '\nif( !ru.stablex.ui.UIBuilder.defaults.exists("' + widget.nodeName + '") ) ru.stablex.ui.UIBuilder.defaults.set("' + widget.nodeName + '", new Hash());';
+                code += '\nif( !ru.stablex.ui.UIBuilder.defaults.exists("' + widget.nodeName + '") ) ru.stablex.ui.UIBuilder.defaults.set("' + widget.nodeName + '", new haxe.ds.StringMap());';
                 for(node in widget.elements()){
                     code += '\nru.stablex.ui.UIBuilder.defaults.get("' + widget.nodeName + '").set("' + node.nodeName + '", function(__ui__widget0:ru.stablex.ui.widgets.Widget) : Void {';
                     code += UIBuilder.construct(node, 1, widget.nodeName);
@@ -372,7 +374,7 @@ class UIBuilder {
 
         //process class-casting attributes
         if( post.length > 0 ){
-            var props : Hash<Bool> = new Hash();
+            var props : haxe.ds.StringMap<Bool> = new haxe.ds.StringMap();
             var prop  : String;
             var pos   : Int = -1;
             post.sort(UIBuilder._attrClassCastSorter);
@@ -725,7 +727,7 @@ class UIBuilder {
     */
     static inline public function applyDefaults(obj:Widget) : Void {
         var clsName : String = Type.getClassName(Type.getClass(obj));
-        var widgetDefaults : Hash<Widget->Void> = UIBuilder.defaults.get( clsName.substr(clsName.lastIndexOf('.', clsName.length - 1) + 1) );
+        var widgetDefaults : haxe.ds.StringMap<Widget->Void> = UIBuilder.defaults.get( clsName.substr(clsName.lastIndexOf('.', clsName.length - 1) + 1) );
         if( widgetDefaults != null ){
             var defs : Array<String> = obj.defaults.split(',');
             for(i in 0...defs.length){

@@ -2,6 +2,7 @@ package ru.stablex.ui.widgets;
 
 import nme.events.MouseEvent;
 import ru.stablex.ui.misc.RadioGroup;
+import haxe.ds.StringMap;
 
 
 /**
