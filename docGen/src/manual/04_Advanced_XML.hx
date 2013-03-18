@@ -96,16 +96,21 @@ widget.onCreate();
 </haxe>
 
 There are some predefined handler types for most frequently used events:
-
+(may be out of date, see <type>ru.stablex.ui.UIBuilder</type>.init() source code for full list)
 <haxe>
-on-enterFrame -&gt; nme.events.Event.ENTER_FRAME
-on-click      -&gt; nme.events.MouseEvent.CLICK
-on-mouseDown  -&gt; nme.events.MouseEvent.MOUSE_DOWN
-on-mouseUp    -&gt; nme.events.MouseEvent.MOUSE_UP
-on-display    -&gt; nme.events.Event.ADDED_TO_STAGE
-on-create     -&gt; ru.stablex.ui.events.WidgetEvent.CREATE
-on-free       -&gt; ru.stablex.ui.events.WidgetEvent.FREE
-on-resize     -&gt; ru.stablex.ui.events.WidgetEvent.RESIZE
+on-enterFrame  -&gt; nme.events.Event.ENTER_FRAME
+on-click       -&gt; nme.events.MouseEvent.CLICK
+on-mouseDown   -&gt; nme.events.MouseEvent.MOUSE_DOWN
+on-mouseUp     -&gt; nme.events.MouseEvent.MOUSE_UP
+on-display     -&gt; nme.events.Event.ADDED_TO_STAGE
+on-create      -&gt; ru.stablex.ui.events.WidgetEvent.CREATE
+on-free        -&gt; ru.stablex.ui.events.WidgetEvent.FREE
+on-resize      -&gt; ru.stablex.ui.events.WidgetEvent.RESIZE
+on-scrollStart -&gt; ru.stablex.ui.events.WidgetEvent.SCROLL_START
+on-scrollStop  -&gt; ru.stablex.ui.events.WidgetEvent.SCROLL_STOP
+on-drag        -&gt; ru.stablex.ui.events.DndEvent.DRAG
+on-drop        -&gt; ru.stablex.ui.events.DndEvent.DROP
+on-receiveDrop -&gt; ru.stablex.ui.events.DndEvent.RECEIVE
 </haxe>
 */
 
