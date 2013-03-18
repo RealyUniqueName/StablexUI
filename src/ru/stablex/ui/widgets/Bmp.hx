@@ -13,12 +13,12 @@ import ru.stablex.Err;
 
 class Bmp extends Widget{
     //Asset ID or path to bitmap
-    public var src (get_src,set_src): String;
+    public var src (get,set): String;
     public var _src : String = null;
     //Should we use smoothing?
     public var smooth : Bool = true;
     //set size depending on bitmap size
-    public var autoSize (never,_setAutoSize) : Bool;
+    public var autoSize (never,set) : Bool;
     //set width depending on bitmap width
     public var autoWidth : Bool = true;
     //set height depending on bitmap height
@@ -28,7 +28,7 @@ class Bmp extends Widget{
     * `.bitmapData` will be set to null automatically, if you set `.src`.
     * `.src` will be set to null automatically, if you set `.bitmapData`
     */
-    public var bitmapData (default,set_bitmapData) : BitmapData;
+    public var bitmapData (default,set) : BitmapData;
     private var _bitmapData : BitmapData = null;
     /**
     * If you want to draw just a portion of the bitmap. Specify top/left corner of
@@ -37,9 +37,9 @@ class Bmp extends Widget{
     * width and height will be taken from `.xOffset` and `.yOffset` to bitmap right border
     * and bottom border respectively
     */
-    public var xOffset (default, _setXOffset) : Int = 0;
+    public var xOffset (default, set) : Int = 0;
     // y offset for drawing a portion of the bitmap
-    public var yOffset (default, _setYOffset) : Int = 0;
+    public var yOffset (default, set) : Int = 0;
     /**
     * When `.xOffset` or `.yOffset` is set, this property is changed to true.
     * To draw full image on next refresh set this property to false again.
@@ -93,67 +93,67 @@ class Bmp extends Widget{
     * Setter for autoSize
     *
     */
-    private function _setAutoSize (as:Bool) : Bool {
+    private function set_autoSize (as:Bool) : Bool {
         return this.autoWidth = this.autoHeight = as;
-    }//function _setAutoSize()
+    }//function set_AutoSize()
 
 
     /**
     * Setter for autoSize
     *
     */
-    private function _setXOffset (x:Int) : Int {
+    private function set_xOffset (x:Int) : Int {
         this.drawPortion = true;
         return this.xOffset = (x >= 0 ? x : 0);
-    }//function _setXOffset()
+    }//function set_XOffset()
 
     /**
     * Setter for autoSize
     *
     */
-    private function _setYOffset (y:Int) : Int {
+    private function set_yOffset (y:Int) : Int {
         this.drawPortion = true;
         return this.yOffset = (y >= 0 ? y : 0);
-    }//function _setYOffset()
+    }//function set_YOffset()
 
     /**
     * If width is set, disable autoWidth
     *
     */
-    override private function _setWidth(w:Float) : Float {
+    override private function set_w(w:Float) : Float {
         this.autoWidth = false;
-        return super._setWidth(w);
-    }//function _setWidth()
+        return super.set_w(w);
+    }//function set_w()
 
 
     /**
     * If width is set, disable autoWidth
     *
     */
-    override private function _setWpt(wp:Float) : Float {
+    override private function set_widthPt(wp:Float) : Float {
         this.autoWidth = false;
-        return super._setWpt(wp);
-    }//function _setWpt()
+        return super.set_widthPt(wp);
+    }//function set_Wpt()
 
 
     /**
     * If height is set, disable autoHeight
     *
     */
-    override private function _setHpt(hp:Float) : Float {
+    override private function set_heightPt(hp:Float) : Float {
         this.autoHeight = false;
-        return super._setHpt(hp);
-    }//function _setHpt()
+        return super.set_heightPt(hp);
+    }//function set_Hpt()
 
 
     /**
     * If height is set, disable autoHeight
     *
     */
-    override function _setHeight(h:Float) : Float {
+    override function set_h(h:Float) : Float {
         this.autoHeight = false;
-        return super._setHeight(h);
-    }//function _setHeight()
+        return super.set_h(h);
+    }//function set_h()
 
 
     /**

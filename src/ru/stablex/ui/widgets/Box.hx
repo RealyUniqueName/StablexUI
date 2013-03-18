@@ -13,7 +13,7 @@ class Box extends Widget{
     //Should we arrange children vertically (true) or horizontally (false). True by default.
     public var vertical : Bool = true;
     //Setter for padding left, right, top, bottom.
-    public var padding (never,_setPadding) : Float;
+    public var padding (never,set) : Float;
     //padding left
     public var paddingLeft   : Float = 0;
     //padding right
@@ -31,7 +31,7 @@ class Box extends Widget{
     */
     public var align : String = 'center,middle';
     //set size depending on content size
-    public var autoSize (never,_setAutoSize) : Bool;
+    public var autoSize (never,set) : Bool;
     //set width depending on content width
     public var autoWidth                     : Bool = true;
     //set height depending on content height
@@ -44,59 +44,59 @@ class Box extends Widget{
     * Setter for autoSize
     *
     */
-    private function _setAutoSize (as:Bool) : Bool {
+    private function set_autoSize (as:Bool) : Bool {
         return this.autoWidth = this.autoHeight = as;
-    }//function _setAutoSize()
+    }//function set_autoSize()
 
 
     /**
     * If width is set, disable autoWidth
     *
     */
-    override private function _setWidth(w:Float) : Float {
+    override private function set_w(w:Float) : Float {
         this.autoWidth = false;
-        return super._setWidth(w);
-    }//function _setWidth()
+        return super.set_w(w);
+    }//function set_w()
 
 
     /**
     * If width is set, disable autoWidth
     *
     */
-    override private function _setWpt(wp:Float) : Float {
+    override private function set_widthPt(wp:Float) : Float {
         this.autoWidth = false;
-        return super._setWpt(wp);
-    }//function _setWpt()
+        return super.set_widthPt(wp);
+    }//function set_widthPt()
 
 
     /**
     * If height is set, disable autoHeight
     *
     */
-    override private function _setHpt(hp:Float) : Float {
+    override private function set_heightPt(hp:Float) : Float {
         this.autoHeight = false;
-        return super._setHpt(hp);
-    }//function _setHpt()
+        return super.set_heightPt(hp);
+    }//function set_heightPt()
 
 
     /**
     * If height is set, disable autoHeight
     *
     */
-    override function _setHeight(h:Float) : Float {
+    override function set_h(h:Float) : Float {
         this.autoHeight = false;
-        return super._setHeight(h);
-    }//function _setHeight()
+        return super.set_h(h);
+    }//function set_h()
 
 
     /**
     * Setter for padding
     *
     */
-    private function _setPadding (p:Float) : Float {
+    private function set_padding (p:Float) : Float {
         this.paddingTop = this.paddingBottom = this.paddingRight = this.paddingLeft = p;
         return p;
-    }//function _setPadding()
+    }//function set_padding()
 
 
     /**

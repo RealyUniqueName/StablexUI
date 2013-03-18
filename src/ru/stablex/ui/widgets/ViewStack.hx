@@ -13,9 +13,9 @@ class ViewStack extends Widget{
     private var _history : Array<Int>;
 
     //getter for .name of currently visible child
-    public var current (_getCurrent,never)       : String;
+    public var current (get,never)       : String;
     //child index of currently visible child
-    public var currentIdx (_getCurrentIdx,never) : Int;
+    public var currentIdx (get,never) : Int;
     // wrap the stack list or not (for `.next()` calls)
     public var wrap : Bool = false;
     //transition for changing children
@@ -119,7 +119,7 @@ class ViewStack extends Widget{
     * show the first one
     */
     public inline function next() : Void {
-        var next = this._getCurrentIdx() + 1;
+        var next = this.get_currentIdx() + 1;
         if (next < this.numChildren) {
             this.showIdx(next);
         }else if (wrap) {
@@ -147,7 +147,7 @@ class ViewStack extends Widget{
     * Getter for this.current
     *
     */
-    private function _getCurrent() : String {
+    private function get_current() : String {
         if( this._history.length == 0 || this._history[ this._history.length - 1 ] >= this.numChildren ){
             return null;
         }else{
@@ -158,16 +158,16 @@ class ViewStack extends Widget{
                 return child.name;
             }
         }
-    }//function _getCurrent()
+    }//function get_current()
 
 
     /**
     * getter for this.currentIdx
     *
     */
-    private function _getCurrentIdx() : Int {
+    private function get_currentIdx() : Int {
         return this._history[ this._history.length - 1 ];
-    }//function _getCurrentIdx()
+    }//function get_currentIdx()
 
 
     /**

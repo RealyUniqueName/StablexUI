@@ -15,12 +15,12 @@ class Text extends Box{
     //Text format wich will be aplied to label on refresh
     public var format : TextFormat;
     //Text format for higlight mode
-    public var highlightFormat (_getHighlightFormat,_setHightlightFormat) : TextFormat;
+    public var highlightFormat (get,set) : TextFormat;
     private var _hightlightFormat : TextFormat;
     //indicates highlighting state
     public var highlighted (default,null) : Bool = false;
     //Getter-setter for text.
-    public var text (_getText,_setText) : String;
+    public var text (get,set) : String;
 
 
     /**
@@ -46,7 +46,7 @@ class Text extends Box{
     * Since highlighting is rare required, avoid creating object for it, until
     * it is requested
     */
-    private function _getHighlightFormat () : TextFormat {
+    private function get_highlightFormat () : TextFormat {
         if( this._hightlightFormat == null ){
             //clone current format
             this._hightlightFormat = new TextFormat(
@@ -73,16 +73,16 @@ class Text extends Box{
             );
         }
         return this._hightlightFormat;
-    }//function _getHighlightFormat()
+    }//function get_HighlightFormat()
 
 
     /**
     * Setter for `.highlightFormat`
     *
     */
-    private function _setHightlightFormat (hl:TextFormat) : TextFormat {
+    private function set_highlightFormat (hl:TextFormat) : TextFormat {
         return this._hightlightFormat = hl;
-    }//function _setHightlightFormat()
+    }//function set_HightlightFormat()
 
 
     /**
@@ -128,16 +128,16 @@ class Text extends Box{
     * Text getter
     *
     */
-    private function _getText() : String {
+    private function get_text() : String {
         return this.label.text;
-    }//function _getText()
+    }//function get_text()
 
 
     /**
     * Text setter
     *
     */
-    private function _setText(txt:String) : String {
+    private function set_text(txt:String) : String {
         this.label.text = txt;
 
         //if widget needs to be resized to fit new string size
@@ -149,7 +149,7 @@ class Text extends Box{
         }
 
         return txt;
-    }//function _setText()
+    }//function set_text()
 
 
 
