@@ -9,6 +9,9 @@ import ru.stablex.ui.widgets.Widget;
 /**
 * Fill widget with bitmap
 *
+* NOTICE: nme 3.5.5 for cpp target has issues for bitmaps with size not power of two.
+* So if you want to use this skin for cpp target, make sure your bitmap size is power of two
+* (32, 64, 128, ... pixels)
 */
 class Tile extends Rect{
 

@@ -4,7 +4,6 @@ import nme.display.DisplayObjectContainer;
 import nme.events.Event;
 import nme.geom.Point;
 import ru.stablex.ui.widgets.Widget;
-import com.eclecticdesignstudio.motion.actuators.GenericActuator;
 
 
 /**
@@ -119,7 +118,7 @@ class DndEvent extends Event{
     * Tween object to position
     *
     */
-    private inline function _moveTo(pos:Point) : IGenericActuator {
+    private inline function _moveTo(pos:Point) {
         return this.obj.tween(0.1, {left:pos.x, top:pos.y}, "Quad.easeOut");
     }//function _moveTo()
 
