@@ -18,6 +18,8 @@ class DndEvent extends Event{
     static public inline var DROP = "dndDrop";
     //Widget was hit by dropped object
     static public inline var RECEIVE = "dndReceive";
+    //Widget was returned to initial position
+    static public inline var RETURN = "dndReturn";
 
     //Dragged object
     public var obj (default,null) : Widget;
@@ -93,7 +95,8 @@ class DndEvent extends Event{
             //parent was not changed, just return to initial pos
             }else{
                 //set initial position
-                this._moveTo(this.srcPos);
+                var e = this.cloneWithType(RETURN);
+                this._moveTo(this.srcPos).onComplete(this.obj.dispatchEvent, [e]);
             }
         }
 
@@ -132,6 +135,9 @@ class DndEvent extends Event{
         //set position
         this.obj.left = this.srcPos.x;
         this.obj.top  = this.srcPos.y;
+
+        var e = this.cloneWithType(RETURN);
+        this.obj.dispatchEvent(e);
     }//function _returnToParent()
 
 
