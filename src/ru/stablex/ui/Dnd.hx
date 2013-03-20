@@ -40,6 +40,9 @@ class Dnd {
         Dnd.current = new DndEvent(DndEvent.DRAG, w, dragArea, true, false, key);
         w.dispatchEvent(Dnd.current);
 
+        //if dropped while processing DRAG event
+        if( Dnd.current == null && !Dnd.current.dropped ) return;
+
         Dnd.current.obj.mouseEnabled = Dnd.current.obj.mouseChildren = false;
 
         //if we have to use another object as an area for dragging
@@ -80,7 +83,7 @@ class Dnd {
         Lib.current.stage.removeEventListener(MouseEvent.MOUSE_UP, Dnd._onDrop);
         Lib.current.stage.removeEventListener(MouseEvent.MOUSE_DOWN, Dnd._onDrop);
 
-        if( Dnd.current != null ){
+        if( Dnd.current != null && !Dnd.current.dropped ){
             Lib.current.stage.removeEventListener(DndEvent.RECEIVE, Dnd._onStageReceive);
             Lib.current.stage.addEventListener(DndEvent.RECEIVE, Dnd._onStageReceive);
 

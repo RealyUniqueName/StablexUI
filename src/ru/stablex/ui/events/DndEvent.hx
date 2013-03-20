@@ -39,6 +39,10 @@ class DndEvent extends Event{
     public var accepted (default,null) : Bool = false;
     //Value passed to <type>Dnd</type>.drag() as third argument. Use it to filter dropped objects on <type>ru.stablex.ui.events.DndEvent</type>.RECEIVE.
     public var key : String = null;
+    /**
+    * First event for this dnd process
+    */
+    public var initialEvent (default,null) : DndEvent;
 
 /*******************************************************************************
 *   STATIC METHODS
@@ -64,6 +68,7 @@ class DndEvent extends Event{
             this.srcChildIndex  = (this.srcParent != null ? this.srcParent.getChildIndex(this.obj) : -1);
             this._mouseChildren = this.obj.mouseChildren;
             this._mouseEnabled  = this.obj.mouseEnabled;
+            this.initialEvent   = this;
         }
 
         super(type, bubble);
@@ -77,6 +82,12 @@ class DndEvent extends Event{
     public function drop(undo:Bool = false) : Void {
         if( this.dropped ) return;
         this.dropped = true;
+
+        //if was already dropped on previous events
+        if( this.initialEvent != this ){
+            if( this.initialEvent.dropped ) return;
+            this.initialEvent.dropped = true;
+        }
 
         this.obj.stopDrag();
 
@@ -167,6 +178,9 @@ class DndEvent extends Event{
         e.srcChildIndex  = this.srcChildIndex;
         e._mouseChildren = this._mouseChildren;
         e._mouseEnabled  = this._mouseEnabled;
+        e.dropped        = this.dropped;
+        e.accepted       = this.accepted;
+        e.initialEvent   = this.initialEvent;
 
         return e;
     }//function cloneWithType()
