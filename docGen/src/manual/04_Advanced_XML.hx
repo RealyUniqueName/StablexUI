@@ -87,7 +87,7 @@ var widget : ru.stablex.ui.widgets.Button = ... // UIBuilder actions to create w
 if( widget.skin == null ) widget.skin = new ru.stablex.ui.skins.Paint();
 cast(widget.skin, ru.stablex.ui.skins.Paint).color  = 0x002200;
 widget.text = 'Click me';
-widget.addEventListener(nme.events.MouseEvent.CLICK, function(event:nme.events.Event){
+widget.addEventListener(nme.events.MouseEvent.CLICK, function(event:nme.events.MouseEvent){
     trace('Oops! You clicked it again!');'
 })
 widget.skin = skin;
@@ -122,7 +122,8 @@ Let's register shortcut for <type>nme.events.MouseEvent</type>.MOUSE_WHEEL event
 To complete this task, we need to execute following code before <type>ru.stablex.ui.UIBuilder</type>.init() :
 
 <haxe>
- ru.stablex.ui.UIBuilder.regEvent('mouseWheel', 'nme.events.MouseEvent.MOUSE_WHEEL');
+ //last argument is optional. See API for details.
+ ru.stablex.ui.UIBuilder.regEvent('mouseWheel', 'nme.events.MouseEvent.MOUSE_WHEEL', 'nme.events.MouseEvent');
 
 //initialize StablexUI
  ru.stablex.ui.UIBuilder.init();
@@ -143,7 +144,7 @@ var widget : ru.stablex.ui.widgets.Button = ... // UIBuilder actions to create w
 if( widget.skin == null ) widget.skin = new ru.stablex.ui.skins.Paint();
 cast(widget.skin, ru.stablex.ui.skins.Paint).color  = 0x002200;
 widget.text    = 'Use mouse wheel over me';
-widget.addEventListener(nme.events.MouseEvent.MOUSE_WHEEL, function(event:nme.events.Event){
+widget.addEventListener(nme.events.MouseEvent.MOUSE_WHEEL, function(event:nme.events.MouseEvent){
     trace('Oops! You wheel it again!');
 });
 widget.skin = skin;

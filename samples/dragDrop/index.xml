@@ -5,16 +5,14 @@
     <!-- Drop area 1 -->
     <VBox w="250" heightPt="100" skin:Paint-color="0x0000FF"
         on-receiveDrop="
-            var e = cast(event, $DndEvent);
-
             //if dropped object was dragged from this container, return object to initial position
-            if( e.srcParent == $this ){
-                e.drop(true);
+            if( event.srcParent == $this ){
+                event.drop(true);
 
             //accept dropped object
             }else{
                 //indicate d'n'd was successful and add object to this container
-                e.accept($this);
+                event.accept($this);
             }
         "
     >
@@ -36,16 +34,14 @@
     <!-- Drop area 2 -->
     <Widget name="'dndTarget'" right="0" w="250" heightPt="100" skin:Paint-color="0x00FF00"
         on-receiveDrop="
-            var e = cast(event, $DndEvent);
-
             //accept only some of dropped widgets
-            if( e.key == 'odd' ){
+            if( event.key == 'odd' ){
                 //indicate d'n'd was successful and add object to this container
-                e.accept($this);
+                event.accept($this);
 
             //anything else return to initial position
             }else{
-                e.drop(true);
+                event.drop(true);
             }
         "
     />

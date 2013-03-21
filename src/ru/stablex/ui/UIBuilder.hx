@@ -34,7 +34,7 @@ class UIBuilder {
         @:macro static private var _erAttrCls : EReg = ~/(([-a-z0-9_]+):([a-z0-9_]+))/i;
     //}
 
-    @:macro static private var _events  : Hash<String> = new Hash();
+    @:macro static private var _events  : Hash<Array<String>> = new Hash();
     @:macro static private var _imports : Hash<String> = new Hash();
 
     @:macro static private var _initialized : Bool = false;
@@ -102,19 +102,19 @@ class UIBuilder {
 
             //registering frequently used events
             UIBuilder.regEvent('enterFrame',  'nme.events.Event.ENTER_FRAME');
-            UIBuilder.regEvent('click',       'nme.events.MouseEvent.CLICK');
-            UIBuilder.regEvent('mouseDown',   'nme.events.MouseEvent.MOUSE_DOWN');
-            UIBuilder.regEvent('mouseUp',     'nme.events.MouseEvent.MOUSE_UP');
+            UIBuilder.regEvent('click',       'nme.events.MouseEvent.CLICK',                    'nme.events.MouseEvent');
+            UIBuilder.regEvent('mouseDown',   'nme.events.MouseEvent.MOUSE_DOWN',               'nme.events.MouseEvent');
+            UIBuilder.regEvent('mouseUp',     'nme.events.MouseEvent.MOUSE_UP',                 'nme.events.MouseEvent');
             UIBuilder.regEvent('display',     'nme.events.Event.ADDED_TO_STAGE');
-            UIBuilder.regEvent('create',      'ru.stablex.ui.events.WidgetEvent.CREATE');
-            UIBuilder.regEvent('free',        'ru.stablex.ui.events.WidgetEvent.FREE');
-            UIBuilder.regEvent('resize',      'ru.stablex.ui.events.WidgetEvent.RESIZE');
-            UIBuilder.regEvent('change',      'ru.stablex.ui.events.WidgetEvent.CHANGE');
-            UIBuilder.regEvent('scrollStart', 'ru.stablex.ui.events.WidgetEvent.SCROLL_START');
-            UIBuilder.regEvent('scrollStop',  'ru.stablex.ui.events.WidgetEvent.SCROLL_STOP');
-            UIBuilder.regEvent('drag',        'ru.stablex.ui.events.DndEvent.DRAG');
-            UIBuilder.regEvent('drop',        'ru.stablex.ui.events.DndEvent.DROP');
-            UIBuilder.regEvent('receiveDrop', 'ru.stablex.ui.events.DndEvent.RECEIVE');
+            UIBuilder.regEvent('create',      'ru.stablex.ui.events.WidgetEvent.CREATE',        'ru.stablex.ui.events.WidgetEvent');
+            UIBuilder.regEvent('free',        'ru.stablex.ui.events.WidgetEvent.FREE',          'ru.stablex.ui.events.WidgetEvent');
+            UIBuilder.regEvent('resize',      'ru.stablex.ui.events.WidgetEvent.RESIZE',        'ru.stablex.ui.events.WidgetEvent');
+            UIBuilder.regEvent('change',      'ru.stablex.ui.events.WidgetEvent.CHANGE',        'ru.stablex.ui.events.WidgetEvent');
+            UIBuilder.regEvent('scrollStart', 'ru.stablex.ui.events.WidgetEvent.SCROLL_START',  'ru.stablex.ui.events.WidgetEvent');
+            UIBuilder.regEvent('scrollStop',  'ru.stablex.ui.events.WidgetEvent.SCROLL_STOP',   'ru.stablex.ui.events.WidgetEvent');
+            UIBuilder.regEvent('drag',        'ru.stablex.ui.events.DndEvent.DRAG',             'ru.stablex.ui.events.DndEvent');
+            UIBuilder.regEvent('drop',        'ru.stablex.ui.events.DndEvent.DROP',             'ru.stablex.ui.events.DndEvent');
+            UIBuilder.regEvent('receiveDrop', 'ru.stablex.ui.events.DndEvent.RECEIVE',          'ru.stablex.ui.events.DndEvent');
 
             //registering frequently used classes
             UIBuilder.regClass('ru.stablex.ui.widgets.Text');
@@ -354,10 +354,10 @@ class UIBuilder {
 
             //if this attribute defines event listener
             if( UIBuilder._erEvent.match(attr) ){
-                cls = UIBuilder._events.get( UIBuilder._erEvent.matched(1) );
-                if( cls == null ) Err.trigger('Event is not registered: ' + UIBuilder._erEvent.matched(1));
+                var event : Array<String> = UIBuilder._events.get( UIBuilder._erEvent.matched(1) );
+                if( event == null ) Err.trigger('Event is not registered: ' + UIBuilder._erEvent.matched(1));
 
-                code += '\n' + obj + '.addEventListener('+ cls +', function(event:nme.events.Event){' + value + '});';
+                code += '\n' + obj + '.addEventListener('+ event[0] +', function(event:' + event[1] + '){' + value + '});';
 
             //just apply attribute value to appropriate widget property
             }else{
@@ -533,11 +533,14 @@ class UIBuilder {
     /**
     * Register event type to declare event listeners in xml (attributes prefixed with `on-[shortcut]`).
     *
+    * @param eventType - type of event we need to listen to. E.g. nme.events.MouseEvent.MOUSE_WHEEL
+    * @param eventClass - expected class of event. E.g. nme.events.MouseEvent.
+    *
     * @throw <type>String</type> if this shortcut is already used
     */
-    @:macro static public function regEvent (shortcut:String, eventType:String) : Expr{
+    @:macro static public function regEvent (shortcut:String, eventType:String, eventClass:String = 'nme.events.Event') : Expr{
         if( UIBuilder._events.exists(shortcut) ) Err.trigger('Event is already registered: ' + shortcut);
-        UIBuilder._events.set(shortcut, eventType);
+        UIBuilder._events.set(shortcut, [eventType, eventClass]);
         return Context.parse('true', Context.currentPos());
     }//function register()
 

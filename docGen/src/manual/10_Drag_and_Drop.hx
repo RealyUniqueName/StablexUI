@@ -12,7 +12,7 @@ Here is how to drag:
 Here is how to drop:
 
 <xml>
-<Widget w="100" h="100" on-receiveDrop="cast(event, $DndEvent).accept($this);" />
+<Widget w="100" h="100" on-receiveDrop="event.accept($this);" />
 </xml>
 
 See <type>ru.stablex.ui.Dnd</type>.drag() for more options like filtering dropped objects, dropping on mouseDown etc.
@@ -29,11 +29,9 @@ More complex example:
 
     <!-- Drop area -->
     <Widget w="200" heightPt="100" right="0" skin:Paint-color="0x00FF00" on-receiveDrop="
-        var e = cast(event, $DndEvent);
-
         //we will accept only cool pictures
-        if( e.key == 'cool' ){
-            e.accept($this);
+        if( event.key == 'cool' ){
+            event.accept($this);
         }
     "/>
 

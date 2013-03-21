@@ -4,7 +4,7 @@
 
     <!-- Drop area 1 -->
     <Widget w="200" heightPt="100" skin:Paint-color="0x00FF00" on-receiveDrop="
-        cast(event, $DndEvent).accept($this);
+        event.accept($this);
     ">
         <!-- Droppable object -->
         <Widget left="50" top="50" w="100" h="100" skin:Paint-color="0x888888" on-mouseDown="
@@ -18,6 +18,6 @@
 
     <!-- Drop area 2 -->
     <Widget w="200" heightPt="100" right="0" skin:Paint-color="0x00FF00" on-receiveDrop="
-        cast(event, $DndEvent).accept($this);
+        event.accept($this);
     "/>
 </Widget>
