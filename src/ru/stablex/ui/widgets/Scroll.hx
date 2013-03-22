@@ -6,6 +6,7 @@ import nme.events.Event;
 import nme.events.MouseEvent;
 import nme.events.TouchEvent;
 import nme.Lib;
+import ru.stablex.ui.events.ScrollEvent;
 import ru.stablex.ui.events.WidgetEvent;
 
 
@@ -13,6 +14,8 @@ import ru.stablex.ui.events.WidgetEvent;
 /**
 * Scroll container.
 * First child of this widget will be used as container for scrolled content.
+* When scrolling is about to start, <type>ru.stablex.ui.events.ScrollEvent</type>.BEFORE_SCROLL is dispatched.
+* Handle this event to cancel scrolling if needed.
 */
 class Scroll extends Widget{
 
@@ -83,6 +86,9 @@ class Scroll extends Widget{
             h        : 10,
             slider   : {heightPt : 100}
         });
+
+        this.addUniqueListener(MouseEvent.MOUSE_WHEEL, this._beforeScroll);
+        this.addUniqueListener(MouseEvent.MOUSE_DOWN, this._beforeScroll);
     }//function new()
 
 
@@ -213,20 +219,6 @@ class Scroll extends Widget{
             this.hBar.refresh();
             this.hBar.addUniqueListener(WidgetEvent.CHANGE, this._onHBarChange);
         }
-
-        //mouse wheel scrolling
-        if( this.wheelScroll ){
-            this.addUniqueListener(MouseEvent.MOUSE_WHEEL, this._wheelScroll);
-        }else{
-            this.removeEventListener(MouseEvent.MOUSE_WHEEL, this._wheelScroll);
-        }
-
-        //dragging
-        if( this.dragScroll ){
-            this.box.addUniqueListener(MouseEvent.MOUSE_DOWN, this._dragScroll);
-        }else{
-            this.box.removeEventListener(MouseEvent.MOUSE_DOWN, this._dragScroll);
-        }
     }//function refresh()
 
 
@@ -252,6 +244,38 @@ class Scroll extends Widget{
             this.scrollX = -this.hBar.value;
         }
     }//function _onHBarChange()
+
+
+    /**
+    * When user want to scroll, dispatch ScrollEvent.BEFORE_SCROLL
+    *
+    */
+    private function _beforeScroll(e:MouseEvent) : Void {
+        this.addUniqueListener(ScrollEvent.BEFORE_SCROLL, this._startScroll);
+
+        var e : ScrollEvent = new ScrollEvent(ScrollEvent.BEFORE_SCROLL, e);
+        this.dispatchEvent(e);
+    }//function _beforeScroll()
+
+
+    /**
+    * Start scrolling
+    *
+    */
+    private function _startScroll(e:ScrollEvent) : Void {
+        this.removeEventListener(ScrollEvent.BEFORE_SCROLL, this._startScroll);
+
+        //scrolling cancaled
+        if( e.canceled ) return;
+
+        //scrolling by drag
+        if( e.srcEvent.type == MouseEvent.MOUSE_DOWN && this.dragScroll ){
+            this._dragScroll( e.srcAs(MouseEvent) );
+        //scrolling by mouse wheel
+        }else if( e.srcEvent.type == MouseEvent.MOUSE_WHEEL && this.wheelScroll ){
+            this._wheelScroll( e.srcAs(MouseEvent) );
+        }
+    }//function _startScroll()
 
 
     /**
@@ -366,6 +390,7 @@ class Scroll extends Widget{
         ){
             this.tweenStop();
             this.scrollX += e.delta * wheelScrollSpeed;
+
         //scroll vertically
         }else if( this.vScroll ){
             this.tweenStop();

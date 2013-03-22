@@ -115,6 +115,7 @@ class UIBuilder {
             UIBuilder.regEvent('drag',        'ru.stablex.ui.events.DndEvent.DRAG',             'ru.stablex.ui.events.DndEvent');
             UIBuilder.regEvent('drop',        'ru.stablex.ui.events.DndEvent.DROP',             'ru.stablex.ui.events.DndEvent');
             UIBuilder.regEvent('receiveDrop', 'ru.stablex.ui.events.DndEvent.RECEIVE',          'ru.stablex.ui.events.DndEvent');
+            UIBuilder.regEvent('beforeScroll','ru.stablex.ui.events.ScrollEvent.BEFORE_SCROLL', 'ru.stablex.ui.events.ScrollEvent');
 
             //registering frequently used classes
             UIBuilder.regClass('ru.stablex.ui.widgets.Text');
@@ -142,6 +143,7 @@ class UIBuilder {
             UIBuilder.regClass('ru.stablex.ui.widgets.Clock');
             UIBuilder.regClass('ru.stablex.ui.events.WidgetEvent');
             UIBuilder.regClass('ru.stablex.ui.events.DndEvent');
+            UIBuilder.regClass('ru.stablex.ui.events.ScrollEvent');
             UIBuilder.regClass('ru.stablex.ui.skins.Paint');
             UIBuilder.regClass('ru.stablex.ui.skins.Gradient');
             UIBuilder.regClass('ru.stablex.ui.skins.Tile');
@@ -534,7 +536,7 @@ class UIBuilder {
     * Register event type to declare event listeners in xml (attributes prefixed with `on-[shortcut]`).
     *
     * @param eventType - type of event we need to listen to. E.g. nme.events.MouseEvent.MOUSE_WHEEL
-    * @param eventClass - expected class of event. E.g. nme.events.MouseEvent.
+    * @param eventType - expected class of event. E.g. nme.events.MouseEvent.
     *
     * @throw <type>String</type> if this shortcut is already used
     */
