@@ -21,6 +21,8 @@ class Progress extends Widget{
     public var bar : Widget;
     //Whether user can click/tap/slide progress bar to change value
     public var interactive (default,set_interactive) : Bool = false;
+    //Visualize progress bar changes smoothly
+    public var smoothChange : Bool;
 
 
     /**
@@ -80,7 +82,11 @@ class Progress extends Widget{
     *
     */
     private inline function _setBarWidth (value:Float, max:Float) : Void {
-        this.bar.widthPt = 100 * (max <= 0 || value <= 0 ? 0 : value / max);
+        if( !this.smoothChange ){
+            this.bar.widthPt = 100 * (max <= 0 || value <= 0 ? 0 : value / max);
+        }else{
+            this.bar.tween(0.1, {widthPt: 100 * (max <= 0 || value <= 0 ? 0 : value / max)}, "Quad.easeIn");
+        }
     }//function _setBarWidth()
 
 
