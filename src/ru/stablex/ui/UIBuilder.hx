@@ -393,7 +393,7 @@ class UIBuilder {
                     //create new object if needed
                     if( !props.exists(prop) ){
                         props.set(prop, true);
-                        code += '\nif(' + prop + ' == null ){';
+                        code += '\nif( !Std.is(' + prop + ', ' + cls + ') ){';
                         code += '\n     ' + prop + ' = new ' + cls + '();';
 
                         //if this is a widget, we should do all necessary stuff
