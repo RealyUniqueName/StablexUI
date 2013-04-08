@@ -19,12 +19,13 @@ class Scale extends Transition{
     /**
     * Switch children visibility
     *
+    * @param cb - callback to call after visible object was hidden
     */
-    override public function change (vs:ViewStack, toHide:DisplayObject, toShow:DisplayObject) : Void {
+    override public function change (vs:ViewStack, toHide:DisplayObject, toShow:DisplayObject, cb:Void->Void = null) : Void{
         if( this.scaleUp ){
-            this._scaleUp(vs, toHide, toShow);
+            this._scaleUp(vs, toHide, toShow, cb);
         }else{
-            this._scaleDown(vs, toHide, toShow);
+            this._scaleDown(vs, toHide, toShow, cb);
         }
     }//function change()
 
@@ -33,7 +34,7 @@ class Scale extends Transition{
     * Set `.visible` = false for provided object
     *
     */
-    private function _hide (vs:ViewStack, toHide:DisplayObject, toShow:DisplayObject, swap:Bool) : Void {
+    private function _hide (vs:ViewStack, toHide:DisplayObject, toShow:DisplayObject, swap:Bool, cb:Void->Void = null) : Void {
         vs.mouseChildren = true;
         var w : Widget;
 
@@ -56,6 +57,8 @@ class Scale extends Transition{
         if( swap ){
             vs.swapChildren(toHide, toShow);
         }
+
+        if( cb != null ) cb();
     }//function _hide()
 
 
@@ -63,7 +66,7 @@ class Scale extends Transition{
     * Scale DOWN
     *
     */
-    private inline function _scaleDown (vs:ViewStack, toHide:DisplayObject, toShow:DisplayObject) : Void {
+    private inline function _scaleDown (vs:ViewStack, toHide:DisplayObject, toShow:DisplayObject, cb:Void->Void = null) : Void {
         vs.mouseChildren = false;
         //hide
         if( Std.is(toHide, Widget) ){
@@ -86,9 +89,10 @@ class Scale extends Transition{
                 left   : vs.w / 2,
                 scaleX : 0,
                 scaleY : 0
-            }).onComplete(this._hide, [vs, toHide, toShow, swap]);
+            }).onComplete(this._hide, [vs, toHide, toShow, swap, cb]);
         }else{
             toHide.visible = false;
+            if( cb != null ) cb();
         }
 
         //show
@@ -105,7 +109,7 @@ class Scale extends Transition{
     * Scale UP
     *
     */
-    private inline function _scaleUp (vs:ViewStack, toHide:DisplayObject, toShow:DisplayObject) : Void {
+    private inline function _scaleUp (vs:ViewStack, toHide:DisplayObject, toShow:DisplayObject, cb:Void->Void = null) : Void {
         vs.mouseChildren = false;
         //hide
         if( Std.is(toHide, Widget) ){
@@ -137,9 +141,10 @@ class Scale extends Transition{
                 left   : 0,
                 scaleX : 1,
                 scaleY : 1
-            }).onComplete(this._hide, [vs, toHide, toShow, swap]);
+            }).onComplete(this._hide, [vs, toHide, toShow, swap, cb]);
         }else{
             toShow.visible = true;
+            if( cb != null ) cb();
         }
     }//function _scaleUp()
 }//class Scale

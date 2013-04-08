@@ -26,8 +26,9 @@ class Transition {
     /**
     * This method must hide `toHide` object and make visible `toShow` object
     *
+    * @param cb - callback to call after visible object was hidden
     */
-    public function change (vs:ViewStack, toHide:DisplayObject, toShow:DisplayObject) : Void{
+    public function change (vs:ViewStack, toHide:DisplayObject, toShow:DisplayObject, cb:Void->Void = null) : Void{
     }//function change()
 
 

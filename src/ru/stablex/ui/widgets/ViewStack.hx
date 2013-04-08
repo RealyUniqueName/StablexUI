@@ -48,27 +48,27 @@ class ViewStack extends Widget{
                 this.getChildAt(i).visible = true;
             }
         }
-
-        // //show current
-        // this.showIdx(this.currentIdx, true);
     }//function refresh()
 
 
     /**
     * Shows element with given child index
+    *
     * @param ignoreHistory - do not write this visit to history log
+    * @param cb - callback to call after visible object was hidden
     */
-    public function showIdx (idx:Int, ignoreHistory:Bool = false) : Void{
+    public function showIdx (idx:Int, cb:Void->Void = null, ignoreHistory:Bool = false) : Void{
         if( idx < this.numChildren ){
             var toHide : DisplayObject = this.getChildAt(this.currentIdx);
             var toShow : DisplayObject = this.getChildAt(idx);
 
             //should we use transition?
             if( toHide != toShow && this.trans != null ){
-                this.trans.change(this, toHide, toShow);
+                this.trans.change(this, toHide, toShow, cb);
             }else{
                 toHide.visible = false;
                 toShow.visible = true;
+                if( cb != null ) cb();
             }
 
             if( !ignoreHistory ){
@@ -81,8 +81,9 @@ class ViewStack extends Widget{
     /**
     * Show element with given .name
     *
+    * @param cb - callback to call after visible object was hidden
     */
-    public function show (name:String, ignoreHistory:Bool = false) : Void {
+    public function show (name:String, cb:Void->Void = null, ignoreHistory:Bool = false) : Void {
         var toHide : DisplayObject = this.getChildAt(this.currentIdx);
         var toShow : DisplayObject = this.getChildByName(name);
 
@@ -92,10 +93,11 @@ class ViewStack extends Widget{
             }
 
             if( toHide != toShow && this.trans != null ){
-                this.trans.change(this, toHide, toShow);
+                this.trans.change(this, toHide, toShow, cb);
             }else{
                 toHide.visible = false;
                 toShow.visible = true;
+                if( cb != null ) cb();
             }
         }
     }//function show()
@@ -104,10 +106,12 @@ class ViewStack extends Widget{
     /**
     * Show element wich was visible previously.
     * Goes back through history log and removes the last entry from log.
+    *
+    * @param cb - callback to call after visible object was hidden
     */
-    public inline function back() : Void {
+    public inline function back(cb:Void->Void = null) : Void {
         if( this._history.length >= 2 ){
-            this.showIdx(this._history[ this._history.length - 2 ], true);
+            this.showIdx(this._history[ this._history.length - 2 ], cb, true);
             this._history.pop();
         }
     }//function back()
@@ -117,13 +121,15 @@ class ViewStack extends Widget{
     * Show next element in display list of viewstack.
     * If wrap is true and we are at the end of the stack then
     * show the first one
+    *
+    * @param cb - callback to call after visible object was hidden
     */
-    public inline function next() : Void {
+    public inline function next(cb:Void->Void = null) : Void {
         var next = this._getCurrentIdx() + 1;
         if (next < this.numChildren) {
-            this.showIdx(next);
-        }else if (wrap) {
-            this.showIdx(0);
+            this.showIdx(next, cb);
+        }else if (this.wrap) {
+            this.showIdx(0, cb);
         }
     }//function next()
 
@@ -132,13 +138,15 @@ class ViewStack extends Widget{
     * Show previous element in display list of viewstack.
     * If wrap is true and we are at the beginning of the stack then
     * show the last one.
+    *
+    * @param cb - callback to call after visible object was hidden
     */
-    public inline function previous() : Void {
+    public inline function previous(cb:Void->Void = null) : Void {
         var previous = this.currentIdx - 1;
         if (previous >= 0) {
-            this.showIdx(previous);
-        }else if (wrap) {
-            this.showIdx(this.numChildren - 1);
+            this.showIdx(previous, cb);
+        }else if (this.wrap) {
+            this.showIdx(this.numChildren - 1, cb);
         }
     }//function previous()
 

@@ -23,13 +23,14 @@ class Slide extends Transition{
     /**
     * Switch children visibility
     *
+    * @param cb - callback to call after visible object was hidden
     */
-    override public function change (vs:ViewStack, toHide:DisplayObject, toShow:DisplayObject) : Void {
+    override public function change (vs:ViewStack, toHide:DisplayObject, toShow:DisplayObject, cb:Void->Void = null) : Void{
         switch(this.direction){
-            case 'right':   this._slideRight(vs, toHide, toShow);
-            case 'top':     this._slideTop(vs, toHide, toShow);
-            case 'bottom':  this._slideBottom(vs, toHide, toShow);
-            default:        this._slideLeft(vs, toHide, toShow);
+            case 'right':   this._slideRight(vs, toHide, toShow, cb);
+            case 'top':     this._slideTop(vs, toHide, toShow, cb);
+            case 'bottom':  this._slideBottom(vs, toHide, toShow, cb);
+            default:        this._slideLeft(vs, toHide, toShow, cb);
         }
     }//function change()
 
@@ -38,8 +39,9 @@ class Slide extends Transition{
     * Set `.visible` = false for provided object
     *
     */
-    private function _hide (obj:DisplayObject) : Void {
+    private function _hide (obj:DisplayObject, cb:Void->Void = null) : Void {
         obj.visible = false;
+        if( cb != null ) cb();
     }//function _hide()
 
 
@@ -47,7 +49,7 @@ class Slide extends Transition{
     * Slide left
     *
     */
-    private inline function _slideLeft (vs:ViewStack, toHide:DisplayObject, toShow:DisplayObject) : Void {
+    private inline function _slideLeft (vs:ViewStack, toHide:DisplayObject, toShow:DisplayObject, cb:Void->Void = null) : Void {
         var w : Widget;
 
         //hide
@@ -65,10 +67,11 @@ class Slide extends Transition{
             w.visible = true;
             w.left    = vs.w;
             w.top     = 0;
-            w.tween(this.duration, {left:0}).onComplete(this._hide, [toHide]);
+            w.tween(this.duration, {left:0}).onComplete(this._hide, [toHide, cb]);
         }else{
             toHide.visible = false;
             toShow.visible = true;
+            if( cb != null ) cb();
         }
     }//function _slideLeft()
 
@@ -77,7 +80,7 @@ class Slide extends Transition{
     * Slide right
     *
     */
-    private inline function _slideRight (vs:ViewStack, toHide:DisplayObject, toShow:DisplayObject) : Void {
+    private inline function _slideRight (vs:ViewStack, toHide:DisplayObject, toShow:DisplayObject, cb:Void->Void = null) : Void {
         var w : Widget;
 
         //hide
@@ -95,10 +98,11 @@ class Slide extends Transition{
             w.visible = true;
             w.right   = vs.w;
             w.top     = 0;
-            w.tween(this.duration, {left:0}).onComplete(this._hide, [toHide]);
+            w.tween(this.duration, {left:0}).onComplete(this._hide, [toHide, cb]);
         }else{
             toHide.visible = false;
             toShow.visible = true;
+            if( cb != null ) cb();
         }
     }//function _slideRight()
 
@@ -107,7 +111,7 @@ class Slide extends Transition{
     * Slide top
     *
     */
-    private inline function _slideTop (vs:ViewStack, toHide:DisplayObject, toShow:DisplayObject) : Void {
+    private inline function _slideTop (vs:ViewStack, toHide:DisplayObject, toShow:DisplayObject, cb:Void->Void = null) : Void {
         var w : Widget;
 
         //hide
@@ -125,10 +129,11 @@ class Slide extends Transition{
             w.visible = true;
             w.top     = vs.h;
             w.left    = 0;
-            w.tween(this.duration, {top:0}).onComplete(this._hide, [toHide]);
+            w.tween(this.duration, {top:0}).onComplete(this._hide, [toHide, cb]);
         }else{
             toHide.visible = false;
             toShow.visible = true;
+            if( cb != null ) cb();
         }
     }//function _slideTop()
 
@@ -137,7 +142,7 @@ class Slide extends Transition{
     * Slide bottom
     *
     */
-    private inline function _slideBottom (vs:ViewStack, toHide:DisplayObject, toShow:DisplayObject) : Void {
+    private inline function _slideBottom (vs:ViewStack, toHide:DisplayObject, toShow:DisplayObject, cb:Void->Void = null) : Void {
         var w : Widget;
 
         //hide
@@ -155,10 +160,11 @@ class Slide extends Transition{
             w.visible = true;
             w.bottom  = vs.h;
             w.left    = 0;
-            w.tween(this.duration, {top:0}).onComplete(this._hide, [toHide]);
+            w.tween(this.duration, {top:0}).onComplete(this._hide, [toHide, cb]);
         }else{
             toHide.visible = false;
             toShow.visible = true;
+            if( cb != null ) cb();
         }
     }//function _slideBottom()
 }//class Slide
