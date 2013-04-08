@@ -26,8 +26,22 @@ class InputText extends Text{
                 this.label.type = browser.text.TextFieldType.INPUT;
             });
         #end
+
+        this.label.autoSize = nme.text.TextFieldAutoSize.NONE;
+        this.format.align   = nme.text.TextFormatAlign.LEFT;
     }//function new()
 
+
+    /**
+    * update textField size on refresh
+    *
+    */
+    override public function refresh () : Void {
+        this.label.width  = this.w - this.paddingLeft - this.paddingRight;
+        this.label.height = this.h - this.paddingTop - this.paddingBottom;
+
+        super.refresh();
+    }//function refresh()
 
 #if html5
     /**
