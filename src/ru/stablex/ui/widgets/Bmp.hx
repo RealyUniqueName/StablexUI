@@ -28,7 +28,7 @@ class Bmp extends Widget{
     * `.bitmapData` will be set to null automatically, if you set `.src`.
     * `.src` will be set to null automatically, if you set `.bitmapData`
     */
-    public var bitmapData (default,set_bitmapData) : BitmapData;
+    public var bitmapData (get_bitmapData,set_bitmapData) : BitmapData;
     private var _bitmapData : BitmapData = null;
     /**
     * If you want to draw just a portion of the bitmap. Specify top/left corner of
