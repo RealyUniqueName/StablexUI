@@ -75,30 +75,25 @@ class MetaTags {
             var times : String = meta.get("times");
             if( times == null ) Err.trigger("meta:repeat - `times` is not specified");
 
-            var code = "\nfor(" + counter + " in 0..." + times + "){";
+            var code = "\nfor(" + counter + " in 0..." + UIBuilder.fillCodeShortcuts(parentWidget, times) + "){";
 
-            // for(i in 0...times){
-                //if we have nested widgets, generate code for them
-                for(node in meta.elements()){
-                    //if this node defines some meta
-                    if( node.nodeName.indexOf('meta:') == 0 ){
-                        var meta : String = node.nodeName.substr('meta:'.length);
-                        var fn   : Xml->String->String = UIBuilder.meta.get(meta);
-                        if( fn == null ) Err.trigger('Meta processor not found: ' + meta);
+            for(node in meta.elements()){
+                //if this node defines some meta
+                if( node.nodeName.indexOf('meta:') == 0 ){
+                    var meta : String = node.nodeName.substr('meta:'.length);
+                    var fn   : Xml->String->String = UIBuilder.meta.get(meta);
+                    if( fn == null ) Err.trigger('Meta processor not found: ' + meta);
 
-                        code += fn(node, parentWidget);
+                    code += fn(node, parentWidget);
 
-                    //continue ordinary code generation
-                    }else{
-                        var code2 : String = "\n" + UIBuilder.construct(node, 1, null, "__meta__repeat");
-                        code2 += "\nreturn __meta__repeat1;";
-                        code += "\n" + parentWidget + ".addChild( (function() : ru.stablex.ui.widgets.Widget {" + code2 + "})() );";
-                    }
+                //continue ordinary code generation
+                }else{
+                    var code2 : String = "\n" + UIBuilder.construct(node, 1, null, "__meta__repeat");
+                    code2 += "\nreturn __meta__repeat1;";
+                    code += "\n" + parentWidget + ".addChild( (function() : ru.stablex.ui.widgets.Widget {" + code2 + "})() );";
                 }
+            }
 
-            //     //count iterations
-            //     code += "\ncounter++;";
-            // }///for()
             code += "\n}";
 
             return code;
