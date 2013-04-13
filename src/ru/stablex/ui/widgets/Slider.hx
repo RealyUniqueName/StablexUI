@@ -16,7 +16,7 @@ class Slider extends Widget{
     //Maximum value
     public var max : Float = 100;
     //Current value
-    public var value (_getValue,_setValue) : Float;
+    public var value (get_value,set_value) : Float;
     private var _value : Float = 0;
     //Slider element
     public var slider : Widget;
@@ -43,7 +43,7 @@ class Slider extends Widget{
     * Getter for `.value`
     *
     */
-    private function _getValue () : Float {
+    private function get_value () : Float {
         return (
             this._value < this.min
                 ? this.min
@@ -53,14 +53,14 @@ class Slider extends Widget{
                         : this._value
                 )
         );
-    }//function _getValue()
+    }//function get_value()
 
 
     /**
     * Setter for `.value`
     *
     */
-    private function _setValue (v:Float) : Float {
+    private function set_value (v:Float) : Float {
         this._value = v;
         this._updateSliderPos();
 
@@ -69,7 +69,7 @@ class Slider extends Widget{
         }
 
         return v;
-    }//function _setValue()
+    }//function set_value()
 
 
     /**

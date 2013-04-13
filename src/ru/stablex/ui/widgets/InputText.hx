@@ -48,12 +48,12 @@ class InputText extends Text{
     * Text getter
     * we need this hack to get actual text of textfield
     */
-    override private function _getText() : String {
+    override private function get_text() : String {
         return (
             this.label.type == nme.text.TextFieldType.INPUT
                 ? StringTools.replace( Reflect.field(this.label, 'nmeGraphics').nmeSurface.innerHTML, '&nbsp;', ' ' )
                 : this.label.text
         );
-    }//function _getText()
+    }//function get_text()
 #end
 }//class InputText

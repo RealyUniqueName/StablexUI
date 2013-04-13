@@ -58,7 +58,7 @@ class Gradient extends Rect{
 
         this._adjustArrays();
 
-        w.graphics.beginGradientFill((this.type == 'linear' ? GradientType.LINEAR : GradientType.RADIAL), this.colors, this.alphas, this.ratios, mx);
+        w.graphics.beginGradientFill((this.type == 'linear' ? GradientType.LINEAR : GradientType.RADIAL), #if flash cast #end this.colors, this.alphas, this.ratios, mx);
 
         super.draw(w);
 

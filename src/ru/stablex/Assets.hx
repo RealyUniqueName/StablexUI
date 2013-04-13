@@ -66,7 +66,7 @@ class Assets{
     * Embed file content "as is" at compile time. This content can be any valid haxe code.
     *
     */
-    @:macro static public function embed (file:String) : Expr{
+    #if haxe3 macro #else @:macro #end static public function embed (file:String) : Expr{
         return Context.parse( File.getContent(file), Context.makePosition({min:0, max:1, file:file}));
     }//function embed()
 
@@ -76,7 +76,7 @@ class Assets{
     *
     * @return String - content of specified file
     */
-    @:macro static public function embedStr (fname:String) : Expr{
+    #if haxe3 macro #else @:macro #end static public function embedStr (fname:String) : Expr{
         return Context.makeExpr(File.getContent(fname), Context.currentPos());
     }//function embedStr()
 

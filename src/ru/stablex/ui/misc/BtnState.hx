@@ -12,10 +12,10 @@ class BtnState {
     //button label for this state
     public var text : String;
     //icon for this state
-    public var ico (_getIco,_setIco): Bmp;
+    public var ico (get_ico,set_ico): Bmp;
     public var _ico : Bmp;
     //skin name for this state (skin must be registered with <type>UIBuilder</type>.regSkins() )
-    public var skinName (default,_setSkinName) : String;
+    public var skinName (default,set_skinName) : String;
     //skin for this state
     public var skin : Skin;
 
@@ -32,36 +32,36 @@ class BtnState {
     * Getter for ico
     *
     */
-    private function _getIco () : Bmp {
+    private function get_ico () : Bmp {
         //if ico is still not created, create it
         if( this._ico == null ){
             this._ico = UIBuilder.create(Bmp);
         }
 
         return this._ico;
-    }//function _getIco()
+    }//function get_ico()
 
 
     /**
     * Setter for ico
     *
     */
-    private function _setIco (ico:Bmp) : Bmp {
+    private function set_ico (ico:Bmp) : Bmp {
         //destroy old ico
         if( this._ico != null ){
             this._ico.free();
         }
         return this._ico = ico;
-    }//function _setIco()
+    }//function set_ico()
 
 
     /**
     * Setter for skinName
     *
     */
-    private function _setSkinName (s:String) : String {
+    private function set_skinName (s:String) : String {
         this.skin = UIBuilder.skin(s)();
         return this.skinName = s;
-    }//function _setSkinName()
+    }//function set_skinName()
 
 }//class BtnState

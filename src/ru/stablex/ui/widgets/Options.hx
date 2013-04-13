@@ -20,13 +20,13 @@ class Options extends Button{
     * First element in these pairs must be of <type>String</type> type.
     * First option is selected by default
     */
-    public var options (default,_setOptions) : Array<Array<Dynamic>>;
+    public var options (default,set_options) : Array<Array<Dynamic>>;
     //List wich appears when control is clicked
     public var list : Floating;
     //box is a child for `.list` and contains buttons for each option
     public var box : Box;
     //Currently selected value. If you try to set value wich is not in the `.options`, than `.value` won't be changed
-    public var value (_getValue,_setValue) : Dynamic;
+    public var value (get_value,set_value) : Dynamic;
     //defaults for options in list (each option is a <type>Toggle</type> widget)
     public var optionDefaults : String = 'Default';
     //If this is true. List position will be overriden to make list appear under this control
@@ -35,7 +35,7 @@ class Options extends Button{
     //if `.options` changed, we need to rebuild list of options
     private var _rebuildList : Bool = true;
     //currently selected option index in `.options`
-    private var _selectedIdx (default,_setSelectedIdx) : Int = 0;
+    private var _selectedIdx (default,set__selectedIdx) : Int = 0;
 
 
     /**
@@ -60,21 +60,21 @@ class Options extends Button{
     * Setter for `._selectedIdx`
     * @dispatch <type>ru.stablex.ui.events.WidgetEvent</type>.CHANGE
     */
-    private function _setSelectedIdx (idx:Int) : Int {
+    private function set__selectedIdx (idx:Int) : Int {
         if( idx != this._selectedIdx ){
             this._rebuildList = true;
             this._selectedIdx = idx;
             this.dispatchEvent(new WidgetEvent(WidgetEvent.CHANGE));
         }
         return idx;
-    }//function _setSelectedIdx()
+    }//function set__selectedIdx()
 
 
     /**
     * Setter for `.options`
     *
     */
-    private function _setOptions (o:Array<Array<Dynamic>>) : Array<Array<Dynamic>> {
+    private function set_options (o:Array<Array<Dynamic>>) : Array<Array<Dynamic>> {
         if( o == null || o.length == 0 ){
             Err.trigger('Option list must not be null or empty');
         }
@@ -90,14 +90,14 @@ class Options extends Button{
         this.text         = o[ this._selectedIdx ][0];
 
         return this.options = o;
-    }//function _setOptions()
+    }//function set_options()
 
 
     /**
     * Getter for `.value`
     *
     */
-    private function _getValue () : Dynamic {
+    private function get_value () : Dynamic {
         if(
             this.options == null
             || this.options.length <= this._selectedIdx
@@ -106,14 +106,14 @@ class Options extends Button{
         }else{
             return this.options[ this._selectedIdx ][1];
         }
-    }//function _getValue()
+    }//function get_value()
 
 
     /**
     * Setter for `.value`
     *
     */
-    private function _setValue (v:Dynamic) : Dynamic {
+    private function set_value (v:Dynamic) : Dynamic {
         if( this.options != null ){
             for(i in 0...this.options.length){
                 if( this.options[i][1] == v ){
@@ -124,7 +124,7 @@ class Options extends Button{
         }
 
         return v;
-    }//function _setValue()
+    }//function set_value()
 
 
     /**

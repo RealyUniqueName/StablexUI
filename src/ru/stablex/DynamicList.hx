@@ -4,22 +4,29 @@ package ru.stablex;
 /**
 * List of any objects. Once requested, objects become accessible as properties of this list
 * Objects constructor must take no necessary arguments.
-* New object is created every time you request an undefined property. 
+* New object is created every time you request an undefined property.
 * So dynamicListInstance.someProperty never returns null
 */
 class DynamicList<T> implements Dynamic<T>{
     //class for objects in this list
     private var _cls : Class<T>;
-    //description
+    #if haxe3
+    private var _hash : Map<String,T>;
+    #else
     private var _hash : Hash<T>;
+    #end
 
 
     /**
     * Constructor
     * @param cls - class to use for new objects in list
     */
-    public function new (cls:Class<T>) : Void {        
+    public function new (cls:Class<T>) : Void {
+        #if haxe3
+        this._hash = new Map();
+        #else
         this._hash = new Hash();
+        #end
         this._cls = cls;
     }//function new()
 
@@ -54,5 +61,5 @@ class DynamicList<T> implements Dynamic<T>{
     public inline function exists (key:String) : Bool {
         return this._hash.exists(key);
     }//function exists()
-    
+
 }//class DynamicList

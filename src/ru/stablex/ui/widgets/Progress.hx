@@ -13,9 +13,9 @@ import ru.stablex.ui.events.WidgetEvent;
 */
 class Progress extends Widget{
     //Maximum value.
-    public var max (default,_setMax) : Float = 100;
+    public var max (default,set_max) : Float = 100;
     //current value
-    public var value (_getValue,_setValue) : Float = 0;
+    @:isVar public var value (get_value,set_value) : Float = 0;
     private var _value : Float = 0;
     //bar
     public var bar : Widget;
@@ -50,31 +50,31 @@ class Progress extends Widget{
     * Setter for `.max`
     *
     */
-    private function _setMax (m:Float) : Float {
+    private function set_max (m:Float) : Float {
         if( this.created ){
             this._setBarWidth(this.value, m);
         }
         return this.max = m;
-    }//function _setMax()
+    }//function set_max()
 
 
     /**
     * Setter for `.value`
     *
     */
-    private function _setValue (v:Float) : Float {
+    private function set_value (v:Float) : Float {
         this._setBarWidth(v, this.max);
         return this._value = v;
-    }//function _setValue()
+    }//function set_value()
 
 
     /**
     * Getter for `.value`
     *
     */
-    private function _getValue () : Float {
+    private function get_value () : Float {
         return this._value;
-    }//function _setValue()
+    }//function set_value()
 
 
     /**

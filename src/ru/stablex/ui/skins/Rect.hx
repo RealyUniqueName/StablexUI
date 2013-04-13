@@ -28,17 +28,17 @@ class Rect extends Skin{
     //padding for left border
     public var paddingLeft : Float = 0;
     //set equal padding for all borders
-    public var padding(never,_setPadding) : Float;
+    public var padding(never,set_padding) : Float;
 
 
     /**
     * Setter for padding
     *
     */
-    private function _setPadding (p:Float) : Float {
+    private function set_padding (p:Float) : Float {
         this.paddingTop = this.paddingBottom = this.paddingRight = this.paddingLeft = p;
         return p;
-    }//function _setPadding()
+    }//function set_padding()
 
 
     /**

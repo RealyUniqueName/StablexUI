@@ -20,9 +20,9 @@ class StateButton extends Button{
     //defines states order. Only states defined in this array will apear on button clicking
     public var order : Array<String>;
     //current state
-    public var state(_getState,_setState) : String;
+    public var state(get_state,set_state) : String;
     //current state index in this.order array
-    private var _currentIdx (default,_setCurrentIdx) : Int = 0;
+    private var _currentIdx (default,set__currentIdx) : Int = 0;
 
 
     /**
@@ -43,7 +43,7 @@ class StateButton extends Button{
     * Setter for `._currentIdx`
     * @dispatch <type>ru.stablex.ui.events.WidgetEvent</type>.CHANGE
     */
-    private function _setCurrentIdx(idx:Int) : Int {
+    private function set__currentIdx(idx:Int) : Int {
         if( idx != this._currentIdx ){
             this._currentIdx = idx;
             if( this.created ){
@@ -51,29 +51,29 @@ class StateButton extends Button{
             }
         }
         return idx;
-    }//function _setCurrentIdx()
+    }//function set__currentIdx()
 
 
     /**
     * Getter for `.state`
     *
     */
-    private function _getState () : String {
+    private function get_state () : String {
         //order must be defined
         if( this.order == null || this.order.length == 0 ) return null;
 
         return this.order[ this._currentIdx ];
-    }//function _getState()
+    }//function get_state()
 
 
     /**
     * Setter for state
     *
     */
-    private function _setState (s:String) : String {
+    private function set_state (s:String) : String {
         this.set(s);
         return s;
-    }//function _setState()
+    }//function set_state()
 
 
     /**

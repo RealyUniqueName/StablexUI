@@ -13,7 +13,7 @@ class Box extends Widget{
     //Should we arrange children vertically (true) or horizontally (false). True by default.
     public var vertical : Bool = true;
     //Setter for padding left, right, top, bottom.
-    public var padding (never,_setPadding) : Float;
+    public var padding (never,set_padding) : Float;
     //padding left
     public var paddingLeft   : Float = 0;
     //padding right
@@ -31,7 +31,7 @@ class Box extends Widget{
     */
     public var align : String = 'center,middle';
     //set size depending on content size
-    public var autoSize (never,_setAutoSize) : Bool;
+    public var autoSize (never,set_autoSize) : Bool;
     //set width depending on content width
     public var autoWidth                     : Bool = true;
     //set height depending on content height
@@ -40,63 +40,90 @@ class Box extends Widget{
     public var unifyChildren : Bool = false;
 
 
-    /**
-    * Setter for autoSize
-    *
-    */
-    private function _setAutoSize (as:Bool) : Bool {
-        return this.autoWidth = this.autoHeight = as;
-    }//function _setAutoSize()
-
+/*******************************************************************************
+*       STATIC METHODS
+*******************************************************************************/
 
     /**
-    * If width is set, disable autoWidth
-    *
+    * Strange bug: on html5 TextField.width (.height) reported is less than TextField.textWidth (.textHeight).
+    * While on other targets .width (.height) is bigger by approximately 4 pixels.
+    * That's why we need these functions.
+    * Another one bug on cpp target:
+    * While textField.parent(.parent(...parent).visible == false, textField.width (.height) reported is wrong
+    * {
     */
-    override private function _setWidth(w:Float) : Float {
-        this.autoWidth = false;
-        return super._setWidth(w);
-    }//function _setWidth()
 
+        /**
+        * get object width
+        *
+        */
+        static private inline function _objWidth (obj:DisplayObject) : Float {
+            // #if html5
+                if( Std.is(obj, Widget) ){
+                    return cast(obj, Widget).w;
+                }else if( Std.is(obj, nme.text.TextField) ){
+                    return cast(obj, nme.text.TextField).textWidth + 4;
+                }else{
+                    return obj.width;
+                }
+            // #else
+            //     return (Std.is(obj, Widget) ? cast(obj, Widget).w : obj.width);
+            // #end
+        }//function _objWidth()
+
+
+        /**
+        * get object height
+        *
+        */
+        static private inline function _objHeight (obj:DisplayObject) : Float {
+            // #if html5
+                if( Std.is(obj, Widget) ){
+                    return cast(obj, Widget).h;
+                }else if( Std.is(obj, nme.text.TextField) ){
+                    return cast(obj, nme.text.TextField).textHeight + 4;
+                }else{
+                    return obj.height;
+                }
+            // #else
+            //     return (Std.is(obj, Widget) ? cast(obj, Widget).h : obj.height);
+            // #end
+        }//function _objHeight()
+
+
+        /**
+        * Set object x
+        *
+        */
+        static private inline function _setObjX (obj:DisplayObject, x:Float) : Void {
+            #if html5
+                obj.x = (Std.is(obj, nme.text.TextField) ? obj.x = x + 2 : x);
+            #else
+                obj.x = x;
+            #end
+        }//function _setObjX()
+
+
+        /**
+        * Set object y
+        *
+        */
+        static private inline function _setObjY (obj:DisplayObject, y:Float) : Void {
+            #if html5
+                obj.y = (Std.is(obj, nme.text.TextField) ? obj.y = y + 2 : y);
+            #else
+                obj.y = y;
+            #end
+        }//function _setObjY()
 
     /**
-    * If width is set, disable autoWidth
-    *
+    * }
     */
-    override private function _setWpt(wp:Float) : Float {
-        this.autoWidth = false;
-        return super._setWpt(wp);
-    }//function _setWpt()
 
 
-    /**
-    * If height is set, disable autoHeight
-    *
-    */
-    override private function _setHpt(hp:Float) : Float {
-        this.autoHeight = false;
-        return super._setHpt(hp);
-    }//function _setHpt()
-
-
-    /**
-    * If height is set, disable autoHeight
-    *
-    */
-    override function _setHeight(h:Float) : Float {
-        this.autoHeight = false;
-        return super._setHeight(h);
-    }//function _setHeight()
-
-
-    /**
-    * Setter for padding
-    *
-    */
-    private function _setPadding (p:Float) : Float {
-        this.paddingTop = this.paddingBottom = this.paddingRight = this.paddingLeft = p;
-        return p;
-    }//function _setPadding()
+/*******************************************************************************
+*       INSTANCE METHODS
+*******************************************************************************/
 
 
     /**
@@ -561,79 +588,67 @@ class Box extends Widget{
     }//function _onChildResize()
 
 
-    /**
-    * Strange bug: on html5 TextField.width (.height) reported is less than TextField.textWidth (.textHeight).
-    * While on other targets .width (.height) is bigger by approximately 4 pixels.
-    * That's why we need these functions.
-    * Another one bug on cpp target:
-    * While textField.parent(.parent(...parent).visible == false, textField.width (.height) reported is wrong
-    * {
-    */
+/*******************************************************************************
+*       GETTERS / SETTERS
+*******************************************************************************/
 
-        /**
-        * get object width
-        *
-        */
-        static private inline function _objWidth (obj:DisplayObject) : Float {
-            // #if html5
-                if( Std.is(obj, Widget) ){
-                    return cast(obj, Widget).w;
-                }else if( Std.is(obj, nme.text.TextField) ){
-                    return cast(obj, nme.text.TextField).textWidth + 4;
-                }else{
-                    return obj.width;
-                }
-            // #else
-            //     return (Std.is(obj, Widget) ? cast(obj, Widget).w : obj.width);
-            // #end
-        }//function _objWidth()
-
-
-        /**
-        * get object height
-        *
-        */
-        static private inline function _objHeight (obj:DisplayObject) : Float {
-            // #if html5
-                if( Std.is(obj, Widget) ){
-                    return cast(obj, Widget).h;
-                }else if( Std.is(obj, nme.text.TextField) ){
-                    return cast(obj, nme.text.TextField).textHeight + 4;
-                }else{
-                    return obj.height;
-                }
-            // #else
-            //     return (Std.is(obj, Widget) ? cast(obj, Widget).h : obj.height);
-            // #end
-        }//function _objHeight()
-
-
-        /**
-        * Set object x
-        *
-        */
-        static private inline function _setObjX (obj:DisplayObject, x:Float) : Void {
-            #if html5
-                obj.x = (Std.is(obj, nme.text.TextField) ? obj.x = x + 2 : x);
-            #else
-                obj.x = x;
-            #end
-        }//function _setObjX()
-
-
-        /**
-        * Set object y
-        *
-        */
-        static private inline function _setObjY (obj:DisplayObject, y:Float) : Void {
-            #if html5
-                obj.y = (Std.is(obj, nme.text.TextField) ? obj.y = y + 2 : y);
-            #else
-                obj.y = y;
-            #end
-        }//function _setObjY()
 
     /**
-    * }
+    * Setter for autoSize
+    *
     */
+    private function set_autoSize (as:Bool) : Bool {
+        return this.autoWidth = this.autoHeight = as;
+    }//function set_autoSize()
+
+
+    /**
+    * If width is set, disable autoWidth
+    *
+    */
+    override private function set_w(w:Float) : Float {
+        this.autoWidth = false;
+        return super.set_w(w);
+    }//function set_w()
+
+
+    /**
+    * If width is set, disable autoWidth
+    *
+    */
+    override private function set_widthPt(wp:Float) : Float {
+        this.autoWidth = false;
+        return super.set_widthPt(wp);
+    }//function set_widthPt()
+
+
+    /**
+    * If height is set, disable autoHeight
+    *
+    */
+    override private function set_heightPt(hp:Float) : Float {
+        this.autoHeight = false;
+        return super.set_heightPt(hp);
+    }//function set_heightPt()
+
+
+    /**
+    * If height is set, disable autoHeight
+    *
+    */
+    override function set_h(h:Float) : Float {
+        this.autoHeight = false;
+        return super.set_h(h);
+    }//function set_h()
+
+
+    /**
+    * Setter for padding
+    *
+    */
+    private function set_padding (p:Float) : Float {
+        this.paddingTop = this.paddingBottom = this.paddingRight = this.paddingLeft = p;
+        return p;
+    }//function set_padding()
+
 }//class Box

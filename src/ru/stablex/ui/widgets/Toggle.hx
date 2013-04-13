@@ -10,7 +10,7 @@ class Toggle extends StateButton{
     //should we `.highlight()` the text when button is toggled?
     public var highlightOnSelect : Bool = false;
     //whether button is in down/selected state
-    public var selected (_getSelected,_setSelected) : Bool = false;
+    @:isVar public var selected (get_selected,set_selected) : Bool = false;
 
 
     /**
@@ -27,16 +27,16 @@ class Toggle extends StateButton{
     * Getter for `.selected`
     *
     */
-    private function _getSelected () : Bool {
+    private function get_selected () : Bool {
         return this.state == 'down';
-    }//function _getSelected()
+    }//function get_selected()
 
 
     /**
     * Setter for `.selected`
     *
     */
-    private function _setSelected (s:Bool) : Bool {
+    private function set_selected (s:Bool) : Bool {
         if( s ){
             this.down();
         }else{
@@ -44,7 +44,7 @@ class Toggle extends StateButton{
         }
 
         return s;
-    }//function _setSelected()
+    }//function set_selected()
 
 
     /**

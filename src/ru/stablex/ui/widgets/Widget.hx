@@ -37,17 +37,17 @@ class Widget extends TweenSprite{
     public var destroyed : Bool = false;
 
     //Widget width in pixels
-    public var w (_getWidth,_setWidth)   : Float;
+    public var w (get_w,set_w)   : Float;
     //Widget width in % of parent's width
-    public var widthPt (_getWpt,_setWpt) : Float;
+    public var widthPt (get_widthPt,set_widthPt) : Float;
     private var _width                   : Float = 0;
     private var _widthPercent            : Float = 0;
     private var _widthUsePercent         : Bool = false;
 
     //Widget height height in pixels
-    public var h (_getHeight,_setHeight)  : Float;
+    public var h (get_h,set_h)  : Float;
     //Widget height in % of parent's height
-    public var heightPt (_getHpt,_setHpt) : Float;
+    public var heightPt (get_heightPt,set_heightPt) : Float;
     private var _height                   : Float = 0;
     private var _heightPercent            : Float = 0;
     private var _heightUsePercent         : Bool = false;
@@ -58,19 +58,19 @@ class Widget extends TweenSprite{
     private var _resizing : Bool = false;
 
     //Widget id (unique)
-    public var id (default, _setId) : String;
+    public var id (default, set_id) : String;
 
     //position this widget by left border in pixels
-    public var left (_getLeft,_setLeft) : Float;
+    public var left (get_left,set_left) : Float;
     //position this widget by left border in % of parent's width
-    public var leftPt (_getLpt,_setLpt) : Float;
+    public var leftPt (get_leftPt,set_leftPt) : Float;
     private var _left                   : Float = 0;
     private var _leftPercent            : Float = 0;
 
     //position this widget by right border in pixels
-    public var right (_getRight,_setRight) : Float;
+    public var right (get_right,set_right) : Float;
     //position this widget by right border in % of parent's width
-    public var rightPt (_getRpt,_setRpt)   : Float;
+    public var rightPt (get_rightPt,set_rightPt)   : Float;
     private var _right                     : Float = 0;
     private var _rightPercent              : Float = 0;
 
@@ -79,19 +79,19 @@ class Widget extends TweenSprite{
     private var _yUse : Int = _Y_USE_TOP;
 
     //Get parent if it is widget, returns null otherwise
-    public var wparent (_getParentWidget,never) : Widget;
+    public var wparent (get_wparent,never) : Widget;
 
     //position this widget by top border in pixels
-    public var top (_getTop,_setTop)   : Float;
+    public var top (get_top,set_top)   : Float;
     //position this widget by top border in % of parent's height
-    public var topPt (_getTpt,_setTpt) : Float;
+    public var topPt (get_topPt,set_topPt) : Float;
     private var _top                   : Float = 0;
     private var _topPercent            : Float = 0;
 
     //position this widget by bottom border in pixels
-    public var bottom (_getBottom,_setBottom) : Float;
+    public var bottom (get_bottom,set_bottom) : Float;
     //position this widget by bottom border in % of parent's height
-    public var bottomPt (_getBpt,_setBpt)     : Float;
+    public var bottomPt (get_bottomPt,set_bottomPt)     : Float;
     private var _bottom                       : Float = 0;
     private var _bottomPercent                : Float = 0;
 
@@ -103,16 +103,26 @@ class Widget extends TweenSprite{
     */
     public var _skinQueued : Bool = false;
     //skin name to use. One of registered with <type>ru.stablex.ui.UIBuilder</type>.regSkins()
-    public var skinName (default,_setSkinName) : String;
+    public var skinName (default,set_skinName) : String;
     //whether widget content out of widgt bounds is visible
-    public var overflow (default,_setOverflow) : Bool = true;
+    public var overflow (default,set_overflow) : Bool = true;
 
     //Tooltip for this widget. See <type>Tip</type> to know how to use it.
-    public var tip (default,_setTip) : Tip;
+    public var tip (default,set_tip) : Tip;
 
     //layout manager
     public var layout : Layout;
 
+
+/*******************************************************************************
+*       STATIC METHODS
+*******************************************************************************/
+
+
+
+/*******************************************************************************
+*       INSTANCE METHODS
+*******************************************************************************/
 
     /**
     * Constructor
@@ -123,427 +133,6 @@ class Widget extends TweenSprite{
 
         this.id = UIBuilder.createId();
     }//function new()
-
-
-    /**
-    * Setter for `overflow`
-    *
-    */
-    private function _setOverflow (o:Bool) : Bool {
-        if( !o ){
-            this.scrollRect = new Rectangle(0, 0, this._width, this._height);
-        }else{
-            this.scrollRect = null;
-        }
-
-        return this.overflow = o;
-    }//function _setOverflow()
-
-
-    /**
-    * Setter for `skinName`
-    *
-    */
-    private function _setSkinName(sn:String) : String {
-        this.skin = UIBuilder.skin(sn)();
-        if( this.created ) UIBuilder.queueSkin(this);
-        return this.skinName = sn;
-    }//function _setSkinName()
-
-
-    /**
-    * returns parent widget
-    *
-    */
-    private inline function _getParentWidget() : Widget {
-        return (
-            Std.is(this.parent, Widget)
-                ? cast(this.parent, Widget)
-                : null
-        );
-    }//function _getParentWidget()
-
-
-    /**
-    * Left setter
-    *
-    */
-    private function _setLeft(l:Float) : Float {
-        this._xUse = _X_USE_LEFT;
-        this.x     = l;
-        return this._left = l;
-    }//function _setLeft()
-
-
-    /**
-    * Left getter
-    *
-    */
-    private function _getLeft() : Float {
-        return this.x;
-    }//function _getLeft()
-
-
-    /**
-    * Right setter
-    *
-    */
-    private function _setRight(r:Float) : Float {
-        this._xUse = _X_USE_RIGHT;
-        if( this.wparent != null ){
-            this.x = this.wparent._width - r - this.w;
-        }
-        return this._right = r;
-    }//function _setRight()
-
-
-    /**
-    * Right getter
-    *
-    */
-    private function _getRight() : Float {
-        if( this._xUse == _X_USE_RIGHT ){
-            return this._right;
-        }
-
-        if( this.wparent != null ){
-            return this.wparent._width - this.x - this.w;
-        }
-
-        return 0;
-    }//function _getRight()
-
-
-    /**
-    * Left percent setter
-    *
-    */
-    private function _setLpt(lp:Float) : Float {
-        this._xUse = _X_USE_LEFT_PERCENT;
-
-        if( this.wparent != null ){
-            this.x = this.wparent._width * lp / 100;
-        }
-
-        return this._leftPercent = lp;
-    }//function _setLpt()
-
-
-    /**
-    * Left percent getter
-    *
-    */
-    private function _getLpt() : Float {
-        if( this._xUse == _X_USE_LEFT_PERCENT ){
-            return this._leftPercent;
-        }
-
-        if( this.wparent != null &&  this.wparent._width != 0 ){
-            return this.x / this.wparent._width * 100;
-        }
-
-        return 0;
-    }//function _getLpt()
-
-
-    /**
-    * Right percent setter
-    *
-    */
-    private function _setRpt(rp:Float) : Float {
-        this._xUse = _X_USE_RIGHT_PERCENT;
-
-        if( this.wparent != null ){
-            this.x = this.wparent._width - this.wparent._width * rp / 100 - this.w;
-        }
-
-        return this._rightPercent = rp;
-    }//function _setRpt()
-
-
-    /**
-    * Right percent getter
-    *
-    */
-    private function _getRpt() : Float {
-        if( this._xUse == _X_USE_RIGHT_PERCENT ){
-            return this._rightPercent;
-        }
-
-        if( this.wparent != null && this.wparent._width != 0 ) {
-            return (this.wparent._width - this.x - this._width) / this.wparent._width * 100;
-        }
-
-        return 0;
-    }//function _getRpt()
-
-
-    /**
-    * Top setter
-    *
-    */
-    private function _setTop(t:Float) : Float {
-        this._yUse = _Y_USE_TOP;
-        this.y     = t;
-        return this._top = t;
-    }//function _setTop()
-
-
-    /**
-    * Top getter
-    *
-    */
-    private function _getTop() : Float {
-        return this.y;
-    }//function _getTop()
-
-
-    /**
-    * Bottom setter
-    *
-    */
-    private function _setBottom(b:Float) : Float {
-        this._yUse = _Y_USE_BOTTOM;
-        if( this.wparent != null ){
-            this.y = this.wparent._height - b - this.h;
-        }
-        return this._bottom = b;
-    }//function _setBottom()
-
-
-    /**
-    * Bottom getter
-    *
-    */
-    private function _getBottom() : Float {
-        if( this._yUse == _Y_USE_BOTTOM ) {
-            return this._bottom;
-        }
-
-        if( this.wparent != null ){
-            return this.wparent._height - this.y - this.h;
-        }
-
-        return 0;
-    }//function _getBottom()
-
-
-    /**
-    * Top percent setter
-    *
-    */
-    private function _setTpt(tp:Float) : Float {
-        this._yUse = _Y_USE_TOP_PERCENT;
-
-        if( this.wparent != null ){
-            this.y = this.wparent._height * tp / 100;
-        }
-
-        return this._topPercent = tp;
-    }//function _setTpt()
-
-
-    /**
-    * Top percent getter
-    *
-    */
-    private function _getTpt() : Float {
-        if( this._yUse == _Y_USE_TOP_PERCENT ){
-            return this._topPercent;
-        }
-
-        if( this.wparent != null &&  this.wparent._height != 0 ){
-            return this.y / this.wparent._height * 100;
-        }
-
-        return 0;
-    }//function _getLpt()
-
-
-    /**
-    * Bottom percent setter
-    *
-    */
-    private function _setBpt(bp:Float) : Float {
-        this._yUse = _Y_USE_BOTTOM_PERCENT;
-
-        if( this.wparent != null ){
-            this.y = this.wparent._height - this.wparent._height * bp / 100 - this.h;
-        }
-
-        return this._bottomPercent = bp;
-    }//function _setBpt()
-
-
-    /**
-    * Bottom percent getter
-    *
-    */
-    private function _getBpt() : Float {
-        if( this._yUse == _Y_USE_BOTTOM_PERCENT ){
-            return this._bottomPercent;
-        }
-
-        if( this.wparent != null && this.wparent._height != 0 ) {
-            return (this.wparent._height - this.y - this._height) / this.wparent._height * 100;
-        }
-
-        return 0;
-    }//function _getRpt()
-
-
-    /**
-    * Width setter
-    *
-    */
-    private function _setWidth(w:Float) : Float {
-        this._width           = w;
-        this._widthUsePercent = false;
-        if( !this._silentResize ){
-            this._onResize();
-        }
-        return w;
-    }//function _setWidth()
-
-
-    /**
-    * Width getter
-    *
-    */
-    private function _getWidth() : Float {
-        return this._width;
-    }//function _getWidth()
-
-
-    /**
-    * Height setter
-    *
-    */
-    private function _setHeight(h:Float) : Float {
-        this._height           = h;
-        this._heightUsePercent = false;
-        if( !this._silentResize ){
-            this._onResize();
-        }
-        return h;
-    }//function _setHeight()
-
-
-    /**
-    * Height getter
-    *
-    */
-    private function _getHeight() : Float {
-        return this._height;
-    }//function _getHeight()
-
-
-    /**
-    * Width percent setter
-    *
-    */
-    private function _setWpt(wp:Float) : Float {
-        this._widthPercent    = wp;
-        this._widthUsePercent = true;
-
-        if( this.wparent != null ){
-            this._width = this.wparent._width * wp / 100;
-            if( !this._silentResize ){
-                this._onResize();
-            }
-        }
-
-        return wp;
-    }//function _setWpt()
-
-
-    /**
-    * Width percent getter
-    *
-    */
-    private function _getWpt() : Float {
-        if( this._widthUsePercent ){
-            return this._widthPercent;
-
-        }else if( this.wparent != null && this.wparent._width != 0 ){
-            return this.w / this.wparent._width * 100;
-
-        }else{
-            return 0;
-        }
-    }//function _getWpt()
-
-
-    /**
-    * Height percent setter
-    *
-    */
-    private function _setHpt(hp:Float) : Float {
-        this._heightPercent    = hp;
-        this._heightUsePercent = true;
-
-        if( this.wparent != null ){
-            this._height = this.wparent._height * hp / 100;
-            if( !this._silentResize ){
-                this._onResize();
-            }
-        }
-
-        return hp;
-    }//function _setHpt()
-
-
-    /**
-    * Height percent getter
-    *
-    */
-    private function _getHpt() : Float {
-        if( this._heightUsePercent ){
-            return this._heightPercent;
-
-        }else if( this.wparent != null && this.wparent._height != 0 ){
-            return this._height / this.wparent._height * 100;
-
-        }else{
-            return 0;
-        }
-    }//function _getHpt()
-
-
-    /**
-    * Id setter
-    *
-    */
-    @:final private function _setId (id:String) : String{
-        if( id == null ){
-            Err.trigger('Widget id cannot be null');
-        }
-
-        //remove reference with old id
-        if( this.id != null ){
-            UIBuilder.forget(this.id);
-        }
-
-        this.id = id;
-
-        //save reference with new id
-        UIBuilder.save(this);
-
-        return id;
-    }//function _setId()
-
-
-    /**
-    * Setter for `.tip`
-    *
-    */
-    private function _setTip(tip:Tip) : Tip {
-        if( this.tip != null ){
-            this.tip.free();
-        }
-        tip.bindTo(this);
-        return this.tip = tip;
-    }//function _setTip()
 
 
     /**
@@ -952,5 +541,429 @@ class Widget extends TweenSprite{
     public inline function as<T> (cls:Class<T>) : Null<T> {
         return (Std.is(this, cls) ? cast this : null);
     }//function as()
+
+/*******************************************************************************
+*       GETTERS / SETTERS
+*******************************************************************************/
+
+    /**
+    * Setter for `overflow`
+    *
+    */
+    private function set_overflow (o:Bool) : Bool {
+        if( !o ){
+            this.scrollRect = new Rectangle(0, 0, this._width, this._height);
+        }else{
+            this.scrollRect = null;
+        }
+
+        return this.overflow = o;
+    }//function set_overflow()
+
+
+    /**
+    * Setter for `skinName`
+    *
+    */
+    private function set_skinName(sn:String) : String {
+        this.skin = UIBuilder.skin(sn)();
+        if( this.created ) UIBuilder.queueSkin(this);
+        return this.skinName = sn;
+    }//function set_skinName()
+
+
+    /**
+    * returns parent widget
+    *
+    */
+    private inline function get_wparent() : Widget {
+        return (
+            Std.is(this.parent, Widget)
+                ? cast(this.parent, Widget)
+                : null
+        );
+    }//function get_wparent()
+
+
+    /**
+    * Left setter
+    *
+    */
+    private function set_left(l:Float) : Float {
+        this._xUse = _X_USE_LEFT;
+        this.x     = l;
+        return this._left = l;
+    }//function set_left()
+
+
+    /**
+    * Left getter
+    *
+    */
+    private function get_left() : Float {
+        return this.x;
+    }//function get_left()
+
+
+    /**
+    * Right setter
+    *
+    */
+    private function set_right(r:Float) : Float {
+        this._xUse = _X_USE_RIGHT;
+        if( this.wparent != null ){
+            this.x = this.wparent._width - r - this.w;
+        }
+        return this._right = r;
+    }//function set_right()
+
+
+    /**
+    * Right getter
+    *
+    */
+    private function get_right() : Float {
+        if( this._xUse == _X_USE_RIGHT ){
+            return this._right;
+        }
+
+        if( this.wparent != null ){
+            return this.wparent._width - this.x - this.w;
+        }
+
+        return 0;
+    }//function get_right()
+
+
+    /**
+    * Left percent setter
+    *
+    */
+    private function set_leftPt(lp:Float) : Float {
+        this._xUse = _X_USE_LEFT_PERCENT;
+
+        if( this.wparent != null ){
+            this.x = this.wparent._width * lp / 100;
+        }
+
+        return this._leftPercent = lp;
+    }//function set_leftPt()
+
+
+    /**
+    * Left percent getter
+    *
+    */
+    private function get_leftPt() : Float {
+        if( this._xUse == _X_USE_LEFT_PERCENT ){
+            return this._leftPercent;
+        }
+
+        if( this.wparent != null &&  this.wparent._width != 0 ){
+            return this.x / this.wparent._width * 100;
+        }
+
+        return 0;
+    }//function get_leftPt()
+
+
+    /**
+    * Right percent setter
+    *
+    */
+    private function set_rightPt(rp:Float) : Float {
+        this._xUse = _X_USE_RIGHT_PERCENT;
+
+        if( this.wparent != null ){
+            this.x = this.wparent._width - this.wparent._width * rp / 100 - this.w;
+        }
+
+        return this._rightPercent = rp;
+    }//function set_rightPt()
+
+
+    /**
+    * Right percent getter
+    *
+    */
+    private function get_rightPt() : Float {
+        if( this._xUse == _X_USE_RIGHT_PERCENT ){
+            return this._rightPercent;
+        }
+
+        if( this.wparent != null && this.wparent._width != 0 ) {
+            return (this.wparent._width - this.x - this._width) / this.wparent._width * 100;
+        }
+
+        return 0;
+    }//function get_rightPt()
+
+
+    /**
+    * Top setter
+    *
+    */
+    private function set_top(t:Float) : Float {
+        this._yUse = _Y_USE_TOP;
+        this.y     = t;
+        return this._top = t;
+    }//function set_top()
+
+
+    /**
+    * Top getter
+    *
+    */
+    private function get_top() : Float {
+        return this.y;
+    }//function get_top()
+
+
+    /**
+    * Bottom setter
+    *
+    */
+    private function set_bottom(b:Float) : Float {
+        this._yUse = _Y_USE_BOTTOM;
+        if( this.wparent != null ){
+            this.y = this.wparent._height - b - this.h;
+        }
+        return this._bottom = b;
+    }//function set_bottom()
+
+
+    /**
+    * Bottom getter
+    *
+    */
+    private function get_bottom() : Float {
+        if( this._yUse == _Y_USE_BOTTOM ) {
+            return this._bottom;
+        }
+
+        if( this.wparent != null ){
+            return this.wparent._height - this.y - this.h;
+        }
+
+        return 0;
+    }//function get_bottom()
+
+
+    /**
+    * Top percent setter
+    *
+    */
+    private function set_topPt(tp:Float) : Float {
+        this._yUse = _Y_USE_TOP_PERCENT;
+
+        if( this.wparent != null ){
+            this.y = this.wparent._height * tp / 100;
+        }
+
+        return this._topPercent = tp;
+    }//function set_topPt()
+
+
+    /**
+    * Top percent getter
+    *
+    */
+    private function get_topPt() : Float {
+        if( this._yUse == _Y_USE_TOP_PERCENT ){
+            return this._topPercent;
+        }
+
+        if( this.wparent != null &&  this.wparent._height != 0 ){
+            return this.y / this.wparent._height * 100;
+        }
+
+        return 0;
+    }//function get_leftPt()
+
+
+    /**
+    * Bottom percent setter
+    *
+    */
+    private function set_bottomPt(bp:Float) : Float {
+        this._yUse = _Y_USE_BOTTOM_PERCENT;
+
+        if( this.wparent != null ){
+            this.y = this.wparent._height - this.wparent._height * bp / 100 - this.h;
+        }
+
+        return this._bottomPercent = bp;
+    }//function set_bottomPt()
+
+
+    /**
+    * Bottom percent getter
+    *
+    */
+    private function get_bottomPt() : Float {
+        if( this._yUse == _Y_USE_BOTTOM_PERCENT ){
+            return this._bottomPercent;
+        }
+
+        if( this.wparent != null && this.wparent._height != 0 ) {
+            return (this.wparent._height - this.y - this._height) / this.wparent._height * 100;
+        }
+
+        return 0;
+    }//function get_rightPt()
+
+
+    /**
+    * Width setter
+    *
+    */
+    private function set_w(w:Float) : Float {
+        this._width           = w;
+        this._widthUsePercent = false;
+        if( !this._silentResize ){
+            this._onResize();
+        }
+        return w;
+    }//function set_w()
+
+
+    /**
+    * Width getter
+    *
+    */
+    private function get_w() : Float {
+        return this._width;
+    }//function get_w()
+
+
+    /**
+    * Height setter
+    *
+    */
+    private function set_h(h:Float) : Float {
+        this._height           = h;
+        this._heightUsePercent = false;
+        if( !this._silentResize ){
+            this._onResize();
+        }
+        return h;
+    }//function set_h()
+
+
+    /**
+    * Height getter
+    *
+    */
+    private function get_h() : Float {
+        return this._height;
+    }//function get_h()
+
+
+    /**
+    * Width percent setter
+    *
+    */
+    private function set_widthPt(wp:Float) : Float {
+        this._widthPercent    = wp;
+        this._widthUsePercent = true;
+
+        if( this.wparent != null ){
+            this._width = this.wparent._width * wp / 100;
+            if( !this._silentResize ){
+                this._onResize();
+            }
+        }
+
+        return wp;
+    }//function set_widthPt()
+
+
+    /**
+    * Width percent getter
+    *
+    */
+    private function get_widthPt() : Float {
+        if( this._widthUsePercent ){
+            return this._widthPercent;
+
+        }else if( this.wparent != null && this.wparent._width != 0 ){
+            return this.w / this.wparent._width * 100;
+
+        }else{
+            return 0;
+        }
+    }//function get_widthPt()
+
+
+    /**
+    * Height percent setter
+    *
+    */
+    private function set_heightPt(hp:Float) : Float {
+        this._heightPercent    = hp;
+        this._heightUsePercent = true;
+
+        if( this.wparent != null ){
+            this._height = this.wparent._height * hp / 100;
+            if( !this._silentResize ){
+                this._onResize();
+            }
+        }
+
+        return hp;
+    }//function set_heightPt()
+
+
+    /**
+    * Height percent getter
+    *
+    */
+    private function get_heightPt() : Float {
+        if( this._heightUsePercent ){
+            return this._heightPercent;
+
+        }else if( this.wparent != null && this.wparent._height != 0 ){
+            return this._height / this.wparent._height * 100;
+
+        }else{
+            return 0;
+        }
+    }//function get_heightPt()
+
+
+    /**
+    * Id setter
+    *
+    */
+    @:final private function set_id (id:String) : String{
+        if( id == null ){
+            Err.trigger('Widget id cannot be null');
+        }
+
+        //remove reference with old id
+        if( this.id != null ){
+            UIBuilder.forget(this.id);
+        }
+
+        this.id = id;
+
+        //save reference with new id
+        UIBuilder.save(this);
+
+        return id;
+    }//function set_id()
+
+
+    /**
+    * Setter for `.tip`
+    *
+    */
+    private function set_tip(tip:Tip) : Tip {
+        if( this.tip != null ){
+            this.tip.free();
+        }
+        tip.bindTo(this);
+        return this.tip = tip;
+    }//function set_tip()
 
 }//class Widget

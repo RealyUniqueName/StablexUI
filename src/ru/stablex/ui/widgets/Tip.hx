@@ -18,7 +18,7 @@ class Tip extends Floating{
     //tooltip content
     public var label : Text;
     //Setter and getter for `.label.text`
-    public var text(_getText,_setText) : String;
+    public var text(get_text,set_text) : String;
 
 
     /**
@@ -42,18 +42,18 @@ class Tip extends Floating{
     * Getter for `.text`
     *
     */
-    private function _getText() : String {
+    private function get_text() : String {
         return this.label.text;
-    }//function _getText()
+    }//function get_text()
 
 
     /**
     * Setter for `.text`
     *
     */
-    private function _setText(s:String) : String {
+    private function set_text(s:String) : String {
         return this.label.text = s;
-    }//function _setText()
+    }//function set_text()
 
 
     /**

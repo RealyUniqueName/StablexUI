@@ -17,22 +17,22 @@ class Button extends Text{
     //Wether mouse pointer is currently over this button
     public var hovered (default,null) : Bool = false;
     //default icon for button
-    public var ico (_getIco,_setIco): Bmp;
+    public var ico (get_ico,set_ico): Bmp;
     private var _ico : Bmp;
     //icon for hovered state
-    public var icoHovered (_getIcoHovered,_setIcoHovered) : Bmp;
+    public var icoHovered (get_icoHovered,set_icoHovered) : Bmp;
     private var _icoHovered : Bmp;
     //icon for pressed state
-    public var icoPressed (_getIcoPressed,_setIcoPressed) : Bmp;
+    public var icoPressed (get_icoPressed,set_icoPressed) : Bmp;
     private var _icoPressed : Bmp;
     //whether icon should appear before text (on left or on top of text), set to false to move icon to the right (or below) text
-    public var icoBeforeLabel (default,_setIcoBeforeLabel) : Bool = true;
+    public var icoBeforeLabel (default,set_icoBeforeLabel) : Bool = true;
     //skin name for hovered state (skin must be registered with <type>UIBuilder</type>.regSkins() )
-    public var skinHoveredName (default,_setSkinHoveredName) : String;
+    public var skinHoveredName (default,set_skinHoveredName) : String;
     //skin for hovered state
     public var skinHovered : Skin;
     //skin name for pressed state (skin must be registered with <type>UIBuilder</type>.regSkins() )
-    public var skinPressedName (default,_setSkinPressedName) : String;
+    public var skinPressedName (default,set_skinPressedName) : String;
     //skin for pressed state
     public var skinPressed : Skin;
     //to test whether we trying to apply already applied skin
@@ -218,21 +218,21 @@ class Button extends Text{
     * Setter for `.icoBeforeLabel`
     *
     */
-    private function _setIcoBeforeLabel(ibl:Bool) : Bool {
+    private function set_icoBeforeLabel(ibl:Bool) : Bool {
         if( ibl ){
             this.setChildIndex(this.label, this.numChildren - 1);
         }else{
             this.setChildIndex(this.label, 0);
         }
         return this.icoBeforeLabel = ibl;
-    }//function _setIcoBeforeLabel()
+    }//function set_icoBeforeLabel()
 
 
     /**
     * Getter for ico
     *
     */
-    private function _getIco () : Bmp {
+    private function get_ico () : Bmp {
         //if ico is still not created, create it
         if( this._ico == null ){
             this._ico = UIBuilder.create(Bmp);
@@ -240,14 +240,14 @@ class Button extends Text{
         }
 
         return this._ico;
-    }//function _getIco()
+    }//function get_ico()
 
 
     /**
     * Setter for ico
     *
     */
-    private function _setIco (ico:Bmp) : Bmp {
+    private function set_ico (ico:Bmp) : Bmp {
         //destroy old ico
         if( this._ico != null ){
             this._ico.free();
@@ -257,14 +257,14 @@ class Button extends Text{
             this._addIco(ico);
         }
         return this._ico = ico;
-    }//function _setIco()
+    }//function set_ico()
 
 
     /**
     * Getter for icoHovered
     *
     */
-    private function _getIcoHovered () : Bmp {
+    private function get_icoHovered () : Bmp {
         //if ico is still not created, create it
         if( this._icoHovered == null ){
             this._icoHovered = UIBuilder.create(Bmp);
@@ -273,14 +273,14 @@ class Button extends Text{
         }
 
         return this._icoHovered;
-    }//function _getIcoHovered()
+    }//function get_icoHovered()
 
 
     /**
     * Setter for icoHovered
     *
     */
-    private function _setIcoHovered (ico:Bmp) : Bmp {
+    private function set_icoHovered (ico:Bmp) : Bmp {
         //destroy old ico
         if( this._icoHovered != null ){
             this._icoHovered.free();
@@ -290,14 +290,14 @@ class Button extends Text{
             this._addIco(ico);
         }
         return this._icoHovered = ico;
-    }//function _setIcoHovered()
+    }//function set_icoHovered()
 
 
     /**
     * Getter for icoPressed
     *
     */
-    private function _getIcoPressed () : Bmp {
+    private function get_icoPressed () : Bmp {
         //if ico is still not created, create it
         if( this._icoPressed == null ){
             this._icoPressed = UIBuilder.create(Bmp);
@@ -306,14 +306,14 @@ class Button extends Text{
         }
 
         return this._icoPressed;
-    }//function _getIcoPressed()
+    }//function get_icoPressed()
 
 
     /**
     * Setter for icoPressed
     *
     */
-    private function _setIcoPressed (ico:Bmp) : Bmp {
+    private function set_icoPressed (ico:Bmp) : Bmp {
         //destroy old ico
         if( this._icoPressed != null ){
             this._icoPressed.free();
@@ -323,27 +323,27 @@ class Button extends Text{
             this._addIco(ico);
         }
         return this._icoPressed = ico;
-    }//function _setIcoPressed()
+    }//function set_icoPressed()
 
 
     /**
     * Setter for skinHoveredName
     *
     */
-    private function _setSkinHoveredName (s:String) : String {
+    private function set_skinHoveredName (s:String) : String {
         this.skinHovered = UIBuilder.skin(s)();
         return this.skinHoveredName = s;
-    }//function _setSkinHoveredName()
+    }//function set_skinHoveredName()
 
 
     /**
     * Setter for skinPressedName
     *
     */
-    private function _setSkinPressedName (s:String) : String {
+    private function set_skinPressedName (s:String) : String {
         this.skinPressed = UIBuilder.skin(s)();
         return this.skinPressedName = s;
-    }//function _setSkinPressedName()
+    }//function set_skinPressedName()
 
 
     /**

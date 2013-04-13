@@ -42,26 +42,6 @@ class Slice9 extends Slice3{
             return;
         }
 
-// if( w.wparent != null && w.wparent.id == 'naughty' ){
-//     // trace({sx:scaleX, sy:scaleY});
-//     var b = new nme.display.Sprite();
-//     var mx = new nme.geom.Matrix();
-//     mx.scale(scaleX, scaleY);
-//     b.graphics.beginBitmapFill(bmp, mx, false, true);
-//     b.graphics.drawRect(0, 0, bmp.width * scaleX, bmp.height * scaleY);
-//     b.graphics.endFill();
-//     b.y = b.x = 200;
-//     nme.Lib.current.addChild(b);
-
-//     var b = new nme.display.Sprite();
-//     b.graphics.beginBitmapFill(bmp, null, false, true);
-//     b.graphics.drawRect(0, 0, bmp.width, bmp.height);
-//     b.graphics.endFill();
-//     b.y = b.x = 300;
-//     b.scaleX = scaleX;
-//     b.scaleY = scaleY;
-//     nme.Lib.current.addChild(b);
-// }
         //top left{
             src.x      = 0;
             src.y      = 0;

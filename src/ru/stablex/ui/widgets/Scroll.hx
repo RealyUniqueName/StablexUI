@@ -42,19 +42,19 @@ class Scroll extends Widget{
     * Container for content. Content is scrolled by moving this container.
     * This is always the first child of Scroll widget
     */
-    public var box (_getBox,never) : Widget;
+    public var box (get_box,never) : Widget;
 
     //determine how far mouse wheel deltas will scroll the content
     public var wheelScrollSpeed : Float = 10;
 
     //scroll position along x axes
-    public var scrollX (_getScrollX,_setScrollX) : Float;
+    public var scrollX (get_scrollX,set_scrollX) : Float;
     //scroll position along y axes
-    public var scrollY (_getScrollY,_setScrollY) : Float;
+    public var scrollY (get_scrollY,set_scrollY) : Float;
     //vertical scroll bar
-    public var vBar (default,_setVBar) : Slider;
+    public var vBar (default,set_vBar) : Slider;
     //horizontal scroll bar
-    public var hBar (default,_setHBar) : Slider;
+    public var hBar (default,set_hBar) : Slider;
     /**
     * For neko and html5 targets onMouseDown dispatched several times (depends on display list depth)
     * We want to process it only once
@@ -96,7 +96,7 @@ class Scroll extends Widget{
     * Getter for `.box`
     *
     */
-    private function _getBox () : Widget {
+    private function get_box () : Widget {
         if( this.numChildren == 0 ){
             Err.trigger('Scroll widget must have at least one child.');
             return null;
@@ -108,14 +108,14 @@ class Scroll extends Widget{
             }
             return cast(child, Widget);
         }
-    }//function _getBox()
+    }//function get_box()
 
 
     /**
     * Setter for .scrollX
     *
     */
-    private function _setScrollX (x:Float) : Float {
+    private function set_scrollX (x:Float) : Float {
         if( this.box._width > this._width ){
             if( x > 0 ) x = 0;
             if( x + this.box._width < this._width ) x = this._width - this.box._width;
@@ -126,23 +126,23 @@ class Scroll extends Widget{
         }
 
         return x;
-    }//function _setScrollX()
+    }//function set_scrollX()
 
 
     /**
     * Getter for .scrollX
     *
     */
-    private function _getScrollX () : Float {
+    private function get_scrollX () : Float {
         return this.box.left;
-    }//function _getScrollX()
+    }//function get_scrollX()
 
 
     /**
     * Setter for .scrollY
     *
     */
-    private function _setScrollY (y:Float) : Float {
+    private function set_scrollY (y:Float) : Float {
         if( this.box._height > this._height ){
             if( y > 0 ) y = 0;
             if( y + this.box._height < this._height ) y = this._height - this.box._height;
@@ -153,40 +153,40 @@ class Scroll extends Widget{
         }
 
         return y;
-    }//function _setScrollY()
+    }//function set_scrollY()
 
 
     /**
     * Getter for .scrollY
     *
     */
-    private function _getScrollY () : Float {
+    private function get_scrollY () : Float {
         return this.box.top;
-    }//function _getScrollY()
+    }//function get_scrollY()
 
 
     /**
     * Setter for '.vBar'
     *
     */
-    private function _setVBar(bar:Slider) : Slider {
+    private function set_vBar(bar:Slider) : Slider {
         if( bar == null && this.vBar != null ){
             this.vBar.free();
         }
         return this.vBar = bar;
-    }//function _setVBar()
+    }//function set_vBar()
 
 
     /**
     * Setter for '.hBar'
     *
     */
-    private function _setHBar(bar:Slider) : Slider {
+    private function set_hBar(bar:Slider) : Slider {
         if( bar == null && this.hBar != null ){
             this.hBar.free();
         }
         return this.hBar = bar;
-    }//function _setHBar()
+    }//function set_hBar()
 
 
     /**

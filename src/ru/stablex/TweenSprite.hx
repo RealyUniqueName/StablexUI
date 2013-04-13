@@ -26,7 +26,11 @@ import nme.display.Sprite;
 class TweenSprite extends Sprite{
 
     //registered event listeners
+    #if haxe3
+    private var _listeners : Map<String,List<Dynamic->Void>>;
+    #else
     private var _listeners : Hash<List<Dynamic->Void>>;
+    #end
 
 
     /**
@@ -36,7 +40,11 @@ class TweenSprite extends Sprite{
     override public function addEventListener (type:String, listener:Dynamic->Void, useCapture:Bool = false, priority:Int = 0, useWeakReference:Bool = false) : Void{
         //if listeners list is not created
         if( this._listeners == null ){
+            #if haxe3
+            this._listeners = new Map();
+            #else
             this._listeners = new Hash();
+            #end
         }
 
         var listeners : List<Dynamic->Void> = this._listeners.get(type);

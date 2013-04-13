@@ -18,7 +18,7 @@ class Bmp extends Widget{
     //Should we use smoothing?
     public var smooth : Bool = true;
     //set size depending on bitmap size
-    public var autoSize (never,_setAutoSize) : Bool;
+    public var autoSize (never,set_autoSize) : Bool;
     //set width depending on bitmap width
     public var autoWidth : Bool = true;
     //set height depending on bitmap height
@@ -37,124 +37,24 @@ class Bmp extends Widget{
     * width and height will be taken from `.xOffset` and `.yOffset` to bitmap right border
     * and bottom border respectively
     */
-    public var xOffset (default, _setXOffset) : Int = 0;
+    public var xOffset (default, set_xOffset) : Int = 0;
     // y offset for drawing a portion of the bitmap
-    public var yOffset (default, _setYOffset) : Int = 0;
+    public var yOffset (default, set_yOffset) : Int = 0;
     /**
     * When `.xOffset` or `.yOffset` is set, this property is changed to true.
     * To draw full image on next refresh set this property to false again.
     */
     public var drawPortion : Bool = false;
 
-
-    /**
-    * Getter src
-    *
-    */
-    private inline function get_src() : String {
-        return this._src;
-    }//function get_src()
+/*******************************************************************************
+*       STATIC METHODS
+*******************************************************************************/
 
 
-    /**
-    * Setter src
-    *
-    */
-    private inline function set_src(src:String) : String {
-        if( src != null ){
-            this._bitmapData = null;
-        }
-        return this._src = src;
-    }//function set_src()
 
-
-    /**
-    * Getter bitmapData
-    *
-    */
-    private inline function get_bitmapData() : BitmapData {
-        return this._bitmapData;
-    }//function get_bitmapData()
-
-
-    /**
-    * Setter bitmapData
-    *
-    */
-    private inline function set_bitmapData(bitmapData:BitmapData) : BitmapData {
-        if( bitmapData != null ){
-            this._src = null;
-        }
-        return this._bitmapData = bitmapData;
-    }//function set_bitmapData()
-
-
-    /**
-    * Setter for autoSize
-    *
-    */
-    private function _setAutoSize (as:Bool) : Bool {
-        return this.autoWidth = this.autoHeight = as;
-    }//function _setAutoSize()
-
-
-    /**
-    * Setter for autoSize
-    *
-    */
-    private function _setXOffset (x:Int) : Int {
-        this.drawPortion = true;
-        return this.xOffset = (x >= 0 ? x : 0);
-    }//function _setXOffset()
-
-    /**
-    * Setter for autoSize
-    *
-    */
-    private function _setYOffset (y:Int) : Int {
-        this.drawPortion = true;
-        return this.yOffset = (y >= 0 ? y : 0);
-    }//function _setYOffset()
-
-    /**
-    * If width is set, disable autoWidth
-    *
-    */
-    override private function _setWidth(w:Float) : Float {
-        this.autoWidth = false;
-        return super._setWidth(w);
-    }//function _setWidth()
-
-
-    /**
-    * If width is set, disable autoWidth
-    *
-    */
-    override private function _setWpt(wp:Float) : Float {
-        this.autoWidth = false;
-        return super._setWpt(wp);
-    }//function _setWpt()
-
-
-    /**
-    * If height is set, disable autoHeight
-    *
-    */
-    override private function _setHpt(hp:Float) : Float {
-        this.autoHeight = false;
-        return super._setHpt(hp);
-    }//function _setHpt()
-
-
-    /**
-    * If height is set, disable autoHeight
-    *
-    */
-    override function _setHeight(h:Float) : Float {
-        this.autoHeight = false;
-        return super._setHeight(h);
-    }//function _setHeight()
-
+/*******************************************************************************
+*       INSTANCE METHODS
+*******************************************************************************/
 
     /**
     * Refresh widget. Draw bitmap on this.graphics
@@ -245,5 +145,117 @@ class Bmp extends Widget{
     }//function _draw()
 
 
+/*******************************************************************************
+*       GETTERS / SETTERS
+*******************************************************************************/
+
+
+    /**
+    * Getter src
+    *
+    */
+    private inline function get_src() : String {
+        return this._src;
+    }//function get_src()
+
+
+    /**
+    * Setter src
+    *
+    */
+    private inline function set_src(src:String) : String {
+        if( src != null ){
+            this._bitmapData = null;
+        }
+        return this._src = src;
+    }//function set_src()
+
+
+    /**
+    * Getter bitmapData
+    *
+    */
+    private inline function get_bitmapData() : BitmapData {
+        return this._bitmapData;
+    }//function get_bitmapData()
+
+
+    /**
+    * Setter bitmapData
+    *
+    */
+    private inline function set_bitmapData(bitmapData:BitmapData) : BitmapData {
+        if( bitmapData != null ){
+            this._src = null;
+        }
+        return this._bitmapData = bitmapData;
+    }//function set_bitmapData()
+
+
+    /**
+    * Setter for autoSize
+    *
+    */
+    private function set_autoSize (as:Bool) : Bool {
+        return this.autoWidth = this.autoHeight = as;
+    }//function set_autoSize()
+
+
+    /**
+    * Setter for autoSize
+    *
+    */
+    private function set_xOffset (x:Int) : Int {
+        this.drawPortion = true;
+        return this.xOffset = (x >= 0 ? x : 0);
+    }//function set_xOffset()
+
+    /**
+    * Setter for autoSize
+    *
+    */
+    private function set_yOffset (y:Int) : Int {
+        this.drawPortion = true;
+        return this.yOffset = (y >= 0 ? y : 0);
+    }//function set_yOffset()
+
+    /**
+    * If width is set, disable autoWidth
+    *
+    */
+    override private function set_w(w:Float) : Float {
+        this.autoWidth = false;
+        return super.set_w(w);
+    }//function set_w()
+
+
+    /**
+    * If width is set, disable autoWidth
+    *
+    */
+    override private function set_widthPt(wp:Float) : Float {
+        this.autoWidth = false;
+        return super.set_widthPt(wp);
+    }//function set_widthPt()
+
+
+    /**
+    * If height is set, disable autoHeight
+    *
+    */
+    override private function set_heightPt(hp:Float) : Float {
+        this.autoHeight = false;
+        return super.set_heightPt(hp);
+    }//function set_heightPt()
+
+
+    /**
+    * If height is set, disable autoHeight
+    *
+    */
+    override function set_h(h:Float) : Float {
+        this.autoHeight = false;
+        return super.set_h(h);
+    }//function set_h()
 
 }//class Bmp

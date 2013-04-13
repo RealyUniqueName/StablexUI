@@ -18,7 +18,7 @@ class Switch extends Widget{
     //Slider element
     public var slider : Widget;
     //Indicates switch state. `true` for `on`-state, `false` for `off`-state. `true` by default
-    public var selected (_getSelected,_setSelected) : Bool;
+    public var selected (get_selected,set_selected) : Bool;
     private var _selected : Bool = true;
     //if user is pushing `.slider`
     private var _sliding : Bool = false;
@@ -29,7 +29,7 @@ class Switch extends Widget{
     *
     */
     public function new() : Void {
-        super();        
+        super();
         this.overflow = false;
 
         this.slider = UIBuilder.create(Widget, {right:0, heightPt:100});
@@ -61,7 +61,7 @@ class Switch extends Widget{
     * Setter for `.selected`. Change switch state
     *
     */
-    private function _setSelected(s:Bool) : Bool {
+    private function set_selected(s:Bool) : Bool {
         this._selected = s;
         if( s ){
             this.slider.right = 0;
@@ -73,16 +73,16 @@ class Switch extends Widget{
             this.dispatchEvent(new WidgetEvent(WidgetEvent.CHANGE));
         }
         return s;
-    }//function _setSelected()
+    }//function set_selected()
 
 
     /**
     * Getter for `.selected`
     *
     */
-    private function _getSelected() : Bool {
+    private function get_selected() : Bool {
         return this._selected;
-    }//function _getSelected()
+    }//function get_selected()
 
 
     /**

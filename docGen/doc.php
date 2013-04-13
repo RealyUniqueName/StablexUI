@@ -194,9 +194,9 @@ function comment($str, $imports = array()){
 
 
 function definition($str, $imports = array()){
-    //$str = preg_replace('/([()<>\[\]])/', '<span class="bracket">\\1</span>', $str);
     $str = preg_replace('/</', '&lt;', $str);
     $str = preg_replace('/>/', '&gt;', $str);
+    $str = str_replace('#if haxe3 macro #else @:macro #end', '<span class="macro">macro</span>', $str);
     $str = preg_replace('/((var|function)\s*)([a-zA-Z0-9_]+)(\s*(\:|\())/', '\\1<span class="definitionName">\\3</span>\\4', $str);
     $str = preg_replace('/(override|dynamic|static|public|private|inline|var|function)/', '<span class="\\1">\\1</span>', $str);
     $str = preg_replace('/(@\:[a-zA-Z0-9_]+)/', '<span class="macro">\\1</span>', $str);
