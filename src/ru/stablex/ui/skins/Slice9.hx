@@ -22,11 +22,7 @@ class Slice9 extends Slice3{
     *
     */
     override public function draw (w:Widget) : Void {
-        if( this.slice == null || this.slice.length < 4 ){
-            Err.trigger('.slice property should contain 4 integers.');
-        }
-
-        var bmp : BitmapData = Assets.getBitmapData(this.src);
+        var bmp : BitmapData = this._getBmp();
 
         if( bmp == null ){
             Err.trigger(this.src == null ? 'Bitmap is not specified' : 'Bitmap data not found: ' + this.src);
