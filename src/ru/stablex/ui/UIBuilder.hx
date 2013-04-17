@@ -635,22 +635,6 @@ class UIBuilder {
 
 #if !macro
 
-    #if RTXML
-
-    //parsed xml cache
-    static private var _xmlCache : Hash<XmlCache> = new Hash();
-
-
-    /**
-    * Parse xml and cache result under specified name
-    *
-    */
-    static public function parse (name:String, xml:String) : Void {
-
-    }//function parse()
-
-    #end
-
 
     /**
     * Creates unique id for widgets
