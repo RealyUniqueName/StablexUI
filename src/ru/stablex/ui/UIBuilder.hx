@@ -27,15 +27,15 @@ class UIBuilder {
         //checks whether attribute declares event listener
         static private var _erEvent    : EReg = ~/^on-(.+)/i;
         //for replacing @someVar with arguments passed to UIBuilder.buildFn()({arguments})
-        static private var _erCodeArg : EReg = ~/@([._a-z0-9]+)/i;
+        static private var _erCodeArg : EReg = ~/(^|[^@])@([._a-z0-9]+)/i;
         //for replacing $ClassName with classes registered through UIBuilder.regClass('fully qualified class name')
-        static private var _erCls     : EReg = ~/\$([a-z0-9_]+)([^a-z0-9_])/i;
+        static private var _erCls     : EReg = ~/(^|[^\$])\$([a-z0-9_]+)([^a-z0-9_])/i;
         //for replacing #someId with UIBuilder.get('someId')
-        static private var _erId      : EReg = new EReg("#([a-z0-9_]+)([^a-z0-9_])", "i");
+        static private var _erId      : EReg = new EReg("(^|[^#])#([a-z0-9_]+)([^a-z0-9_])", "i");
         //for replacing #SomeClass(someId) with UIBuilder.getAs('someId', SomeClass)
-        static private var _erCastId  : EReg = new EReg("#([a-z0-9_]+)\\(([a-z0-9_]+)\\)", "i");
+        static private var _erCastId  : EReg = new EReg("(^|[^#])#([a-z0-9_]+)\\(([a-z0-9_]+)\\)", "i");
         //for replacing `this` keyword with object currently being processed
-        static private var _erThis    : EReg = ~/\$this([^a-z0-9_])/i;
+        static private var _erThis    : EReg = ~/(^|[^\$])\$this([^a-z0-9_])/i;
         //checks whether we need to create object of specified class (second matched group) for this attribute (first matched group)
         static private var _erAttrCls : EReg = ~/(([-a-z0-9_]+):([a-z0-9_]+))/i;
     //}
@@ -447,30 +447,34 @@ class UIBuilder {
 
         //this
         while( erThis.match(code) ){
-            code = erThis.replace(code, thisObj+'$1');
+            code = erThis.replace(code, '$1' + thisObj+'$2');
         }
 
         //class names
         while( cls.match(code) ){
-            if( !UIBuilder._imports.exists(cls.matched(1)) ) Err.trigger('Class is not imported: ' + cls.matched(1));
-            code = cls.replace(code, UIBuilder._imports.get(cls.matched(1)) + '$2' );
+            if( !UIBuilder._imports.exists(cls.matched(2)) ) Err.trigger('Class is not imported: ' + cls.matched(2));
+            code = cls.replace(code, '$1' + UIBuilder._imports.get(cls.matched(2)) + '$3' );
         }
 
         //widgets by id as specified class
         while( castId.match(code) ){
-            if( !UIBuilder._imports.exists(castId.matched(1)) ) Err.trigger('Class is not imported: ' + castId.matched(1));
-            code = castId.replace(code, 'ru.stablex.ui.UIBuilder.getAs("$2", ' + UIBuilder._imports.get(castId.matched(1)) + ')');
+            if( !UIBuilder._imports.exists(castId.matched(2)) ) Err.trigger('Class is not imported: ' + castId.matched(2));
+            code = castId.replace(code, '$1ru.stablex.ui.UIBuilder.getAs("$3", ' + UIBuilder._imports.get(castId.matched(2)) + ')');
         }
 
         //widgets by ids
         while( id.match(code) ){
-            code = id.replace(code, 'ru.stablex.ui.UIBuilder.get("$1")$2');
+            code = id.replace(code, '$1ru.stablex.ui.UIBuilder.get("$2")$3');
         }
 
         //arguments
         while( arg.match(code) ){
-            code = arg.replace(code, '__ui__arguments.$1');
+            code = arg.replace(code, '$1__ui__arguments.$2');
         }
+
+        code = StringTools.replace(code, "##", "#");
+        code = StringTools.replace(code, "$$", "$");
+        code = StringTools.replace(code, "@@", "@");
 
         return code;
     }//function fillCodeShortcuts()
@@ -630,6 +634,23 @@ class UIBuilder {
 
 
 #if !macro
+
+    #if RTXML
+
+    //parsed xml cache
+    static private var _xmlCache : Hash<XmlCache> = new Hash();
+
+
+    /**
+    * Parse xml and cache result under specified name
+    *
+    */
+    static public function parse (name:String, xml:String) : Void {
+
+    }//function parse()
+
+    #end
+
 
     /**
     * Creates unique id for widgets

@@ -171,7 +171,8 @@ to shorten haxe code in xml.
                and must be of <type>Class</type>&lt;<type>ru.stablex.ui.widgets.Widget</type>&gt;
 <span class="placeholder">@someArg</span>    - read section "Xml arguments" below.
 </pre>
-
+If you need to use characters '@', '#' or '$' without replacing them with placeholders code, you need
+to type these characters twice. E.g. "trace('It costs $$45')" will output "It costs $45".
 Let's investigate how these placeholders work in examples.
 
 <h3>$this</h3>
