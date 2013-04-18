@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<VBox id="'root'" left="100" top="100" w="400" h="400" skin:Paint-color="0x00FF00">
+<VBox id="'root'" left="100" tip:Tip-text="'dad'" top="100" w="400" h="400" skin:Paint-color="0x00FF00">
     <Text  text="'Hello, world!'" format-size="40">
     </Text>
 </VBox>

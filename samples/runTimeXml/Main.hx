@@ -26,9 +26,15 @@ class Main extends nme.display.Sprite{
         // //compile-time xml parsing
         // Lib.current.addChild( UIBuilder.buildFn("assets/ui.xml")() );
 
-        //run-time xml parsing
-        Lib.current.addChild( RTXml.buildFn(Assets.getText("assets/ui.xml"))() );
+        //run-time xml parsing {
+            var tm = Lib.getTimer();
+            var fn = RTXml.buildFn(Assets.getText("assets/big.xml"));
+            trace("Parse time: " + (Lib.getTimer() - tm) + "ms");
 
+            tm = Lib.getTimer();
+            Lib.current.addChild( fn() );
+            trace("Create time: " + (Lib.getTimer() - tm) + "ms");
+        //}
     }//function main()
 
 

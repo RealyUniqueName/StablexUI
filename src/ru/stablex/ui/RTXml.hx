@@ -72,6 +72,20 @@ class RTXml {
             RTXml.interp = new Interp();
         }
 
+        #if flash
+            //flash does not like colons in attributes names.
+            //workaround this by adding required namespaces
+            var r      : EReg = new EReg("([-a-zA-Z0-9]+)\\:", "");
+            var nsList : String = "";
+            var str    : String = xmlStr;
+            while( r.match(str) ){
+                nsList += " xmlns:" + r.matched(1) + "=\"" + r.matched(1) + "\"";
+                str = r.matchedRight();
+            }
+            r = new EReg("(\\<[a-zA-Z0-9]+)", "");
+            xmlStr = r.replace(xmlStr, "$1" + nsList);
+        #end
+
         return RTXml.processXml( Xml.parse(xmlStr).firstElement() ).create;
     }//function buildFn()
 
@@ -86,6 +100,9 @@ class RTXml {
 
         //attributes
         for(attr in node.attributes()){
+            #if flash
+                attr = StringTools.replace(attr, "::", ":");
+            #end
             if(attr == "defaults"){
                 cache.defaults = node.get(attr);
             }else{
@@ -188,18 +205,19 @@ class Attribute {
     *
     */
     public function new (name:String, expression:String) : Void {
-        var names : Array<String> = name.split("-");
-        var name  : Array<String> = names.shift().split(":");
-        this.name = name.shift();
+        var all   : Array<String> = name.split("-");
+        var local : Array<String> = all.shift().split(":");
+
+        this.name = local.shift();
 
         //if property needs to be of specified type
-        if( name.length > 0 ){
-            this._instanceof = RTXml.getImportedClass(name[0]);
+        if( local.length > 0 ){
+            this._instanceof = RTXml.getImportedClass(local[0]);
         }
 
         //if this is nested property attribute
-        if( names.length > 0 ){
-            this._child = new Attribute(names.join("-"), expression);
+        if( all.length > 0 ){
+            this._child = new Attribute(all.join("-"), expression);
         }else{
             this.value = RTXml.parser.parseString(expression);
         }
