@@ -5,7 +5,7 @@ import ru.stablex.ui.misc.RadioGroup;
 
 
 #if haxe3
-typedef Hash<T> = Map<String,T>;
+private typedef Hash<T> = Map<String,T>;
 #end
 
 

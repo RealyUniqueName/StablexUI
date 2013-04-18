@@ -14,7 +14,7 @@ import ru.stablex.ui.widgets.Widget;
 
 
 #if haxe3
-typedef Hash<T> = Map<String,T>;
+private typedef Hash<T> = Map<String,T>;
 #end
 
 
@@ -101,7 +101,7 @@ class UIBuilder {
     * Initializing UIBuilder. Should be called before using any other UIBuilder methods except .reg* methods
     * @param defaultsXmlFile - path to xml file with default settings for widgets
     */
-    #if haxe3 macro #else @:macro #end static public function init(defaultsXmlFile:String = null) : Expr {
+    #if haxe3 macro #else @:macro #end static public function init(defaultsXmlFile:String = null, enableRTXml:Bool = false) : Expr {
         var code : String = '\nnme.Lib.current.stage.removeEventListener(nme.events.Event.ENTER_FRAME, ru.stablex.ui.UIBuilder.skinQueue);';
         code += '\nnme.Lib.current.stage.addEventListener(nme.events.Event.ENTER_FRAME, ru.stablex.ui.UIBuilder.skinQueue);';
 
@@ -174,6 +174,11 @@ class UIBuilder {
 
             //register default meta processors
             UIBuilder._createCoreMeta();
+
+            //if need to register classes for runtime xml
+            if( enableRTXml ){
+                code += UIBuilder._regRTXml();
+            }
         }
 
         //If provided with file for defaults, generate closures for applying defaults to widgets
@@ -511,6 +516,21 @@ class UIBuilder {
         }
     }//function _attrClassCastSorter()
 
+
+    /**
+    * Generate code for RTXml.regClass() calls for registered classes
+    *
+    */
+    static private function _regRTXml () : String {
+        var code : String = "";
+
+        for(cls in UIBuilder._imports.iterator()){
+            code += "\nru.stablex.ui.RTXml.regClass(" + cls + ");";
+        }
+
+        return code;
+    }//function _regRTXml()
+
 #end
 
     /**
@@ -589,7 +609,7 @@ class UIBuilder {
             Err.trigger('Wrong class name: ' + fullyQualifiedName);
         }
 
-        return Context.parse('true', Context.currentPos());
+        return Context.parse("true", Context.currentPos());
     }//function regClass()
 
 
@@ -635,7 +655,6 @@ class UIBuilder {
 
 #if !macro
 
-
     /**
     * Creates unique id for widgets
     * @private
@@ -656,13 +675,9 @@ class UIBuilder {
     * @throw <type>Dynamic</type> if corresponding properties of `cls` and `properties` have different types
     * @throw <type>String</type> if `cls` is not of <type>Class</type>&lt;<type>ru.stblex.ui.widgets.Widget</type>&gt;
     */
-    static public function create<T>(cls:Class<T>, properties:Dynamic = null) : Null<T>{
+    static public function create<T:Widget>(cls:Class<T>, properties:Dynamic = null) : Null<T>{
         //create widget instance
-        var obj : Widget = cast Type.createInstance(cls, []);
-
-        if( obj == null ){
-            Err.trigger('Wrong class provided for UIBuilder.create(). Must be Widget or extended Widget');
-        }
+        var obj : Widget = Type.createInstance(cls, []);
 
         //apply defaults  {
             obj.defaults = Reflect.field(properties, 'defaults');
