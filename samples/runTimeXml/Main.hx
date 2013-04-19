@@ -28,11 +28,17 @@ class Main extends nme.display.Sprite{
 
         //run-time xml parsing {
             var tm = Lib.getTimer();
-            var fn = RTXml.buildFn(Assets.getText("assets/big.xml"));
+            var fn = RTXml.buildFn(Assets.getText("assets/ui.xml"));
             trace("Parse time: " + (Lib.getTimer() - tm) + "ms");
 
             tm = Lib.getTimer();
-            Lib.current.addChild( fn() );
+            Lib.current.addChild( fn({
+                color : 0xFF0000,
+                data  : {
+                    tooltip : "Greetings",
+                    name    : "World"
+                }
+            }) );
             trace("Create time: " + (Lib.getTimer() - tm) + "ms");
         //}
     }//function main()

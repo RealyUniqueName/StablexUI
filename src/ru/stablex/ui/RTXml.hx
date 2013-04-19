@@ -16,7 +16,7 @@ private typedef Hash<T> = Map<String,T>;
 class RTXml {
     //hscript parser and interpretator
     static public var parser : Parser;
-    static public var interp : Interp;
+    public var interp : Interp;
 
     //classes registered for xml
     static public var imports : Hash<Class<Dynamic>>;
@@ -69,7 +69,6 @@ class RTXml {
     static public function buildFn (xmlStr:String) : ?Dynamic->Widget {
         if( RTXml.parser == null ){
             RTXml.parser = new Parser();
-            RTXml.interp = new Interp();
         }
 
         #if flash
@@ -94,8 +93,8 @@ class RTXml {
     * Get data from xml for ui creation
     *
     */
-    static public function processXml (node:Xml) : RTXml {
-        var cache : RTXml = new RTXml();
+    static public function processXml (node:Xml, interp:Interp = null) : RTXml {
+        var cache : RTXml = new RTXml(interp);
         cache.cls = RTXml.getImportedClass(node.nodeName);
 
         //attributes
@@ -112,7 +111,7 @@ class RTXml {
 
         //children
         for(child in node.elements()){
-            cache.children.push( RTXml.processXml(child) );
+            cache.children.push( RTXml.processXml(child, cache.interp) );
         }
 
         return cache;
@@ -128,9 +127,10 @@ class RTXml {
     * Constructor
     *
     */
-    public function new () : Void {
+    public function new (interp:Interp = null) : Void {
         this.data     = [];
         this.children = [];
+        this.interp = (interp == null ? new Interp() : interp);
     }//function new()
 
 
@@ -139,8 +139,13 @@ class RTXml {
     *
     */
     public function create (args:Dynamic = null) : Widget {
+        if( args != null ){
+            this.interp.variables.set("__ui__arguments", args);
+        }
+
         //create widget instance
         var obj : Widget = Type.createInstance(this.cls, []);
+        this.interp.variables.set("__ui__this", obj);
 
         //apply defaults  {
             obj.defaults = this.defaults;
@@ -150,7 +155,7 @@ class RTXml {
 
         //apply properties
         for(prop in this.data){
-            prop.apply(obj);
+            prop.apply(obj, this.interp);
         }
 
         obj._onInitialize();
@@ -163,6 +168,10 @@ class RTXml {
         }
 
         obj._onCreate();
+
+        if( args != null ){
+            this.interp.variables.remove("__ui__arguments");
+        }
 
         return cast obj;
     }//function create()
@@ -181,6 +190,11 @@ class RTXml {
 *
 */
 class Attribute {
+    //for replacing @someVar with arguments passed to RTXml.buildFn()({arguments})
+    static private var _erCodeArg : EReg = ~/(^|[^@])@([._a-z0-9]+)/i;
+    //for replacing `this` keyword with object currently being processed
+    static private var _erThis    : EReg = ~/(^|[^\$])\$this([^a-z0-9_])/i;
+
     //attribute name
     public var name : String;
     //if this is nested property attribute
@@ -194,6 +208,26 @@ class Attribute {
 *       STATIC METHODS
 *******************************************************************************/
 
+    /**
+    * Replace placeholders with actual code
+    *
+    */
+    static public inline function fillShortcuts (code:String) : String {
+        //this
+        while( _erThis.match(code) ){
+            code = _erThis.replace(code, '$1__ui__this$2');
+        }
+
+        //arguments
+        while( _erCodeArg.match(code) ){
+            code = _erCodeArg.replace(code, '$1__ui__arguments.$2');
+        }
+
+        code = StringTools.replace(code, "$$", "$");
+        code = StringTools.replace(code, "@@", "@");
+
+        return code;
+    }//function fillShortcuts()
 
 
 /*******************************************************************************
@@ -219,7 +253,7 @@ class Attribute {
         if( all.length > 0 ){
             this._child = new Attribute(all.join("-"), expression);
         }else{
-            this.value = RTXml.parser.parseString(expression);
+            this.value = RTXml.parser.parseString( Attribute.fillShortcuts(expression) );
         }
     }//function new()
 
@@ -228,7 +262,7 @@ class Attribute {
     * Apply attribute value to object
     *
     */
-    public function apply (obj:Dynamic, level:Int = 0) : Void {
+    public function apply (obj:Dynamic, interp) : Void {
         //if this attribute defines nested property
         if( this._child != null ){
             var subObj : Dynamic = Reflect.getProperty(obj, this.name);
@@ -247,11 +281,11 @@ class Attribute {
                 }
             }
 
-            this._child.apply(subObj);
+            this._child.apply(subObj, interp);
 
         //simple attribute
         }else{
-            Reflect.setProperty(obj, this.name, RTXml.interp.execute(this.value));
+            Reflect.setProperty(obj, this.name, interp.execute(this.value));
         }
     }//function apply()
 
