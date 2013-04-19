@@ -7,5 +7,4 @@ ROADMAP
 4. Bugs hunting;
 5. Keyboard handling to navigate and activate widgets;
 6. Make xml builder independent from StablexUI classes;
-7. Real-time xml->ui parser;
 8. ...
