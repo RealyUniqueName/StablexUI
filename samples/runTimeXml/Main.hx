@@ -20,29 +20,41 @@ class Main extends nme.display.Sprite{
         Lib.current.stage.align     = nme.display.StageAlign.TOP_LEFT;
         Lib.current.stage.scaleMode = nme.display.StageScaleMode.NO_SCALE;
 
-        //initialize StablexUI
+        //register Main class for xml
+        UIBuilder.regClass("Main");
+
+        //initialize StablexUI.
+        //Second parameter must be `true` if you want to use runtime xml processing.
         UIBuilder.init(null, true);
 
         // //compile-time xml parsing
         // Lib.current.addChild( UIBuilder.buildFn("assets/ui.xml")() );
 
         //run-time xml parsing {
-            var tm = Lib.getTimer();
-            var fn = RTXml.buildFn(Assets.getText("assets/ui.xml"));
-            trace("Parse time: " + (Lib.getTimer() - tm) + "ms");
+            //parse xml and get function, wich can be used for ui creation
+            var fn : ?Dynamic->Widget = RTXml.buildFn( Assets.getText("assets/ui.xml") );
 
-            tm = Lib.getTimer();
-            Lib.current.addChild( fn({
-                color : 0xFF0000,
-                data  : {
-                    tooltip : "Greetings",
-                    name    : "World"
-                }
-            }) );
-            trace("Create time: " + (Lib.getTimer() - tm) + "ms");
+            //create ui and pass arguments
+            Lib.current.addChild(
+                fn({
+                    color : 0xFF0000,
+                    data  : {
+                        tooltip : "Greetings",
+                        name    : "World"
+                    }
+                })
+            );
         //}
     }//function main()
 
+
+    /**
+    * For testing $ClassName placeholder
+    *
+    */
+    static public function test () : String {
+        return "How are you?";
+    }//function test()
 
 }//class Main
 

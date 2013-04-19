@@ -36,7 +36,7 @@ class RTXml {
 
     /**
     * Register class for usage in xml
-    *
+    * @private
     */
     static public function regClass (cls:Class<Dynamic>) : Void {
         if( RTXml.imports == null ) RTXml.imports = new Hash();
@@ -48,7 +48,7 @@ class RTXml {
 
     /**
     * Find imported class by shortcut
-    *
+    * @private
     */
     static public inline function getImportedClass (className:String) : Class<Dynamic> {
         var cls : Class<Dynamic> = RTXml.imports.get(className);
@@ -65,6 +65,8 @@ class RTXml {
     * Parse provided xml
     *
     * @param xmlStr - valid xml string
+    *
+    * @return - method for ui creation
     */
     static public function buildFn (xmlStr:String) : ?Dynamic->Widget {
         if( RTXml.parser == null ){
@@ -73,16 +75,11 @@ class RTXml {
 
         #if flash
             //flash does not like colons in attributes names.
-            //workaround this by adding required namespaces
-            var r      : EReg = new EReg("([-a-zA-Z0-9]+)\\:", "");
-            var nsList : String = "";
-            var str    : String = xmlStr;
-            while( r.match(str) ){
-                nsList += " xmlns:" + r.matched(1) + "=\"" + r.matched(1) + "\"";
-                str = r.matchedRight();
+            //workaround this by replacing them with dots
+            var r : EReg = new EReg("([_a-zA-Z0-9]+)\\:([-_a-zA-Z0-9:]+\\s*=\\s*)", "");
+            while( r.match(xmlStr) ){
+                xmlStr = r.replace(xmlStr, "$1.$2");
             }
-            r = new EReg("(\\<[a-zA-Z0-9]+)", "");
-            xmlStr = r.replace(xmlStr, "$1" + nsList);
         #end
 
         return RTXml.processXml( Xml.parse(xmlStr).firstElement() ).create;
@@ -91,7 +88,7 @@ class RTXml {
 
     /**
     * Get data from xml for ui creation
-    *
+    * @private
     */
     static public function processXml (node:Xml, interp:Interp = null) : RTXml {
         var cache : RTXml = new RTXml(interp);
@@ -99,9 +96,6 @@ class RTXml {
 
         //attributes
         for(attr in node.attributes()){
-            #if flash
-                attr = StringTools.replace(attr, "::", ":");
-            #end
             if(attr == "defaults"){
                 cache.defaults = node.get(attr);
             }else{
@@ -125,18 +119,24 @@ class RTXml {
 
     /**
     * Constructor
-    *
+    * @private
     */
     public function new (interp:Interp = null) : Void {
         this.data     = [];
         this.children = [];
         this.interp = (interp == null ? new Interp() : interp);
+        this.interp.variables.set("__ui__UIBuilder", UIBuilder);
+
+        //register imported classes
+        for(cls in RTXml.imports.keys()){
+            this.interp.variables.set("__ui__" + cls, RTXml.imports.get(cls));
+        }
     }//function new()
 
 
     /**
     * Creates objects for ui
-    *
+    * @private
     */
     public function create (args:Dynamic = null) : Widget {
         if( args != null ){
@@ -187,13 +187,19 @@ class RTXml {
 
 /**
 * Xml tag attribute
-*
+* @private
 */
 class Attribute {
     //for replacing @someVar with arguments passed to RTXml.buildFn()({arguments})
     static private var _erCodeArg : EReg = ~/(^|[^@])@([._a-z0-9]+)/i;
     //for replacing `this` keyword with object currently being processed
     static private var _erThis    : EReg = ~/(^|[^\$])\$this([^a-z0-9_])/i;
+    //for replacing $ClassName with classes registered through UIBuilder.regClass('fully qualified class name')
+    static private var _erCls     : EReg = ~/(^|[^\$])\$([a-z0-9_]+)([^a-z0-9_])/i;
+    //for replacing #someId with UIBuilder.get('someId')
+    static private var _erId      : EReg = new EReg("(^|[^#])#([a-z0-9_]+)([^a-z0-9_])", "i");
+    //for replacing #SomeClass(someId) with UIBuilder.getAs('someId', SomeClass)
+    static private var _erCastId  : EReg = new EReg("(^|[^#])#([a-z0-9_]+)\\(([a-z0-9_]+)\\)", "i");
 
     //attribute name
     public var name : String;
@@ -210,7 +216,7 @@ class Attribute {
 
     /**
     * Replace placeholders with actual code
-    *
+    * @private
     */
     static public inline function fillShortcuts (code:String) : String {
         //this
@@ -218,11 +224,33 @@ class Attribute {
             code = _erThis.replace(code, '$1__ui__this$2');
         }
 
+        //class names
+        while( _erCls.match(code) ){
+            if( !RTXml.imports.exists(_erCls.matched(2)) ){
+                Err.trigger("Class is not registered for runtime xml: " + _erCls.matched(2));
+            }
+            code = _erCls.replace(code, "$1__ui__$2$3");
+        }
+
         //arguments
         while( _erCodeArg.match(code) ){
             code = _erCodeArg.replace(code, '$1__ui__arguments.$2');
         }
 
+        //widget by id as specified class instance
+        while( _erCastId.match(code) ){
+            if( !RTXml.imports.exists(_erCastId.matched(2)) ){
+                Err.trigger("Class is not registered for runtime xml: " + _erCastId.matched(2));
+            }
+            code = _erCastId.replace(code, "$1__ui__UIBuilder.getAs('$3', __ui__$2)");
+        }
+
+        //widget by id
+        while( _erId.match(code) ){
+            code = _erId.replace(code, "$1__ui__UIBuilder.get('$2')$3");
+        }
+
+        code = StringTools.replace(code, "##", "#");
         code = StringTools.replace(code, "$$", "$");
         code = StringTools.replace(code, "@@", "@");
 
@@ -236,11 +264,11 @@ class Attribute {
 
     /**
     * Constructor
-    *
+    * @private
     */
     public function new (name:String, expression:String) : Void {
         var all   : Array<String> = name.split("-");
-        var local : Array<String> = all.shift().split(":");
+        var local : Array<String> = all.shift().split(#if flash "." #else ":" #end);
 
         this.name = local.shift();
 
@@ -260,7 +288,7 @@ class Attribute {
 
     /**
     * Apply attribute value to object
-    *
+    * @private
     */
     public function apply (obj:Dynamic, interp) : Void {
         //if this attribute defines nested property
