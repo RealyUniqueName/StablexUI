@@ -10,24 +10,42 @@ private typedef Hash<T> = Map<String,T>;
 #end
 
 /**
-* Stores parsed xml data for ui creation
+* Runtime xml processing
 *
 */
 class RTXml {
-    //hscript parser and interpretator
+    /**
+    * hscript parser and interpretator
+    * @private
+    */
     static public var parser : Parser;
     public var interp : Interp;
 
-    //classes registered for xml
+    /**
+    * classes registered for xml
+    * @private
+    */
     static public var imports : Hash<Class<Dynamic>>;
 
-    //xml tag class
+    /**
+    * xml tag class
+    * @private
+    */
     public var cls : Class<Dynamic>;
-    //the only special case attribute
+    /**
+    * the only special case attribute
+    * @private
+    */
     public var defaults : String;
-    //xml tag attributes
+    /**
+    * xml tag attributes
+    * @private
+    */
     public var data : Array<Attribute>;
-    //parsed children nodes
+    /**
+    * parsed children nodes
+    * @private
+    */
     public var children : Array<RTXml>;
 
 /*******************************************************************************
@@ -201,13 +219,19 @@ class Attribute {
     //for replacing #SomeClass(someId) with UIBuilder.getAs('someId', SomeClass)
     static private var _erCastId  : EReg = new EReg("(^|[^#])#([a-z0-9_]+)\\(([a-z0-9_]+)\\)", "i");
 
-    //attribute name
+    /**
+    * attribute name
+    * @private
+    */
     public var name : String;
     //if this is nested property attribute
     private var _child : Attribute;
     //if property needs to be of specified type
     private var _instanceof : Class<Dynamic>;
-    //attribute value interpretator
+    /**
+    * attribute value interpretator
+    * @private
+    */
     public var value : Expr;
 
 /*******************************************************************************

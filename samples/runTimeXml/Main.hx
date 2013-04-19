@@ -28,23 +28,21 @@ class Main extends nme.display.Sprite{
         UIBuilder.init(null, true);
 
         // //compile-time xml parsing
-        // Lib.current.addChild( UIBuilder.buildFn("assets/ui.xml")() );
+        // var fn : ?Dynamic->Widget = UIBuilder.buildFn("assets/ui.xml");
 
-        //run-time xml parsing {
-            //parse xml and get function, wich can be used for ui creation
-            var fn : ?Dynamic->Widget = RTXml.buildFn( Assets.getText("assets/ui.xml") );
+        //run-time xml parsing
+        var fn : ?Dynamic->Widget = RTXml.buildFn( Assets.getText("assets/ui.xml") );
 
-            //create ui and pass arguments
-            Lib.current.addChild(
-                fn({
-                    color : 0xFF0000,
-                    data  : {
-                        tooltip : "Greetings",
-                        name    : "World"
-                    }
-                })
-            );
-        //}
+        //create ui
+        Lib.current.addChild(
+            fn({
+                color : 0xFF0000,
+                data  : {
+                    tooltip : "Greetings",
+                    name    : "World"
+                }
+            })
+        );
     }//function main()
 
 

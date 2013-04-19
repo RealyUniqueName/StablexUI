@@ -100,6 +100,7 @@ class UIBuilder {
     /**
     * Initializing UIBuilder. Should be called before using any other UIBuilder methods except .reg* methods
     * @param defaultsXmlFile - path to xml file with default settings for widgets
+    * @param enableRTXml - if you need to process xml at runtime, set this parameter to true
     */
     #if haxe3 macro #else @:macro #end static public function init(defaultsXmlFile:String = null, enableRTXml:Bool = false) : Expr {
         var code : String = '\nnme.Lib.current.stage.removeEventListener(nme.events.Event.ENTER_FRAME, ru.stablex.ui.UIBuilder.skinQueue);';
