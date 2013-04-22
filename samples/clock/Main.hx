@@ -17,7 +17,7 @@ class Main extends nme.display.Sprite{
         UIBuilder.init();
 
         //Create UI and attach it to root display object
-        Lib.current.addChild( UIBuilder.buildFn('clcok.xml')() );
+        nme.Lib.current.addChild( UIBuilder.buildFn('clock.xml')() );
     }//function main()
 
 
