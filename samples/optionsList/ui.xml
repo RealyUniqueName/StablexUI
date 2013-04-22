@@ -5,18 +5,12 @@
     <Options
         w = "100"
         h = "30"
-        skin:Paint-color   = "0xFF0000"
-        skin:Paint-corners = "[20]"
 
         options = "[['lion', 1], ['camel', 2], ['elephant', 3]]"
 
-        box-skin:Paint-color = "0x222222"
         box-skin:Paint-alpha = "0.9"
-        box-padding = "5"
-        box-childPadding = "5"
 
-        skinOption:Paint-color = "0x00FF00"
-        skinSelected:Paint-color = "0x007700"
+        optionDefaults = "'option'"
     />
 
     <!-- fullscreen list -->
@@ -25,8 +19,6 @@
         <Options
             w = "150"
             h = "30"
-            skin:Paint-color   = "0xFF0000"
-            skin:Paint-corners = "[20]"
 
             options = "[['apple', 'wow'], ['pancakes', 'yay'], ['peanut butter jelly time!', 'doh']]"
 
@@ -37,12 +29,7 @@
 
             alignList="false"
 
-            box-skin:Paint-color = "0x222222"
-            box-padding = "5"
-            box-childPadding = "5"
-
-            skinOption:Paint-color = "0x00FF00"
-            skinSelected:Paint-color = "0x007700"
+            optionDefaults = "'option'"
         />
     </HBox>
 

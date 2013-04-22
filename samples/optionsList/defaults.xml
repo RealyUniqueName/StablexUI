@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<Defaults>
+
+    <Options>
+        <Default
+            skin:Paint-color   = "0xFF0000"
+            skin:Paint-corners = "[20]"
+
+            box-skin:Paint-color = "0x222222"
+            box-padding          = "5"
+            box-childPadding     = "5"
+        />
+    </Options>
+
+    <Toggle>
+        <option
+            states-up-skin:Paint-color   = "0x00FF00"
+            states-down-skin:Paint-color = "0x007700"
+        />
+    </Toggle>
+
+</Defaults>

@@ -20,7 +20,7 @@ class Main extends nme.display.Sprite{
         Lib.current.stage.scaleMode = StageScaleMode.NO_SCALE;
 
         //initialize StablexUI
-        UIBuilder.init();
+        UIBuilder.init("defaults.xml");
 
         //Create our floating UI
         Lib.current.addChild(UIBuilder.buildFn('ui.xml')());
