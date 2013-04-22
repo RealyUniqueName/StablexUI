@@ -1,4 +1,4 @@
-package com.example;
+package ;
 
 import nme.display.StageAlign;
 import nme.display.StageScaleMode;
