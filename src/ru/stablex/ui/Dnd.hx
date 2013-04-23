@@ -41,7 +41,7 @@ class Dnd {
         w.dispatchEvent(Dnd.current);
 
         //if dropped while processing DRAG event
-        if( Dnd.current == null && !Dnd.current.dropped ) return;
+        if( Dnd.current == null || Dnd.current.dropped ) return;
 
         Dnd.current.obj.mouseEnabled = Dnd.current.obj.mouseChildren = false;
 
