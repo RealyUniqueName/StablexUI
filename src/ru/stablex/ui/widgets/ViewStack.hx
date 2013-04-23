@@ -174,7 +174,17 @@ class ViewStack extends Widget{
     *
     */
     private function get_currentIdx() : Int {
-        return this._history[ this._history.length - 1 ];
+        var idx : Int = this._history[ this._history.length - 1 ];
+        //if idx is out of bounds, get currently visible child index
+        if( idx >= this.numChildren ){
+            for(i in 0...this.numChildren){
+                if( this.getChildAt(i).visible == true ){
+                    this._history[ this._history.length - 1 ] = idx = i;
+                    break;
+                }
+            }
+        }
+        return idx;
     }//function get_currentIdx()
 
 
