@@ -64,7 +64,11 @@ class Progress extends Widget{
     */
     private function set_value (v:Float) : Float {
         this._setBarWidth(v, this.max);
-        return this._value = v;
+        this._value = v;
+        if( this.created ){
+            this.dispatchEvent(new WidgetEvent(WidgetEvent.CHANGE));
+        }
+        return v;
     }//function set_value()
 
 
@@ -121,7 +125,6 @@ class Progress extends Widget{
                     newValue = max;
                 }
                 this.value = newValue;
-                this.dispatchEvent(new WidgetEvent(WidgetEvent.CHANGE));
             }
         };
 
