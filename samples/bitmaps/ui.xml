@@ -1,13 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<HBox skin:Paint-color="0x555555" w="$Lib.current.stage.stageWidth" h="$Lib.current.stage.stageHeight" padding="50" childPadding="30">
+<HBox skin:Paint-color="0xFFFFFF" w="$Lib.current.stage.stageWidth" h="$Lib.current.stage.stageHeight" padding="50" childPadding="30">
 
     <!-- full image -->
-    <Bmp src="'assets/haxe.png'"/>
+    <Bmp x="50" y="50" src="'assets/haxe.png'" scaleX="0.5" scaleY="0.5" rotation="90" filters="[new nme.filters.GlowFilter(0xFF0000, 2, 10, 10),new nme.filters.DropShadowFilter(12,45,0x303030,0xD0,10,10)]" 
+    />
 
     <!-- part of image -->
     <Bmp src="'assets/haxe.png'" xOffset="72" yOffset="72" w="76" h="76"/>
 
     <!-- part of image with autoWidth -->
     <Bmp src="'assets/haxe.png'" xOffset="0" yOffset="0" autoWidth="true" h="148"/>
+    
+    <!-- The axis of rotation is correct. -->
+    <Bmp src="'assets/haxe.png'" xOffset="0" yOffset="0" w="148" h="148" wOrgSize="0" hOrgSize="0" xRotationOffset="148/2" yRotationOffset="148/2" on-display="$this.rotationByPoint=45;" on-enterFrame="
+    $this.rotationByPoint++; 
+	//trace($this.rotationByPoint);
+	//trace($this.xRotationOffset);
+	//trace($this.yRotationOffset);
+	//trace($this.width);
+	//trace($this.height);
+	"/>
+	
+	<!-- The axis of rotation is error. -->
+    <Bmp src="'assets/haxe.png'" xOffset="0" yOffset="0" w="148" h="148" wOrgSize="148" hOrgSize="148" xRotationOffsetPt="0.5" yRotationOffsetPt="0.5" rotationByPoint="45" on-enterFrame="
+    //$this.rotationByPoint++; 
+    "/>
+    <!-- The axis of rotation is correct. -->
+    <Bmp src="'assets/haxe.png'" xOffset="0" yOffset="0" w="148" h="148" wOrgSize="148" hOrgSize="148" xRotationOffsetPt="0.5" yRotationOffsetPt="0.5" on-enterFrame="
+    $this.rotationByPoint++; 
+    "/>
+
 </HBox>
