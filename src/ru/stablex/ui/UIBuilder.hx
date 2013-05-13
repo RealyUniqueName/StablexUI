@@ -150,6 +150,7 @@ class UIBuilder {
             UIBuilder.regClass('ru.stablex.ui.widgets.Slider');
             UIBuilder.regClass('ru.stablex.ui.widgets.Switch');
             UIBuilder.regClass('ru.stablex.ui.widgets.Clock');
+            UIBuilder.regClass('ru.stablex.ui.widgets.ClockWatch');
             UIBuilder.regClass('ru.stablex.ui.events.WidgetEvent');
             UIBuilder.regClass('ru.stablex.ui.events.DndEvent');
             UIBuilder.regClass('ru.stablex.ui.events.ScrollEvent');

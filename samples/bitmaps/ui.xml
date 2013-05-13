@@ -14,7 +14,7 @@
     
     <!-- The axis of rotation is correct. -->
     <Bmp src="'assets/haxe.png'" xOffset="0" yOffset="0" w="148" h="148" wOrgSize="0" hOrgSize="0" xRotationOffset="148/2" yRotationOffset="148/2" on-display="$this.rotationByPoint=45;" on-enterFrame="
-    $this.rotationByPoint++; 
+    //$this.rotationByPoint++; 
 	//trace($this.rotationByPoint);
 	//trace($this.xRotationOffset);
 	//trace($this.yRotationOffset);
@@ -22,10 +22,10 @@
 	//trace($this.height);
 	"/>
 	
-	<!-- The axis of rotation is error. -->
-    <Bmp src="'assets/haxe.png'" xOffset="0" yOffset="0" w="148" h="148" wOrgSize="148" hOrgSize="148" xRotationOffsetPt="0.5" yRotationOffsetPt="0.5" rotationByPoint="45" on-enterFrame="
+	<!-- The axis of rotation is error.-->
+    <Bmp src="'assets/haxe.png'" xOffset="0" yOffset="0" w="148" h="148" wOrgSize="148" hOrgSize="148" xRotationOffsetPt="0.5" yRotationOffsetPt="0.5" rotationByPoint="45"  on-enterFrame="
     //$this.rotationByPoint++; 
-    "/>
+    "/> 
     <!-- The axis of rotation is correct. -->
     <Bmp src="'assets/haxe.png'" xOffset="0" yOffset="0" w="148" h="148" wOrgSize="148" hOrgSize="148" xRotationOffsetPt="0.5" yRotationOffsetPt="0.5" on-enterFrame="
     $this.rotationByPoint++; 

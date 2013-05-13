@@ -9,6 +9,7 @@ import ru.stablex.ui.layouts.Layout;
 import ru.stablex.ui.UIBuilder;
 import ru.stablex.ui.skins.Skin;
 import nme.geom.Point;
+import nme.events.Event;
 
 /**
 * Basic widget
@@ -100,7 +101,7 @@ class Widget extends TweenSprite{
     public var hOrgSize (get_hOrgSize,set_hOrgSize)         			 : Float;
     private var _wOrgSize                                                        : Float = 0;
     private var _hOrgSize                                                        : Float = 0;
-    public var useOrgSize                               			 : Bool = false;
+    public var useOrgSize                               			 			 : Bool = false;
 
     public var xRotationOffset (get_xRotationOffset,set_xRotationOffset)         : Float;
     public var xRotationOffsetPt (get_xRotationOffsetPt,set_xRotationOffsetPt)   : Float;
@@ -112,6 +113,7 @@ class Widget extends TweenSprite{
     private var _yRotationOffsetPercent                                          : Float = 0;
 
     public var rotationByPoint(get_rotationByPoint, set_rotationByPoint):Float;
+	private var _rotationByPoint: Float = 0;
 
     //Skin processor (see ru.stablex.ui.skins package)
     public var skin : Skin;
@@ -184,14 +186,29 @@ class Widget extends TweenSprite{
         this.clearEvent(WidgetEvent.INITIAL_RESIZE);
 
         this.onCreate();
+		
+		this._predefineWidgetEvent();
 
         //refresh widget
         this.refresh();
 
         this.created = true;
-
+		
         this.dispatchEvent(new WidgetEvent(WidgetEvent.CREATE));
     }//function _onCreate()
+	
+	
+	private function _predefineWidgetEvent () : Void {
+		var displayfn : Event->Void = function(e:Event) : Void {
+            this.rotateAxis(this._rotationByPoint);
+        };
+        this.addEventListener(nme.events.Event.ADDED_TO_STAGE, displayfn);
+		
+		var changedfn : Event->Void = function(e:Event) : Void {
+            this.rotateAxis(this._rotationByPoint);
+        };
+        this.addEventListener(WidgetEvent.CHANGE, changedfn);		
+	}
 
 
     /**
@@ -199,9 +216,8 @@ class Widget extends TweenSprite{
     * This method is called automatically after widget was created
     * by <type>UIBuilder</type>.buildFn() or <type>UIBuilder</type>.create()
     */
-    public function onCreate() : Void {
+    public function onCreate() : Void {		
     }//function onCreate()
-
 
     /**
     * Free (destroy) widget
@@ -953,8 +969,8 @@ class Widget extends TweenSprite{
     *
     */
     private function set_wOrgSize(w:Float) : Float {
-	this._wOrgSize = w;
-	this.useOrgSize = (( this._wOrgSize != 0 ) || ( this._hOrgSize != 0 ));
+		this._wOrgSize = w;
+		this.useOrgSize = (( this._wOrgSize != 0 ) || ( this._hOrgSize != 0 ));
         return w;
     }//function set_wOrgSize()
 
@@ -971,8 +987,8 @@ class Widget extends TweenSprite{
     *
     */
     private function set_hOrgSize(h:Float) : Float {
-	this._hOrgSize = h;
-	this.useOrgSize = (( this._wOrgSize != 0 ) || ( this._hOrgSize != 0 ));
+		this._hOrgSize = h;
+		this.useOrgSize = (( this._wOrgSize != 0 ) || ( this._hOrgSize != 0 ));
         return h;
     }//function set_hOrgSize()
 
@@ -989,18 +1005,21 @@ class Widget extends TweenSprite{
     *
     */
     private function set_xRotationOffset(x:Float) : Float {
-	var osize:Float = 0;
+		var osize:Float = 0;
         if (this.useOrgSize && this._wOrgSize!=0 ){
-	    osize = this._wOrgSize;
+			osize = this._wOrgSize;
         } else {
-	    osize = this.w;
+			osize = this.w;
         }
         //trace("aaa:"+this._width);
         //if (osize != 0)
-        {
-	    this._xRotationOffset = x;
-	    this._xRotationOffsetPercent = x/osize;
-        }
+        //{
+		//trace("set_xRotationOffset:" + x);
+		//trace("_rotationByPoint:" + this._rotationByPoint);
+			this._xRotationOffset = x;
+			this._xRotationOffsetPercent = x / osize;
+			this.set_rotationByPoint(this._rotationByPoint);
+        //}
         return this._xRotationOffset;
     }//function set_xRotationOffset()
 
@@ -1019,12 +1038,12 @@ class Widget extends TweenSprite{
     private function set_xRotationOffsetPt(xp:Float) : Float {
 	var osize:Float = 0;
         if (this.useOrgSize && this._wOrgSize!=0 ){
-	    osize = this._wOrgSize;
+			osize = this._wOrgSize;
         } else {
-	    osize = this.w;
+			osize = this.w;
         }
-	this._xRotationOffsetPercent = xp;
-	this._xRotationOffset = osize*xp;
+		this._xRotationOffsetPercent = xp;
+		this.xRotationOffset = osize*xp;
         return this._xRotationOffsetPercent;
     }//function set_xRotationOffsetPt()
 
@@ -1043,15 +1062,18 @@ class Widget extends TweenSprite{
     private function set_yRotationOffset(y:Float) : Float {
 	var osize:Float = 0;
         if (this.useOrgSize && this._hOrgSize!=0 ){
-	    osize = this._hOrgSize;
+			osize = this._hOrgSize;
         } else {
-	    osize = this.h;
+			osize = this.h;
         }
         //if (osize != 0)
-        {
-	    this._yRotationOffset = y;
-	    this._yRotationOffsetPercent = y/osize;
-        }
+        //{
+		
+			this._yRotationOffset = y;
+			this._yRotationOffsetPercent = y / osize;
+			this.set_rotationByPoint(this._rotationByPoint);
+			
+        //}
         return this._yRotationOffset;
     }//function set_yRotationOffset()
 
@@ -1070,12 +1092,12 @@ class Widget extends TweenSprite{
     private function set_yRotationOffsetPt(yp:Float) : Float {
 	var osize:Float = 0;
         if (this.useOrgSize && this._hOrgSize!=0 ){
-	    osize = this._hOrgSize;
+			osize = this._hOrgSize;
         } else {
-	    osize = this.h;
+			osize = this.h;
         }
-	this._yRotationOffsetPercent = yp;
-	this._yRotationOffset = osize*yp;
+		this._yRotationOffsetPercent = yp;
+		this.yRotationOffset = osize*yp;
         return this._yRotationOffsetPercent;
     }//function set_yRotationOffsetPt()
 
@@ -1088,28 +1110,32 @@ class Widget extends TweenSprite{
     }//function get_yRotationOffsetPt()
 
     private function set_rotationByPoint(r:Float):Float {
-        
-        var lp:Point = new Point(this._xRotationOffset,this._yRotationOffset);
-        var ps:Point = this.localToGlobal(lp);
-        this.rotation = r;
-        var pe:Point = this.localToGlobal(lp);
-        this.x-=pe.x-ps.x;
-        this.y-=pe.y-ps.y;
-
-	/*
-        trace("w:"+this.w);
-	trace("h:"+this.h);
-        trace("rotation:"+this.rotation);
-	trace("xRotationOffset:"+this.xRotationOffset);
-	trace("yRotationOffset:"+this.yRotationOffset);
-	*/
-        return this.rotation;
+        this._rotationByPoint = r;
+		this.dispatchEvent(new WidgetEvent(WidgetEvent.CHANGE));
+        return this._rotationByPoint;
     }
     
     private function get_rotationByPoint():Float { 
-        return this.rotation;
+        return this._rotationByPoint;
     }
 
+	public function rotateAxis(r:Float) : Void {
+		var lp:Point = new Point(this._xRotationOffset,this._yRotationOffset);
+		var ps:Point = this.localToGlobal(lp);
+		
+		this.rotation = r;
+		var pe:Point = this.localToGlobal(lp);
+		this.x-=pe.x-ps.x;
+		this.y-=pe.y-ps.y;
+
+		/*
+		trace("w:"+this.w);
+		trace("h:"+this.h);
+		trace("rotation:"+this.rotation);
+		trace("xRotationOffset:"+this.xRotationOffset);
+		trace("yRotationOffset:"+this.yRotationOffset);
+		*/
+	}
 
     /**
     * Id setter
