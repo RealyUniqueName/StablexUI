@@ -615,6 +615,39 @@ class UIBuilder {
 
 
     /**
+    * Create class for custom widget based on xml markup
+    *
+    */
+    #if haxe3 macro #else @:macro #end static public function createClass(xmlFile:String, cls:String) : Expr {
+        var pos = Context.currentPos();
+
+        var element = Xml.parse( File.getContent(xmlFile) ).firstElement();
+        var code : String = UIBuilder.construct(element);
+        code += '\nreturn __ui__widget1;';
+        code = 'function(__ui__arguments:Dynamic = null) : ' + UIBuilder._imports.get(element.nodeName) + ' {' + code + '}';
+trace(code);
+        var e = Context.parse(code, pos);
+trace(e);
+        var pack : Array<String> = cls.split(".");
+        cls = pack.pop();
+
+        var clazz:TypeDefinition  = {
+            pos : pos,
+            fields : [],
+            params : [],
+            pack : pack,
+            name : cls,
+            meta : [  ],
+            isExtern : false,
+            kind : TDClass( { pack : ["ru", "stablex", "ui", "widgets"], name : "Widget", params :[] } ),
+        };
+        Context.defineType(clazz);
+
+        return Context.makeExpr(Void, Context.currentPos());
+    }//function createClass()
+
+
+    /**
     * Register skin list. See samples/handlers_skinning for example skins.xml
     * @throw <type>String</type> if UIBuilder.init() was not called before
     * @throw <type>String</type> if one of tag names in xml does not match ~/^([a-z0-9_]+):([a-z0-9_]+)$/i
