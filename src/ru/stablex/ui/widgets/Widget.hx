@@ -114,6 +114,7 @@ class Widget extends TweenSprite{
 
     public var rotationByPoint(get_rotationByPoint, set_rotationByPoint):Float;
 	private var _rotationByPoint: Float = 0;
+	private var _rotationByPointChange: Bool = false;
 
     //Skin processor (see ru.stablex.ui.skins package)
     public var skin : Skin;
@@ -200,12 +201,18 @@ class Widget extends TweenSprite{
 	
 	private function _predefineWidgetEvent () : Void {
 		var displayfn : Event->Void = function(e:Event) : Void {
-            this.rotateAxis(this._rotationByPoint);
+			if (this._rotationByPointChange) {
+				this._rotationByPointChange = false;
+				this.rotateAxis(this._rotationByPoint);
+			} 
         };
         this.addEventListener(nme.events.Event.ADDED_TO_STAGE, displayfn);
 		
 		var changedfn : Event->Void = function(e:Event) : Void {
-            this.rotateAxis(this._rotationByPoint);
+			if (this._rotationByPointChange) {
+				this._rotationByPointChange = false;
+				this.rotateAxis(this._rotationByPoint);
+			} 
         };
         this.addEventListener(WidgetEvent.CHANGE, changedfn);		
 	}
@@ -1018,6 +1025,7 @@ class Widget extends TweenSprite{
 		//trace("_rotationByPoint:" + this._rotationByPoint);
 			this._xRotationOffset = x;
 			this._xRotationOffsetPercent = x / osize;
+			this._rotationByPointChange = true;
 			this.set_rotationByPoint(this._rotationByPoint);
         //}
         return this._xRotationOffset;
@@ -1071,6 +1079,7 @@ class Widget extends TweenSprite{
 		
 			this._yRotationOffset = y;
 			this._yRotationOffsetPercent = y / osize;
+			this._rotationByPointChange = true;
 			this.set_rotationByPoint(this._rotationByPoint);
 			
         //}
@@ -1109,8 +1118,11 @@ class Widget extends TweenSprite{
         return this._yRotationOffsetPercent;
     }//function get_yRotationOffsetPt()
 
-    private function set_rotationByPoint(r:Float):Float {
-        this._rotationByPoint = r;
+    private function set_rotationByPoint(r:Float):Float {        
+		if (this._rotationByPoint != r) {
+			this._rotationByPointChange = true;
+			this._rotationByPoint = r;
+		}
 		this.dispatchEvent(new WidgetEvent(WidgetEvent.CHANGE));
         return this._rotationByPoint;
     }
