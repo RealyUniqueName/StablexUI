@@ -685,7 +685,8 @@ class UIBuilder {
 
     /**
     * Create class for custom widget based on xml markup
-    *
+    * @param xmlFile - source markup file for new class
+    * @param cls - fully qualified class name for new class (E.g. 'com.example.MyFancyWidget')
     */
     #if haxe3 macro #else @:macro #end static public function createClass(xmlFile:String, cls:String) : Expr {
         if( !UIBuilder._initialized ){

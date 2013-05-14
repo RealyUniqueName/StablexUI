@@ -20,9 +20,6 @@ class Init{
         //create xml-based classes for custom widgets
         UIBuilder.createClass("ui/custom.xml", "com.example.Custom");
 
-        // //register classes, which rely on xml-based classes
-        // UIBuilder.regClass("com.example.CustomExtended");
-
         //initialize StablexUI
         UIBuilder.init("ui/defaults.xml");
 
@@ -30,6 +27,15 @@ class Init{
         Main.main();
 
     }//function main()
+
+
+    /**
+    * constructor
+    *
+    */
+    public function new() : Void {
+    }//function new()
+
 
 
 }//class Init
