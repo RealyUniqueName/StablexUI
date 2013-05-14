@@ -253,9 +253,9 @@ class UIBuilder {
 
     /**
     * Try to parse this code
-    *
+    * @private
     */
-    static private inline function _parse (xmlFile:String, code:String) : Expr {
+    static public inline function _parse (xmlFile:String, code:String) : Expr {
         var expr : Expr = null;
         try{
             expr = Context.parseInlineString(code, Context.makePosition({ min:0, max:0, file:xmlFile}) );

@@ -8,8 +8,8 @@ import sys.io.File;
 
 
 /**
-* Function to create xml-based widget classes
-*
+* Functions to create xml-based widget classes
+* You have no need to use this class.
 */
 class ClassBuilder {
 
@@ -21,7 +21,7 @@ class ClassBuilder {
 
     /**
     * Create class for custom widget based on xml markup
-    *
+    * @private
     */
     static public function createClass(xmlFile:String, cls:String) : Expr {
         var pos = Context.makePosition({min:0, max:0, file:xmlFile});
@@ -35,17 +35,33 @@ class ClassBuilder {
 
         //get parent
         var parentPack : Array<String> = ClassBuilder.getPack(root.nodeName);
-        // var parentClass : String = UIBuilder.imports().get(root.nodeName);
-        // if( parentClass == null ) Err.trigger('Class is not registered: ' + root.nodeName);
-        // var parentPack : Array<String> = parentClass.split(".");
-        // parentClass = parentPack.pop();
 
         //find children, which must be assigned to new class properties
-        // + gen code for children
-        var fields = ClassBuilder._getFields(root, pos);
+        var fieldsData = ClassBuilder._getFields(root, pos);
 
+        //create instances for properties
+        var fields : Array<Field> = [];
+        var code   : String = "";
+        for(fdata in fieldsData){
+            fields.push(fdata.field);
+
+            //create instance
+            code += '\nthis.' + fdata.field.name + ' = new ' + UIBuilder.imports().get(fdata.node.nodeName) + '();';
+
+            //process 'defaults' attribute
+            var defaults : String = fdata.node.get('defaults');
+            if( defaults != null ){
+                code += "\nthis." + fdata.field.name + ".defaults = " + defaults + ";";
+            }
+            code += "\nru.stablex.ui.UIBuilder.applyDefaults(this." + fdata.field.name + ");";
+
+            code += UIBuilder.attr2Haxe(fdata.node, "this." + fdata.field.name);
+        }
+
+        //get `_onInitialize` definition
+        fields.push( ClassBuilder._genOnInitialize(root, pos) );
         //get constructor definition
-        fields.push( ClassBuilder._genConstructor(root, pos) );
+        fields.push( ClassBuilder._genConstructor(root, pos, code) );
 
         //create new class definition
         var clazz:TypeDefinition  = {
@@ -71,8 +87,7 @@ class ClassBuilder {
     * Generate expressions structure for constructor
     *
     */
-    static private function _genConstructor(xml:Xml, pos:Position) : Field {
-        var code  :String = "";
+    static private function _genConstructor(xml:Xml, pos:Position, code:String) : Field {
         //default settings{
             var defaults : String = xml.get('defaults');
             if( defaults != null ){
@@ -87,10 +102,6 @@ class ClassBuilder {
             }
             code += "\nru.stablex.ui.UIBuilder.applyDefaults(this);";
         //}
-
-        // //find children, which must be assigned to new class properties
-        // // + gen code for children
-        // var data = ClassBuilder._getFields(xml, pos);
 
         //generate dummy function to extract expressions for constructor method
         var dummy : Expr = Context.parse("function () { super(); " + code + UIBuilder.attr2Haxe(xml, "this") + " }", pos);
@@ -120,42 +131,73 @@ class ClassBuilder {
 
 
     /**
+    * Generate '._onInitialize' method definition
+    *
+    */
+    static private function _genOnInitialize(xml:Xml, pos:Position) : Field {
+        //generate code
+        var code : String = "";
+        for(node in xml.elements()){
+            code += ClassBuilder._construct(pos, node);
+        }
+
+        //generate dummy function to extract expressions
+        var dummy : Expr = Context.parse("function () { super._onInitialize(); " + code + " }", pos);
+
+        //extract expressions
+        var eblock : Expr = null;
+        switch(dummy.expr){
+            case EFunction(a,b) : eblock = b.expr;
+            default:
+        }
+
+        //build Field structure
+        return {
+            pos    : pos,
+            name   : "_onInitialize",
+            meta   : [],
+            kind   : FFun({
+                ret    : null,
+                params : [],
+                expr   : eblock,
+                args   : [],
+            }),
+            doc    : null,
+            access : [AOverride, APublic]
+        };
+    }//function _genOnInitialize()
+
+
+
+    /**
     * Get fields to create for new class
     *
     */
-    static private function _getFields(xml:Xml, pos:Position, fields:Array<Field> = null) : Array<Field> {
+    static private function _getFields(xml:Xml, pos:Position, fields:Array<{field:Field, node:Xml}> = null) : Array<{field:Field, node:Xml}> {
         if( fields == null ) fields = [];
 
-        var name : String;
-        var e : Expr;
+        var field : String;
         for(node in xml.elements()){
-            name = node.get("name");
-            //if this node has `name` attribute
-            if( name != null ){
-                e = Context.parse(name, pos);
-                switch(e.expr){
-                    case EConst(a):
-                        switch(a){
-                            //if value of `name` attribute is string constant, create class field definition
-                            case CString(fieldName):
-                                var nodePack : Array<String> = ClassBuilder.getPack(node.nodeName);
-                                fields.push({
-                                    pos    : pos,
-                                    name   : fieldName,
-                                    meta   : [],
-                                    kind   : FVar(TPath({
-                                        sub    : null,
-                                        params : [],
-                                        name   : nodePack.pop(),
-                                        pack   : nodePack,
-                                    })),
-                                    doc    : null,
-                                    access : [APublic]
-                                });
-                            default:
-                        }
-                    default:
-                }
+            field = ClassBuilder._fieldName(node, pos);
+            //if this node must be referenced by class field
+            if( field != null ){
+                var nodePack : Array<String> = ClassBuilder.getPack(node.nodeName);
+                fields.push({
+                    node  : node,
+                    field : {
+                        pos    : pos,
+                        name   : field,
+                        meta   : [],
+                        kind   : FVar(TPath({
+                            sub    : null,
+                            params : [],
+                            name   : nodePack.pop(),
+                            pack   : nodePack,
+                        })),
+                        doc    : null,
+                        access : [APublic]
+                    }
+                });
             }
             ClassBuilder._getFields(node, pos, fields);
         }
@@ -173,6 +215,92 @@ class ClassBuilder {
         if( cls == null ) Err.trigger('Class is not registered: ' + importedClass);
         return cls.split(".");
     }//function getPack()
+
+
+    /**
+    * Returns field name which must reference to this node in generated class
+    *
+    */
+    static private function _fieldName(node:Xml, pos:Position) : Null<String> {
+        var name : String = node.get("name");
+        //if this node has `name` attribute
+        if( name != null ){
+            var e : Expr = Context.parse(name, pos);
+            switch(e.expr){
+                case EConst(a):
+                    switch(a){
+                        //if value of `name` attribute is string constant, return it as field name
+                        case CString(fieldName):
+                            name = fieldName;
+                        default:
+                            name = null;
+                    }
+                default:
+                    name = null;
+            }
+        }
+
+        return name;
+    }//function _fieldName()
+
+
+    /**
+    * Generates code based on Xml object.
+    * @private
+    * @throw <type>String</type> if one of used in xml widgets, classes or events was not registered by UIBuilder.regClass() or UIBuilder.regEvent()
+    */
+    static public function _construct (pos:Position, element:Xml, n:Int = 1, parent:String = "this", wname:String = "__ui__widget") : String{
+        var code   : String = '';
+        var widget : String = wname + n;
+        var field  : String = ClassBuilder._fieldName(element, pos);
+        //if this element must be assigned to a field
+        if( field != null ){
+            widget = "this." + field;
+        //create widget instance for this node
+        }else{
+            //get class for widget
+            var cls  : String = UIBuilder.imports().get(element.nodeName);
+            if( cls == null ) Err.trigger('Widget class is not registered: ' + element.nodeName);
+            code += '\nvar '+ widget + ' = new ' + cls + '();';
+
+            //default settings {
+                var defaults : String = element.get('defaults');
+                if( defaults != null ){
+                    code += "\n" + widget + ".defaults = " + defaults + ";";
+                }
+                code += "\nru.stablex.ui.UIBuilder.applyDefaults(" + widget + ");";
+            //}
+            code += UIBuilder.attr2Haxe(element, widget);
+        }
+
+        //call .onInitialize method to notify widget that it is initialized
+        code += '\n'+ widget + '._onInitialize();';
+
+        //if we have nested widgets, generate code for them
+        for(node in element.elements()){
+            //if this node defines some meta
+            if( node.nodeName.indexOf('meta:') == 0 ){
+                var meta : String = node.nodeName.substr('meta:'.length);
+                var fn   : Xml->String->String = UIBuilder.meta.get(meta);
+                if( fn == null ) Err.trigger('Meta processor not found: ' + meta);
+
+                code += fn(node, widget);
+
+            //continue ordinary code generation
+            }else{
+                code += '\n' + ClassBuilder._construct(pos, node, n + 1, widget, wname);
+            }
+        }
+
+        //call .onCreate method to notify widget that it is created
+        code += '\n'+ widget + '._onCreate();';
+
+        //add to parent's display list
+        code += '\n'+ parent + '.addChild('+ widget + ');';
+
+        return code;
+    }//function _construct()
+
 
 /*******************************************************************************
 *   INSTANCE METHODS
