@@ -1,0 +1,16 @@
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+<HBox w="800" h="600" childPadding="20">
+
+    <!-- use generated widget class as usual -->
+    <Custom />
+    <Custom skin:Paint-color="0x0000FF"/>
+
+    <!-- access widgets assigned to fields of generated class -->
+    <Custom h="200" box-align="'bottom,right'" box-padding="10" btn-text="'no-no!'" />
+
+    <!-- Widget, which extends generated class -->
+    <CustomExt />
+
+</HBox>
