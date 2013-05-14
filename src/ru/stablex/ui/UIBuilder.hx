@@ -190,6 +190,7 @@ class UIBuilder {
         UIBuilder.registerClass('ru.stablex.ui.events.WidgetEvent');
         UIBuilder.registerClass('ru.stablex.ui.events.DndEvent');
         UIBuilder.registerClass('ru.stablex.ui.events.ScrollEvent');
+        UIBuilder.registerClass('ru.stablex.ui.skins.Rect');
         UIBuilder.registerClass('ru.stablex.ui.skins.Paint');
         UIBuilder.registerClass('ru.stablex.ui.skins.Gradient');
         UIBuilder.registerClass('ru.stablex.ui.skins.Tile');
