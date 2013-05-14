@@ -107,74 +107,7 @@ class UIBuilder {
         code += '\nnme.Lib.current.stage.addEventListener(nme.events.Event.ENTER_FRAME, ru.stablex.ui.UIBuilder.skinQueue);';
 
         if( !UIBuilder._initialized ){
-            UIBuilder._initialized = true;
-
-            //registering frequently used events
-            UIBuilder.regEvent('enterFrame',  'nme.events.Event.ENTER_FRAME');
-            UIBuilder.regEvent('click',       'nme.events.MouseEvent.CLICK',                    'nme.events.MouseEvent');
-            UIBuilder.regEvent('mouseDown',   'nme.events.MouseEvent.MOUSE_DOWN',               'nme.events.MouseEvent');
-            UIBuilder.regEvent('mouseUp',     'nme.events.MouseEvent.MOUSE_UP',                 'nme.events.MouseEvent');
-            UIBuilder.regEvent('display',     'nme.events.Event.ADDED_TO_STAGE');
-            UIBuilder.regEvent('create',      'ru.stablex.ui.events.WidgetEvent.CREATE',        'ru.stablex.ui.events.WidgetEvent');
-            UIBuilder.regEvent('free',        'ru.stablex.ui.events.WidgetEvent.FREE',          'ru.stablex.ui.events.WidgetEvent');
-            UIBuilder.regEvent('resize',      'ru.stablex.ui.events.WidgetEvent.RESIZE',        'ru.stablex.ui.events.WidgetEvent');
-            UIBuilder.regEvent('change',      'ru.stablex.ui.events.WidgetEvent.CHANGE',        'ru.stablex.ui.events.WidgetEvent');
-            UIBuilder.regEvent('scrollStart', 'ru.stablex.ui.events.WidgetEvent.SCROLL_START',  'ru.stablex.ui.events.WidgetEvent');
-            UIBuilder.regEvent('scrollStop',  'ru.stablex.ui.events.WidgetEvent.SCROLL_STOP',   'ru.stablex.ui.events.WidgetEvent');
-            UIBuilder.regEvent('drag',        'ru.stablex.ui.events.DndEvent.DRAG',             'ru.stablex.ui.events.DndEvent');
-            UIBuilder.regEvent('drop',        'ru.stablex.ui.events.DndEvent.DROP',             'ru.stablex.ui.events.DndEvent');
-            UIBuilder.regEvent('receiveDrop', 'ru.stablex.ui.events.DndEvent.RECEIVE',          'ru.stablex.ui.events.DndEvent');
-            UIBuilder.regEvent('beforeScroll','ru.stablex.ui.events.ScrollEvent.BEFORE_SCROLL', 'ru.stablex.ui.events.ScrollEvent');
-
-            //registering frequently used classes
-            UIBuilder.regClass('ru.stablex.ui.widgets.Text');
-            UIBuilder.regClass('ru.stablex.ui.widgets.InputText');
-            UIBuilder.regClass('ru.stablex.ui.widgets.Widget');
-            UIBuilder.regClass('ru.stablex.ui.widgets.Bmp');
-            UIBuilder.regClass('ru.stablex.ui.widgets.Button');
-            UIBuilder.regClass('ru.stablex.ui.widgets.StateButton');
-            UIBuilder.regClass('ru.stablex.ui.widgets.Toggle');
-            UIBuilder.regClass('ru.stablex.ui.widgets.Checkbox');
-            UIBuilder.regClass('ru.stablex.ui.widgets.Radio');
-            UIBuilder.regClass('ru.stablex.ui.widgets.Box');
-            UIBuilder.regClass('ru.stablex.ui.widgets.VBox');
-            UIBuilder.regClass('ru.stablex.ui.widgets.HBox');
-            UIBuilder.regClass('ru.stablex.ui.widgets.ViewStack');
-            UIBuilder.regClass('ru.stablex.ui.widgets.Scroll');
-            UIBuilder.regClass('ru.stablex.ui.widgets.Progress');
-            UIBuilder.regClass('ru.stablex.ui.widgets.Floating');
-            UIBuilder.regClass('ru.stablex.ui.widgets.Options');
-            UIBuilder.regClass('ru.stablex.ui.widgets.TabStack');
-            UIBuilder.regClass('ru.stablex.ui.widgets.TabPage');
-            UIBuilder.regClass('ru.stablex.ui.widgets.Tip');
-            UIBuilder.regClass('ru.stablex.ui.widgets.Slider');
-            UIBuilder.regClass('ru.stablex.ui.widgets.Switch');
-            UIBuilder.regClass('ru.stablex.ui.widgets.Clock');
-            UIBuilder.regClass('ru.stablex.ui.events.WidgetEvent');
-            UIBuilder.regClass('ru.stablex.ui.events.DndEvent');
-            UIBuilder.regClass('ru.stablex.ui.events.ScrollEvent');
-            UIBuilder.regClass('ru.stablex.ui.skins.Paint');
-            UIBuilder.regClass('ru.stablex.ui.skins.Gradient');
-            UIBuilder.regClass('ru.stablex.ui.skins.Tile');
-            UIBuilder.regClass('ru.stablex.ui.skins.Slice3');
-            UIBuilder.regClass('ru.stablex.ui.skins.Slice9');
-            UIBuilder.regClass('ru.stablex.ui.skins.Layer');
-            UIBuilder.regClass('ru.stablex.ui.skins.Img');
-            UIBuilder.regClass('ru.stablex.ui.layouts.Column');
-            UIBuilder.regClass('ru.stablex.ui.layouts.Row');
-            UIBuilder.regClass('ru.stablex.ui.transitions.Fade');
-            UIBuilder.regClass('ru.stablex.ui.transitions.Slide');
-            UIBuilder.regClass('ru.stablex.ui.transitions.Scale');
-            UIBuilder.regClass('ru.stablex.ui.UIBuilder');
-            UIBuilder.regClass('ru.stablex.ui.Dnd');
-            UIBuilder.regClass('ru.stablex.TweenSprite');
-            UIBuilder.regClass('ru.stablex.Assets');
-            UIBuilder.regClass('nme.events.Event');
-            UIBuilder.regClass('nme.events.MouseEvent');
-            UIBuilder.regClass('nme.Lib');
-
-            //register default meta processors
-            UIBuilder._createCoreMeta();
+            UIBuilder._initialize();
 
             //if need to register classes for runtime xml
             if( enableRTXml ){
@@ -203,7 +136,86 @@ class UIBuilder {
         return UIBuilder._parse((defaultsXmlFile == null ? 'UIBuilder.hx' : defaultsXmlFile), code);
     }//function _init()
 
+
 #if macro
+
+    /**
+    * Register common classes, events, meta tags, etc.
+    *
+    */
+    static private function _initialize() : Void {
+        UIBuilder._initialized = true;
+
+        //registering frequently used events
+        UIBuilder.regEvent('enterFrame',  'nme.events.Event.ENTER_FRAME');
+        UIBuilder.regEvent('click',       'nme.events.MouseEvent.CLICK',                    'nme.events.MouseEvent');
+        UIBuilder.regEvent('mouseDown',   'nme.events.MouseEvent.MOUSE_DOWN',               'nme.events.MouseEvent');
+        UIBuilder.regEvent('mouseUp',     'nme.events.MouseEvent.MOUSE_UP',                 'nme.events.MouseEvent');
+        UIBuilder.regEvent('display',     'nme.events.Event.ADDED_TO_STAGE');
+        UIBuilder.regEvent('create',      'ru.stablex.ui.events.WidgetEvent.CREATE',        'ru.stablex.ui.events.WidgetEvent');
+        UIBuilder.regEvent('free',        'ru.stablex.ui.events.WidgetEvent.FREE',          'ru.stablex.ui.events.WidgetEvent');
+        UIBuilder.regEvent('resize',      'ru.stablex.ui.events.WidgetEvent.RESIZE',        'ru.stablex.ui.events.WidgetEvent');
+        UIBuilder.regEvent('change',      'ru.stablex.ui.events.WidgetEvent.CHANGE',        'ru.stablex.ui.events.WidgetEvent');
+        UIBuilder.regEvent('scrollStart', 'ru.stablex.ui.events.WidgetEvent.SCROLL_START',  'ru.stablex.ui.events.WidgetEvent');
+        UIBuilder.regEvent('scrollStop',  'ru.stablex.ui.events.WidgetEvent.SCROLL_STOP',   'ru.stablex.ui.events.WidgetEvent');
+        UIBuilder.regEvent('drag',        'ru.stablex.ui.events.DndEvent.DRAG',             'ru.stablex.ui.events.DndEvent');
+        UIBuilder.regEvent('drop',        'ru.stablex.ui.events.DndEvent.DROP',             'ru.stablex.ui.events.DndEvent');
+        UIBuilder.regEvent('receiveDrop', 'ru.stablex.ui.events.DndEvent.RECEIVE',          'ru.stablex.ui.events.DndEvent');
+        UIBuilder.regEvent('beforeScroll','ru.stablex.ui.events.ScrollEvent.BEFORE_SCROLL', 'ru.stablex.ui.events.ScrollEvent');
+
+        //registering frequently used classes
+        UIBuilder.registerClass('ru.stablex.ui.widgets.Text');
+        UIBuilder.registerClass('ru.stablex.ui.widgets.InputText');
+        UIBuilder.registerClass('ru.stablex.ui.widgets.Widget');
+        UIBuilder.registerClass('ru.stablex.ui.widgets.Bmp');
+        UIBuilder.registerClass('ru.stablex.ui.widgets.Button');
+        UIBuilder.registerClass('ru.stablex.ui.widgets.StateButton');
+        UIBuilder.registerClass('ru.stablex.ui.widgets.Toggle');
+        UIBuilder.registerClass('ru.stablex.ui.widgets.Checkbox');
+        UIBuilder.registerClass('ru.stablex.ui.widgets.Radio');
+        UIBuilder.registerClass('ru.stablex.ui.widgets.Box');
+        UIBuilder.registerClass('ru.stablex.ui.widgets.VBox');
+        UIBuilder.registerClass('ru.stablex.ui.widgets.HBox');
+        UIBuilder.registerClass('ru.stablex.ui.widgets.ViewStack');
+        UIBuilder.registerClass('ru.stablex.ui.widgets.Scroll');
+        UIBuilder.registerClass('ru.stablex.ui.widgets.Progress');
+        UIBuilder.registerClass('ru.stablex.ui.widgets.Floating');
+        UIBuilder.registerClass('ru.stablex.ui.widgets.Options');
+        UIBuilder.registerClass('ru.stablex.ui.widgets.TabStack');
+        UIBuilder.registerClass('ru.stablex.ui.widgets.TabPage');
+        UIBuilder.registerClass('ru.stablex.ui.widgets.Tip');
+        UIBuilder.registerClass('ru.stablex.ui.widgets.Slider');
+        UIBuilder.registerClass('ru.stablex.ui.widgets.Switch');
+        UIBuilder.registerClass('ru.stablex.ui.widgets.Clock');
+        UIBuilder.registerClass('ru.stablex.ui.events.WidgetEvent');
+        UIBuilder.registerClass('ru.stablex.ui.events.DndEvent');
+        UIBuilder.registerClass('ru.stablex.ui.events.ScrollEvent');
+        UIBuilder.registerClass('ru.stablex.ui.skins.Paint');
+        UIBuilder.registerClass('ru.stablex.ui.skins.Gradient');
+        UIBuilder.registerClass('ru.stablex.ui.skins.Tile');
+        UIBuilder.registerClass('ru.stablex.ui.skins.Slice3');
+        UIBuilder.registerClass('ru.stablex.ui.skins.Slice9');
+        UIBuilder.registerClass('ru.stablex.ui.skins.Layer');
+        UIBuilder.registerClass('ru.stablex.ui.skins.Img');
+        UIBuilder.registerClass('ru.stablex.ui.layouts.Column');
+        UIBuilder.registerClass('ru.stablex.ui.layouts.Row');
+        UIBuilder.registerClass('ru.stablex.ui.transitions.Fade');
+        UIBuilder.registerClass('ru.stablex.ui.transitions.Slide');
+        UIBuilder.registerClass('ru.stablex.ui.transitions.Scale');
+        UIBuilder.registerClass('ru.stablex.ui.UIBuilder');
+        UIBuilder.registerClass('ru.stablex.ui.Dnd');
+        UIBuilder.registerClass('ru.stablex.TweenSprite');
+        UIBuilder.registerClass('ru.stablex.Assets');
+        UIBuilder.registerClass('nme.events.Event');
+        UIBuilder.registerClass('nme.events.MouseEvent');
+        UIBuilder.registerClass('nme.Lib');
+
+        //register default meta processors
+        UIBuilder._createCoreMeta();
+    }//function _initialize()
+
+
+
     /**
     * Save code generated from specified file
     *
@@ -265,7 +277,7 @@ class UIBuilder {
 
     /**
     * Generates code based on Xml object.
-    *
+    * @private
     * @throw <type>String</type> if one of used in xml widgets, classes or events was not registered by .regClass() or .regEvent()
     */
     static public function construct (element:Xml, n:Int = 1, zeroElementCls:String = null, wname:String = "__ui__widget") : String{
@@ -532,6 +544,42 @@ class UIBuilder {
         return code;
     }//function _regRTXml()
 
+
+    /**
+    * Access to registered classes
+    * @private
+    */
+    static public inline function imports() : Hash<String> {
+        return UIBuilder._imports;
+    }//function imports()
+
+
+    /**
+    * Register specified class for usage in xml
+    * @private
+    */
+    static public function registerClass(fullyQualifiedName:String) : Void {
+        var cls : String;
+
+        var sc : EReg = ~/\.([a-z0-9_]+)$/i;
+        if( sc.match(fullyQualifiedName) ){
+            cls = sc.matched(1);
+        }else{
+            var sc : EReg = ~/^([a-z0-9_]+)$/i;
+            if( sc.match(fullyQualifiedName) ){
+                cls = sc.matched(1);
+            }
+        }
+
+        if( cls != null ){
+            if( UIBuilder._imports.exists(cls) ) Err.trigger('Class is already imported: ' + cls);
+            UIBuilder._imports.set(cls, fullyQualifiedName);
+
+        }else{
+            Err.trigger('Wrong class name: ' + fullyQualifiedName);
+        }
+    }//function registerClass()
+
 #end
 
     /**
@@ -590,61 +638,9 @@ class UIBuilder {
     * You still can register one of them and use another one by it's full classpath in xml
     */
     #if haxe3 macro #else @:macro #end static public function regClass (fullyQualifiedName:String) : Expr{
-        var cls : String;
-
-        var sc : EReg = ~/\.([a-z0-9_]+)$/i;
-        if( sc.match(fullyQualifiedName) ){
-            cls = sc.matched(1);
-        }else{
-            var sc : EReg = ~/^([a-z0-9_]+)$/i;
-            if( sc.match(fullyQualifiedName) ){
-                cls = sc.matched(1);
-            }
-        }
-
-        if( cls != null ){
-            if( UIBuilder._imports.exists(cls) ) Err.trigger('Class is already imported: ' + cls);
-            UIBuilder._imports.set(cls, fullyQualifiedName);
-
-        }else{
-            Err.trigger('Wrong class name: ' + fullyQualifiedName);
-        }
-
+        UIBuilder.registerClass(fullyQualifiedName);
         return Context.parse("true", Context.currentPos());
     }//function regClass()
-
-
-    /**
-    * Create class for custom widget based on xml markup
-    *
-    */
-    #if haxe3 macro #else @:macro #end static public function createClass(xmlFile:String, cls:String) : Expr {
-        var pos = Context.currentPos();
-
-        var element = Xml.parse( File.getContent(xmlFile) ).firstElement();
-        var code : String = UIBuilder.construct(element);
-        code += '\nreturn __ui__widget1;';
-        code = 'function(__ui__arguments:Dynamic = null) : ' + UIBuilder._imports.get(element.nodeName) + ' {' + code + '}';
-trace(code);
-        var e = Context.parse(code, pos);
-trace(e);
-        var pack : Array<String> = cls.split(".");
-        cls = pack.pop();
-
-        var clazz:TypeDefinition  = {
-            pos : pos,
-            fields : [],
-            params : [],
-            pack : pack,
-            name : cls,
-            meta : [  ],
-            isExtern : false,
-            kind : TDClass( { pack : ["ru", "stablex", "ui", "widgets"], name : "Widget", params :[] } ),
-        };
-        Context.defineType(clazz);
-
-        return Context.makeExpr(Void, Context.currentPos());
-    }//function createClass()
 
 
     /**
@@ -686,6 +682,17 @@ trace(e);
         return UIBuilder._parse(xmlFile, code);
     }//function regSkins()
 
+
+    /**
+    * Create class for custom widget based on xml markup
+    *
+    */
+    #if haxe3 macro #else @:macro #end static public function createClass(xmlFile:String, cls:String) : Expr {
+        if( !UIBuilder._initialized ){
+            UIBuilder._initialize();
+        }
+        return ClassBuilder.createClass(xmlFile, cls);
+    }//function createClass()
 
 #if !macro
 
@@ -791,6 +798,7 @@ trace(e);
     static inline public function applyDefaults(obj:Widget) : Void {
         var clsName : String = Type.getClassName(Type.getClass(obj));
         var widgetDefaults : Hash<Widget->Void> = UIBuilder.defaults.get( clsName.substr(clsName.lastIndexOf('.', clsName.length - 1) + 1) );
+
         if( widgetDefaults != null ){
             var defs : Array<String> = obj.defaults.split(',');
             for(i in 0...defs.length){
