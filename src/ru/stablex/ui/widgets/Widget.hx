@@ -161,7 +161,7 @@ class Widget extends TweenSprite{
     * were applied to widget and before creating children.
     * @private
     */
-    @:final public function _onInitialize() : Void {
+    public function _onInitialize() : Void {
         this.onInitialize();
         this.initialized = true;
     }//function _onInitialize()
@@ -187,8 +187,8 @@ class Widget extends TweenSprite{
         this.clearEvent(WidgetEvent.INITIAL_RESIZE);
 
         this.onCreate();
-		
-		this._predefineWidgetEvent();
+
+	this._predefineWidgetEvent();
 
         //refresh widget
         this.refresh();
@@ -205,16 +205,16 @@ class Widget extends TweenSprite{
 				this._rotationByPointChange = false;
 				this.rotateAxis(this._rotationByPoint);
 			} 
-        };
-        this.addEventListener(nme.events.Event.ADDED_TO_STAGE, displayfn);
+	};
+	this.addEventListener(nme.events.Event.ADDED_TO_STAGE, displayfn);
 		
 		var changedfn : Event->Void = function(e:Event) : Void {
 			if (this._rotationByPointChange) {
 				this._rotationByPointChange = false;
 				this.rotateAxis(this._rotationByPoint);
 			} 
-        };
-        this.addEventListener(WidgetEvent.CHANGE, changedfn);		
+	};
+	this.addEventListener(WidgetEvent.CHANGE, changedfn);		
 	}
 
 
@@ -223,8 +223,9 @@ class Widget extends TweenSprite{
     * This method is called automatically after widget was created
     * by <type>UIBuilder</type>.buildFn() or <type>UIBuilder</type>.create()
     */
-    public function onCreate() : Void {		
+    public function onCreate() : Void {
     }//function onCreate()
+
 
     /**
     * Free (destroy) widget

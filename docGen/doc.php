@@ -17,6 +17,8 @@ $urls = array(
     'default' => DOC_BASE_URL.'#http://haxe.org/api/#type#'
 );
 
+$hide = array("ru.stablex.ui.ClassBuilder");
+
 file_put_contents(
     'doc/menu.html',
     "<ul>\n"
@@ -32,6 +34,8 @@ file_put_contents(
 
 
 function generate($srcPath, $dstPath = 'doc/', $imports = array()){
+    global $hide;
+
     if( !file_exists($dstPath) ){
         mkdir($dstPath, 0777, true);
     }
@@ -57,6 +61,10 @@ function generate($srcPath, $dstPath = 'doc/', $imports = array()){
         $import = preg_replace('/\//', '.', $import);
         $import = preg_replace('/^([^a-zA-Z]*)/', '', $import);
         $import = preg_replace('/\.hx$/', '', $import);
+
+        if( in_array($import, $hide) ){
+            continue;
+        }
 
         $menu .= "<li class=\"class\"><a href=\"". url($import) ."\" class=\"class\">". basename($fname, '.hx') ."</a></li>\n";
 

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Widget w="100" h="100" defaults="'bg'">
+    <HBox name="'box'" widthPt="100" heightPt="100" childPadding="4">
+        <Button name="'btn'" text="'Yeah!'" skin:Paint-color="0x00FF55" on-click="trace('it works!');"/>
+    </HBox>
+</Widget>
