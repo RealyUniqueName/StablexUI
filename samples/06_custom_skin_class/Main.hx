@@ -7,7 +7,7 @@ import ru.stablex.ui.UIBuilder;
 
 
 /**
-* StablexUI example created in this manual: http://stablex.ru/ui/doc#manual/06_Skin_system.html
+* StablexUI example created in this manual: http://ui.stablex.ru/doc#manual/06_Skin_system.html
 * Section: `Custom skin class`
 *
 */

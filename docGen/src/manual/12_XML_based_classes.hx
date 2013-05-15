@@ -75,7 +75,7 @@ Or in xml:
 </HBox>
 </xml>
 
-Here is how it looks in <a href="http://stablex.ru/ui/demo/xmlClasses.swf" target="_blank">flash</a> and in <a href="http://stablex.ru/ui/demo/xmlClasses" target="_blank">html5</a>.
+Here is how it looks in <a href="http://ui.stablex.ru/demo/xmlClasses.swf" target="_blank">flash</a> and in <a href="http://ui.stablex.ru/demo/xmlClasses" target="_blank">html5</a>.
 Source code can be found in Github repository in <a href="https://github.com/RealyUniqueName/StablexUI/tree/master/samples/xmlClasses" target="_blank">samples/xmlClasses</a> directory.
 
 */
