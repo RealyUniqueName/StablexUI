@@ -107,75 +107,7 @@ class UIBuilder {
         code += '\nnme.Lib.current.stage.addEventListener(nme.events.Event.ENTER_FRAME, ru.stablex.ui.UIBuilder.skinQueue);';
 
         if( !UIBuilder._initialized ){
-            UIBuilder._initialized = true;
-
-            //registering frequently used events
-            UIBuilder.regEvent('enterFrame',  'nme.events.Event.ENTER_FRAME');
-            UIBuilder.regEvent('click',       'nme.events.MouseEvent.CLICK',                    'nme.events.MouseEvent');
-            UIBuilder.regEvent('mouseDown',   'nme.events.MouseEvent.MOUSE_DOWN',               'nme.events.MouseEvent');
-            UIBuilder.regEvent('mouseUp',     'nme.events.MouseEvent.MOUSE_UP',                 'nme.events.MouseEvent');
-            UIBuilder.regEvent('display',     'nme.events.Event.ADDED_TO_STAGE');
-            UIBuilder.regEvent('create',      'ru.stablex.ui.events.WidgetEvent.CREATE',        'ru.stablex.ui.events.WidgetEvent');
-            UIBuilder.regEvent('free',        'ru.stablex.ui.events.WidgetEvent.FREE',          'ru.stablex.ui.events.WidgetEvent');
-            UIBuilder.regEvent('resize',      'ru.stablex.ui.events.WidgetEvent.RESIZE',        'ru.stablex.ui.events.WidgetEvent');
-            UIBuilder.regEvent('change',      'ru.stablex.ui.events.WidgetEvent.CHANGE',        'ru.stablex.ui.events.WidgetEvent');
-            UIBuilder.regEvent('scrollStart', 'ru.stablex.ui.events.WidgetEvent.SCROLL_START',  'ru.stablex.ui.events.WidgetEvent');
-            UIBuilder.regEvent('scrollStop',  'ru.stablex.ui.events.WidgetEvent.SCROLL_STOP',   'ru.stablex.ui.events.WidgetEvent');
-            UIBuilder.regEvent('drag',        'ru.stablex.ui.events.DndEvent.DRAG',             'ru.stablex.ui.events.DndEvent');
-            UIBuilder.regEvent('drop',        'ru.stablex.ui.events.DndEvent.DROP',             'ru.stablex.ui.events.DndEvent');
-            UIBuilder.regEvent('receiveDrop', 'ru.stablex.ui.events.DndEvent.RECEIVE',          'ru.stablex.ui.events.DndEvent');
-            UIBuilder.regEvent('beforeScroll','ru.stablex.ui.events.ScrollEvent.BEFORE_SCROLL', 'ru.stablex.ui.events.ScrollEvent');
-
-            //registering frequently used classes
-            UIBuilder.regClass('ru.stablex.ui.widgets.Text');
-            UIBuilder.regClass('ru.stablex.ui.widgets.InputText');
-            UIBuilder.regClass('ru.stablex.ui.widgets.Widget');
-            UIBuilder.regClass('ru.stablex.ui.widgets.Bmp');
-            UIBuilder.regClass('ru.stablex.ui.widgets.Button');
-            UIBuilder.regClass('ru.stablex.ui.widgets.StateButton');
-            UIBuilder.regClass('ru.stablex.ui.widgets.Toggle');
-            UIBuilder.regClass('ru.stablex.ui.widgets.Checkbox');
-            UIBuilder.regClass('ru.stablex.ui.widgets.Radio');
-            UIBuilder.regClass('ru.stablex.ui.widgets.Box');
-            UIBuilder.regClass('ru.stablex.ui.widgets.VBox');
-            UIBuilder.regClass('ru.stablex.ui.widgets.HBox');
-            UIBuilder.regClass('ru.stablex.ui.widgets.ViewStack');
-            UIBuilder.regClass('ru.stablex.ui.widgets.Scroll');
-            UIBuilder.regClass('ru.stablex.ui.widgets.Progress');
-            UIBuilder.regClass('ru.stablex.ui.widgets.Floating');
-            UIBuilder.regClass('ru.stablex.ui.widgets.Options');
-            UIBuilder.regClass('ru.stablex.ui.widgets.TabStack');
-            UIBuilder.regClass('ru.stablex.ui.widgets.TabPage');
-            UIBuilder.regClass('ru.stablex.ui.widgets.Tip');
-            UIBuilder.regClass('ru.stablex.ui.widgets.Slider');
-            UIBuilder.regClass('ru.stablex.ui.widgets.Switch');
-            UIBuilder.regClass('ru.stablex.ui.widgets.Clock');
-            UIBuilder.regClass('ru.stablex.ui.widgets.ClockWatch');
-            UIBuilder.regClass('ru.stablex.ui.events.WidgetEvent');
-            UIBuilder.regClass('ru.stablex.ui.events.DndEvent');
-            UIBuilder.regClass('ru.stablex.ui.events.ScrollEvent');
-            UIBuilder.regClass('ru.stablex.ui.skins.Paint');
-            UIBuilder.regClass('ru.stablex.ui.skins.Gradient');
-            UIBuilder.regClass('ru.stablex.ui.skins.Tile');
-            UIBuilder.regClass('ru.stablex.ui.skins.Slice3');
-            UIBuilder.regClass('ru.stablex.ui.skins.Slice9');
-            UIBuilder.regClass('ru.stablex.ui.skins.Layer');
-            UIBuilder.regClass('ru.stablex.ui.skins.Img');
-            UIBuilder.regClass('ru.stablex.ui.layouts.Column');
-            UIBuilder.regClass('ru.stablex.ui.layouts.Row');
-            UIBuilder.regClass('ru.stablex.ui.transitions.Fade');
-            UIBuilder.regClass('ru.stablex.ui.transitions.Slide');
-            UIBuilder.regClass('ru.stablex.ui.transitions.Scale');
-            UIBuilder.regClass('ru.stablex.ui.UIBuilder');
-            UIBuilder.regClass('ru.stablex.ui.Dnd');
-            UIBuilder.regClass('ru.stablex.TweenSprite');
-            UIBuilder.regClass('ru.stablex.Assets');
-            UIBuilder.regClass('nme.events.Event');
-            UIBuilder.regClass('nme.events.MouseEvent');
-            UIBuilder.regClass('nme.Lib');
-
-            //register default meta processors
-            UIBuilder._createCoreMeta();
+            UIBuilder._initialize();
 
             //if need to register classes for runtime xml
             if( enableRTXml ){

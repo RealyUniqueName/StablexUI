@@ -113,8 +113,8 @@ class Widget extends TweenSprite{
     private var _yRotationOffsetPercent                                          : Float = 0;
 
     public var rotationByPoint(get_rotationByPoint, set_rotationByPoint):Float;
-	private var _rotationByPoint: Float = 0;
-	private var _rotationByPointChange: Bool = false;
+    private var _rotationByPoint: Float = 0;
+    private var _rotationByPointChange: Bool = false;
 
     //Skin processor (see ru.stablex.ui.skins package)
     public var skin : Skin;
