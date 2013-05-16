@@ -26,6 +26,7 @@ class InputText extends Text{
                 this.label.type = browser.text.TextFieldType.INPUT;
                 Reflect.field(this.label, 'nmeGraphics').nmeSurface.style.width = this.label.width + "px";
                 Reflect.field(this.label, 'nmeGraphics').nmeSurface.style.height = this.label.height + "px";
+                Reflect.field(this.label, 'nmeGraphics').nmeSurface.style.overflow = "hidden";
             });
         #end
 
