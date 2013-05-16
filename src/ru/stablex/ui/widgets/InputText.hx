@@ -24,6 +24,8 @@ class InputText extends Text{
             //due to strange bug we need this hack
             this.addEventListener(Event.ADDED_TO_STAGE, function(e:Event){
                 this.label.type = browser.text.TextFieldType.INPUT;
+                Reflect.field(this.label, 'nmeGraphics').nmeSurface.style.width = this.label.width + "px";
+                Reflect.field(this.label, 'nmeGraphics').nmeSurface.style.height = this.label.height + "px";
             });
         #end
 
@@ -41,6 +43,11 @@ class InputText extends Text{
         this.label.height = this.h - this.paddingTop - this.paddingBottom;
 
         super.refresh();
+
+        #if html5
+            Reflect.field(this.label, 'nmeGraphics').nmeSurface.style.width = this.label.width + "px";
+            Reflect.field(this.label, 'nmeGraphics').nmeSurface.style.height = this.label.height + "px";
+        #end
     }//function refresh()
 
 #if html5
