@@ -90,7 +90,7 @@ class Main extends nme.display.Sprite{
 }//class Main
 </haxe>
 
-See it in action: <a href="/ui/demo/05_custom_widget.swf" target="_blank">flash</a> or <a href="/ui/demo/05_custom_widget" target="_blank">html5</a>.
+See it in action: <a href="/demo/05_custom_widget.swf" target="_blank">flash</a> or <a href="/demo/05_custom_widget" target="_blank">html5</a>.
 You can find sample source code in samples/05_custom_widget on <a href="https://github.com/RealyUniqueName/StablexUI" target="_blank">GitHub</a>.
 
 */

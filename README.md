@@ -4,22 +4,22 @@ StablexUI
 Macro driven ui engine for Haxe NME. It's designed to give developer as much freedom as possible in customizing UI.
 Supported targets: cpp (iOS, Android, Blackberry, webOS, Windows, Linux, MacOS), flash, html5, neko.
 
-Online docs for API and basic features: http://stablex.ru/ui/doc
+Online docs for API and basic features: http://ui.stablex.ru/doc
 
 Demo with android-4.x-like theme (written completely in xml):
-* flash: http://stablex.ru/ui/demo/demo_flash/
-* html5: http://stablex.ru/ui/demo/demo_html5/
+* flash: http://ui.stablex.ru/demo/demo_flash/
+* html5: http://ui.stablex.ru/demo/demo_html5/
 
 Games prototypes:
 * Coder: all objects in this game are StablexUI widgets - play on [newgrounds](http://www.newgrounds.com/portal/view/616444); [sources](https://github.com/RealyUniqueName/LD26-Coder)
 * The Tale of Ladybird: all objects in this game are StablexUI widgets - http://stablex.ru/ladybird
-* Untwist: simple game with simple ui and screen transitions - http://stablex.ru/ui/demo/untwist/
+* Untwist: simple game with simple ui and screen transitions - http://ui.stablex.ru/demo/untwist/
 
 Another example:
-* flash: http://stablex.ru/ui/demo/handlers.swf
-* html5: http://stablex.ru/ui/demo/handlers/
+* flash: http://ui.stablex.ru/demo/handlers.swf
+* html5: http://ui.stablex.ru/demo/handlers/
 
-More simple demoes: http://stablex.ru/ui/demo
+More simple demoes: http://ui.stablex.ru/demo
 
 
 Features:
@@ -41,7 +41,7 @@ Features:
 * Flexible layout system (including custom layouts);
 * Don't worry about forgotten eventListeners. Just use widget.free() method to let GC destroy the object;
 * Ability to create custom classes for skinning, transitions, tooltips, etc;
-* There is more! Some features are described in docs: http://stablex.ru/ui/doc;
+* There is more! Some features are described in docs: http://ui.stablex.ru/doc;
 
 
 Implemented widgets:

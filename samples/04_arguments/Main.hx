@@ -7,7 +7,7 @@ import ru.stablex.ui.UIBuilder;
 
 
 /**
-* StablexUI example created in this manual: http://stablex.ru/ui/doc#manual/04_Advanced_XML.html
+* StablexUI example created in this manual: http://ui.stablex.ru/doc#manual/04_Advanced_XML.html
 * Section: Xml arguments (`@someArg` placeholder)
 *
 */

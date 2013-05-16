@@ -7,7 +7,7 @@ Here are properties to set widget area:
     .h        - set widget height in pixels;
     .widhtPt  - set widget width in % of parent's width (works only if parent is a widget too);
     .heightPt - set widget height in % of parent's height (works only if parent is a widget too).
-Play with following demo in <a href="/ui/demo/03_size.swf" target="_blank">flash</a> or in <a href="/ui/demo/03_size" target="_blank">html5</a> to understand sizing.
+Play with following demo in <a href="/demo/03_size.swf" target="_blank">flash</a> or in <a href="/demo/03_size" target="_blank">html5</a> to understand sizing.
 You can find full source of this demo on <a href="https://github.com/RealyUniqueName/StablexUI" target="_blank">GitHub</a> in samples/03_size/
 */
 
@@ -27,6 +27,6 @@ If .parent is a widget, following properties will also work:
     .rightPt  - set position by right border in % of parent's width;
     .topPt    - set position by top border in % of parent's height;
     .bottomPt - set position by bottom border in % of parent's height.
-Play with following demo in <a href="/ui/demo/03_position.swf" target="_blank">flash</a> or in <a href="/ui/demo/03_position" target="_blank">html5</a> to understand positioning.
+Play with following demo in <a href="/demo/03_position.swf" target="_blank">flash</a> or in <a href="/demo/03_position" target="_blank">html5</a> to understand positioning.
 You can find full source of this demo on <a href="https://github.com/RealyUniqueName/StablexUI" target="_blank">GitHub</a> in samples/03_position/
 */

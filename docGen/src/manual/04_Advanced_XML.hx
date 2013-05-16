@@ -364,7 +364,7 @@ import nme.Lib;
 import ru.stablex.ui.UIBuilder;
 
 /**
-* StablexUI example created in this manual: http://stablex.ru/ui/doc#manual/04_Advanced_XML.html
+* StablexUI example created in this manual: http://ui.stablex.ru/doc#manual/04_Advanced_XML.html
 * Section: Xml arguments (`@someArg` placeholder)
 *
 */
@@ -386,6 +386,6 @@ class Main extends nme.display.Sprite{
 }//class Main
 </haxe>
 
-Build project or try <a href="/ui/demo/04_alert.swf" target="_blank">flash</a> version or <a href="/ui/demo/04_alert" target="_blank">html5</a>.
+Build project or try <a href="/demo/04_alert.swf" target="_blank">flash</a> version or <a href="/demo/04_alert" target="_blank">html5</a>.
 Full sample code is included in samples/04_arguments on <a href="https://github.com/RealyUniqueName/StablexUI" target="_blank">GitHub</a>.
 */

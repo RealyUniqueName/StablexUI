@@ -8,7 +8,7 @@
 
 define('SRC_ROOT', '../src/');
 define('DOC_ROOT', 'src/');
-define('DOC_BASE_URL', '/ui/doc/');
+define('DOC_BASE_URL', '/doc/');
 
 $urls = array(
     'manual'  => DOC_BASE_URL.'##type#.html',

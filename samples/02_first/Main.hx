@@ -5,7 +5,7 @@ import ru.stablex.ui.UIBuilder;
 
 
 /**
-* StablexUI example created in this manual: http://stablex.ru/ui/doc#manual/02_Basics.html
+* StablexUI example created in this manual: http://ui.stablex.ru/doc#manual/02_Basics.html
 */
 class Main extends nme.display.Sprite{
 

@@ -34,7 +34,7 @@ nme.Lib.current.addChild( ru.stablex.ui.UIBuilder.buildFn('first.xml')() );
 </haxe>
 
 Don't forget empty parentheses after 'first.xml'. That's all! You've just created your first UI :)
-Build your project to any target or see result in <a href="/ui/demo/02_first.swf" target="_blank">flash</a> or in <a href="/ui/demo/02_first" target="_blank">html5</a>.
+Build your project to any target or see result in <a href="/demo/02_first.swf" target="_blank">flash</a> or in <a href="/demo/02_first" target="_blank">html5</a>.
 Full project code is included in samples on <a href="https://github.com/RealyUniqueName/StablexUI" target="_blank">GitHub</a>.
 */
 
@@ -95,7 +95,7 @@ Lets modify above sample. Place that text field to another widget:
 </xml>
 
 Now text field will be positioned in root widget's system of axes. Build project to see how it
-looks or look at <a href="/ui/demo/02_nested.swf" target="_blank">flash</a> or at <a href="/ui/demo/02_nested" target="_blank">html5</a>
+looks or look at <a href="/demo/02_nested.swf" target="_blank">flash</a> or at <a href="/demo/02_nested" target="_blank">html5</a>
 You can create nested widgets indefinite levels deep.
 */
 

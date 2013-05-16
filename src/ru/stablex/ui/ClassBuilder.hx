@@ -79,7 +79,7 @@ class ClassBuilder {
         //register class
         UIBuilder.registerClass(cls);
 
-        return Context.makeExpr(Void, Context.currentPos());
+        return Context.makeExpr(true, Context.currentPos());
     }//function createClass()
 
 
