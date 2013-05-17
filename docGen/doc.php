@@ -260,7 +260,7 @@ function url($classpath){
     $url = implode('/', $parts);
 
     #hack for actuate
-    if( strpos($classpath, 'com.eclecticdesignstudio.motion') !== false ){
+    if( strpos($classpath, 'motion') !== false ){
         $url = DOC_BASE_URL.'#http://haxe.org/com/libs/actuate';
 
     }elseif( isset($urls[ $parts[0] ]) ){
