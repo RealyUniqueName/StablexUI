@@ -6,7 +6,7 @@ import nme.geom.Point;
 import nme.Lib;
 import ru.stablex.ui.events.DndEvent;
 import ru.stablex.ui.widgets.Widget;
-import com.eclecticdesignstudio.motion.actuators.GenericActuator;
+import motion.actuators.GenericActuator;
 
 
 /**

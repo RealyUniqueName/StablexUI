@@ -3,7 +3,7 @@ package ru.stablex.ui.transitions;
 import nme.display.DisplayObject;
 import ru.stablex.ui.widgets.Widget;
 import ru.stablex.ui.widgets.ViewStack;
-import com.eclecticdesignstudio.motion.Actuate;
+import motion.Actuate;
 
 
 /**
