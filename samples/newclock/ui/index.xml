@@ -1,0 +1,9 @@
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+<HBox skin:Paint-color="0xFF0000" w="800" h="600" childPadding="20">
+
+    <!-- use generated widget class as usual -->
+    <ClockDial />
+
+</HBox>

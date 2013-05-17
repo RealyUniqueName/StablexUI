@@ -188,7 +188,7 @@ class Widget extends TweenSprite{
 
         this.onCreate();
 
-	this._predefineWidgetEvent();
+		this._predefineWidgetEvent();
 
         //refresh widget
         this.refresh();
@@ -205,16 +205,16 @@ class Widget extends TweenSprite{
 				this._rotationByPointChange = false;
 				this.rotateAxis(this._rotationByPoint);
 			} 
-	};
-	this.addEventListener(nme.events.Event.ADDED_TO_STAGE, displayfn);
+		};
+		this.addEventListener(nme.events.Event.ADDED_TO_STAGE, displayfn);
 		
 		var changedfn : Event->Void = function(e:Event) : Void {
 			if (this._rotationByPointChange) {
 				this._rotationByPointChange = false;
 				this.rotateAxis(this._rotationByPoint);
 			} 
-	};
-	this.addEventListener(WidgetEvent.CHANGE, changedfn);		
+		};
+		this.addEventListener(WidgetEvent.CHANGE, changedfn);		
 	}
 
 
