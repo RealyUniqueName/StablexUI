@@ -27,6 +27,11 @@ class InputText extends Text{
                 Reflect.field(this.label, 'nmeGraphics').nmeSurface.style.width = this.label.width + "px";
                 Reflect.field(this.label, 'nmeGraphics').nmeSurface.style.height = this.label.height + "px";
                 Reflect.field(this.label, 'nmeGraphics').nmeSurface.style.overflow = "hidden";
+                if( this.label.wordWrap ){
+                    Reflect.field(this.label, 'nmeGraphics').nmeSurface.style.whiteSpace = "normal";
+                }else{
+                    Reflect.field(this.label, 'nmeGraphics').nmeSurface.style.whiteSpace = "nowrap";
+                }
             });
         #end
 
@@ -48,6 +53,11 @@ class InputText extends Text{
         #if html5
             Reflect.field(this.label, 'nmeGraphics').nmeSurface.style.width = this.label.width + "px";
             Reflect.field(this.label, 'nmeGraphics').nmeSurface.style.height = this.label.height + "px";
+            if( this.label.wordWrap ){
+                Reflect.field(this.label, 'nmeGraphics').nmeSurface.style.whiteSpace = "normal";
+            }else{
+                Reflect.field(this.label, 'nmeGraphics').nmeSurface.style.whiteSpace = "nowrap";
+            }
         #end
     }//function refresh()
 
