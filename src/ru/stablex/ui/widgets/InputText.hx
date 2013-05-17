@@ -24,8 +24,8 @@ class InputText extends Text{
             //due to strange bug we need this hack
             this.addEventListener(Event.ADDED_TO_STAGE, function(e:Event){
                 this.label.type = browser.text.TextFieldType.INPUT;
-                Reflect.field(this.label, 'nmeGraphics').nmeSurface.style.width = this.label.width + "px";
-                Reflect.field(this.label, 'nmeGraphics').nmeSurface.style.height = this.label.height + "px";
+                Reflect.field(this.label, 'nmeGraphics').nmeSurface.style.width = this.w + "px";
+                Reflect.field(this.label, 'nmeGraphics').nmeSurface.style.height = this.h + "px";
                 Reflect.field(this.label, 'nmeGraphics').nmeSurface.style.overflow = "hidden";
                 if( this.label.wordWrap ){
                     Reflect.field(this.label, 'nmeGraphics').nmeSurface.style.whiteSpace = "normal";
@@ -51,8 +51,8 @@ class InputText extends Text{
         super.refresh();
 
         #if html5
-            Reflect.field(this.label, 'nmeGraphics').nmeSurface.style.width = this.label.width + "px";
-            Reflect.field(this.label, 'nmeGraphics').nmeSurface.style.height = this.label.height + "px";
+            Reflect.field(this.label, 'nmeGraphics').nmeSurface.style.width = this.w + "px";
+            Reflect.field(this.label, 'nmeGraphics').nmeSurface.style.height = this.h + "px";
             if( this.label.wordWrap ){
                 Reflect.field(this.label, 'nmeGraphics').nmeSurface.style.whiteSpace = "normal";
             }else{
