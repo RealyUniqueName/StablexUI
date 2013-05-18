@@ -8,7 +8,8 @@ import ru.stablex.ui.events.WidgetEvent;
 import ru.stablex.ui.layouts.Layout;
 import ru.stablex.ui.UIBuilder;
 import ru.stablex.ui.skins.Skin;
-
+import nme.geom.Point;
+import nme.events.Event;
 
 /**
 * Basic widget
@@ -95,6 +96,26 @@ class Widget extends TweenSprite{
     private var _bottom                       : Float = 0;
     private var _bottomPercent                : Float = 0;
 
+    // x,y Rotation Offset
+    public var wOrgSize (get_wOrgSize,set_wOrgSize)         			 : Float;
+    public var hOrgSize (get_hOrgSize,set_hOrgSize)         			 : Float;
+    private var _wOrgSize                                                        : Float = 0;
+    private var _hOrgSize                                                        : Float = 0;
+    public var useOrgSize                               			 			 : Bool = false;
+
+    public var xRotationOffset (get_xRotationOffset,set_xRotationOffset)         : Float;
+    public var xRotationOffsetPt (get_xRotationOffsetPt,set_xRotationOffsetPt)   : Float;
+    private var _xRotationOffset                                                 : Float = 0;
+    private var _xRotationOffsetPercent                                          : Float = 0;
+    public var yRotationOffset (get_yRotationOffset,set_yRotationOffset)         : Float;
+    public var yRotationOffsetPt (get_yRotationOffsetPt,set_yRotationOffsetPt)   : Float;
+    private var _yRotationOffset                                                 : Float = 0;
+    private var _yRotationOffsetPercent                                          : Float = 0;
+
+    public var rotationByPoint(get_rotationByPoint, set_rotationByPoint):Float;
+    private var _rotationByPoint: Float = 0;
+    private var _rotationByPointChange: Bool = false;
+
     //Skin processor (see ru.stablex.ui.skins package)
     public var skin : Skin;
     /**
@@ -167,13 +188,34 @@ class Widget extends TweenSprite{
 
         this.onCreate();
 
+		this._predefineWidgetEvent();
+
         //refresh widget
         this.refresh();
 
         this.created = true;
-
+		
         this.dispatchEvent(new WidgetEvent(WidgetEvent.CREATE));
     }//function _onCreate()
+	
+	
+	private function _predefineWidgetEvent () : Void {
+		var displayfn : Event->Void = function(e:Event) : Void {
+			if (this._rotationByPointChange) {
+				this._rotationByPointChange = false;
+				this.rotateAxis(this._rotationByPoint);
+			} 
+		};
+		this.addEventListener(nme.events.Event.ADDED_TO_STAGE, displayfn);
+		
+		var changedfn : Event->Void = function(e:Event) : Void {
+			if (this._rotationByPointChange) {
+				this._rotationByPointChange = false;
+				this.rotateAxis(this._rotationByPoint);
+			} 
+		};
+		this.addEventListener(WidgetEvent.CHANGE, changedfn);		
+	}
 
 
     /**
@@ -930,6 +972,183 @@ class Widget extends TweenSprite{
         }
     }//function get_heightPt()
 
+    /**
+    * wOrgSize percent setter
+    *
+    */
+    private function set_wOrgSize(w:Float) : Float {
+		this._wOrgSize = w;
+		this.useOrgSize = (( this._wOrgSize != 0 ) || ( this._hOrgSize != 0 ));
+        return w;
+    }//function set_wOrgSize()
+
+    /**
+    * wOrgSize percent getter
+    *
+    */
+    private function get_wOrgSize() : Float {
+        return this._wOrgSize;
+    }//function get_wOrgSize()
+
+    /**
+    * hOrgSize percent setter
+    *
+    */
+    private function set_hOrgSize(h:Float) : Float {
+		this._hOrgSize = h;
+		this.useOrgSize = (( this._wOrgSize != 0 ) || ( this._hOrgSize != 0 ));
+        return h;
+    }//function set_hOrgSize()
+
+    /**
+    * hOrgSize percent getter
+    *
+    */
+    private function get_hOrgSize() : Float {
+        return this._hOrgSize;
+    }//function get_hOrgSize()
+
+    /**
+    * xRotationOffset percent setter
+    *
+    */
+    private function set_xRotationOffset(x:Float) : Float {
+		var osize:Float = 0;
+        if (this.useOrgSize && this._wOrgSize!=0 ){
+			osize = this._wOrgSize;
+        } else {
+			osize = this.w;
+        }
+        //trace("aaa:"+this._width);
+        //if (osize != 0)
+        //{
+		//trace("set_xRotationOffset:" + x);
+		//trace("_rotationByPoint:" + this._rotationByPoint);
+			this._xRotationOffset = x;
+			this._xRotationOffsetPercent = x / osize;
+			this._rotationByPointChange = true;
+			this.set_rotationByPoint(this._rotationByPoint);
+        //}
+        return this._xRotationOffset;
+    }//function set_xRotationOffset()
+
+    /**
+    * xRotationOffset percent getter
+    *
+    */
+    private function get_xRotationOffset() : Float {
+        return this._xRotationOffset;
+    }//function get_xRotationOffset()
+
+    /**
+    * xRotationOffsetPt percent setter
+    *
+    */
+    private function set_xRotationOffsetPt(xp:Float) : Float {
+	var osize:Float = 0;
+        if (this.useOrgSize && this._wOrgSize!=0 ){
+			osize = this._wOrgSize;
+        } else {
+			osize = this.w;
+        }
+		this._xRotationOffsetPercent = xp;
+		this.xRotationOffset = osize*xp;
+        return this._xRotationOffsetPercent;
+    }//function set_xRotationOffsetPt()
+
+    /**
+    * xRotationOffsetPt percent getter
+    *
+    */
+    private function get_xRotationOffsetPt() : Float {
+        return this._xRotationOffsetPercent;
+    }//function get_xRotationOffsetPt()
+
+    /**
+    * yRotationOffset percent setter
+    *
+    */
+    private function set_yRotationOffset(y:Float) : Float {
+	var osize:Float = 0;
+        if (this.useOrgSize && this._hOrgSize!=0 ){
+			osize = this._hOrgSize;
+        } else {
+			osize = this.h;
+        }
+        //if (osize != 0)
+        //{
+		
+			this._yRotationOffset = y;
+			this._yRotationOffsetPercent = y / osize;
+			this._rotationByPointChange = true;
+			this.set_rotationByPoint(this._rotationByPoint);
+			
+        //}
+        return this._yRotationOffset;
+    }//function set_yRotationOffset()
+
+    /**
+    * yRotationOffset percent getter
+    *
+    */
+    private function get_yRotationOffset() : Float {
+        return this._yRotationOffset;
+    }//function get_yRotationOffset()
+
+    /**
+    * yRotationOffsetPt percent setter
+    *
+    */
+    private function set_yRotationOffsetPt(yp:Float) : Float {
+	var osize:Float = 0;
+        if (this.useOrgSize && this._hOrgSize!=0 ){
+			osize = this._hOrgSize;
+        } else {
+			osize = this.h;
+        }
+		this._yRotationOffsetPercent = yp;
+		this.yRotationOffset = osize*yp;
+        return this._yRotationOffsetPercent;
+    }//function set_yRotationOffsetPt()
+
+    /**
+    * yRotationOffsetPt percent getter
+    *
+    */
+    private function get_yRotationOffsetPt() : Float {
+        return this._yRotationOffsetPercent;
+    }//function get_yRotationOffsetPt()
+
+    private function set_rotationByPoint(r:Float):Float {        
+		if (this._rotationByPoint != r) {
+			this._rotationByPointChange = true;
+			this._rotationByPoint = r;
+		}
+		this.dispatchEvent(new WidgetEvent(WidgetEvent.CHANGE));
+        return this._rotationByPoint;
+    }
+    
+    private function get_rotationByPoint():Float { 
+        return this._rotationByPoint;
+    }
+
+	public function rotateAxis(r:Float) : Void {
+		var lp:Point = new Point(this._xRotationOffset,this._yRotationOffset);
+		var ps:Point = this.localToGlobal(lp);
+		
+		this.rotation = r;
+		var pe:Point = this.localToGlobal(lp);
+		this.x-=pe.x-ps.x;
+		this.y-=pe.y-ps.y;
+
+		/*
+		trace("w:"+this.w);
+		trace("h:"+this.h);
+		trace("rotation:"+this.rotation);
+		trace("xRotationOffset:"+this.xRotationOffset);
+		trace("yRotationOffset:"+this.yRotationOffset);
+		*/
+	}
 
     /**
     * Id setter

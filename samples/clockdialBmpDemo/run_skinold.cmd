@@ -1,0 +1,1 @@
+nme test build_old.nmml neko
