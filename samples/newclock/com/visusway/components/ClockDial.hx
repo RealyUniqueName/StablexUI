@@ -12,9 +12,9 @@ import nme.events.Event;
 class ClockDial extends ClockDialBase {
 	
 	//current amount of day
-    public var dateValue (default,set_datevalue) : String = "";	
+    public var dateValue (default,set_dateValue) : String = "";	
     //current amount of seconds
-    public var timeValue (default,set_timevalue) : Int = 0;
+    public var timeValue (default,set_timeValue) : Int = 0;
 
     //timer object
     private var _timer : Timer;
@@ -158,7 +158,7 @@ class ClockDial extends ClockDialBase {
 *   GETTERS / SETTERS
 *******************************************************************************/
 
-	private function set_datevalue(dateValue:String) : String {
+	private function set_dateValue(dateValue:String) : String {
 		this.dateValue = dateValue;
 		return dateValue;
 	}
@@ -167,7 +167,7 @@ class ClockDial extends ClockDialBase {
     * Setter timevalue
     *
     */
-    private function set_timevalue(timeValue:Int) : Int {
+    private function set_timeValue(timeValue:Int) : Int {
         if( timeValue < 0 ) timeValue = 0;
 
 		if (this.timeValue != timeValue)
