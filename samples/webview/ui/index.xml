@@ -1,0 +1,14 @@
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+<VBox skin:Paint-color="0xFF0000" w="800" h="900" childPadding="20">
+	<Button id="'simpleButton'" text="'Simple'" h="60" on-click="
+                #WebView(webview).w = Math.random()*800 ;
+				#WebView(webview).h = Math.random()*800 ;
+                #WebView(webview2).url = 'assets/font.html';
+    "/>
+	<HBox skin:Paint-color="0xFF0088" w="800" h="800" childPadding="10">
+		<WebView id="'webview'" w="360" h="360" url="'assets/divcssdemo.html'" />
+	    <WebView id="'webview2'" w="360" h="360" />
+	</HBox>
+</VBox>

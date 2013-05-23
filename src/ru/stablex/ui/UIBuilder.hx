@@ -188,7 +188,7 @@ class UIBuilder {
         UIBuilder.registerClass('ru.stablex.ui.widgets.Switch');
         UIBuilder.registerClass('ru.stablex.ui.widgets.Clock');
         UIBuilder.registerClass('ru.stablex.ui.widgets.RotateWidget');
-        //UIBuilder.registerClass('ru.stablex.ui.widgets.WebView');
+        UIBuilder.registerClass('ru.stablex.ui.widgets.WebView');
         UIBuilder.registerClass('ru.stablex.ui.events.WidgetEvent');
         UIBuilder.registerClass('ru.stablex.ui.events.DndEvent');
         UIBuilder.registerClass('ru.stablex.ui.events.ScrollEvent');
