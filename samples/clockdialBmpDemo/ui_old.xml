@@ -2,32 +2,34 @@
 
 <Box skin:Paint-color="0xFFFFFF" w="$Lib.current.stage.stageWidth" h="$Lib.current.stage.stageHeight" padding="50" childPadding="30">
     <Bmp id="'dial'" src="'assets/old/256/clock_dial.png'" w="256" h="256">
-		<!-- neko has err,flash,cpp,ok
-		<Bmp id="'hur'" src="'assets/256/hour_hand.png'" w="18" h="67" x="(#dial.w+2-$this.w)/2" y="#dial.h/2-$this.h+4" xRotationOffset="$this.w/2" yRotationOffset="$this.h-$this.w/2" rotationByPoint="45" />
-		<Bmp id="'min'" src="'assets/256/minute_hand.png'" w="18" h="67" x="(#dial.w+2-$this.w)/2" y="#dial.h/2-$this.h+4" />
-		<Bmp id="'sec'" src="'assets/256/second_hand.png'" w="18" h="67" x="(#dial.w+2-$this.w)/2" y="#dial.h/2-$this.h+4" />
-		-->
-		<!-- neko,flash,cpp,ok -->
-		<Bmp id="'hur'" src="'assets/old/256/hour_hand.png'" w="18" h="67" on-display="
+		<RotateWidget id="'hur'" w="18" h="67" on-display="
 			$this.x=(#dial.w+2-$this.w)/2;
 			$this.y=#dial.h/2-$this.h+4;
-			$this.xRotationOffset=$this.w/2;
-			$this.yRotationOffset=$this.h-10/2;
-			$this.rotationByPoint=90;
-		" />
-		<Bmp id="'min'" src="'assets/old/256/minute_hand.png'" w="18" h="67" on-display="
+			$this.xAxis=$this.w/2;
+			$this.yAxis=$this.h-10/2;
+			$this.rotateAxis=45;
+		">
+			<Bmp src="'assets/old/256/hour_hand.png'" w="18" h="67" />
+		</RotateWidget>
+		
+		<RotateWidget id="'min'" w="18" h="67" on-display="
 			$this.x=(#dial.w+2-$this.w)/2;
 			$this.y=#dial.h/2-$this.h+4;
-			$this.xRotationOffset=$this.w/2;
-			$this.yRotationOffset=$this.h-10/2;
-			$this.rotationByPoint=45;
-		" />
-		<Bmp id="'sec'" src="'assets/old/256/second_hand.png'" w="18" h="67" on-display="
+			$this.xAxis=$this.w/2;
+			$this.yAxis=$this.h-10/2;
+			$this.rotateAxis=90;
+		">
+			<Bmp src="'assets/old/256/minute_hand.png'" w="18" h="67"/>
+		</RotateWidget>
+		<RotateWidget id="'sec'" w="18" h="67" on-display="
 			$this.x=(#dial.w+2-$this.w)/2;
 			$this.y=#dial.h/2-$this.h+4;
-			$this.xRotationOffset=$this.w/2;
-			$this.yRotationOffset=$this.h-10/2;
-			$this.rotationByPoint=145;
-		" />
+			$this.xAxis=$this.w/2;
+			$this.yAxis=$this.h-10/2;
+			$this.rotateAxis=190;
+		">
+			<Bmp src="'assets/old/256/second_hand.png'" w="18" h="67"/>
+		</RotateWidget>
+
 	</Bmp>
 </HBox>

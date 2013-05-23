@@ -106,36 +106,37 @@ class ClockDial extends ClockDialBase {
 		this.day = this._date.getDay();
 		this.hours = this._date.getHours();
 		this.minutes = this._date.getMinutes();
-		this.seconds = this._date.getSeconds();		
+		this.seconds = this._date.getSeconds();
+		
 	}
 	
 	private function _setClockHand() : Void {
 		
 		if (this.useHourGrid)
-			this.hur.rotationByPoint = ((this.hours % 12) * (360 / 12));
+			this.hur.rotateAxis = ((this.hours % 12) * (360 / 12));
 		else 
-			this.hur.rotationByPoint = (((this.hours % 12) + (this.minutes / 60)) * (360 / 12));
+			this.hur.rotateAxis = (((this.hours % 12) + (this.minutes / 60)) * (360 / 12));
 		
 		if (this.useMinuteGrid)
-			this.min.rotationByPoint = (this.minutes * (360 / 60));
+			this.min.rotateAxis = (this.minutes * (360 / 60));
 		else 
-			this.min.rotationByPoint = ((this.minutes + (this.seconds / 60)) * (360 / 60));
+			this.min.rotateAxis = ((this.minutes + (this.seconds / 60)) * (360 / 60));
 		
 		if (!this.useSecondGrid)
-			this.sec.rotationByPoint = (this.seconds * (360 / 60));
+			this.sec.rotateAxis = (this.seconds * (360 / 60));
 		else {
 			var secRot:Float = 0;
 			this.sec.tweenStop("rotationByPoint", true, true);
 			var finish : Void->Void = function() : Void {
 				if (this.seconds == 0) 
-					this.sec.rotationByPoint = 0;
+					this.sec.rotateAxis = 0;
 			};			
 			if (this.seconds == 0) {	
 				secRot = ( 60 * (360 / 60));
 			}else {
 				secRot = (this.seconds * (360 / 60));
 			}
-			this.sec.tween(0.8, { rotationByPoint:secRot }, this.setSecondHandStyle ).onComplete(finish);
+			this.sec.tween(0.8, { rotateAxis:secRot }, this.setSecondHandStyle ).onComplete(finish);
 		}
 	}
 	
