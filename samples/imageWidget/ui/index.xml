@@ -1,0 +1,15 @@
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+<VBox skin:Paint-color="0xFF0000" w="800" h="600" childPadding="20">
+	<Button id="'simpleButton'" text="'Simple'" h="30" skin:Paint-color="0x0FF000" on-click="
+    #Image(image0).src = 'assets/cocktail.png';
+    #Image(image1).src = 'http://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/PNG_transparency_demonstration_2.png/300px-PNG_transparency_demonstration_2.png';
+    "/>
+	<HBox skin:Paint-color="0xFF0088" w="800" h="550" childPadding="10">
+		<Image id="'image0'" src="'http://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/PNG_transparency_demonstration_2.png/300px-PNG_transparency_demonstration_2.png'"
+		defaultSrc="'assets/haxe.png'" errorSrc="'assets/cocktail.png'" />
+		<Image id="'image1'" src="'http://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/PNG_transparency_demonstration_2.png/300px-PNG_transparency_demonstration_21.png'"
+		defaultSrc="'assets/haxe.png'" errorSrc="'assets/cocktail.png'" />
+	</HBox>
+</VBox>

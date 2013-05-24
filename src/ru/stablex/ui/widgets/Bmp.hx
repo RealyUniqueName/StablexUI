@@ -56,20 +56,27 @@ class Bmp extends Widget{
 *       INSTANCE METHODS
 *******************************************************************************/
 
-    /**
-    * Refresh widget. Draw bitmap on this.graphics
-    *
-    * @throw <type>String</type> if asset for bitmap was not found
-    */
-    override public function refresh() : Void {
+    private function _loadBitmapFromSrc() : BitmapData {
         var bmp : BitmapData = this._bitmapData;
-
+        
         if( bmp == null && this.src != null ){
             bmp = Assets.getBitmapData(this.src);
             if( bmp == null ){
                 Err.trigger('Bitmap not found: ' + this.src);
             }
         }
+        
+        return bmp;
+    }
+
+    /**
+    * Refresh widget. Draw bitmap on this.graphics
+    *
+    * @throw <type>String</type> if asset for bitmap was not found
+    */
+    override public function refresh() : Void {
+        
+        var bmp : BitmapData = this._loadBitmapFromSrc();
 
         if( bmp != null ){
             //handle auto size
@@ -92,6 +99,7 @@ class Bmp extends Widget{
         }else{
             super.refresh();
         }
+        //trace("widget: "+this.id+" "+this.x+" "+this.y+" "+this.w+" "+this.h);
     }//function refresh()
 
 
@@ -163,7 +171,7 @@ class Bmp extends Widget{
     * Setter src
     *
     */
-    private inline function set_src(src:String) : String {
+    private function set_src(src:String) : String {
         if( src != null ){
             this._bitmapData = null;
         }
@@ -184,7 +192,7 @@ class Bmp extends Widget{
     * Setter bitmapData
     *
     */
-    private inline function set_bitmapData(bitmapData:BitmapData) : BitmapData {
+    private function set_bitmapData(bitmapData:BitmapData) : BitmapData {
         if( bitmapData != null ){
             this._src = null;
         }
