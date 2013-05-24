@@ -147,21 +147,34 @@ class UIBuilder {
         UIBuilder._initialized = true;
 
         //registering frequently used events
-        UIBuilder.regEvent('enterFrame',  'nme.events.Event.ENTER_FRAME');
-        UIBuilder.regEvent('click',       'nme.events.MouseEvent.CLICK',                    'nme.events.MouseEvent');
-        UIBuilder.regEvent('mouseDown',   'nme.events.MouseEvent.MOUSE_DOWN',               'nme.events.MouseEvent');
-        UIBuilder.regEvent('mouseUp',     'nme.events.MouseEvent.MOUSE_UP',                 'nme.events.MouseEvent');
-        UIBuilder.regEvent('display',     'nme.events.Event.ADDED_TO_STAGE');
-        UIBuilder.regEvent('create',      'ru.stablex.ui.events.WidgetEvent.CREATE',        'ru.stablex.ui.events.WidgetEvent');
-        UIBuilder.regEvent('free',        'ru.stablex.ui.events.WidgetEvent.FREE',          'ru.stablex.ui.events.WidgetEvent');
-        UIBuilder.regEvent('resize',      'ru.stablex.ui.events.WidgetEvent.RESIZE',        'ru.stablex.ui.events.WidgetEvent');
-        UIBuilder.regEvent('change',      'ru.stablex.ui.events.WidgetEvent.CHANGE',        'ru.stablex.ui.events.WidgetEvent');
-        UIBuilder.regEvent('scrollStart', 'ru.stablex.ui.events.WidgetEvent.SCROLL_START',  'ru.stablex.ui.events.WidgetEvent');
-        UIBuilder.regEvent('scrollStop',  'ru.stablex.ui.events.WidgetEvent.SCROLL_STOP',   'ru.stablex.ui.events.WidgetEvent');
-        UIBuilder.regEvent('drag',        'ru.stablex.ui.events.DndEvent.DRAG',             'ru.stablex.ui.events.DndEvent');
-        UIBuilder.regEvent('drop',        'ru.stablex.ui.events.DndEvent.DROP',             'ru.stablex.ui.events.DndEvent');
-        UIBuilder.regEvent('receiveDrop', 'ru.stablex.ui.events.DndEvent.RECEIVE',          'ru.stablex.ui.events.DndEvent');
-        UIBuilder.regEvent('beforeScroll','ru.stablex.ui.events.ScrollEvent.BEFORE_SCROLL', 'ru.stablex.ui.events.ScrollEvent');
+        UIBuilder.regEvent('enterFrame',    'nme.events.Event.ENTER_FRAME');
+        UIBuilder.regEvent('click',         'nme.events.MouseEvent.CLICK',                    'nme.events.MouseEvent');
+        UIBuilder.regEvent('mouseDown',     'nme.events.MouseEvent.MOUSE_DOWN',               'nme.events.MouseEvent');
+        UIBuilder.regEvent('mouseUp',       'nme.events.MouseEvent.MOUSE_UP',                 'nme.events.MouseEvent');
+        UIBuilder.regEvent('display',       'nme.events.Event.ADDED_TO_STAGE');
+        UIBuilder.regEvent('create',        'ru.stablex.ui.events.WidgetEvent.CREATE',        'ru.stablex.ui.events.WidgetEvent');
+        UIBuilder.regEvent('free',          'ru.stablex.ui.events.WidgetEvent.FREE',          'ru.stablex.ui.events.WidgetEvent');
+        UIBuilder.regEvent('resize',        'ru.stablex.ui.events.WidgetEvent.RESIZE',        'ru.stablex.ui.events.WidgetEvent');
+        UIBuilder.regEvent('change',        'ru.stablex.ui.events.WidgetEvent.CHANGE',        'ru.stablex.ui.events.WidgetEvent');
+        UIBuilder.regEvent('scrollStart',   'ru.stablex.ui.events.WidgetEvent.SCROLL_START',  'ru.stablex.ui.events.WidgetEvent');
+        UIBuilder.regEvent('scrollStop',    'ru.stablex.ui.events.WidgetEvent.SCROLL_STOP',   'ru.stablex.ui.events.WidgetEvent');
+        UIBuilder.regEvent('drag',          'ru.stablex.ui.events.DndEvent.DRAG',             'ru.stablex.ui.events.DndEvent');
+        UIBuilder.regEvent('drop',          'ru.stablex.ui.events.DndEvent.DROP',             'ru.stablex.ui.events.DndEvent');
+        UIBuilder.regEvent('receiveDrop',   'ru.stablex.ui.events.DndEvent.RECEIVE',          'ru.stablex.ui.events.DndEvent');
+        UIBuilder.regEvent('beforeScroll',  'ru.stablex.ui.events.ScrollEvent.BEFORE_SCROLL', 'ru.stablex.ui.events.ScrollEvent');
+        
+        UIBuilder.regEvent('showImage',         'ru.stablex.ui.events.ImageWidgetEvent.SHOW_IMG',       'ru.stablex.ui.events.ImageWidgetEvent');
+        UIBuilder.regEvent('showDefaultImage',  'ru.stablex.ui.events.ImageWidgetEvent.SHOW_DEFIMG',    'ru.stablex.ui.events.ImageWidgetEvent');
+        UIBuilder.regEvent('showErrorImage',    'ru.stablex.ui.events.ImageWidgetEvent.SHOW_ERRIMG',    'ru.stablex.ui.events.ImageWidgetEvent');
+        UIBuilder.regEvent('showWebImage',      'ru.stablex.ui.events.ImageWidgetEvent.SHOW_WEBIMG',    'ru.stablex.ui.events.ImageWidgetEvent');
+        UIBuilder.regEvent('showLocalImage',    'ru.stablex.ui.events.ImageWidgetEvent.SHOW_LOCALIMG',  'ru.stablex.ui.events.ImageWidgetEvent');
+        UIBuilder.regEvent('noneImage',         'ru.stablex.ui.events.ImageWidgetEvent.NONE_IMG',       'ru.stablex.ui.events.ImageWidgetEvent');
+        
+        UIBuilder.regEvent('httpGetStart',      'ru.stablex.ui.events.URLLoaderEvent.WEBGET_START',     'ru.stablex.ui.events.URLLoaderEvent');
+        UIBuilder.regEvent('httpGetCancel',     'ru.stablex.ui.events.URLLoaderEvent.WEBGET_CANCEL',    'ru.stablex.ui.events.URLLoaderEvent');
+        UIBuilder.regEvent('httpGetProgress',   'ru.stablex.ui.events.URLLoaderEvent.WEBGET_PROGRESS',  'ru.stablex.ui.events.URLLoaderEvent');
+        UIBuilder.regEvent('httpGetCompleted',  'ru.stablex.ui.events.URLLoaderEvent.WEBGET_COMPLETE',  'ru.stablex.ui.events.URLLoaderEvent');
+        UIBuilder.regEvent('httpGetFailed',     'ru.stablex.ui.events.URLLoaderEvent.WEBGET_FAIL',      'ru.stablex.ui.events.URLLoaderEvent');
 
         //registering frequently used classes
         UIBuilder.registerClass('ru.stablex.ui.widgets.Text');

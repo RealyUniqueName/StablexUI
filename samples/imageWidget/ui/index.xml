@@ -8,7 +8,10 @@
     "/>
 	<HBox skin:Paint-color="0xFF0088" w="800" h="550" childPadding="10">
 		<Image id="'image0'" src="'http://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/PNG_transparency_demonstration_2.png/300px-PNG_transparency_demonstration_2.png'"
-		defaultSrc="'assets/haxe.png'" errorSrc="'assets/cocktail.png'" />
+		defaultSrc="'assets/haxe.png'" errorSrc="'assets/cocktail.png'" 
+        on-httpGetProgress="
+        #Button(simpleButton).text = 'Simple '+#Image(image0).progress;
+        "/>
 		<Image id="'image1'" src="'http://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/PNG_transparency_demonstration_2.png/300px-PNG_transparency_demonstration_21.png'"
 		defaultSrc="'assets/haxe.png'" errorSrc="'assets/cocktail.png'" />
 	</HBox>

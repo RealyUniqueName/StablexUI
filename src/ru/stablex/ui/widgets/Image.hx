@@ -3,6 +3,11 @@ package ru.stablex.ui.widgets;
 import nme.display.BitmapData;
 import mloader.Loader;
 import mloader.ImageLoader;
+import nme.events.Event;
+import ru.stablex.ui.events.WidgetEvent;
+import ru.stablex.ui.events.ImageWidgetEvent;
+import ru.stablex.ui.events.URLLoaderEvent;
+
 /**
  * ...
  * @author Darcy.G
@@ -39,6 +44,32 @@ class Image extends Bmp
     private var _lastW : Float;
     private var _lastH : Float;
     
+    public var loading(get_loading, null) : Bool; 
+    private function get_loading() : Bool {
+        if (this._loader != null) {
+            return this._loader.loading;
+        }
+        return false;
+    }
+    
+    public var progress(get_progress, null) : Float;
+    private var _progress : Float = -1 ;
+    private function get_progress() : Float {
+        //if (this._loader != null) {
+            //this._progress = this._loader.progress;
+        //}
+        return this._progress;        
+    }
+    
+    public var loaded(get_loaded, null) : Bool;
+    private var _loaded : Bool = false;
+    private function get_loaded() : Bool {
+        return this._loaded;        
+    }
+    
+    private var _updateBitmapCache : Bool = false;
+    private var _islocalsrc : Bool = false;
+    
     /**
     * Setter src
     *
@@ -49,12 +80,16 @@ class Image extends Bmp
             this._src = src;
             if (src.indexOf("http://") == 0 || src.indexOf("https://") == 0) {
                 this._lastSrc = this._defaultSrc;
+                this._progress = 0;
                 this._loader = new ImageLoader(src);
                 this._loader.loaded.add(this.__onLoaded);
                 this._loader.load();
+                this._islocalsrc = false;
             } else {
                 this._bitmapData = null;
                 this._lastSrc = src;
+                this._updateBitmapCache = true;
+                this._islocalsrc = true;
                 this.refresh();
             }
         }
@@ -83,7 +118,19 @@ class Image extends Bmp
                 //Err.trigger('Bitmap not found: ' + this._lastSrc);
             }else this.resize(bmp.width, bmp.height);
         }
-        this._resetSize(bmp);
+        
+        if (this._updateBitmapCache) {
+            this._updateBitmapCache = false;
+            if (bmp != null) {
+                if (!this._islocalsrc)
+                    this.dispatchEvent( new ImageWidgetEvent(ImageWidgetEvent.SHOW_WEBIMG));
+                this.dispatchEvent( new ImageWidgetEvent(ImageWidgetEvent.SHOW_IMG));
+            }else {
+                this.dispatchEvent( new ImageWidgetEvent(ImageWidgetEvent.NONE_IMG));
+            }
+            this._resetSize(bmp);            
+        }
+
         return bmp;
     }
     
@@ -92,6 +139,10 @@ class Image extends Bmp
             bmp = Assets.getBitmapData(this._lastSrc);
             if (bmp != null) {
                 //trace("_setLastBmp ok");
+                if (this._islocalsrc) this.dispatchEvent( new ImageWidgetEvent(ImageWidgetEvent.SHOW_LOCALIMG));
+                //else this.dispatchEvent( new ImageWidgetEvent(ImageWidgetEvent.SHOW_WEBIMG));
+                
+                this._updateBitmapCache = true;
                 return bmp;
             }
         }
@@ -102,6 +153,8 @@ class Image extends Bmp
         if (this._defaultSrc != null) {
             bmp = Assets.getBitmapData(this._defaultSrc);
             if (bmp != null) {
+                this.dispatchEvent( new ImageWidgetEvent(ImageWidgetEvent.SHOW_DEFIMG));
+                this._updateBitmapCache = true;
                 //trace("_setDefBmp ok");
                 this._lastSrc = this._defaultSrc;
             }
@@ -114,6 +167,8 @@ class Image extends Bmp
             bmp = Assets.getBitmapData(this._errorSrc);
             if (bmp != null) {
                 //trace("_setErrBmp ok");
+                this.dispatchEvent( new ImageWidgetEvent(ImageWidgetEvent.SHOW_ERRIMG));
+                this._updateBitmapCache = true;
                 this._lastSrc = this._errorSrc;
                 return bmp;
             }
@@ -144,7 +199,17 @@ class Image extends Bmp
         //var bmp : BitmapData = this._bitmapData;
 		switch (event.type)
 		{
+            case Start:
+                this._loaded = false;
+                this.dispatchEvent( new URLLoaderEvent(URLLoaderEvent.WEBGET_START));
+                
+            case Cancel:
+                this._progress = 0;
+                this.dispatchEvent( new URLLoaderEvent(URLLoaderEvent.WEBGET_CANCEL));
+                this._loader = null;
+                
 			case Fail(error):
+                this._progress = -1;
                 if (this._errorSrc != null) {
                     this._bitmapData = null;
                     this._lastSrc = this._errorSrc;
@@ -152,15 +217,26 @@ class Image extends Bmp
                     this._bitmapData = null;
                     this._lastSrc = this._defaultSrc;
                 }
-                this.refresh();
-
-			case Complete:
-				this._bitmapData = event.target.content;
+                this.dispatchEvent( new URLLoaderEvent(URLLoaderEvent.WEBGET_FAIL));
+                this._updateBitmapCache = true;
                 this.refresh();
                 this._loader = null;
+                this._loaded = false;
+
+			case Complete:
+                this._progress = 1;
+				this._bitmapData = event.target.content;
+                this.dispatchEvent( new URLLoaderEvent(URLLoaderEvent.WEBGET_COMPLETE));
+                this._islocalsrc = false;
+                this._updateBitmapCache = true;
+                this.refresh();
+                this._loader = null;
+                this._loaded = true;
                 
             case Progress:
-                var p = Std.int(this._loader.progress*100);
+                //var p = Std.int(this._loader.progress*100);
+                this._progress = this._loader.progress;
+                this.dispatchEvent( new URLLoaderEvent(URLLoaderEvent.WEBGET_PROGRESS));
 
 			default:
 		}
