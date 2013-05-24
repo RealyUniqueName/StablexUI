@@ -70,6 +70,8 @@ class Image extends Bmp
     private var _updateBitmapCache : Bool = false;
     private var _islocalsrc : Bool = false;
     
+    public var fixedSize : Bool = false;
+    
     /**
     * Setter src
     *
@@ -116,7 +118,7 @@ class Image extends Bmp
             bmp = this._setLastBmp(bmp);
             if( bmp == null ){
                 //Err.trigger('Bitmap not found: ' + this._lastSrc);
-            }else this.resize(bmp.width, bmp.height);
+            }//else this.resize(bmp.width, bmp.height);
         }
         
         if (this._updateBitmapCache) {
@@ -128,7 +130,14 @@ class Image extends Bmp
             }else {
                 this.dispatchEvent( new ImageWidgetEvent(ImageWidgetEvent.NONE_IMG));
             }
-            this._resetSize(bmp);            
+            if (!this.fixedSize) {
+                this._resetSize(bmp);
+            }else {
+                if (bmp != null) {
+                    if (bmp.width > 0) this.scaleX = this.w / bmp.width;
+                    if (bmp.height > 0) this.scaleY = this.h / bmp.height;
+                }     
+            }
         }
 
         return bmp;
