@@ -126,7 +126,7 @@ class ClockDial extends ClockDialBase {
 			this.sec.rotateAxis = (this.seconds * (360 / 60));
 		else {
 			var secRot:Float = 0;
-			this.sec.tweenStop("rotationByPoint", true, true);
+			this.sec.tweenStop("rotateAxis", true, true);
 			var finish : Void->Void = function() : Void {
 				if (this.seconds == 0) 
 					this.sec.rotateAxis = 0;
