@@ -92,10 +92,14 @@ class Text extends Box{
     override public function refresh() : Void {
         if( this.highlighted ){
             this.label.defaultTextFormat = this.highlightFormat;
-            this.label.setTextFormat(this.highlightFormat);
+            if( this.label.text.length > 0 ){
+                this.label.setTextFormat(this.highlightFormat #if cpp , 0 , this.text.length #end );
+            }
         }else{
             this.label.defaultTextFormat = this.format;
-            this.label.setTextFormat(this.format);
+            if( this.label.text.length > 0 ){
+                this.label.setTextFormat(this.format #if cpp , 0 , this.text.length #end);
+            }
         }
 
         if( !this.autoWidth && this.label.wordWrap ){
