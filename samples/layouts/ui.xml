@@ -3,11 +3,42 @@
 <VBox w="800" h="600" childPadding="20">
 
     <!-- Column layout demo -->
-    <Widget id="'demo'" w="600" h="400" layout:Column-cols="[100, -2, -1, 0.1]">
-        <Text text="'100px'" skin:Paint-color="0x777777"/>
-        <Text text="'2/3 of free space'" skin:Paint-color="0xAAAAAA"/>
-        <Text text="'1/3 of free space'" skin:Paint-color="0x777777"/>
-        <Text text="'10%'" skin:Paint-color="0xAAAAAA"/>
+    <Widget id="'demo'" w="600" h="400" layout:Row-rows="[0.2, 0.2, 0.2, 0.2, 0.2]" layout:Row-padding="-5">
+        <Widget layout:Column-cols="[100, -2, -1, 0.1, 0.1]" >
+	        <Text text="'100px'" skin:Paint-color="0x777777" childPadding="20"/>
+	        <Text text="'2/3 of free space'" skin:Paint-color="0xAAAAAA"/>
+	        <Text text="'1/3 of free space'" skin:Paint-color="0x777777"/>
+	        <Text text="'10%'" skin:Paint-color="0xAAAAAA"/>
+	        <Text text="'10%'" skin:Paint-color="0x777777"/>
+	    </Widget>
+        <Widget layout:Column-cols="[100, -2, -1, 0.1, 0.1]" >
+	        <Text text="'100px'" skin:Paint-color="0x777777" childPadding="20"/>
+	        <Text text="'2/3 of free space'" skin:Paint-color="0xAAAAAA"/>
+	        <Text text="'1/3 of free space'" skin:Paint-color="0x777777"/>
+	        <Text text="'10%'" skin:Paint-color="0xAAAAAA"/>
+	        <Text text="'10%'" skin:Paint-color="0x777777"/>
+	    </Widget>
+        <Widget layout:Column-cols="[100, -2, -1, 0.1, 0.1]" >
+	        <Text text="'100px'" skin:Paint-color="0x777777" childPadding="20"/>
+	        <Text text="'2/3 of free space'" skin:Paint-color="0xAAAAAA"/>
+	        <Text text="'1/3 of free space'" skin:Paint-color="0x777777"/>
+	        <Text text="'10%'" skin:Paint-color="0xAAAAAA"/>
+	        <Text text="'10%'" skin:Paint-color="0x777777"/>
+	    </Widget>
+        <Widget layout:Column-cols="[100, -2, -1, 0.1, 0.1]" >
+	        <Text text="'100px'" skin:Paint-color="0x777777" childPadding="20"/>
+	        <Text text="'2/3 of free space'" skin:Paint-color="0xAAAAAA"/>
+	        <Text text="'1/3 of free space'" skin:Paint-color="0x777777"/>
+	        <Text text="'10%'" skin:Paint-color="0xAAAAAA"/>
+	        <Text text="'10%'" skin:Paint-color="0x777777"/>
+	    </Widget>
+        <Widget layout:Column-cols="[100, -2, -1, 0.1, 0.1]" >
+	        <Text text="'100px'" skin:Paint-color="0x777777" childPadding="20"/>
+	        <Text text="'2/3 of free space'" skin:Paint-color="0xAAAAAA"/>
+	        <Text text="'1/3 of free space'" skin:Paint-color="0x777777"/>
+	        <Text text="'10%'" skin:Paint-color="0xAAAAAA"/>
+	        <Text text="'10%'" skin:Paint-color="0x777777"/>
+	    </Widget>
     </Widget>
 
     <!-- adjust demo width -->
