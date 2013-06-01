@@ -44,7 +44,7 @@ class Img extends Skin{
             w.resize(bmp.width, bmp.height);
         }
 
-        w.graphics.beginBitmapFill(bmp, null, true, this.smooth);
+        w.graphics.beginBitmapFill(bmp, null, false, this.smooth);
         w.graphics.drawRect(0, 0, bmp.width, bmp.height);
         w.graphics.endFill();
     }//function draw()

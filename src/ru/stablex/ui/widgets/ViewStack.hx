@@ -3,6 +3,7 @@ package ru.stablex.ui.widgets;
 import nme.display.DisplayObject;
 import ru.stablex.ui.transitions.Transition;
 
+
 /**
 * There can be only one child element visible in ViewStack
 * By default visible child is one with childIndex = 0
