@@ -3,9 +3,11 @@ package mloader;
 /**
 	This class is what happens when you override things in the std library.
 **/
+
 class Http extends haxe.Http
 {
-	public function new(url:String)
+
+	public function new(?url:String)
 	{
 		super(url);
 	}

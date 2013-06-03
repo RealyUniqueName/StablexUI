@@ -170,6 +170,7 @@ class UIBuilder {
         UIBuilder.regEvent('showLocalImage',    'ru.stablex.ui.events.ImageWidgetEvent.SHOW_LOCALIMG',  'ru.stablex.ui.events.ImageWidgetEvent');
         UIBuilder.regEvent('noneImage',         'ru.stablex.ui.events.ImageWidgetEvent.NONE_IMG',       'ru.stablex.ui.events.ImageWidgetEvent');
         
+        UIBuilder.regEvent('httpGetUrlReady',   'ru.stablex.ui.events.URLLoaderEvent.LOADER_READY',     'ru.stablex.ui.events.URLLoaderEvent');
         UIBuilder.regEvent('httpGetStart',      'ru.stablex.ui.events.URLLoaderEvent.WEBGET_START',     'ru.stablex.ui.events.URLLoaderEvent');
         UIBuilder.regEvent('httpGetCancel',     'ru.stablex.ui.events.URLLoaderEvent.WEBGET_CANCEL',    'ru.stablex.ui.events.URLLoaderEvent');
         UIBuilder.regEvent('httpGetProgress',   'ru.stablex.ui.events.URLLoaderEvent.WEBGET_PROGRESS',  'ru.stablex.ui.events.URLLoaderEvent');
@@ -203,6 +204,7 @@ class UIBuilder {
         UIBuilder.registerClass('ru.stablex.ui.widgets.RotateWidget');
         UIBuilder.registerClass('ru.stablex.ui.widgets.WebView');
         UIBuilder.registerClass('ru.stablex.ui.widgets.Image');
+        UIBuilder.registerClass('ru.stablex.ui.widgets.BmpPlus');
         UIBuilder.registerClass('ru.stablex.ui.events.WidgetEvent');
         UIBuilder.registerClass('ru.stablex.ui.events.DndEvent');
         UIBuilder.registerClass('ru.stablex.ui.events.ScrollEvent');

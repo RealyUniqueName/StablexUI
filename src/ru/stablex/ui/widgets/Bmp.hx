@@ -77,7 +77,7 @@ class Bmp extends Widget{
     override public function refresh() : Void {
         
         var bmp : BitmapData = this._loadBitmapFromSrc();
-
+        //trace(bmp);
         if( bmp != null ){
             //handle auto size
             if(
@@ -93,7 +93,7 @@ class Bmp extends Widget{
             }else if( this.autoHeight && this._height != (this.drawPortion ? bmp.height - this.yOffset : bmp.height) ){
                 this.h = (this.drawPortion ? bmp.height - this.yOffset : bmp.height);
             }
-
+            //trace(this.w +" " + this.h);
             super.refresh();
             this._draw(bmp);
         }else{

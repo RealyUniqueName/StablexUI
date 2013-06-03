@@ -82,10 +82,17 @@ class JsonLoader<T> extends HttpLoader<T>
 	*/
 	public var parseData:Dynamic->T;
 
+    #if nme    
+	public function new(?url:String)
+	{
+		super(url);
+	}
+    #else
 	public function new(?url:String, ?http:Http)
 	{
 		super(url, http);
-	}
+	}    
+    #end
 
 	override function httpData(data:String)
 	{

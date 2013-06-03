@@ -66,6 +66,9 @@ class ImageLoader extends LoaderBase<js.Dom.Image>
 
 	function imageError(event)
 	{
+        if (content == null)
+            return;
+            
 		content.onload = null;
 		content.onerror = null;
 		loaderFail(IO(Std.string(event)));
@@ -105,7 +108,7 @@ class ImageLoader extends LoaderBase<BitmapData>
 		}
 		else
 		{
-			content = nme.installer.Assets.getBitmapData(url);
+			content = nme.Assets.getBitmapData(url);
 			loaderComplete();
 		}
 		#else

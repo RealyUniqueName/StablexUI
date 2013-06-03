@@ -12,7 +12,7 @@ import ru.stablex.ui.events.URLLoaderEvent;
  * ...
  * @author Darcy.G
  */
-class Image extends Bmp
+class Image extends BmpPlus
 {
     
     public var defaultSrc(get_defaultSrc, set_defaultSrc) : String;
@@ -124,6 +124,12 @@ class Image extends Bmp
         if (this._updateBitmapCache) {
             this._updateBitmapCache = false;
             if (bmp != null) {
+                this.srcWidth = bmp.width;
+                this.srcHeight = bmp.height;
+            }else {
+                this.srcWidth = this.srcHeight = 0;
+            }
+            if (bmp != null) {
                 if (!this._islocalsrc)
                     this.dispatchEvent( new ImageWidgetEvent(ImageWidgetEvent.SHOW_WEBIMG));
                 this.dispatchEvent( new ImageWidgetEvent(ImageWidgetEvent.SHOW_IMG));
@@ -139,7 +145,7 @@ class Image extends Bmp
                 }     
             }
         }
-
+        
         return bmp;
     }
     
@@ -235,6 +241,7 @@ class Image extends Bmp
 			case Complete:
                 this._progress = 1;
 				this._bitmapData = event.target.content;
+                
                 this.dispatchEvent( new URLLoaderEvent(URLLoaderEvent.WEBGET_COMPLETE));
                 this._islocalsrc = false;
                 this._updateBitmapCache = true;
@@ -247,7 +254,7 @@ class Image extends Bmp
                 this._progress = this._loader.progress;
                 this.dispatchEvent( new URLLoaderEvent(URLLoaderEvent.WEBGET_PROGRESS));
 
-			default:
+			//default:
 		}
 	}  
     

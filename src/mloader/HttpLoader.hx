@@ -69,7 +69,11 @@ class HttpLoader<T> extends LoaderBase<T>
 	@param url  the url to load the resource from
 	@param http optional Http instance to use for the load request
 	*/
-	function new(?url:String, ?http:Http)
+    #if nme
+	function new(?url:String)
+    #else
+    function new(?url:String, ?http:Http)    
+    #end
 	{
 		super(url);
 		
@@ -193,12 +197,14 @@ class HttpLoader<T> extends LoaderBase<T>
 		if (url.indexOf("http:") == 0 || url.indexOf("https:") == 0)
 		{
 			//loader.load(urlRequest);
-			loadFromFileSystem(url);
+			//this.loadFromFileSystem(url);
+            loader.load(urlRequest);
 		}
 		else
 		{
-			var result = nme.installer.Assets.getText(url);
-			haxe.Timer.delay(callback(httpData, result), 10);
+			var result = nme.Assets.getText(url);
+			//haxe.Timer.delay(callback(httpData, result), 10);
+            haxe.Timer.delay(httpData.bind(result), 10);
 		}
 		#else
 		http.url = url;
@@ -209,7 +215,7 @@ class HttpLoader<T> extends LoaderBase<T>
 		}
 		else
 		{	
-			loadFromFileSystem(url);
+			this.loadFromFileSystem(url);
 		}
 		#else
 		try
