@@ -203,8 +203,11 @@ class HttpLoader<T> extends LoaderBase<T>
 		else
 		{
 			var result = nme.Assets.getText(url);
-			//haxe.Timer.delay(callback(httpData, result), 10);
+			#if haxe3
             haxe.Timer.delay(httpData.bind(result), 10);
+            #else
+            haxe.Timer.delay(callback(httpData, result), 10);
+            #end
 		}
 		#else
 		http.url = url;

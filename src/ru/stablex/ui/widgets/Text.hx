@@ -2,6 +2,7 @@ package ru.stablex.ui.widgets;
 
 import nme.text.TextField;
 import nme.text.TextFormat;
+import nme.events.Event;
 import ru.stablex.Err;
 import ru.stablex.ui.UIBuilder;
 
@@ -40,6 +41,15 @@ class Text extends Box{
         this.align    = 'top,left';
     }//function new()
 
+    #if haxe3
+    override public function onCreate() : Void {
+        var displayfn : Event->Void = function(e:Event) : Void {
+            this.text = this.text;
+            //this.refresh();
+        };
+        this.addEventListener(nme.events.Event.ADDED_TO_STAGE, displayfn);	
+    }
+    #end
 
     /**
     * Getter for `.highlightFormat`.
@@ -98,14 +108,13 @@ class Text extends Box{
         }else{
             this.label.defaultTextFormat = this.format;
             if( this.label.text.length > 0 ){
-                this.label.setTextFormat(this.format #if cpp , 0 , this.text.length #end);
+                this.label.setTextFormat(this.format #if cpp , 0 , this.text.length #end );
             }
         }
 
         if( !this.autoWidth && this.label.wordWrap ){
             this.label.width = this._width;
         }
-
         super.refresh();
     }//function refresh()
 
