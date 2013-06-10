@@ -1,11 +1,11 @@
 package ru.stablex.ui.widgets;
 
-import nme.display.DisplayObject;
-import nme.display.Sprite;
-import nme.events.Event;
-import nme.events.MouseEvent;
-import nme.events.TouchEvent;
-import nme.Lib;
+import #if nme nme #else flash #end.display.DisplayObject;
+import #if nme nme #else flash #end.display.Sprite;
+import #if nme nme #else flash #end.events.Event;
+import #if nme nme #else flash #end.events.MouseEvent;
+import #if nme nme #else flash #end.events.TouchEvent;
+import #if nme nme #else flash #end.Lib;
 import ru.stablex.ui.events.ScrollEvent;
 import ru.stablex.ui.events.WidgetEvent;
 

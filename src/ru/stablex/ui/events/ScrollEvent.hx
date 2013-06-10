@@ -1,6 +1,6 @@
 package ru.stablex.ui.events;
 
-import nme.events.Event;
+import #if nme nme #else flash #end.events.Event;
 
 
 

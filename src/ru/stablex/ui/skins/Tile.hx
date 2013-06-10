@@ -1,6 +1,6 @@
 package ru.stablex.ui.skins;
 
-import nme.display.BitmapData;
+import #if nme nme #else flash #end.display.BitmapData;
 import ru.stablex.Assets;
 import ru.stablex.ui.widgets.Widget;
 

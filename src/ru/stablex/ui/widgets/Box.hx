@@ -1,6 +1,6 @@
 package ru.stablex.ui.widgets;
 
-import nme.display.DisplayObject;
+import #if nme nme #else flash #end.display.DisplayObject;
 import ru.stablex.Err;
 import ru.stablex.ui.events.WidgetEvent;
 
@@ -61,8 +61,8 @@ class Box extends Widget{
             // #if html5
                 if( Std.is(obj, Widget) ){
                     return cast(obj, Widget).w;
-                }else if( Std.is(obj, nme.text.TextField) ){
-                    return cast(obj, nme.text.TextField).textWidth + 4;
+                }else if( Std.is(obj, #if nme nme #else flash #end.text.TextField) ){
+                    return cast(obj, #if nme nme #else flash #end.text.TextField).textWidth + 4;
                 }else{
                     return obj.width;
                 }
@@ -80,8 +80,8 @@ class Box extends Widget{
             // #if html5
                 if( Std.is(obj, Widget) ){
                     return cast(obj, Widget).h;
-                }else if( Std.is(obj, nme.text.TextField) ){
-                    return cast(obj, nme.text.TextField).textHeight + 4;
+                }else if( Std.is(obj, #if nme nme #else flash #end.text.TextField) ){
+                    return cast(obj, #if nme nme #else flash #end.text.TextField).textHeight + 4;
                 }else{
                     return obj.height;
                 }
@@ -97,7 +97,7 @@ class Box extends Widget{
         */
         static private inline function _setObjX (obj:DisplayObject, x:Float) : Void {
             #if html5
-                obj.x = (Std.is(obj, nme.text.TextField) ? obj.x = x + 2 : x);
+                obj.x = (Std.is(obj, #if nme nme #else flash #end.text.TextField) ? obj.x = x + 2 : x);
             #else
                 obj.x = x;
             #end
@@ -110,7 +110,7 @@ class Box extends Widget{
         */
         static private inline function _setObjY (obj:DisplayObject, y:Float) : Void {
             #if html5
-                obj.y = (Std.is(obj, nme.text.TextField) ? obj.y = y + 2 : y);
+                obj.y = (Std.is(obj, #if nme nme #else flash #end.text.TextField) ? obj.y = y + 2 : y);
             #else
                 obj.y = y;
             #end
@@ -395,7 +395,7 @@ class Box extends Widget{
                 child   = this.getChildAt(this.numChildren - 1 - i);
                 if( !child.visible ) continue;
                 Box._setObjY(child, lastY - Box._objHeight(child));
-                lastY   = child.y - this.childPadding #if html5 - (Std.is(child, nme.text.TextField) ? 2 : 0) #end;
+                lastY   = child.y - this.childPadding #if html5 - (Std.is(child, #if nme nme #else flash #end.text.TextField) ? 2 : 0) #end;
             }
 
         //horizontal box

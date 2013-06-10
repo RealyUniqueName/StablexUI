@@ -1,9 +1,9 @@
 package ru.stablex.ui;
 
-import nme.display.DisplayObjectContainer;
-import nme.events.MouseEvent;
-import nme.geom.Point;
-import nme.Lib;
+import #if nme nme #else flash #end.display.DisplayObjectContainer;
+import #if nme nme #else flash #end.events.MouseEvent;
+import #if nme nme #else flash #end.geom.Point;
+import #if nme nme #else flash #end.Lib;
 import ru.stablex.ui.events.DndEvent;
 import ru.stablex.ui.widgets.Widget;
 import motion.actuators.GenericActuator;
