@@ -3,6 +3,7 @@ package ru.stablex;
 #if macro
 import haxe.macro.Context;
 import haxe.macro.Expr;
+import openfl.AssetType;
 import sys.io.File;
 #end
 
@@ -19,8 +20,8 @@ class Assets{
     * By default it is equal to nme.Assets.getBitmapData
     *
     */
-    static dynamic public function getBitmapData(src:String, useCache:Bool = true) : nme.display.BitmapData {
-        return nme.Assets.getBitmapData(src, useCache);
+    static dynamic public function getBitmapData(src:String, useCache:Bool = true) : #if nme nme #else flash #end.display.BitmapData {
+        return #if nme nme #else openfl #end.Assets.getBitmapData(src, useCache);
     }//function getBitmapData()
 
 
@@ -28,8 +29,8 @@ class Assets{
     * By default it is equal to nme.Assets.getBytes
     *
     */
-    static dynamic public function getBytes(src:String) : nme.utils.ByteArray {
-        return nme.Assets.getBytes(src);
+    static dynamic public function getBytes(src:String) : #if nme nme #else flash #end.utils.ByteArray {
+        return #if nme nme #else openfl #end.Assets.getBytes(src);
     }//function getBytes()
 
 
@@ -38,8 +39,8 @@ class Assets{
     * if this method is declared as dynamic, cpp fails to compile (hxcpp 2.10.2)
     *
     */
-    static public inline function getFont(src:String) : nme.text.Font {
-        return nme.Assets.getFont(src);
+    static public inline function getFont(src:String) : #if nme nme #else flash #end.text.Font {
+        return #if nme nme #else openfl #end.Assets.getFont(src);
     }//function getFont()
 
 
@@ -47,8 +48,8 @@ class Assets{
     * By default it is equal to nme.Assets.getSound
     *
     */
-    static dynamic public function getSound(src:String) : nme.media.Sound {
-        return nme.Assets.getSound(src);
+    static dynamic public function getSound(src:String) : #if nme nme #else flash #end.media.Sound {
+        return #if nme nme #else openfl #end.Assets.getSound(src);
     }//function getSound()
 
 
@@ -57,7 +58,7 @@ class Assets{
     *
     */
     static dynamic public function getText(src:String) : String {
-        return nme.Assets.getText(src);
+        return #if nme nme #else openfl #end.Assets.getText(src);
     }//function getText()
 
 #end

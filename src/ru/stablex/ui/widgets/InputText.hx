@@ -19,7 +19,7 @@ class InputText extends Text{
         super();
 
         #if !html5
-            this.label.type = nme.text.TextFieldType.INPUT;
+            this.label.type = #if nme nme #else flash #end.text.TextFieldType.INPUT;
         #else
             //due to strange bug we need this hack
             this.addEventListener(Event.ADDED_TO_STAGE, function(e:Event){
@@ -35,8 +35,8 @@ class InputText extends Text{
             });
         #end
 
-        this.label.autoSize = nme.text.TextFieldAutoSize.NONE;
-        this.format.align   = nme.text.TextFormatAlign.LEFT;
+        this.label.autoSize = #if nme nme #else flash #end.text.TextFieldAutoSize.NONE;
+        this.format.align   = #if nme nme #else flash #end.text.TextFormatAlign.LEFT;
     }//function new()
 
 

@@ -14,9 +14,13 @@ import motion.easing.Quart;
 import motion.easing.Cubic;
 import motion.easing.Sine;
 
+#if nme
 import nme.display.DisplayObject;
 import nme.display.Sprite;
-
+#else
+import flash.display.DisplayObject;
+import flash.display.Sprite;
+#end
 
 /**
 * class TweenSprite implements easy access to <type>motion.Actuate</type> methods and manages registered

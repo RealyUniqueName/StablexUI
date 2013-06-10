@@ -1,8 +1,12 @@
 package ru.stablex.ui.widgets;
 
+#if nme
 import nme.events.Event;
 import nme.Lib;
-
+#else
+import flash.events.Event;
+import flash.Lib;
+#end
 
 
 /**

@@ -1,7 +1,7 @@
 package ru.stablex.ui.widgets;
 
-import nme.text.TextField;
-import nme.text.TextFormat;
+import #if nme nme #else flash #end.text.TextField;
+import #if nme nme #else flash #end.text.TextFormat;
 import ru.stablex.Err;
 import ru.stablex.ui.UIBuilder;
 
@@ -31,7 +31,7 @@ class Text extends Box{
         super();
 
         this.label = cast(this.addChild(new TextField()), TextField);
-        this.label.autoSize   = nme.text.TextFieldAutoSize.LEFT;
+        this.label.autoSize   = #if nme nme #else flash #end.text.TextFieldAutoSize.LEFT;
         this.label.multiline  = true;
         // this.label.embedFonts = true;
 

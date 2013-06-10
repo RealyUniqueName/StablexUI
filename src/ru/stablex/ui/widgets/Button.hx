@@ -1,10 +1,10 @@
 package ru.stablex.ui.widgets;
 
-import nme.display.DisplayObject;
+import #if nme nme #else flash #end.display.DisplayObject;
 import ru.stablex.ui.skins.Skin;
 import ru.stablex.ui.UIBuilder;
-import nme.events.MouseEvent;
-import nme.events.MouseEvent;
+import #if nme nme #else flash #end.events.MouseEvent;
+import #if nme nme #else flash #end.events.MouseEvent;
 
 
 /**
