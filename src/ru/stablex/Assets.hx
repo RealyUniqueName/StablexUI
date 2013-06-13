@@ -3,7 +3,6 @@ package ru.stablex;
 #if macro
 import haxe.macro.Context;
 import haxe.macro.Expr;
-import openfl.AssetType;
 import sys.io.File;
 #end
 
