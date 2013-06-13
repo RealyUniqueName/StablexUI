@@ -2,7 +2,7 @@
 @manual Creating UI elements
 
 For StablexUI widgets are objects wich can be used in gui. These are buttons,
-boxes, text fields, etc. All widgets' classes extend <type>ru.stablex.ui.widgets.Widget</type> wich extends <type>nme.display.Sprite</type>.
+boxes, text fields, etc. All widgets' classes extend <type>ru.stablex.ui.widgets.Widget</type> wich extends <type>flash.display.Sprite</type>.
 
 To create our first gui, let's write xml like this:
 
@@ -14,14 +14,14 @@ To create our first gui, let's write xml like this:
 
 Please, notice that it's necessary to use double quotes and single quotes simultaneously
 for string properties. Call this file 'first.xml' and place it wherever to your project.
-You don't need to include this file in your assets managed by NME.
+You don't need to include this file in your assets managed by OpenFL.
 Let's analyze content of the file:
     Line '&lt;?xml version="1.0" encoding="UTF-8"?&gt;' must be the first line of any xml file;
     <type>ru.stablex.ui.widgets.Text</type> - class of widget we want to create;
     left, top - properties of Text widget class inherited from <type>ru.stablex.ui.widgets.Widget</type>.
                 These properties define widget position by x and y coordinates respectively.
                 Of course,  instead of .left and .top you can assign .x and .y properties
-                directly in xml since these properties are inherited from <type>nme.display.Sprite</type>.
+                directly in xml since these properties are inherited from <type>flash.display.Sprite</type>.
                 And in this example you will get the same result using .x and .y,
                 but it is recommended to always use .left and .top for widgets.
     text - own property of <type>ru.stablex.ui.widgets.Text</type> class (click to see api for that class).
@@ -30,7 +30,7 @@ This field will be placed with .x=50 and .y=100.
 Here is the haxe code wich will do the job:
 
 <haxe>
-nme.Lib.current.addChild( ru.stablex.ui.UIBuilder.buildFn('first.xml')() );
+flash.Lib.current.addChild( ru.stablex.ui.UIBuilder.buildFn('first.xml')() );
 </haxe>
 
 Don't forget empty parentheses after 'first.xml'. That's all! You've just created your first UI :)
@@ -47,7 +47,7 @@ To make it clear, next code does the same thing as code above:
 
 <haxe>
 var fn : Dynamic->ru.stablex.ui.Widgets.Text = ru.stablex.ui.UIBuilder.buildFn('first.xml');
-nme.Lib.current.addChild( fn() );
+flash.Lib.current.addChild( fn() );
 </haxe>
 
 Type of closure is <type>Dynamic</type>-&gt;<type>ru.stablex.ui.Widgets.Text</type> because the type of root element in xml
@@ -64,7 +64,7 @@ var fn : Dynamic->ru.stablex.ui.Widgets.Text = function(arguments:Dynamic = null
     widget.onCreate(); //Here widget is notified it is created
     return widget;
 };
-nme.Lib.current.addChild( fn() );
+flash.Lib.current.addChild( fn() );
 </haxe>
 
 I guess, you understand about parentheses now. And single quotes are required for string
@@ -80,7 +80,7 @@ wich of course breaks Haxe syntax.
 /**
 @manual Nested widgets
 
-Every widget can contain children since <type>ru.stablex.ui.widgets.Widget</type> inherits from <type>nme.display.DisplayObjectContainer</type>.
+Every widget can contain children since <type>ru.stablex.ui.widgets.Widget</type> inherits from <type>flash.display.DisplayObjectContainer</type>.
 Child widgets behave like ordinary display objects in terms of position/scale/alpha etc.
 Lets modify above sample. Place that text field to another widget:
 
@@ -112,7 +112,7 @@ var widget = ru.stablex.ui.UIBuilder.create(ru.stablex.ui.widgets.Text, {
     top  : 100,
     text : 'My first widget!'
 });
-nme.Lib.current.addChild( widget );
+flash.Lib.current.addChild( widget );
 </haxe>
 
 Also you can add children. E.g. to get the same result as in `Nested widgets` section of this manual,
@@ -132,10 +132,10 @@ var widget = ru.stablex.ui.UIBuilder.create(ru.stablex.ui.widgets.Widget, {
         })
     ]
 });
-nme.Lib.current.addChild( widget );
+flash.Lib.current.addChild( widget );
 </haxe>
 
-To dynamically manage widget's children, use ordinary <type>nme.display.DisplayObjectContainer</type> methods:
+To dynamically manage widget's children, use ordinary <type>flash.display.DisplayObjectContainer</type> methods:
 
 <haxe>
 widget1.addChild(widget2);

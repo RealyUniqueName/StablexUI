@@ -9,7 +9,7 @@
     h        = "$Lib.current.stage.stageHeight - 20"
     skinName = "'winxp'"
 >
-    <!-- panel with NME logo -->
+    <!-- panel with OpenFL logo -->
     <Box id="'box'" rightPt="5" bottom="10" widthPt="90" heightPt="50" skinName="'green'" on-mouseDown="
         #nme.tween(
             1,
@@ -25,7 +25,7 @@
 
     <!-- Buttons -->
     <HBox id="'buttons'" top="35" widthPt="100" h="40" childPadding="10" align="'center,middle'">
-        <Button skinName="'btnxp'" w="100" h="40" text="'Move nme logo'" on-click="
+        <Button skinName="'btnxp'" w="100" h="40" text="'Move nme. logo'" on-click="
             #nme.tween(
                 1,
                 {x:#box.w * Math.random(), y:#box.h * Math.random()},

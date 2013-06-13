@@ -8,7 +8,7 @@
         w = "200"
         format-color = "0xFFFFFF"
         format-size  = "20"
-        label-filters = "[new nme.filters.GlowFilter()]"
+        label-filters = "[new flash.filters.GlowFilter()]"
 
         skinHoveredName      = "'redHovered'"
         skinPressedName      = "'redPressed'"
@@ -25,7 +25,7 @@
         w = "200"
         format-color  = "0xFFFFFF"
         format-size   = "20"
-        label-filters = "[new nme.filters.GlowFilter()]"
+        label-filters = "[new flash.filters.GlowFilter()]"
 
         order = "['one', 'two', 'three']"
 
@@ -43,7 +43,7 @@
     <Checkbox
         format-color  = "0xFFFFFF"
         format-size   = "20"
-        label-filters = "[new nme.filters.GlowFilter()]"
+        label-filters = "[new flash.filters.GlowFilter()]"
 
         states-up-ico-src   = "'assets/img/haxe24Unchecked.png'"
         states-down-ico-src = "'assets/img/haxe24.png'"
@@ -54,7 +54,7 @@
     <Checkbox
         format-color  = "0xFFFFFF"
         format-size   = "20"
-        label-filters = "[new nme.filters.GlowFilter()]"
+        label-filters = "[new flash.filters.GlowFilter()]"
 
         states-up-ico-src   = "'assets/img/haxe24Unchecked.png'"
         states-down-ico-src = "'assets/img/haxe24.png'"
@@ -68,7 +68,7 @@
         <Radio
             format-color  = "0xFFFFFF"
             format-size   = "20"
-            label-filters = "[new nme.filters.GlowFilter()]"
+            label-filters = "[new flash.filters.GlowFilter()]"
 
             states-up-ico-src   = "'assets/img/haxe24Unchecked.png'"
             states-down-ico-src = "'assets/img/haxe24.png'"
@@ -80,7 +80,7 @@
         <Radio
             format-color  = "0xFFFFFF"
             format-size   = "20"
-            label-filters = "[new nme.filters.GlowFilter()]"
+            label-filters = "[new flash.filters.GlowFilter()]"
 
             states-up-ico-src   = "'assets/img/haxe24Unchecked.png'"
             states-down-ico-src = "'assets/img/haxe24.png'"

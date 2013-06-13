@@ -1,7 +1,7 @@
 package ru.stablex.ui.skins;
 
-import #if nme nme #else flash #end.display.GradientType;
-import #if nme nme #else flash #end.geom.Matrix;
+import flash.display.GradientType;
+import flash.geom.Matrix;
 import ru.stablex.ui.widgets.Widget;
 
 

@@ -8,14 +8,8 @@ import sys.io.File;
 #else
 import ru.stablex.ui.skins.Skin;
 import Type;
-#if nme
-import nme.text.TextField;
-#elseif openfl
-import flash.text.TextField;
-#end
 import ru.stablex.ui.widgets.Widget;
 #end
-
 
 #if haxe3
 private typedef Hash<T> = Map<String,T>;
@@ -87,7 +81,7 @@ class UIBuilder {
     * If you get any compiler errors on your xml files, you can find corresponding
     * file with generated code to find out what was wrong.
     */
-    #if haxe3 macro #else @:macro #end static public function saveCodeTo (dir:String) : Expr {
+    macro static public function saveCodeTo (dir:String) : Expr {
         var endSlash : EReg = ~/(\/|\\)$/;
         if( !endSlash.match(dir) ){
             dir += '/';
@@ -106,15 +100,10 @@ class UIBuilder {
     * @param defaultsXmlFile - path to xml file with default settings for widgets
     * @param enableRTXml - if you need to process xml at runtime, set this parameter to true
     */
-    #if haxe3 macro #else @:macro #end static public function init(defaultsXmlFile:String = null, enableRTXml:Bool = false) : Expr {
-		#if nme
-			var code : String = '\nnme.Lib.current.stage.removeEventListener(nme.events.Event.ENTER_FRAME, ru.stablex.ui.UIBuilder.skinQueue);';
-			code += '\nnme.Lib.current.stage.addEventListener(nme.events.Event.ENTER_FRAME, ru.stablex.ui.UIBuilder.skinQueue);';
-		#else
-			var code : String = '\nflash.Lib.current.stage.removeEventListener(flash.events.Event.ENTER_FRAME, ru.stablex.ui.UIBuilder.skinQueue);';
-			code += '\nflash.Lib.current.stage.addEventListener(flash.events.Event.ENTER_FRAME, ru.stablex.ui.UIBuilder.skinQueue);';
-		#end
-		
+    macro static public function init(defaultsXmlFile:String = null, enableRTXml:Bool = false) : Expr {
+		var code : String = '\nflash.Lib.current.stage.removeEventListener(flash.events.Event.ENTER_FRAME, ru.stablex.ui.UIBuilder.skinQueue);';
+		code += '\nflash.Lib.current.stage.addEventListener(flash.events.Event.ENTER_FRAME, ru.stablex.ui.UIBuilder.skinQueue);';
+
         if( !UIBuilder._initialized ){
             UIBuilder._initialize();
 
@@ -156,20 +145,11 @@ class UIBuilder {
         UIBuilder._initialized = true;
 
         //registering frequently used events
-		#if nme
-		UIBuilder.regEvent('enterFrame',  'nme.events.Event.ENTER_FRAME');
-        UIBuilder.regEvent('click',       'nme.events.MouseEvent.CLICK',                    'nme.events.MouseEvent');
-        UIBuilder.regEvent('mouseDown',   'nme.events.MouseEvent.MOUSE_DOWN',               'nme.events.MouseEvent');
-        UIBuilder.regEvent('mouseUp',     'nme.events.MouseEvent.MOUSE_UP',                 'nme.events.MouseEvent');
-        UIBuilder.regEvent('display',     'nme.events.Event.ADDED_TO_STAGE');
-		#else
 		UIBuilder.regEvent('enterFrame',  'flash.events.Event.ENTER_FRAME');
         UIBuilder.regEvent('click',       'flash.events.MouseEvent.CLICK',                    'flash.events.MouseEvent');
         UIBuilder.regEvent('mouseDown',   'flash.events.MouseEvent.MOUSE_DOWN',               'flash.events.MouseEvent');
         UIBuilder.regEvent('mouseUp',     'flash.events.MouseEvent.MOUSE_UP',                 'flash.events.MouseEvent');
         UIBuilder.regEvent('display',     'flash.events.Event.ADDED_TO_STAGE');
-		#end
-       
         UIBuilder.regEvent('create',      'ru.stablex.ui.events.WidgetEvent.CREATE',        'ru.stablex.ui.events.WidgetEvent');
         UIBuilder.regEvent('free',        'ru.stablex.ui.events.WidgetEvent.FREE',          'ru.stablex.ui.events.WidgetEvent');
         UIBuilder.regEvent('resize',      'ru.stablex.ui.events.WidgetEvent.RESIZE',        'ru.stablex.ui.events.WidgetEvent');
@@ -225,17 +205,11 @@ class UIBuilder {
         UIBuilder.registerClass('ru.stablex.ui.Dnd');
         UIBuilder.registerClass('ru.stablex.TweenSprite');
         UIBuilder.registerClass('ru.stablex.Assets');
-		
-		#if nme
-        UIBuilder.registerClass('nme.events.Event');
-        UIBuilder.registerClass('nme.events.MouseEvent');
-        UIBuilder.registerClass('nme.Lib');
-		#else
+
 		UIBuilder.registerClass('flash.events.Event');
         UIBuilder.registerClass('flash.events.MouseEvent');
         UIBuilder.registerClass('flash.Lib');
-		#end
-		
+
         //register default meta processors
         UIBuilder._createCoreMeta();
     }//function _initialize()
@@ -623,7 +597,7 @@ class UIBuilder {
     *
     * @return <type>Dynamic</type>->Root_Xml_Element_Class<Widget>
     */
-    #if haxe3 macro #else @:macro #end static public function buildFn (xmlFile:String) : Expr{
+    macro static public function buildFn (xmlFile:String) : Expr{
         if( !UIBuilder._initialized ) Err.trigger('Call UIBuilder.init()');
 
         var element = Xml.parse( File.getContent(xmlFile) ).firstElement();
@@ -642,12 +616,12 @@ class UIBuilder {
     /**
     * Register event type to declare event listeners in xml (attributes prefixed with `on-[shortcut]`).
     *
-    * @param eventType - type of event we need to listen to. E.g. nme.events.MouseEvent.MOUSE_WHEEL
-    * @param eventType - expected class of event. E.g. nme.events.MouseEvent.
+    * @param eventType - type of event we need to listen to. E.g. flash.events.MouseEvent.MOUSE_WHEEL
+    * @param eventType - expected class of event. E.g. flash.events.MouseEvent.
     *
     * @throw <type>String</type> if this shortcut is already used
     */
-    #if haxe3 macro #else @:macro #end static public function regEvent (shortcut:String, eventType:String, eventClass:String = 'nme.events.Event') : Expr{
+    macro static public function regEvent (shortcut:String, eventType:String, eventClass:String = 'flash.events.Event') : Expr{
         if( UIBuilder._events.exists(shortcut) ) Err.trigger('Event is already registered: ' + shortcut);
         UIBuilder._events.set(shortcut, [eventType, eventClass]);
         return Context.parse('true', Context.currentPos());
@@ -663,7 +637,7 @@ class UIBuilder {
     * can not be registered simultaneously, because both will be shortened to $MyClass for usage in xml.
     * You still can register one of them and use another one by it's full classpath in xml
     */
-    #if haxe3 macro #else @:macro #end static public function regClass (fullyQualifiedName:String) : Expr{
+    macro static public function regClass (fullyQualifiedName:String) : Expr{
         UIBuilder.registerClass(fullyQualifiedName);
         return Context.parse("true", Context.currentPos());
     }//function regClass()
@@ -675,7 +649,7 @@ class UIBuilder {
     * @throw <type>String</type> if one of tag names in xml does not match ~/^([a-z0-9_]+):([a-z0-9_]+)$/i
     * @throw <type>String</type> if class specified for skin system is not registered with .regClass
     */
-    #if haxe3 macro #else @:macro #end static public function regSkins(xmlFile:String) : Expr {
+    macro static public function regSkins(xmlFile:String) : Expr {
         if( !UIBuilder._initialized ) Err.trigger('Call UIBuilder.init() first');
 
         var element = Xml.parse( File.getContent(xmlFile) ).firstElement();
@@ -714,7 +688,7 @@ class UIBuilder {
     * @param xmlFile - source markup file for new class
     * @param cls - fully qualified class name for new class (E.g. 'com.example.MyFancyWidget')
     */
-    #if haxe3 macro #else @:macro #end static public function createClass(xmlFile:String, cls:String) : Expr {
+    macro static public function createClass(xmlFile:String, cls:String) : Expr {
         if( !UIBuilder._initialized ){
             UIBuilder._initialize();
         }
@@ -910,7 +884,7 @@ class UIBuilder {
     * Process skin UIBuilder._skinQueue
     * @private
     */
-    static public function skinQueue (e:#if nme nme #else flash #end.events.Event = null) : Void {
+    static public function skinQueue (e:flash.events.Event = null) : Void {
         //if there is something to render in queue
         if( UIBuilder._skinQueue.length > 0 ){
             //get list we're going to process

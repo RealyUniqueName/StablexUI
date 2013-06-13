@@ -1,7 +1,7 @@
 package ru.stablex.ui.widgets;
 
-import #if nme nme #else flash #end.text.TextField;
-import #if nme nme #else flash #end.text.TextFormat;
+import flash.text.TextField;
+import flash.text.TextFormat;
 import ru.stablex.Err;
 import ru.stablex.ui.UIBuilder;
 
@@ -10,7 +10,7 @@ import ru.stablex.ui.UIBuilder;
 * Text field
 */
 class Text extends Box{
-    //<type>nme.display.TextField</type> used to render text
+    //<type>flash.display.TextField</type> used to render text
     public var label  : TextField;
     //Text format wich will be aplied to label on refresh
     public var format : TextFormat;
@@ -31,7 +31,7 @@ class Text extends Box{
         super();
 
         this.label = cast(this.addChild(new TextField()), TextField);
-        this.label.autoSize   = #if nme nme #else flash #end.text.TextFieldAutoSize.LEFT;
+        this.label.autoSize   = flash.text.TextFieldAutoSize.LEFT;
         this.label.multiline  = true;
         // this.label.embedFonts = true;
 

@@ -1,6 +1,6 @@
 package ru.stablex.ui.widgets;
 
-import #if nme nme #else flash #end.events.MouseEvent;
+import flash.events.MouseEvent;
 import ru.stablex.ui.misc.RadioGroup;
 
 

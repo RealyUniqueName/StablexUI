@@ -28,7 +28,7 @@ Here is a sample main class with StablexUI initialization:
 /**
 * Main class of an application
 */
-class Test extends nme.display.Sprite{
+class Test extends flash.display.Sprite{
 
     /**
     * Entry point

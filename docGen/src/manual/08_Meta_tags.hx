@@ -96,7 +96,7 @@ class Test{
     */
     static public function main(){
         ru.stablex.ui.UIBuilder.UIBuilder.regClass('Test');
-        nme.Lib.current.addChild( ru.stablex.ui.UIBuilder.buildFn('ui.xml')({
+        flash.Lib.current.addChild( ru.stablex.ui.UIBuilder.buildFn('ui.xml')({
             test : new Test()
         }) );
     }

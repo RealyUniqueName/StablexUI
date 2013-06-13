@@ -49,7 +49,7 @@
             </VBox>
         </TabPage>
 
-        <TabPage title-text="'NME'">
+        <TabPage title-text="'OpenFL'">
             <VBox widthPt="100" heightPt="100">
                 <Bmp src="'ui/android/img/nme.png'"/>
             </VBox>

@@ -1,9 +1,9 @@
 package ru.stablex.ui;
 
-import #if nme nme #else flash #end.display.DisplayObjectContainer;
-import #if nme nme #else flash #end.events.MouseEvent;
-import #if nme nme #else flash #end.geom.Point;
-import #if nme nme #else flash #end.Lib;
+import flash.display.DisplayObjectContainer;
+import flash.events.MouseEvent;
+import flash.geom.Point;
+import flash.Lib;
 import ru.stablex.ui.events.DndEvent;
 import ru.stablex.ui.widgets.Widget;
 import motion.actuators.GenericActuator;
@@ -28,8 +28,8 @@ class Dnd {
     * @param w - widget to drag
     * @param dragArea - widget will be added to dragArea's display list for dragging
     * @param key - key to filter dropped objects on <type>ru.stablex.ui.events.DndEvent</type>.RECEIVE. Any string you wish.
-    * @param dropOnRelease - if true, <type>ru.stablex.ui.events.DndEvent</type>.RECEIVE will be dispatched on next <type>nme.events.MouseEvent</type>.MOUSE_UP.
-    *                        If false, <type>ru.stablex.ui.events.DndEvent</type>.RECEIVE will be dispatched on next <type>nme.events.MouseEvent</type>.MOUSE_DOWN.
+    * @param dropOnRelease - if true, <type>ru.stablex.ui.events.DndEvent</type>.RECEIVE will be dispatched on next <type>flash.events.MouseEvent</type>.MOUSE_UP.
+    *                        If false, <type>ru.stablex.ui.events.DndEvent</type>.RECEIVE will be dispatched on next <type>flash.events.MouseEvent</type>.MOUSE_DOWN.
     */
     static public function drag(w:Widget, dragArea:DisplayObjectContainer = null, key:String = null, dropOnRelease:Bool = true) : Void {
         //if we still did not drop previousely dragged widget

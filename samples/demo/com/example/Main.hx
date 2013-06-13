@@ -1,8 +1,8 @@
 package com.example;
 
-import nme.display.StageAlign;
-import nme.display.StageScaleMode;
-import nme.Lib;
+import flash.display.StageAlign;
+import flash.display.StageScaleMode;
+import flash.Lib;
 import ru.stablex.ui.UIBuilder;
 
 
@@ -44,8 +44,8 @@ class Main extends ru.stablex.ui.widgets.Widget{
         UIBuilder.buildFn('ui/index.xml')().show();
 
         // // FPS counter {
-        //     var fps : nme.display.FPS = cast Lib.current.stage.addChild(new nme.display.FPS());
-        //     var format = new nme.text.TextFormat (nme.Assets.getFont ("ui/android/fonts/regular.ttf").fontName, 12, 0xFFFFFF);
+        //     var fps : flash.display.FPS = cast Lib.current.stage.addChild(new flash.display.FPS());
+        //     var format = new flash.text.TextFormat (flash.Assets.getFont ("ui/android/fonts/regular.ttf").fontName, 12, 0xFFFFFF);
         //     fps.defaultTextFormat = format;
         //     fps.selectable = false;
         //     fps.embedFonts = true;

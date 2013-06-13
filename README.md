@@ -1,7 +1,7 @@
 StablexUI
 =========
 
-Macro driven ui engine for Haxe NME. It's designed to give developer as much freedom as possible in customizing UI.
+Macro driven ui engine for Haxe OpenFL It's designed to give developer as much freedom as possible in customizing UI.
 Supported targets: cpp (iOS, Android, Blackberry, webOS, Windows, Linux, MacOS), flash, html5, neko.
 
 Online docs for API and basic features: http://ui.stablex.ru/doc
@@ -35,7 +35,7 @@ Features:
 * Relative positioning (you can define position  by any border of element - left, right, top, bottom in pixels or percentage of parent's size. Define width/height in percentage etc);
 * You can write haxe code right in attributes in xml to acces anything from anywhere! For example:
 ```xml
-<Text text="'Hello world!'" x="nme.Lib.current.stage.stageWidth/2" />
+<Text text="'Hello world!'" x="flash.Lib.current.stage.stageWidth/2" />
 ```
 * Easy skinning with 3-slice-scaling, 9-slice-scaling, tiling with texture, filling with color, gradient fill or your own custom skin processor;
 * Flexible layout system (including custom layouts);

@@ -1,9 +1,9 @@
 package ru.stablex.ui.widgets;
 
-import #if nme nme #else flash #end.display.BitmapData;
-import #if nme nme #else flash #end.geom.Matrix;
-import #if nme nme #else flash #end.geom.Rectangle;
-import #if nme nme #else flash #end.geom.Point;
+import flash.display.BitmapData;
+import flash.geom.Matrix;
+import flash.geom.Rectangle;
+import flash.geom.Point;
 import ru.stablex.Err;
 
 

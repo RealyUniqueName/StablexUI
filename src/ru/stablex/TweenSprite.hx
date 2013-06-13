@@ -14,13 +14,8 @@ import motion.easing.Quart;
 import motion.easing.Cubic;
 import motion.easing.Sine;
 
-#if nme
-import nme.display.DisplayObject;
-import nme.display.Sprite;
-#else
 import flash.display.DisplayObject;
 import flash.display.Sprite;
-#end
 
 /**
 * class TweenSprite implements easy access to <type>motion.Actuate</type> methods and manages registered
@@ -38,7 +33,7 @@ class TweenSprite extends Sprite{
 
 
     /**
-    * Equal to <type>nme.display.Sprite</type>.addEventListener except this ignores `useCapture` and does not support weak references.
+    * Equal to <type>flash.display.Sprite</type>.addEventListener except this ignores `useCapture` and does not support weak references.
     *
     */
     override public function addEventListener (type:String, listener:Dynamic->Void, useCapture:Bool = false, priority:Int = 0, useWeakReference:Bool = false) : Void{
@@ -85,7 +80,7 @@ class TweenSprite extends Sprite{
 
 
     /**
-    * Equal to <type>nme.display.Sprite</type>.removeEventListener except this ignores `useCapture`
+    * Equal to <type>flash.display.Sprite</type>.removeEventListener except this ignores `useCapture`
     *
     */
     override public function removeEventListener (type:String, listener:Dynamic->Void, useCapture:Bool = false) : Void{

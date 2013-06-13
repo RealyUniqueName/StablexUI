@@ -1,9 +1,9 @@
 package ru.stablex.ui.widgets;
 
-import #if nme nme #else flash #end.display.DisplayObject;
-import #if nme nme #else flash #end.events.MouseEvent;
-import #if nme nme #else flash #end.geom.Rectangle;
-import #if nme nme #else flash #end.Lib;
+import flash.display.DisplayObject;
+import flash.events.MouseEvent;
+import flash.geom.Rectangle;
+import flash.Lib;
 import ru.stablex.ui.events.WidgetEvent;
 import ru.stablex.ui.skins.Skin;
 

@@ -1,14 +1,9 @@
 package ru.stablex.ui.widgets;
 
-#if nme
-import nme.display.DisplayObject;
-import nme.display.DisplayObjectContainer;
-import nme.geom.Rectangle;
-#else
+
 import flash.display.DisplayObject;
 import flash.display.DisplayObjectContainer;
 import flash.geom.Rectangle;
-#end
 import ru.stablex.TweenSprite;
 import ru.stablex.ui.events.WidgetEvent;
 import ru.stablex.ui.layouts.Layout;

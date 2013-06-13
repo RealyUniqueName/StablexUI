@@ -6,7 +6,7 @@ import ru.stablex.ui.UIBuilder;
 /**
 * StablexUI example for Clock widget
 */
-class Main extends nme.display.Sprite{
+class Main extends flash.display.Sprite{
 
     /**
     * Enrty point
@@ -17,7 +17,7 @@ class Main extends nme.display.Sprite{
         UIBuilder.init();
 
         //Create UI and attach it to root display object
-        nme.Lib.current.addChild( UIBuilder.buildFn('clock.xml')() );
+        flash.Lib.current.addChild( UIBuilder.buildFn('clock.xml')() );
     }//function main()
 
 

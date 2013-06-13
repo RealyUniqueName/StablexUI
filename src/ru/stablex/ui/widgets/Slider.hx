@@ -1,8 +1,8 @@
 package ru.stablex.ui.widgets;
 
-import #if nme nme #else flash #end.events.Event;
-import #if nme nme #else flash #end.events.MouseEvent;
-import #if nme nme #else flash #end.Lib;
+import flash.events.Event;
+import flash.events.MouseEvent;
+import flash.Lib;
 import ru.stablex.ui.events.WidgetEvent;
 
 

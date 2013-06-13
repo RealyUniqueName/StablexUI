@@ -2,8 +2,8 @@
 @manual Nested properties
 
 In xml you can define `properties of properties of &lt;indefinite deep&gt;` of widgets.
-For example <type>ru.stablex.ui.widgets.Text</type> widget has property 'label' wich is of type <type>nme.text.TextField</type>.
-lets set `selectable` property of <type>nme.text.TextField</type> to false:
+For example <type>ru.stablex.ui.widgets.Text</type> widget has property 'label' wich is of type <type>flash.text.TextField</type>.
+lets set `selectable` property of <type>flash.text.TextField</type> to false:
 
 <xml>
 <?xml version="1.0" encoding="UTF-8"?>
@@ -87,7 +87,7 @@ var widget : ru.stablex.ui.widgets.Button = ... // UIBuilder actions to create w
 if( widget.skin == null ) widget.skin = new ru.stablex.ui.skins.Paint();
 cast(widget.skin, ru.stablex.ui.skins.Paint).color  = 0x002200;
 widget.text = 'Click me';
-widget.addEventListener(nme.events.MouseEvent.CLICK, function(event:nme.events.MouseEvent){
+widget.addEventListener(flash.events.MouseEvent.CLICK, function(event:flash.events.MouseEvent){
     trace('Oops! You clicked it again!');'
 })
 widget.skin = skin;
@@ -98,11 +98,11 @@ widget.onCreate();
 There are some predefined handler types for most frequently used events:
 (may be out of date, see <type>ru.stablex.ui.UIBuilder</type>.init() source code for full list)
 <haxe>
-on-enterFrame  -&gt; nme.events.Event.ENTER_FRAME
-on-click       -&gt; nme.events.MouseEvent.CLICK
-on-mouseDown   -&gt; nme.events.MouseEvent.MOUSE_DOWN
-on-mouseUp     -&gt; nme.events.MouseEvent.MOUSE_UP
-on-display     -&gt; nme.events.Event.ADDED_TO_STAGE
+on-enterFrame  -&gt; flash.events.Event.ENTER_FRAME
+on-click       -&gt; flash.events.MouseEvent.CLICK
+on-mouseDown   -&gt; flash.events.MouseEvent.MOUSE_DOWN
+on-mouseUp     -&gt; flash.events.MouseEvent.MOUSE_UP
+on-display     -&gt; flash.events.Event.ADDED_TO_STAGE
 on-create      -&gt; ru.stablex.ui.events.WidgetEvent.CREATE
 on-free        -&gt; ru.stablex.ui.events.WidgetEvent.FREE
 on-resize      -&gt; ru.stablex.ui.events.WidgetEvent.RESIZE
@@ -118,12 +118,12 @@ on-receiveDrop -&gt; ru.stablex.ui.events.DndEvent.RECEIVE
 @manual Custom handlers
 
 You can define your own event shortcuts for xml handlers.
-Let's register shortcut for <type>nme.events.MouseEvent</type>.MOUSE_WHEEL event.
+Let's register shortcut for <type>flash.events.MouseEvent</type>.MOUSE_WHEEL event.
 To complete this task, we need to execute following code before <type>ru.stablex.ui.UIBuilder</type>.init() :
 
 <haxe>
  //last argument is optional. See API for details.
- ru.stablex.ui.UIBuilder.regEvent('mouseWheel', 'nme.events.MouseEvent.MOUSE_WHEEL', 'nme.events.MouseEvent');
+ ru.stablex.ui.UIBuilder.regEvent('mouseWheel', 'flash.events.MouseEvent.MOUSE_WHEEL', 'flash.events.MouseEvent');
 
 //initialize StablexUI
  ru.stablex.ui.UIBuilder.init();
@@ -144,7 +144,7 @@ var widget : ru.stablex.ui.widgets.Button = ... // UIBuilder actions to create w
 if( widget.skin == null ) widget.skin = new ru.stablex.ui.skins.Paint();
 cast(widget.skin, ru.stablex.ui.skins.Paint).color  = 0x002200;
 widget.text    = 'Use mouse wheel over me';
-widget.addEventListener(nme.events.MouseEvent.MOUSE_WHEEL, function(event:nme.events.MouseEvent){
+widget.addEventListener(flash.events.MouseEvent.MOUSE_WHEEL, function(event:flash.events.MouseEvent){
     trace('Oops! You wheel it again!');
 });
 widget.skin = skin;
@@ -192,7 +192,7 @@ widget.w       = 100;
 widget.h       = 200;
 if( widget.skin == null ) widget.skin = new ru.stablex.ui.skins.Paint();
 cast(widget.skin, ru.stablex.ui.skins.Paint).color  = 0x002200;
-widget.addEventListener(nme.events.MouseEvent.CLICK, function(event:nme.events.Event){
+widget.addEventListener(flash.events.MouseEvent.CLICK, function(event:flash.events.Event){
     trace( widget.w ); //output: 100
 });
 widget.skin = skin;
@@ -206,13 +206,13 @@ Let's imagine we have following class:
 <haxe>
  package com.packg;
 
-import nme.Lib;
+import flash.Lib;
 import ru.stablex.ui.UIBuilder;
 
 /**
 * Random testing
 */
-class MyClass extends nme.display.Sprite{
+class MyClass extends flash.display.Sprite{
     static public inline var TEST = 'here is MyClass';
 
     /**
@@ -266,10 +266,10 @@ Here are some of them:
  ru.stablex.ui.skins.Slice9;
  ru.stablex.TweenSprite;
  ru.stablex.ui.UIBuilder;
- nme.Lib;
+ flash.Lib;
  ru.stablex.Assets;
- nme.events.Event;
- nme.events.MouseEvent;
+ flash.events.Event;
+ flash.events.MouseEvent;
 </pre>
 
 <h3>#widgetId</h3>
@@ -358,9 +358,9 @@ And the last file we need - main class for project. Here is the code for Main.hx
 <haxe>
  package;
 
-import nme.display.StageAlign;
-import nme.display.StageScaleMode;
-import nme.Lib;
+import flash.display.StageAlign;
+import flash.display.StageScaleMode;
+import flash.Lib;
 import ru.stablex.ui.UIBuilder;
 
 /**
@@ -368,7 +368,7 @@ import ru.stablex.ui.UIBuilder;
 * Section: Xml arguments (`@someArg` placeholder)
 *
 */
-class Main extends nme.display.Sprite{
+class Main extends flash.display.Sprite{
     /**
     * Enrty point
     *

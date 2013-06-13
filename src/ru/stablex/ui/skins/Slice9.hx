@@ -1,9 +1,9 @@
 package ru.stablex.ui.skins;
 
-import #if nme nme #else flash #end.display.BitmapData;
-import #if nme nme #else flash #end.geom.Matrix;
-import #if nme nme #else flash #end.geom.Point;
-import #if nme nme #else flash #end.geom.Rectangle;
+import flash.display.BitmapData;
+import flash.geom.Matrix;
+import flash.geom.Point;
+import flash.geom.Rectangle;
 import ru.stablex.Assets;
 import ru.stablex.ui.widgets.Widget;
 

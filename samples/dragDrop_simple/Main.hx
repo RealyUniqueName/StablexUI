@@ -1,13 +1,13 @@
 package ;
 
-import nme.Lib;
+import flash.Lib;
 import ru.stablex.ui.UIBuilder;
 
 
 /**
 * Simple demo project for StablexUI
 */
-class Main extends nme.display.Sprite{
+class Main extends flash.display.Sprite{
 
     /**
     * Enrty point

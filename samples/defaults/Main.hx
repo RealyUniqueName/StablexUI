@@ -1,15 +1,15 @@
 package;
 
-import nme.display.StageAlign;
-import nme.display.StageScaleMode;
-import nme.Lib;
+import flash.display.StageAlign;
+import flash.display.StageScaleMode;
+import flash.Lib;
 import ru.stablex.ui.UIBuilder;
 
 
 /**
 * Simple demo project for StablexUI
 */
-class Main extends nme.display.Sprite{
+class Main extends flash.display.Sprite{
 
     /**
     * Enrty point

@@ -71,7 +71,7 @@ Now, to demonstrate it in action, create `main.xml`:
 And don't forget to register new widget in StablexUI:
 
 <haxe>
-class Main extends nme.display.Sprite{
+class Main extends flash.display.Sprite{
     /**
     * Enrty point
     *
@@ -85,7 +85,7 @@ class Main extends nme.display.Sprite{
         ru.stablex.ui.UIBuilder.init();
 
         //Create our UI
-        nme.Lib.current.addChild( ru.stablex.ui.UIBuilder.buildFn('main.xml')() );
+        flash.Lib.current.addChild( ru.stablex.ui.UIBuilder.buildFn('main.xml')() );
     }//function main()
 }//class Main
 </haxe>
