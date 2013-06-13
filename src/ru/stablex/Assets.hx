@@ -21,7 +21,7 @@ class Assets{
     *
     */
     static dynamic public function getBitmapData(src:String, useCache:Bool = true) : flash.display.BitmapData {
-        return openfl.Assets.getBitmapData(src, useCache);
+        return #if openfl openfl.Assets.getBitmapData(src, useCache) #else null #end;
     }//function getBitmapData()
 
 
@@ -30,7 +30,7 @@ class Assets{
     *
     */
     static dynamic public function getBytes(src:String) : flash.utils.ByteArray {
-        return openfl.Assets.getBytes(src);
+        return #if openfl openfl.Assets.getBytes(src) #else null #end;
     }//function getBytes()
 
 
@@ -40,7 +40,7 @@ class Assets{
     *
     */
     static public inline function getFont(src:String) : flash.text.Font {
-        return openfl.Assets.getFont(src);
+        return #if openfl openfl.Assets.getFont(src) #else null #end;
     }//function getFont()
 
 
@@ -49,7 +49,7 @@ class Assets{
     *
     */
     static dynamic public function getSound(src:String) : flash.media.Sound {
-        return openfl.Assets.getSound(src);
+        return #if openfl openfl.Assets.getSound(src) #else null #end;
     }//function getSound()
 
 
@@ -58,7 +58,7 @@ class Assets{
     *
     */
     static dynamic public function getText(src:String) : String {
-        return openfl.Assets.getText(src);
+        return #if openfl openfl.Assets.getText(src) #else null #end;
     }//function getText()
 
 #end
