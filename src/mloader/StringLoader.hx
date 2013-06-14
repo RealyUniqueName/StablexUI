@@ -34,8 +34,15 @@ class StringLoader extends HttpLoader<String>
 	@param url  the url to load the resource from
 	@param http optional Http instance to use for the load request
 	*/
+    #if openfl    
+	public function new(?url:String)
+	{
+		super(url);
+	}
+    #else
 	public function new(?url:String, ?http:Http)
 	{
 		super(url, http);
 	}
+    #end
 }

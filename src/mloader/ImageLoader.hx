@@ -75,9 +75,9 @@ class ImageLoader extends LoaderBase<js.Dom.Image>
 	}
 }
 
-#elseif (flash || nme )
+#elseif (flash || openfl )
 
-import nme.display.BitmapData;
+import flash.display.BitmapData;
 
 /**
 Loads BitmapData from a defined url.
@@ -85,40 +85,40 @@ Loads BitmapData from a defined url.
 
 class ImageLoader extends LoaderBase<BitmapData>
 {
-	var loader:nme.display.Loader;
+	var loader:flash.display.Loader;
 
 	public function new(?url:String)
 	{
 		super(url);
 
-		loader = new nme.display.Loader();
+		loader = new flash.display.Loader();
 
 		var loaderInfo = loader.contentLoaderInfo;
-		loaderInfo.addEventListener(nme.events.ProgressEvent.PROGRESS, loaderProgressed);
-		loaderInfo.addEventListener(nme.events.Event.COMPLETE, loaderCompleted);
-		loaderInfo.addEventListener(nme.events.IOErrorEvent.IO_ERROR, loaderErrored);
+		loaderInfo.addEventListener(flash.events.ProgressEvent.PROGRESS, loaderProgressed);
+		loaderInfo.addEventListener(flash.events.Event.COMPLETE, loaderCompleted);
+		loaderInfo.addEventListener(flash.events.IOErrorEvent.IO_ERROR, loaderErrored);
 	}
 
 	override function loaderLoad()
 	{
-		#if nme
+		#if openfl
 		if (url.indexOf("http://") == 0 || url.indexOf("https://") == 0)
 		{
-			loader.load(new nme.net.URLRequest(url));
+			loader.load(new flash.net.URLRequest(url));
 		}
 		else
 		{
-			content = nme.Assets.getBitmapData(url);
+			content = openfl.Assets.getBitmapData(url);
 			loaderComplete();
 		}
 		#else
-			loader.load(new nme.net.URLRequest(url));
+			loader.load(new flash.net.URLRequest(url));
 		#end
 	}
 
 	override function loaderCancel()
 	{
-		#if !nme loader.close(); #end
+		#if !openfl loader.close(); #end
 	}
 	
 	function loaderProgressed(event)

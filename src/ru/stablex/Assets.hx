@@ -16,7 +16,7 @@ class Assets{
 
 #if !macro
     /**
-    * By default it is equal to flash.Assets.getBitmapData
+    * By default it is equal to openfl.Assets.getBitmapData
     *
     */
     static dynamic public function getBitmapData(src:String, useCache:Bool = true) : flash.display.BitmapData {
@@ -25,7 +25,7 @@ class Assets{
 
 
     /**
-    * By default it is equal to flash.Assets.getBytes
+    * By default it is equal to openfl.Assets.getBytes
     *
     */
     static dynamic public function getBytes(src:String) : flash.utils.ByteArray {
@@ -34,7 +34,7 @@ class Assets{
 
 
     /**
-    * It is equal to flash.Assets.getFont and can not be overriden due to some strange bug:
+    * It is equal to openfl.Assets.getFont and can not be overriden due to some strange bug:
     * if this method is declared as dynamic, cpp fails to compile (hxcpp 2.10.2)
     *
     */
@@ -44,7 +44,7 @@ class Assets{
 
 
     /**
-    * By default it is equal to flash.Assets.getSound
+    * By default it is equal to openfl.Assets.getSound
     *
     */
     static dynamic public function getSound(src:String) : flash.media.Sound {
@@ -53,7 +53,7 @@ class Assets{
 
 
     /**
-    * By default it is equal to flash.Assets.getText
+    * By default it is equal to openfl.Assets.getText
     *
     */
     static dynamic public function getText(src:String) : String {

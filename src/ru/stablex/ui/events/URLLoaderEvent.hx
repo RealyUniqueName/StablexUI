@@ -1,6 +1,6 @@
 package ru.stablex.ui.events;
 
-import nme.events.Event;
+import flash.events.Event;
 /**
  * ...
  * @author Darcy.G

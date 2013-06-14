@@ -2,6 +2,7 @@ package ru.stablex.ui.widgets;
 
 import flash.text.TextField;
 import flash.text.TextFormat;
+import flash.events.Event;
 import ru.stablex.Err;
 import ru.stablex.ui.UIBuilder;
 

@@ -59,7 +59,7 @@ class HttpMock extends Http
 		}
 		else
 		{
-			#if (flash||js||nme)
+			#if (flash||js||openfl)
 				#if haxe3
 				haxe.Timer.delay(respond.bind(responder.response), responder.delay);
 				#else

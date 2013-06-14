@@ -148,14 +148,15 @@ class UIBuilder {
 
         //registering frequently used events
         UIBuilder.regEvent('enterFrame',    'flash.events.Event.ENTER_FRAME');
-        UIBuilder.regEvent('click',         'flash.events.MouseEvent.CLICK',                    'nme.events.MouseEvent');
-        UIBuilder.regEvent('mouseDown',     'flash.events.MouseEvent.MOUSE_DOWN',               'nme.events.MouseEvent');
-        UIBuilder.regEvent('mouseUp',       'flash.events.MouseEvent.MOUSE_UP',                 'nme.events.MouseEvent');
+        UIBuilder.regEvent('click',         'flash.events.MouseEvent.CLICK',                    'flash.events.MouseEvent');
+        UIBuilder.regEvent('mouseDown',     'flash.events.MouseEvent.MOUSE_DOWN',               'flash.events.MouseEvent');
+        UIBuilder.regEvent('mouseUp',       'flash.events.MouseEvent.MOUSE_UP',                 'flash.events.MouseEvent');
         UIBuilder.regEvent('display',       'flash.events.Event.ADDED_TO_STAGE');
         UIBuilder.regEvent('create',        'ru.stablex.ui.events.WidgetEvent.CREATE',        'ru.stablex.ui.events.WidgetEvent');
         UIBuilder.regEvent('free',          'ru.stablex.ui.events.WidgetEvent.FREE',          'ru.stablex.ui.events.WidgetEvent');
         UIBuilder.regEvent('resize',        'ru.stablex.ui.events.WidgetEvent.RESIZE',        'ru.stablex.ui.events.WidgetEvent');
         UIBuilder.regEvent('change',        'ru.stablex.ui.events.WidgetEvent.CHANGE',        'ru.stablex.ui.events.WidgetEvent');
+        UIBuilder.regEvent('initChange',    'ru.stablex.ui.events.WidgetEvent.INITIAL_CHANGE','ru.stablex.ui.events.WidgetEvent');
         UIBuilder.regEvent('scrollStart',   'ru.stablex.ui.events.WidgetEvent.SCROLL_START',  'ru.stablex.ui.events.WidgetEvent');
         UIBuilder.regEvent('scrollStop',    'ru.stablex.ui.events.WidgetEvent.SCROLL_STOP',   'ru.stablex.ui.events.WidgetEvent');
         UIBuilder.regEvent('drag',          'ru.stablex.ui.events.DndEvent.DRAG',             'ru.stablex.ui.events.DndEvent');
@@ -201,13 +202,17 @@ class UIBuilder {
         UIBuilder.registerClass('ru.stablex.ui.widgets.Slider');
         UIBuilder.registerClass('ru.stablex.ui.widgets.Switch');
         UIBuilder.registerClass('ru.stablex.ui.widgets.Clock');
-        UIBuilder.registerClass('ru.stablex.ui.widgets.RotateWidget');
         UIBuilder.registerClass('ru.stablex.ui.widgets.WebView');
         UIBuilder.registerClass('ru.stablex.ui.widgets.Image');
         UIBuilder.registerClass('ru.stablex.ui.widgets.BmpPlus');
+        UIBuilder.registerClass('ru.stablex.ui.widgets.SVGImage');
+        UIBuilder.registerClass('ru.stablex.ui.widgets.PowerWidget');
+        UIBuilder.registerClass('ru.stablex.ui.widgets.RotateWidget');
+
         UIBuilder.registerClass('ru.stablex.ui.events.WidgetEvent');
         UIBuilder.registerClass('ru.stablex.ui.events.DndEvent');
         UIBuilder.registerClass('ru.stablex.ui.events.ScrollEvent');
+        
         UIBuilder.registerClass('ru.stablex.ui.skins.Rect');
         UIBuilder.registerClass('ru.stablex.ui.skins.Paint');
         UIBuilder.registerClass('ru.stablex.ui.skins.Gradient');
@@ -216,15 +221,20 @@ class UIBuilder {
         UIBuilder.registerClass('ru.stablex.ui.skins.Slice9');
         UIBuilder.registerClass('ru.stablex.ui.skins.Layer');
         UIBuilder.registerClass('ru.stablex.ui.skins.Img');
+        
         UIBuilder.registerClass('ru.stablex.ui.layouts.Column');
         UIBuilder.registerClass('ru.stablex.ui.layouts.Row');
+        
         UIBuilder.registerClass('ru.stablex.ui.transitions.Fade');
         UIBuilder.registerClass('ru.stablex.ui.transitions.Slide');
         UIBuilder.registerClass('ru.stablex.ui.transitions.Scale');
+        
         UIBuilder.registerClass('ru.stablex.ui.UIBuilder');
         UIBuilder.registerClass('ru.stablex.ui.Dnd');
+        
         UIBuilder.registerClass('ru.stablex.TweenSprite');
         UIBuilder.registerClass('ru.stablex.Assets');
+        
         UIBuilder.registerClass('flash.events.Event');
         UIBuilder.registerClass('flash.events.MouseEvent');
         UIBuilder.registerClass('flash.Lib');
@@ -640,7 +650,7 @@ class UIBuilder {
     *
     * @throw <type>String</type> if this shortcut is already used
     */
-    #if haxe3 macro #else @:macro #end static public function regEvent (shortcut:String, eventType:String, eventClass:String = 'nme.events.Event') : Expr{
+    #if haxe3 macro #else @:macro #end static public function regEvent (shortcut:String, eventType:String, eventClass:String = 'flash.events.Event') : Expr{
         if( UIBuilder._events.exists(shortcut) ) Err.trigger('Event is already registered: ' + shortcut);
         UIBuilder._events.set(shortcut, [eventType, eventClass]);
         return Context.parse('true', Context.currentPos());

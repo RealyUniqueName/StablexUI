@@ -18,6 +18,8 @@ class WidgetEvent extends Event{
     static public inline var INITIAL_RESIZE = 'widgetInitialResize';
     //Dispatched when widget value/state is changed (check boxes, radio buttons, toggles etc.)
     static public inline var CHANGE         = 'widgetChange';
+    //
+    static public inline var INITIAL_CHANGE = 'widgetInitialChange';
     //Dispatched when scrolling was started
     static public inline var SCROLL_START   = 'widgetScrollStart';
     //Dispatched when scrolling was stopped
