@@ -1,6 +1,6 @@
 package ru.stablex.ui.transitions;
 
-import nme.display.DisplayObject;
+import flash.display.DisplayObject;
 import ru.stablex.ui.widgets.Widget;
 import ru.stablex.ui.widgets.ViewStack;
 

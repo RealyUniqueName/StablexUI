@@ -1,8 +1,8 @@
 package ru.stablex.ui.widgets;
 
-import nme.display.DisplayObject;
+import flash.display.DisplayObject;
 import cocktail.api.CocktailView;
-import nme.Lib;
+import flash.Lib;
 import ru.stablex.ui.events.WidgetEvent;
 //import js.Lib;
 /**
@@ -25,7 +25,7 @@ class WebView extends Widget{
 		super();
 		//resizeCallbacks = new List();
 		
-		this.addEventListener( nme.events.Event.ADDED_TO_STAGE, onAdded );
+		this.addEventListener( flash.events.Event.ADDED_TO_STAGE, onAdded );
 	}
 	
     /**
@@ -50,8 +50,8 @@ class WebView extends Widget{
 	
 	function onAdded(_)
 	{
-		this.removeEventListener(nme.events.Event.ADDED_TO_STAGE, onAdded);
-		//this.addEventListener(nme.events.Event.RESIZE, _resize);
+		this.removeEventListener(flash.events.Event.ADDED_TO_STAGE, onAdded);
+		//this.addEventListener(flash.events.Event.RESIZE, _resize);
 		#if ios
 		haxe.Timer.delay(init, 100); // iOS 6
 		#else
@@ -100,7 +100,7 @@ class WebView extends Widget{
 		this.cv = new CocktailView();
 		//function updateViewportPosition()
 		//{
-		//	//place the webview in the flash/NME app
+		//	//place the webview in the flash/NME/openfl app
 		//	trace(this.x + " " + this.y + " " + this.w + " " + this.h);
 		//	this.cv.viewport = { 
 		//		x:Std.int(this.x),

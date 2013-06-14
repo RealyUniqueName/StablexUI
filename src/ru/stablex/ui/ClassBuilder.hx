@@ -77,7 +77,7 @@ class ClassBuilder {
         Context.defineType(clazz);
 
         //register class
-        UIBuilder.registerClass(cls);
+        UIBuilder.registerClass(pack.join(".") + "." + cls);
 
         return Context.makeExpr(true, Context.currentPos());
     }//function createClass()

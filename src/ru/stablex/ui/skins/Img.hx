@@ -2,7 +2,7 @@ package ru.stablex.ui.skins;
 
 import ru.stablex.Assets;
 import ru.stablex.ui.widgets.Widget;
-import nme.display.BitmapData;
+import flash.display.BitmapData;
 
 
 /**

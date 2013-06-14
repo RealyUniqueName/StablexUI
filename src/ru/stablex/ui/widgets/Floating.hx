@@ -1,8 +1,7 @@
 package ru.stablex.ui.widgets;
 
-import nme.events.Event;
-import nme.Lib;
-
+import flash.events.Event;
+import flash.Lib;
 
 
 /**

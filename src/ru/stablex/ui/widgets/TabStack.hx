@@ -1,7 +1,7 @@
 package ru.stablex.ui.widgets;
 
-import nme.display.DisplayObject;
-import nme.events.MouseEvent;
+import flash.display.DisplayObject;
+import flash.events.MouseEvent;
 import ru.stablex.Err;
 import ru.stablex.ui.widgets.StateButton;
 import ru.stablex.ui.widgets.ViewStack;

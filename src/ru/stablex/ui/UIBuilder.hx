@@ -8,7 +8,7 @@ import sys.io.File;
 #else
 import ru.stablex.ui.skins.Skin;
 import Type;
-import nme.text.TextField;
+import flash.text.TextField;
 import ru.stablex.ui.widgets.Widget;
 #end
 
@@ -103,8 +103,8 @@ class UIBuilder {
     * @param enableRTXml - if you need to process xml at runtime, set this parameter to true
     */
     #if haxe3 macro #else @:macro #end static public function init(defaultsXmlFile:String = null, enableRTXml:Bool = false) : Expr {
-        var code : String = '\nnme.Lib.current.stage.removeEventListener(nme.events.Event.ENTER_FRAME, ru.stablex.ui.UIBuilder.skinQueue);';
-        code += '\nnme.Lib.current.stage.addEventListener(nme.events.Event.ENTER_FRAME, ru.stablex.ui.UIBuilder.skinQueue);';
+        var code : String = '\nflash.Lib.current.stage.removeEventListener(flash.events.Event.ENTER_FRAME, ru.stablex.ui.UIBuilder.skinQueue);';
+        code += '\nflash.Lib.current.stage.addEventListener(flash.events.Event.ENTER_FRAME, ru.stablex.ui.UIBuilder.skinQueue);';
 
         if( !UIBuilder._initialized ){
             UIBuilder._initialize();
@@ -147,11 +147,11 @@ class UIBuilder {
         UIBuilder._initialized = true;
 
         //registering frequently used events
-        UIBuilder.regEvent('enterFrame',    'nme.events.Event.ENTER_FRAME');
-        UIBuilder.regEvent('click',         'nme.events.MouseEvent.CLICK',                    'nme.events.MouseEvent');
-        UIBuilder.regEvent('mouseDown',     'nme.events.MouseEvent.MOUSE_DOWN',               'nme.events.MouseEvent');
-        UIBuilder.regEvent('mouseUp',       'nme.events.MouseEvent.MOUSE_UP',                 'nme.events.MouseEvent');
-        UIBuilder.regEvent('display',       'nme.events.Event.ADDED_TO_STAGE');
+        UIBuilder.regEvent('enterFrame',    'flash.events.Event.ENTER_FRAME');
+        UIBuilder.regEvent('click',         'flash.events.MouseEvent.CLICK',                    'nme.events.MouseEvent');
+        UIBuilder.regEvent('mouseDown',     'flash.events.MouseEvent.MOUSE_DOWN',               'nme.events.MouseEvent');
+        UIBuilder.regEvent('mouseUp',       'flash.events.MouseEvent.MOUSE_UP',                 'nme.events.MouseEvent');
+        UIBuilder.regEvent('display',       'flash.events.Event.ADDED_TO_STAGE');
         UIBuilder.regEvent('create',        'ru.stablex.ui.events.WidgetEvent.CREATE',        'ru.stablex.ui.events.WidgetEvent');
         UIBuilder.regEvent('free',          'ru.stablex.ui.events.WidgetEvent.FREE',          'ru.stablex.ui.events.WidgetEvent');
         UIBuilder.regEvent('resize',        'ru.stablex.ui.events.WidgetEvent.RESIZE',        'ru.stablex.ui.events.WidgetEvent');
@@ -225,9 +225,9 @@ class UIBuilder {
         UIBuilder.registerClass('ru.stablex.ui.Dnd');
         UIBuilder.registerClass('ru.stablex.TweenSprite');
         UIBuilder.registerClass('ru.stablex.Assets');
-        UIBuilder.registerClass('nme.events.Event');
-        UIBuilder.registerClass('nme.events.MouseEvent');
-        UIBuilder.registerClass('nme.Lib');
+        UIBuilder.registerClass('flash.events.Event');
+        UIBuilder.registerClass('flash.events.MouseEvent');
+        UIBuilder.registerClass('flash.Lib');
 
         //register default meta processors
         UIBuilder._createCoreMeta();
@@ -635,8 +635,8 @@ class UIBuilder {
     /**
     * Register event type to declare event listeners in xml (attributes prefixed with `on-[shortcut]`).
     *
-    * @param eventType - type of event we need to listen to. E.g. nme.events.MouseEvent.MOUSE_WHEEL
-    * @param eventType - expected class of event. E.g. nme.events.MouseEvent.
+    * @param eventType - type of event we need to listen to. E.g. flash.events.MouseEvent.MOUSE_WHEEL
+    * @param eventType - expected class of event. E.g. flash.events.MouseEvent.
     *
     * @throw <type>String</type> if this shortcut is already used
     */
@@ -903,7 +903,7 @@ class UIBuilder {
     * Process skin UIBuilder._skinQueue
     * @private
     */
-    static public function skinQueue (e:nme.events.Event = null) : Void {
+    static public function skinQueue (e:flash.events.Event = null) : Void {
         //if there is something to render in queue
         if( UIBuilder._skinQueue.length > 0 ){
             //get list we're going to process

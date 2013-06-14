@@ -1,8 +1,8 @@
 package ru.stablex.ui.events;
 
-import nme.display.DisplayObjectContainer;
-import nme.events.Event;
-import nme.geom.Point;
+import flash.display.DisplayObjectContainer;
+import flash.events.Event;
+import flash.geom.Point;
 import ru.stablex.ui.widgets.Widget;
 
 

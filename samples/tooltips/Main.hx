@@ -1,9 +1,9 @@
 package;
 
-import nme.display.Sprite;
-import nme.display.StageAlign;
-import nme.display.StageScaleMode;
-import nme.Lib;
+import flash.display.Sprite;
+import flash.display.StageAlign;
+import flash.display.StageScaleMode;
+import flash.Lib;
 import ru.stablex.ui.UIBuilder;
 
 

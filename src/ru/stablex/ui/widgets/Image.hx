@@ -1,9 +1,9 @@
 package ru.stablex.ui.widgets;
 
-import nme.display.BitmapData;
+import flash.display.BitmapData;
 import mloader.Loader;
 import mloader.ImageLoader;
-import nme.events.Event;
+import flash.events.Event;
 import ru.stablex.ui.events.WidgetEvent;
 import ru.stablex.ui.events.ImageWidgetEvent;
 import ru.stablex.ui.events.URLLoaderEvent;

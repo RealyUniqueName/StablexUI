@@ -1,8 +1,8 @@
 package;
 
-import nme.display.StageAlign;
-import nme.display.StageScaleMode;
-import nme.Lib;
+import flash.display.StageAlign;
+import flash.display.StageScaleMode;
+import flash.Lib;
 import ru.stablex.ui.UIBuilder;
 
 
@@ -25,11 +25,11 @@ class Main extends ru.stablex.ui.widgets.Widget{
         //Than we can use <SomeClass /> in tags and $SomeClass in handlers in xml
         //Look in assets/ui/index.xml for samples
 
-        //If we want to to define handlers for any specific event, say nme.event.MouseEvent.MOUSE_WHEEL
+        //If we want to to define handlers for any specific event, say flash.event.MouseEvent.MOUSE_WHEEL
         //we need to register it like this
-        //  UIBuilder.regEvent("wheel", "nme.event.MouseEvent.MOUSE_WHEEL");
+        //  UIBuilder.regEvent("wheel", "flash.event.MouseEvent.MOUSE_WHEEL");
         //or
-        //  UIBuilder.regEvent("wheel", "'mouseWheel'"); //'mouseWheel' is the value of nme.event.MouseEvent.MOUSE_WHEEL constant
+        //  UIBuilder.regEvent("wheel", "'mouseWheel'"); //'mouseWheel' is the value of flash.event.MouseEvent.MOUSE_WHEEL constant
         //than we can use attribute `on-wheel` to define handlers in xml
         //Look for attributes like on-* in assets/ui/index.xml for samples
         //There are some frequenlty used events already registered by default.

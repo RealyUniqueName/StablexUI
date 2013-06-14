@@ -49,7 +49,7 @@
     </Button>
     <Text>
         <Title
-            filters="[new nme.filters.DropShadowFilter()]"
+            filters="[new flash.filters.DropShadowFilter()]"
             label-selectable="false"
             mouseEnabled="false"
             format-size="30"

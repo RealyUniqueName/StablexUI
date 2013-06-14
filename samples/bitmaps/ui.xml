@@ -3,7 +3,7 @@
 <HBox skin:Paint-color="0xFFFFFF" w="$Lib.current.stage.stageWidth" h="$Lib.current.stage.stageHeight" padding="50" childPadding="30">
 
     <!-- full image -->
-    <Bmp x="50" y="50" src="'assets/haxe.png'" scaleX="1" scaleY="2.5" rotation="0" filters="[new nme.filters.GlowFilter(0x00FF00, 2, 10, 10),new nme.filters.DropShadowFilter(12,45,0x303030,0xD0,10,10)]" 
+    <Bmp x="50" y="50" src="'assets/haxe.png'" scaleX="1" scaleY="2.5" rotation="0" filters="[new flash.filters.GlowFilter(0x00FF00, 2, 10, 10),new flash.filters.DropShadowFilter(12,45,0x303030,0xD0,10,10)]" 
     />
 
     <!-- part of image -->

@@ -1,21 +1,21 @@
 package;
 
-import nme.Lib;
+import flash.Lib;
 import ru.stablex.ui.UIBuilder;
 
 
 /**
 * StablexUI example created in this manual: http://ui.stablex.ru/doc#manual/02_Basics.html
 */
-class Main extends nme.display.Sprite{
+class Main extends flash.display.Sprite{
 
     /**
     * Enrty point
     *
     */
     static public function main () : Void{
-        Lib.current.stage.align     = nme.display.StageAlign.TOP_LEFT;
-        Lib.current.stage.scaleMode = nme.display.StageScaleMode.NO_SCALE;
+        Lib.current.stage.align     = flash.display.StageAlign.TOP_LEFT;
+        Lib.current.stage.scaleMode = flash.display.StageScaleMode.NO_SCALE;
 
         //initialize StablexUI
         UIBuilder.init();

@@ -1,13 +1,13 @@
 package ru.stablex.ui.widgets;
 
 #if html5
-import nme.events.Event;
+import flash.events.Event;
 #end
 
 
 
 /**
-* Text with type = <type>nme.text.TextFieldType</type>.INPUT
+* Text with type = <type>flash.text.TextFieldType</type>.INPUT
 */
 class InputText extends Text{
 
@@ -19,11 +19,11 @@ class InputText extends Text{
         super();
 
         #if !html5
-            this.label.type = nme.text.TextFieldType.INPUT;
+            this.label.type = flash.text.TextFieldType.INPUT;
         #else
             //due to strange bug we need this hack
             this.addEventListener(Event.ADDED_TO_STAGE, function(e:Event){
-                this.label.type = browser.text.TextFieldType.INPUT;
+                this.label.type = flash.text.TextFieldType.INPUT;
                 Reflect.field(this.label, 'nmeGraphics').nmeSurface.style.width = this.w + "px";
                 Reflect.field(this.label, 'nmeGraphics').nmeSurface.style.height = this.h + "px";
                 Reflect.field(this.label, 'nmeGraphics').nmeSurface.style.overflow = "hidden";
@@ -35,8 +35,8 @@ class InputText extends Text{
             });
         #end
 
-        this.label.autoSize = nme.text.TextFieldAutoSize.NONE;
-        this.format.align   = nme.text.TextFormatAlign.LEFT;
+        this.label.autoSize = flash.text.TextFieldAutoSize.NONE;
+        this.format.align   = flash.text.TextFormatAlign.LEFT;
     }//function new()
 
 
@@ -68,7 +68,7 @@ class InputText extends Text{
     */
     override private function get_text() : String {
         return (
-            this.label.type == nme.text.TextFieldType.INPUT
+            this.label.type == flash.text.TextFieldType.INPUT
                 ? StringTools.replace( Reflect.field(this.label, 'nmeGraphics').nmeSurface.innerHTML, '&nbsp;', ' ' )
                 : this.label.text
         );

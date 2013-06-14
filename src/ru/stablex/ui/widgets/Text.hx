@@ -1,8 +1,7 @@
 package ru.stablex.ui.widgets;
 
-import nme.text.TextField;
-import nme.text.TextFormat;
-import nme.events.Event;
+import flash.text.TextField;
+import flash.text.TextFormat;
 import ru.stablex.Err;
 import ru.stablex.ui.UIBuilder;
 
@@ -11,7 +10,7 @@ import ru.stablex.ui.UIBuilder;
 * Text field
 */
 class Text extends Box{
-    //<type>nme.display.TextField</type> used to render text
+    //<type>flash.display.TextField</type> used to render text
     public var label  : TextField;
     //Text format wich will be aplied to label on refresh
     public var format : TextFormat;
@@ -32,7 +31,7 @@ class Text extends Box{
         super();
 
         this.label = cast(this.addChild(new TextField()), TextField);
-        this.label.autoSize   = nme.text.TextFieldAutoSize.LEFT;
+        this.label.autoSize   = flash.text.TextFieldAutoSize.LEFT;
         this.label.multiline  = true;
         // this.label.embedFonts = true;
 
@@ -47,7 +46,7 @@ class Text extends Box{
             this.text = this.text;
             //this.refresh();
         };
-        this.addEventListener(nme.events.Event.ADDED_TO_STAGE, displayfn);	
+        this.addEventListener(flash.events.Event.ADDED_TO_STAGE, displayfn);	
     }
     #end
 
@@ -108,13 +107,14 @@ class Text extends Box{
         }else{
             this.label.defaultTextFormat = this.format;
             if( this.label.text.length > 0 ){
-                this.label.setTextFormat(this.format #if cpp , 0 , this.text.length #end );
+                this.label.setTextFormat(this.format #if cpp , 0 , this.text.length #end);
             }
         }
 
         if( !this.autoWidth && this.label.wordWrap ){
             this.label.width = this._width;
         }
+
         super.refresh();
     }//function refresh()
 

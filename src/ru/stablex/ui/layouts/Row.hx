@@ -1,6 +1,6 @@
 package ru.stablex.ui.layouts;
 
-import nme.display.DisplayObject;
+import flash.display.DisplayObject;
 import ru.stablex.ui.widgets.Widget;
 
 

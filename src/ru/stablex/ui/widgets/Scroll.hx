@@ -1,11 +1,11 @@
 package ru.stablex.ui.widgets;
 
-import nme.display.DisplayObject;
-import nme.display.Sprite;
-import nme.events.Event;
-import nme.events.MouseEvent;
-import nme.events.TouchEvent;
-import nme.Lib;
+import flash.display.DisplayObject;
+import flash.display.Sprite;
+import flash.events.Event;
+import flash.events.MouseEvent;
+import flash.events.TouchEvent;
+import flash.Lib;
 import ru.stablex.ui.events.ScrollEvent;
 import ru.stablex.ui.events.WidgetEvent;
 
@@ -251,6 +251,13 @@ class Scroll extends Widget{
     *
     */
     private function _beforeScroll(e:MouseEvent) : Void {
+        //if clicked on bars
+        if(
+            e.target == this.vBar || e.target == this.hBar
+            || (this.vBar != null && e.target == this.vBar.slider)
+            || (this.hBar != null && e.target == this.hBar.slider)
+        ) return;
+
         this.addUniqueListener(ScrollEvent.BEFORE_SCROLL, this._startScroll);
 
         var e : ScrollEvent = new ScrollEvent(ScrollEvent.BEFORE_SCROLL, e);

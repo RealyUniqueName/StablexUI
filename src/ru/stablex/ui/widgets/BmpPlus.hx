@@ -1,11 +1,11 @@
 package ru.stablex.ui.widgets;
 
-import nme.display.BitmapData;
-import nme.geom.Matrix;
-import nme.geom.Rectangle;
-import nme.geom.Point;
+import flash.display.BitmapData;
+import flash.geom.Matrix;
+import flash.geom.Rectangle;
+import flash.geom.Point;
 import ru.stablex.Err;
-import nme.events.Event;
+import flash.events.Event;
 import ru.stablex.ui.events.WidgetEvent;
 
 /**
@@ -40,7 +40,7 @@ class BmpPlus extends Bmp {
                 this.h = this.wparent.h;
             }
 		};
-		this.addEventListener(nme.events.Event.ADDED_TO_STAGE, displayfn);	
+		this.addEventListener(flash.events.Event.ADDED_TO_STAGE, displayfn);	
     }
     
     //*

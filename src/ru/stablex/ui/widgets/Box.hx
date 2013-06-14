@@ -1,6 +1,6 @@
 package ru.stablex.ui.widgets;
 
-import nme.display.DisplayObject;
+import flash.display.DisplayObject;
 import ru.stablex.Err;
 import ru.stablex.ui.events.WidgetEvent;
 
@@ -61,8 +61,8 @@ class Box extends Widget{
             // #if html5
                 if( Std.is(obj, Widget) ){
                     return cast(obj, Widget).w;
-                }else if( Std.is(obj, nme.text.TextField) ){
-                    return cast(obj, nme.text.TextField).textWidth + 4;
+                }else if( Std.is(obj, flash.text.TextField) ){
+                    return cast(obj, flash.text.TextField).textWidth + 4;
                 }else{
                     return obj.width;
                 }
@@ -80,8 +80,8 @@ class Box extends Widget{
             // #if html5
                 if( Std.is(obj, Widget) ){
                     return cast(obj, Widget).h;
-                }else if( Std.is(obj, nme.text.TextField) ){
-                    return cast(obj, nme.text.TextField).textHeight + 4;
+                }else if( Std.is(obj, flash.text.TextField) ){
+                    return cast(obj, flash.text.TextField).textHeight + 4;
                 }else{
                     return obj.height;
                 }
@@ -97,7 +97,7 @@ class Box extends Widget{
         */
         static private inline function _setObjX (obj:DisplayObject, x:Float) : Void {
             #if html5
-                obj.x = (Std.is(obj, nme.text.TextField) ? obj.x = x + 2 : x);
+                obj.x = (Std.is(obj, flash.text.TextField) ? obj.x = x + 2 : x);
             #else
                 obj.x = x;
             #end
@@ -110,7 +110,7 @@ class Box extends Widget{
         */
         static private inline function _setObjY (obj:DisplayObject, y:Float) : Void {
             #if html5
-                obj.y = (Std.is(obj, nme.text.TextField) ? obj.y = y + 2 : y);
+                obj.y = (Std.is(obj, flash.text.TextField) ? obj.y = y + 2 : y);
             #else
                 obj.y = y;
             #end
@@ -395,7 +395,7 @@ class Box extends Widget{
                 child   = this.getChildAt(this.numChildren - 1 - i);
                 if( !child.visible ) continue;
                 Box._setObjY(child, lastY - Box._objHeight(child));
-                lastY   = child.y - this.childPadding #if html5 - (Std.is(child, nme.text.TextField) ? 2 : 0) #end;
+                lastY   = child.y - this.childPadding #if html5 - (Std.is(child, flash.text.TextField) ? 2 : 0) #end;
             }
 
         //horizontal box
@@ -457,7 +457,7 @@ class Box extends Widget{
                 child = this.getChildAt(this.numChildren - 1 - i);
                 if( !child.visible ) continue;
                 Box._setObjX(child, lastX - Box._objWidth(child));
-                lastX = child.x #if html5 - (Std.is(child, nme.text.TextField) ? 2 : 0) #end - this.childPadding;
+                lastX = child.x #if html5 - (Std.is(child, flash.text.TextField) ? 2 : 0) #end - this.childPadding;
             }
         }
     }//function _hAlignRight()

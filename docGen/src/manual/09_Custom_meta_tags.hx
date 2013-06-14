@@ -24,7 +24,7 @@ Here is how to create meta processor:
             //how many children need to create?
             var amount = node.get('amount');
             //create code for that
-            var code = 'for(i in 0...' + amount + '){ ' + parentWidget + '.addChild(new nme.display.Sprite()) ;}';
+            var code = 'for(i in 0...' + amount + '){ ' + parentWidget + '.addChild(new flash.display.Sprite()) ;}';
 
             return code;
         });
@@ -44,7 +44,7 @@ And
     Macro.createMetas();
 
     //create UI
-    nme.Lib.current.addChild( ru.stablex.ui.UIBuilder.buildFn('ui.xml')() );
+    flash.Lib.current.addChild( ru.stablex.ui.UIBuilder.buildFn('ui.xml')() );
 </haxe>
 
 Now you can use it in ui.xml:

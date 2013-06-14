@@ -1,7 +1,7 @@
 package ru.stablex.ui.widgets;
 
-import nme.geom.Point;
-import nme.events.Event;
+import flash.geom.Point;
+import flash.events.Event;
 import ru.stablex.ui.events.WidgetEvent;
 
 /**
@@ -36,7 +36,7 @@ class RotateWidget extends Widget
                 this._inited = true;
 			} 
 		};
-		this.addEventListener(nme.events.Event.ADDED_TO_STAGE, displayfn);
+		this.addEventListener(flash.events.Event.ADDED_TO_STAGE, displayfn);
 		
 		var changedfn : Event->Void = function(e:Event) : Void {
 			if (this._rotateAxisChanged && this._inited) {

@@ -1,7 +1,6 @@
 package ru.stablex.ui.events;
 
-import nme.events.Event;
-
+import flash.events.Event;
 
 /**
 * Events dispatched by widgets

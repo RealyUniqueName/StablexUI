@@ -66,7 +66,7 @@ Step 2. Register your skin presets using <type>ru.stablex.ui.UIBuilder</type>
 Here is example main class:
 
 <haxe>
-class Main extends nme.display.Sprite{
+class Main extends flash.display.Sprite{
     /**
     * Enrty point
     *
@@ -79,7 +79,7 @@ class Main extends nme.display.Sprite{
         ru.stablex.ui.UIBuilder.regSkins('skins.xml');
 
         //Create our UI
-        nme.Lib.current.addChild( ru.stablex.ui.UIBuilder.buildFn('ui.xml')() );
+        flash.Lib.current.addChild( ru.stablex.ui.UIBuilder.buildFn('ui.xml')() );
     }//function main()
 
 
@@ -163,7 +163,7 @@ Now we need to register our new skin class:
 /**
 * Main class
 */
-class Main extends nme.display.Sprite{
+class Main extends flash.display.Sprite{
     /**
     * Enrty point
     *
@@ -176,7 +176,7 @@ class Main extends nme.display.Sprite{
         ru.stablex.ui.UIBuilder.init();
 
         //Create our UI
-        nme.Lib.current.addChild( UIBuilder.buildFn('main.xml')() );
+        flash.Lib.current.addChild( UIBuilder.buildFn('main.xml')() );
     }//function main()
 }//class Main
 </haxe>

@@ -1,8 +1,8 @@
 package ;
 
-import nme.display.StageAlign;
-import nme.display.StageScaleMode;
-import nme.Lib;
+import flash.display.StageAlign;
+import flash.display.StageScaleMode;
+import flash.Lib;
 import ru.stablex.ui.UIBuilder;
 //import cocktail.api.CocktailView;
 
@@ -36,7 +36,7 @@ class Main extends ru.stablex.ui.widgets.Widget{
 		//		width:300,
 		//		height:200
 		//		};
-		//nme.Lib.current.addChild(cocktailView.root);
+		//flash.Lib.current.addChild(cocktailView.root);
 		//cocktail.Lib.init(cocktailView.document);
         Lib.current.addChild( UIBuilder.buildFn('ui/index.xml')() );
     }//function main()

@@ -1,9 +1,9 @@
 package ru.stablex.ui.skins;
 
-import nme.display.BitmapData;
-import nme.geom.Matrix;
-import nme.geom.Point;
-import nme.geom.Rectangle;
+import flash.display.BitmapData;
+import flash.geom.Matrix;
+import flash.geom.Point;
+import flash.geom.Rectangle;
 import ru.stablex.Assets;
 import ru.stablex.ui.widgets.Widget;
 
@@ -30,14 +30,17 @@ class Slice3 extends Skin{
     public var stretch : Bool = true;
     /**
     * Where to slice skin bitmap.
-    * This array should contain zero, one or two integers.
+    * This array should contain zero, one or two floats.
+    * If the floats are less than one they indicate a percentage of the picture where it 
+    * should be cut.
+    * If they are larger than or equal to one they are pixels and should be integer values.
     * Zero - 3 slice scaling (horizontal). Bitmap is divided into two equal sized bitmaps.
     *         Middle part is filled with central column of pixels.
     * One - 3 slice scaling (horizontal). Bitmap is divided into two bitmaps. Middle part
-    *         is filled with column of pixels with x = specified integer.
-    * Two - 3 slice scaling (horizontal). Integers: left and right guidelines for slicing
+    *         is filled with column of pixels with x = specified float.
+    * Two - 3 slice scaling (horizontal). Floats: left and right guidelines for slicing
     */
-    public var slice : Array<Int>;
+    public var slice : Array<Float>;
 
 
     /**
@@ -84,12 +87,12 @@ class Slice3 extends Skin{
             w2 = w1 + 1;
         //two different size parts
         }else if( this.slice.length == 1 ){
-            w1 = this.slice[0];
+            w1 = _sliceSize(this.slice[0], bmp.width);
             w2 = w1 + 1;
         //slice three parts
         }else{
-            w1 = this.slice[0];
-            w2 = this.slice[1];
+            w1 = _sliceSize(this.slice[0], bmp.width);
+            w2 = _sliceSize(this.slice[1], bmp.width);
         }
 
         var src : Rectangle = new Rectangle();
@@ -155,6 +158,18 @@ class Slice3 extends Skin{
         w.graphics.drawRect(dst.x, dst.y, dst.width, dst.height);
         w.graphics.endFill();
     }//function _skinDrawSlice()
+
+
+    /**
+    * Returns the correct slice value, depending on if the slice value is less 
+    * than one or not.
+    * If it's less than one we return a part of the total value passed.
+    * If it's larger or equal to one we return the slice value rounded.
+    *
+    */
+    private function _sliceSize(slice:Float, total:Int) : Int {
+        return Math.round(slice < 1 ? slice*total : slice);
+    }
 
 
 /*******************************************************************************

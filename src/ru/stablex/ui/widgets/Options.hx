@@ -1,9 +1,9 @@
 package ru.stablex.ui.widgets;
 
-import nme.display.DisplayObject;
-import nme.events.MouseEvent;
-import nme.geom.Rectangle;
-import nme.Lib;
+import flash.display.DisplayObject;
+import flash.events.MouseEvent;
+import flash.geom.Rectangle;
+import flash.Lib;
 import ru.stablex.ui.events.WidgetEvent;
 import ru.stablex.ui.skins.Skin;
 

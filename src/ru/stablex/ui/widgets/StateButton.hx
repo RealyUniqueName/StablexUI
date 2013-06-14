@@ -1,6 +1,6 @@
 package ru.stablex.ui.widgets;
 
-import nme.events.MouseEvent;
+import flash.events.MouseEvent;
 import ru.stablex.ui.events.WidgetEvent;
 import ru.stablex.ui.misc.BtnState;
 import ru.stablex.ui.skins.Skin;

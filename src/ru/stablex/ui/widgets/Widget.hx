@@ -1,8 +1,9 @@
 package ru.stablex.ui.widgets;
 
-import nme.display.DisplayObject;
-import nme.display.DisplayObjectContainer;
-import nme.geom.Rectangle;
+
+import flash.display.DisplayObject;
+import flash.display.DisplayObjectContainer;
+import flash.geom.Rectangle;
 import ru.stablex.TweenSprite;
 import ru.stablex.ui.events.WidgetEvent;
 import ru.stablex.ui.layouts.Layout;
