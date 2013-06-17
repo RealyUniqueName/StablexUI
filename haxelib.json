@@ -4,14 +4,11 @@
     "license"      : "MIT",
     "tags"         : ["cross", "cpp", "flash", "html5", "ui"],
     "description"  : "StablexUI is a crossplatform UI engine.",
-    "version"      : "1.0.0",
-    "releasenote"  : "Initial haxelib release",
+    "version"      : "1.0.1",
+    "releasenote"  : "Fix for #36 issue (github)",
     "contributors" : ["RealyUniqueName"],
     "dependencies" : {
         "openfl"        : "",
-        "openfl-tools"  : "",
-        "openfl-native" : "",
-        "openfl-html5"  : "",
         "actuate"       : "",
         "hscript"       : ""
     }
