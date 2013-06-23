@@ -1,22 +1,20 @@
 /**
 @manual Setup StablexUI
 
-First of all you'll need the library sources.
+First of all you'll need the library.
 
 <pre>
-    <a href="https://github.com/RealyUniqueName/StablexUI" target="_blank">Get the latest version on GitHub</a>
+    haxelib install stablexui
 </pre>
 
-Take content of src/ folder to your project.
-Then install Actuate if you still didn't installed it. Run in command line:
+Or get the latest dev version from <a href="https://github.com/RealyUniqueName/StablexUI" target="_blank">GitHub</a>.
+
+StablexUI has several dependancies, which will be installed too.
+
+Now you need to add StablexUI and Actuate (one of dependencies) to project `.xml` file:
 
 <pre>
-    haxelib install actuate
-</pre>
-
-Now you need to add Actuate to .nmml file:
-
-<pre>
+    &lt;haxelib name="stablexui" /&gt;
     &lt;haxelib name="actuate" /&gt;
 </pre>
 
