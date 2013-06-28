@@ -41,6 +41,9 @@ class UIBuilder {
     static private var _events  : Hash<Array<String>> = new Hash();
     static private var _imports : Hash<String> = new Hash();
 
+    //for xml-based class generation
+    static private var _xmlClass : Hash<String> = new Hash();
+
     static private var _initialized : Bool = false;
     //all generated code will be saved in this direcory (see .init() method for details)
     static private var _generatedCodeDir : String = null;
@@ -143,6 +146,8 @@ class UIBuilder {
     */
     static private function _initialize() : Void {
         UIBuilder._initialized = true;
+
+        Context.onTypeNotFound(UIBuilder._createClass);
 
         //registering frequently used events
 		UIBuilder.regEvent('enterFrame',  'flash.events.Event.ENTER_FRAME');
@@ -580,6 +585,20 @@ class UIBuilder {
         }
     }//function registerClass()
 
+
+    /**
+    * Callback for Context.onTypeNotFound()
+    *
+    */
+    static private function _createClass(cls:String) : TypeDefinition {
+        var xmlFile : String = UIBuilder._xmlClass.get(cls);
+        if( xmlFile != null ){
+            return ClassBuilder.createClass(xmlFile, cls);
+        }else{
+            return null;
+        }
+    }//function _createClass()
+
 #end
 
     /**
@@ -692,8 +711,14 @@ class UIBuilder {
         if( !UIBuilder._initialized ){
             UIBuilder._initialize();
         }
-        return ClassBuilder.createClass(xmlFile, cls);
+        //register class
+        UIBuilder.registerClass(cls);
+        //save path to xml file for this class
+        UIBuilder._xmlClass.set(cls, xmlFile);
+
+        return macro true;
     }//function createClass()
+
 
 #if !macro
 

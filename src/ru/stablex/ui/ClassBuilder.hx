@@ -23,7 +23,7 @@ class ClassBuilder {
     * Create class for custom widget based on xml markup
     * @private
     */
-    static public function createClass(xmlFile:String, cls:String) : Expr {
+    static public function createClass(xmlFile:String, cls:String) : TypeDefinition {
         var pos = Context.makePosition({min:0, max:0, file:xmlFile});
 
         //extract packages and class name
@@ -74,12 +74,8 @@ class ClassBuilder {
             isExtern : false,
             kind     : TDClass( { name : parentPack.pop(), pack : parentPack, params :[] } ),
         };
-        Context.defineType(clazz);
 
-        //register class
-        UIBuilder.registerClass(pack.join(".") + "." + cls);
-
-        return Context.makeExpr(true, Context.currentPos());
+        return clazz;
     }//function createClass()
 
 
