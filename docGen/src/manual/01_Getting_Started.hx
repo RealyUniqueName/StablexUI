@@ -11,10 +11,11 @@ Or get the latest dev version from <a href="https://github.com/RealyUniqueName/S
 
 StablexUI has several dependancies, which will be installed too.
 
-Now you need to add StablexUI and Actuate (one of dependencies) to project `.xml` file:
+Now you need to add StablexUI, OpenFL and Actuate (one of dependencies) to project `.xml` file:
 
 <pre>
     &lt;haxelib name="stablexui" /&gt;
+    &lt;haxelib name="openfl" /&gt;
     &lt;haxelib name="actuate" /&gt;
 </pre>
 
