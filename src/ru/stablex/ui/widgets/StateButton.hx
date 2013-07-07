@@ -43,7 +43,7 @@ class StateButton extends Button{
     * Setter for `._currentIdx`
     * @dispatch <type>ru.stablex.ui.events.WidgetEvent</type>.CHANGE
     */
-    private function set__currentIdx(idx:Int) : Int {
+    @:noCompletion private function set__currentIdx(idx:Int) : Int {
         if( idx != this._currentIdx ){
             this._currentIdx = idx;
             if( this.created ){
@@ -58,7 +58,7 @@ class StateButton extends Button{
     * Getter for `.state`
     *
     */
-    private function get_state () : String {
+    @:noCompletion private function get_state () : String {
         //order must be defined
         if( this.order == null || this.order.length == 0 ) return null;
 
@@ -70,7 +70,7 @@ class StateButton extends Button{
     * Setter for state
     *
     */
-    private function set_state (s:String) : String {
+    @:noCompletion private function set_state (s:String) : String {
         this.set(s);
         return s;
     }//function set_state()

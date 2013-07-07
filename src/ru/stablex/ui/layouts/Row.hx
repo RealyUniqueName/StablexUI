@@ -110,7 +110,7 @@ class Row extends Layout{
     * Setter `padding`.
     *
     */
-    private function set_padding (padding:Float) : Float {
+    @:noCompletion private function set_padding (padding:Float) : Float {
         return this.paddingLeft = this.paddingRight = this.paddingTop = this.paddingBottom = padding;
     }//function set_padding
 }//class Row

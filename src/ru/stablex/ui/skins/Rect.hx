@@ -35,7 +35,7 @@ class Rect extends Skin{
     * Setter for padding
     *
     */
-    private function set_padding (p:Float) : Float {
+    @:noCompletion private function set_padding (p:Float) : Float {
         this.paddingTop = this.paddingBottom = this.paddingRight = this.paddingLeft = p;
         return p;
     }//function set_padding()

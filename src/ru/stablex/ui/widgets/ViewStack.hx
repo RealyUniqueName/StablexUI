@@ -155,7 +155,7 @@ class ViewStack extends Widget{
     * Getter for this.current
     *
     */
-    private function get_current() : String {
+    @:noCompletion private function get_current() : String {
         if( this._history.length == 0 || this._history[ this._history.length - 1 ] >= this.numChildren ){
             return null;
         }else{
@@ -173,7 +173,7 @@ class ViewStack extends Widget{
     * getter for this.currentIdx
     *
     */
-    private function get_currentIdx() : Int {
+    @:noCompletion private function get_currentIdx() : Int {
         var idx : Int = this._history[ this._history.length - 1 ];
         //if idx is out of bounds, get currently visible child index
         if( idx >= this.numChildren ){

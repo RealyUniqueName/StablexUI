@@ -26,7 +26,7 @@ class Radio extends Checkbox{
     * Setter for `.group`
     *
     */
-    private function set_group (g:String) : String {
+    @:noCompletion private function set_group (g:String) : String {
         //remove from old group
         if( this.group != null && Radio.groups.exists(this.group) ){
             var group = Radio.groups.get(this.group);

@@ -46,7 +46,7 @@ class Text extends Box{
     * Since highlighting is rare required, avoid creating object for it, until
     * it is requested
     */
-    private function get_highlightFormat () : TextFormat {
+    @:noCompletion private function get_highlightFormat () : TextFormat {
         if( this._hightlightFormat == null ){
             //clone current format
             this._hightlightFormat = new TextFormat(
@@ -80,7 +80,7 @@ class Text extends Box{
     * Setter for `.highlightFormat`
     *
     */
-    private function set_highlightFormat (hl:TextFormat) : TextFormat {
+    @:noCompletion private function set_highlightFormat (hl:TextFormat) : TextFormat {
         return this._hightlightFormat = hl;
     }//function set_highlightFormat()
 
@@ -132,7 +132,7 @@ class Text extends Box{
     * Text getter
     *
     */
-    private function get_text() : String {
+    @:noCompletion private function get_text() : String {
         return this.label.text;
     }//function get_text()
 
@@ -141,7 +141,7 @@ class Text extends Box{
     * Text setter
     *
     */
-    private function set_text(txt:String) : String {
+    @:noCompletion private function set_text(txt:String) : String {
         this.label.text = txt;
 
         //if widget needs to be resized to fit new string size

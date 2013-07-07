@@ -60,7 +60,7 @@ class Options extends Button{
     * Setter for `._selectedIdx`
     * @dispatch <type>ru.stablex.ui.events.WidgetEvent</type>.CHANGE
     */
-    private function set__selectedIdx (idx:Int) : Int {
+    @:noCompletion private function set__selectedIdx (idx:Int) : Int {
         if( idx != this._selectedIdx ){
             this._rebuildList = true;
             this._selectedIdx = idx;
@@ -74,7 +74,7 @@ class Options extends Button{
     * Setter for `.options`
     *
     */
-    private function set_options (o:Array<Array<Dynamic>>) : Array<Array<Dynamic>> {
+    @:noCompletion private function set_options (o:Array<Array<Dynamic>>) : Array<Array<Dynamic>> {
         if( o == null || o.length == 0 ){
             Err.trigger('Option list must not be null or empty');
         }
@@ -97,7 +97,7 @@ class Options extends Button{
     * Getter for `.value`
     *
     */
-    private function get_value () : Dynamic {
+    @:noCompletion private function get_value () : Dynamic {
         if(
             this.options == null
             || this.options.length <= this._selectedIdx
@@ -113,7 +113,7 @@ class Options extends Button{
     * Setter for `.value`
     *
     */
-    private function set_value (v:Dynamic) : Dynamic {
+    @:noCompletion private function set_value (v:Dynamic) : Dynamic {
         if( this.options != null ){
             for(i in 0...this.options.length){
                 if( this.options[i][1] == v ){

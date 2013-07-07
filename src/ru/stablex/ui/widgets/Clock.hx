@@ -100,7 +100,7 @@ class Clock extends Text{
     * Setter format
     *
     */
-    private function set_timeFormat(timeFormat:String) : String {
+    @:noCompletion private function set_timeFormat(timeFormat:String) : String {
         this._hrsIdx = (
             timeFormat.indexOf("%H") == -1
                 ? timeFormat.indexOf("%h")
@@ -127,7 +127,7 @@ class Clock extends Text{
     * Setter value
     *
     */
-    private function set_value(value:Int) : Int {
+    @:noCompletion private function set_value(value:Int) : Int {
         if( value < 0 ) value = 0;
 
         var str : String = this.timeFormat;

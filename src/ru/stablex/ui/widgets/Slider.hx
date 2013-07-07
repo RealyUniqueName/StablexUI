@@ -43,7 +43,7 @@ class Slider extends Widget{
     * Getter for `.value`
     *
     */
-    private function get_value () : Float {
+    @:noCompletion private function get_value () : Float {
         return (
             this._value < this.min
                 ? this.min
@@ -60,7 +60,7 @@ class Slider extends Widget{
     * Setter for `.value`
     *
     */
-    private function set_value (v:Float) : Float {
+    @:noCompletion private function set_value (v:Float) : Float {
         this._value = v;
         this._updateSliderPos();
 

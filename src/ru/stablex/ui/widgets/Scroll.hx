@@ -96,7 +96,7 @@ class Scroll extends Widget{
     * Getter for `.box`
     *
     */
-    private function get_box () : Widget {
+    @:noCompletion private function get_box () : Widget {
         if( this.numChildren == 0 ){
             Err.trigger('Scroll widget must have at least one child.');
             return null;
@@ -115,7 +115,7 @@ class Scroll extends Widget{
     * Setter for .scrollX
     *
     */
-    private function set_scrollX (x:Float) : Float {
+    @:noCompletion private function set_scrollX (x:Float) : Float {
         if( this.box._width > this._width ){
             if( x > 0 ) x = 0;
             if( x + this.box._width < this._width ) x = this._width - this.box._width;
@@ -133,7 +133,7 @@ class Scroll extends Widget{
     * Getter for .scrollX
     *
     */
-    private function get_scrollX () : Float {
+    @:noCompletion private function get_scrollX () : Float {
         return this.box.left;
     }//function get_scrollX()
 
@@ -142,7 +142,7 @@ class Scroll extends Widget{
     * Setter for .scrollY
     *
     */
-    private function set_scrollY (y:Float) : Float {
+    @:noCompletion private function set_scrollY (y:Float) : Float {
         if( this.box._height > this._height ){
             if( y > 0 ) y = 0;
             if( y + this.box._height < this._height ) y = this._height - this.box._height;
@@ -160,7 +160,7 @@ class Scroll extends Widget{
     * Getter for .scrollY
     *
     */
-    private function get_scrollY () : Float {
+    @:noCompletion private function get_scrollY () : Float {
         return this.box.top;
     }//function get_scrollY()
 
@@ -169,7 +169,7 @@ class Scroll extends Widget{
     * Setter for '.vBar'
     *
     */
-    private function set_vBar(bar:Slider) : Slider {
+    @:noCompletion private function set_vBar(bar:Slider) : Slider {
         if( bar == null && this.vBar != null ){
             this.vBar.free();
         }
@@ -181,7 +181,7 @@ class Scroll extends Widget{
     * Setter for '.hBar'
     *
     */
-    private function set_hBar(bar:Slider) : Slider {
+    @:noCompletion private function set_hBar(bar:Slider) : Slider {
         if( bar == null && this.hBar != null ){
             this.hBar.free();
         }

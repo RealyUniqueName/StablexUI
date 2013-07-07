@@ -196,7 +196,7 @@ class Bmp extends Widget{
     * Setter for autoSize
     *
     */
-    private function set_autoSize (as:Bool) : Bool {
+    @:noCompletion private function set_autoSize (as:Bool) : Bool {
         return this.autoWidth = this.autoHeight = as;
     }//function set_autoSize()
 
@@ -205,7 +205,7 @@ class Bmp extends Widget{
     * Setter for autoSize
     *
     */
-    private function set_xOffset (x:Int) : Int {
+    @:noCompletion private function set_xOffset (x:Int) : Int {
         this.drawPortion = true;
         return this.xOffset = (x >= 0 ? x : 0);
     }//function set_xOffset()
@@ -214,7 +214,7 @@ class Bmp extends Widget{
     * Setter for autoSize
     *
     */
-    private function set_yOffset (y:Int) : Int {
+    @:noCompletion private function set_yOffset (y:Int) : Int {
         this.drawPortion = true;
         return this.yOffset = (y >= 0 ? y : 0);
     }//function set_yOffset()
@@ -223,7 +223,7 @@ class Bmp extends Widget{
     * If width is set, disable autoWidth
     *
     */
-    override private function set_w(w:Float) : Float {
+    @:noCompletion override private function set_w(w:Float) : Float {
         this.autoWidth = false;
         return super.set_w(w);
     }//function set_w()
@@ -233,7 +233,7 @@ class Bmp extends Widget{
     * If width is set, disable autoWidth
     *
     */
-    override private function set_widthPt(wp:Float) : Float {
+    @:noCompletion override private function set_widthPt(wp:Float) : Float {
         this.autoWidth = false;
         return super.set_widthPt(wp);
     }//function set_widthPt()
@@ -243,7 +243,7 @@ class Bmp extends Widget{
     * If height is set, disable autoHeight
     *
     */
-    override private function set_heightPt(hp:Float) : Float {
+    @:noCompletion override private function set_heightPt(hp:Float) : Float {
         this.autoHeight = false;
         return super.set_heightPt(hp);
     }//function set_heightPt()

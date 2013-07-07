@@ -27,7 +27,7 @@ class Toggle extends StateButton{
     * Getter for `.selected`
     *
     */
-    private function get_selected () : Bool {
+    @:noCompletion private function get_selected () : Bool {
         return this.state == 'down';
     }//function get_selected()
 
@@ -36,7 +36,7 @@ class Toggle extends StateButton{
     * Setter for `.selected`
     *
     */
-    private function set_selected (s:Bool) : Bool {
+    @:noCompletion private function set_selected (s:Bool) : Bool {
         if( s ){
             this.down();
         }else{

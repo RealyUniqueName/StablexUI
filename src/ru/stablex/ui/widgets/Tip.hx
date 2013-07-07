@@ -42,7 +42,7 @@ class Tip extends Floating{
     * Getter for `.text`
     *
     */
-    private function get_text() : String {
+    @:noCompletion private function get_text() : String {
         return this.label.text;
     }//function get_text()
 
@@ -51,7 +51,7 @@ class Tip extends Floating{
     * Setter for `.text`
     *
     */
-    private function set_text(s:String) : String {
+    @:noCompletion private function set_text(s:String) : String {
         return this.label.text = s;
     }//function set_text()
 

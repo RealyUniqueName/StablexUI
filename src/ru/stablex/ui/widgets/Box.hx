@@ -597,7 +597,7 @@ class Box extends Widget{
     * Setter for autoSize
     *
     */
-    private function set_autoSize (as:Bool) : Bool {
+    @:noCompletion private function set_autoSize (as:Bool) : Bool {
         return this.autoWidth = this.autoHeight = as;
     }//function set_autoSize()
 
@@ -606,7 +606,7 @@ class Box extends Widget{
     * If width is set, disable autoWidth
     *
     */
-    override private function set_w(w:Float) : Float {
+    @:noCompletion override private function set_w(w:Float) : Float {
         this.autoWidth = false;
         return super.set_w(w);
     }//function set_w()
@@ -616,7 +616,7 @@ class Box extends Widget{
     * If width is set, disable autoWidth
     *
     */
-    override private function set_widthPt(wp:Float) : Float {
+    @:noCompletion override private function set_widthPt(wp:Float) : Float {
         this.autoWidth = false;
         return super.set_widthPt(wp);
     }//function set_widthPt()
@@ -626,7 +626,7 @@ class Box extends Widget{
     * If height is set, disable autoHeight
     *
     */
-    override private function set_heightPt(hp:Float) : Float {
+    @:noCompletion override private function set_heightPt(hp:Float) : Float {
         this.autoHeight = false;
         return super.set_heightPt(hp);
     }//function set_heightPt()
@@ -646,7 +646,7 @@ class Box extends Widget{
     * Setter for padding
     *
     */
-    private function set_padding (p:Float) : Float {
+    @:noCompletion private function set_padding (p:Float) : Float {
         this.paddingTop = this.paddingBottom = this.paddingRight = this.paddingLeft = p;
         return p;
     }//function set_padding()

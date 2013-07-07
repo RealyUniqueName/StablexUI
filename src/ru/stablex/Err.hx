@@ -17,7 +17,11 @@ class Err {
         #if debug
             trace(msg);
         #end
-        throw msg;
+        #if macro
+            haxe.macro.Context.error(msg, haxe.macro.Context.currentPos());
+        #else
+            throw msg;
+        #end
     }//function trigger()
 
 

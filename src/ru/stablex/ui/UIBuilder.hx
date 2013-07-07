@@ -104,19 +104,22 @@ class UIBuilder {
     * @param enableRTXml - if you need to process xml at runtime, set this parameter to true
     */
     macro static public function init(defaultsXmlFile:String = null, enableRTXml:Bool = false) : Expr {
+        #if display
+            return macro true;
+        #end
+
 		var code : String = '\nflash.Lib.current.stage.removeEventListener(flash.events.Event.ENTER_FRAME, ru.stablex.ui.UIBuilder.skinQueue);';
 		code += '\nflash.Lib.current.stage.addEventListener(flash.events.Event.ENTER_FRAME, ru.stablex.ui.UIBuilder.skinQueue);';
 
         if( !UIBuilder._initialized ){
             UIBuilder._initialize();
-
-            //if need to register classes for runtime xml
-            if( enableRTXml ){
-                code += UIBuilder._regRTXml();
-            }
         }
 
-        #if !display
+        //if need to register classes for runtime xml
+        if( enableRTXml ){
+            code += UIBuilder._regRTXml();
+        }
+
         //If provided with file for defaults, generate closures for applying defaults to widgets
         if( defaultsXmlFile != null ){
             var root : Xml = Xml.parse( File.getContent(defaultsXmlFile) ).firstElement();
@@ -129,15 +132,12 @@ class UIBuilder {
                 }
             }
         }
-        #end
 
         code = '(function() : Void {' + code + '})()';
 
-        #if !display
         if( defaultsXmlFile != null ){
             UIBuilder._saveCode(defaultsXmlFile, code);
         }
-        #end
 
         return UIBuilder._parse((defaultsXmlFile == null ? 'UIBuilder.hx' : defaultsXmlFile), code);
     }//function _init()
@@ -220,10 +220,27 @@ class UIBuilder {
         UIBuilder.registerClass('flash.events.MouseEvent');
         UIBuilder.registerClass('flash.Lib');
 
-        //register default meta processors
-        UIBuilder._createCoreMeta();
+        #if !display
+            //register default meta processors
+            UIBuilder._createCoreMeta();
+        #end
     }//function _initialize()
 
+
+    /**
+    * Check `UIBuilder.init()` was called
+    *
+    * @throw <type>String</type> if `UIBuilder.init` was not called
+    */
+    static private function _checkInit () : Void {
+        if( !UIBuilder._initialized ) {
+            #if display
+                UIBuilder._initialize();
+            #else
+                Err.trigger('Call UIBuilder.init() first');
+            #end
+        }
+    }//function _checkInit()
 
 
     /**
@@ -622,13 +639,16 @@ class UIBuilder {
     * @return <type>Dynamic</type>->Root_Xml_Element_Class<Widget>
     */
     macro static public function buildFn (xmlFile:String) : Expr{
-        if( !UIBuilder._initialized ) Err.trigger('Call UIBuilder.init()');
+        UIBuilder._checkInit();
 
         var element = Xml.parse( File.getContent(xmlFile) ).firstElement();
         var cls : String = UIBuilder._imports.get(element.nodeName);
 
+// sys.io.File.saveContent("_code_/q.txt", cls);
+
         #if display
             var code : String = 'function(__ui__arguments:Dynamic = null) : ' + cls + ' {return null;}';
+    // sys.io.File.saveContent("_code_/q.txt", code);
         #else
             var code : String = UIBuilder.construct(element);
             code += '\nreturn __ui__widget1;';
@@ -664,7 +684,7 @@ class UIBuilder {
     * can not be registered simultaneously, because both will be shortened to $MyClass for usage in xml.
     * You still can register one of them and use another one by it's full classpath in xml
     */
-    macro static public function regClass (fullyQualifiedName:String) : Expr{
+    #if !macro macro #end static public function regClass (fullyQualifiedName:String) :  Expr{
         UIBuilder.registerClass(fullyQualifiedName);
         return Context.parse("true", Context.currentPos());
     }//function regClass()
@@ -677,11 +697,11 @@ class UIBuilder {
     * @throw <type>String</type> if class specified for skin system is not registered with .regClass
     */
     macro static public function regSkins(xmlFile:String) : Expr {
-        if( !UIBuilder._initialized ) Err.trigger('Call UIBuilder.init() first');
-
         #if display
             return macro true;
         #end
+
+        UIBuilder._checkInit();
 
         var element = Xml.parse( File.getContent(xmlFile) ).firstElement();
 
@@ -714,12 +734,13 @@ class UIBuilder {
     }//function regSkins()
 
 
+#if macro
     /**
     * Create class for custom widget based on xml markup
     * @param xmlFile - source markup file for new class
     * @param cls - fully qualified class name for new class (E.g. 'com.example.MyFancyWidget')
     */
-    macro static public function createClass(xmlFile:String, cls:String) : Expr {
+    static public function createClass(xmlFile:String, cls:String) : Void {
         if( !UIBuilder._initialized ){
             UIBuilder._initialize();
         }
@@ -727,9 +748,8 @@ class UIBuilder {
         UIBuilder.registerClass(cls);
         //save path to xml file for this class
         UIBuilder._xmlClass.set(cls, xmlFile);
-
-        return macro true;
     }//function createClass()
+#end
 
 
 #if !macro
