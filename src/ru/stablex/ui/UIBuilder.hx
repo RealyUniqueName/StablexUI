@@ -84,7 +84,7 @@ class UIBuilder {
     * If you get any compiler errors on your xml files, you can find corresponding
     * file with generated code to find out what was wrong.
     */
-    macro static public function saveCodeTo (dir:String) : Expr {
+    #if !macro macro #end static public function saveCodeTo (dir:String) : Expr {
         var endSlash : EReg = ~/(\/|\\)$/;
         if( !endSlash.match(dir) ){
             dir += '/';
@@ -621,6 +621,24 @@ class UIBuilder {
         }
     }//function _createClass()
 
+
+    /**
+    * Create class for custom widget based on xml markup.
+    * This is available only from macro functions.
+    *
+    * @param xmlFile - source markup file for new class
+    * @param cls - fully qualified class name for new class (E.g. 'com.example.MyFancyWidget')
+    */
+    static public function buildClass(xmlFile:String, cls:String) : Void {
+        if( !UIBuilder._initialized ){
+            UIBuilder._initialize();
+        }
+        //register class
+        UIBuilder.registerClass(cls);
+        //save path to xml file for this class
+        UIBuilder._xmlClass.set(cls, xmlFile);
+    }//function createClass()
+
 #end
 
     /**
@@ -644,11 +662,8 @@ class UIBuilder {
         var element = Xml.parse( File.getContent(xmlFile) ).firstElement();
         var cls : String = UIBuilder._imports.get(element.nodeName);
 
-// sys.io.File.saveContent("_code_/q.txt", cls);
-
         #if display
             var code : String = 'function(__ui__arguments:Dynamic = null) : ' + cls + ' {return null;}';
-    // sys.io.File.saveContent("_code_/q.txt", code);
         #else
             var code : String = UIBuilder.construct(element);
             code += '\nreturn __ui__widget1;';
@@ -734,22 +749,18 @@ class UIBuilder {
     }//function regSkins()
 
 
-#if macro
     /**
     * Create class for custom widget based on xml markup
+    *
+    * @deprecated
+    *
     * @param xmlFile - source markup file for new class
     * @param cls - fully qualified class name for new class (E.g. 'com.example.MyFancyWidget')
     */
-    static public function createClass(xmlFile:String, cls:String) : Void {
-        if( !UIBuilder._initialized ){
-            UIBuilder._initialize();
-        }
-        //register class
-        UIBuilder.registerClass(cls);
-        //save path to xml file for this class
-        UIBuilder._xmlClass.set(cls, xmlFile);
+    macro static public function createClass(xmlFile:String, cls:String) : Expr {
+        UIBuilder.buildClass(xmlFile, cls);
+        return macro true;
     }//function createClass()
-#end
 
 
 #if !macro

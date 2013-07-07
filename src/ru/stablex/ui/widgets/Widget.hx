@@ -141,7 +141,7 @@ class Widget extends TweenSprite{
     * were applied to widget and before creating children.
     * @private
     */
-    @:final @:noCompletion public function _onInitialize() : Void {
+    @:noCompletion public function _onInitialize() : Void {
         this.onInitialize();
         this.initialized = true;
     }//function _onInitialize()
