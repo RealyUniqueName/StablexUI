@@ -756,7 +756,7 @@ class UIBuilder {
     * @param xmlFile - source markup file for new class
     * @param cls - fully qualified class name for new class (E.g. 'com.example.MyFancyWidget')
     */
-    macro static public function createClass(xmlFile:String, cls:String) : Expr {
+    #if !macro macro #end static public function createClass(xmlFile:String, cls:String) : Expr {
         UIBuilder.buildClass(xmlFile, cls);
         return macro true;
     }//function createClass()
