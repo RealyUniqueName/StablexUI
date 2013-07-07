@@ -116,6 +116,7 @@ class UIBuilder {
             }
         }
 
+        #if !display
         //If provided with file for defaults, generate closures for applying defaults to widgets
         if( defaultsXmlFile != null ){
             var root : Xml = Xml.parse( File.getContent(defaultsXmlFile) ).firstElement();
@@ -128,11 +129,15 @@ class UIBuilder {
                 }
             }
         }
+        #end
 
         code = '(function() : Void {' + code + '})()';
+
+        #if !display
         if( defaultsXmlFile != null ){
             UIBuilder._saveCode(defaultsXmlFile, code);
         }
+        #end
 
         return UIBuilder._parse((defaultsXmlFile == null ? 'UIBuilder.hx' : defaultsXmlFile), code);
     }//function _init()
@@ -622,11 +627,14 @@ class UIBuilder {
         var element = Xml.parse( File.getContent(xmlFile) ).firstElement();
         var cls : String = UIBuilder._imports.get(element.nodeName);
 
-        var code : String = UIBuilder.construct(element);
-        code += '\nreturn __ui__widget1;';
-        code = 'function(__ui__arguments:Dynamic = null) : ' + cls + ' {' + code + '}';
-
-        UIBuilder._saveCode(xmlFile, code);
+        #if display
+            var code : String = 'function(__ui__arguments:Dynamic = null) : ' + cls + ' {return null;}';
+        #else
+            var code : String = UIBuilder.construct(element);
+            code += '\nreturn __ui__widget1;';
+            code = 'function(__ui__arguments:Dynamic = null) : ' + cls + ' {' + code + '}';
+            UIBuilder._saveCode(xmlFile, code);
+        #end
 
         return UIBuilder._parse(xmlFile, code);
     }//function buildFn()
@@ -670,6 +678,10 @@ class UIBuilder {
     */
     macro static public function regSkins(xmlFile:String) : Expr {
         if( !UIBuilder._initialized ) Err.trigger('Call UIBuilder.init() first');
+
+        #if display
+            return macro true;
+        #end
 
         var element = Xml.parse( File.getContent(xmlFile) ).firstElement();
 
