@@ -14,7 +14,7 @@ import ru.stablex.Err;
 class Bmp extends Widget{
     //Asset ID or path to bitmap
     public var src (get_src,set_src): String;
-    public var _src : String = null;
+    @:noCompletion public var _src : String = null;
     //Should we use smoothing?
     public var smooth : Bool = true;
     //set size depending on bitmap size
@@ -29,7 +29,7 @@ class Bmp extends Widget{
     * `.src` will be set to null automatically, if you set `.bitmapData`
     */
     public var bitmapData (get_bitmapData,set_bitmapData) : BitmapData;
-    private var _bitmapData : BitmapData = null;
+    @:noCompletion private var _bitmapData : BitmapData = null;
     /**
     * If you want to draw just a portion of the bitmap. Specify top/left corner of
     * desired source rectangle by `.xOffset` and `.yOffset` and widht/height for
