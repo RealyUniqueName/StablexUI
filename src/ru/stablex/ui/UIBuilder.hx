@@ -234,11 +234,7 @@ class UIBuilder {
     */
     static private function _checkInit () : Void {
         if( !UIBuilder._initialized ) {
-            #if display
-                UIBuilder._initialize();
-            #else
-                Err.trigger('Call UIBuilder.init() first');
-            #end
+            UIBuilder._initialize();
         }
     }//function _checkInit()
 
