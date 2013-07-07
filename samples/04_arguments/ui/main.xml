@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<HBox padding="10" childPadding="5">
+    <InputText id="'input'" skin:Paint-border="1" skin:Paint-color="0xFFFFFF" w="150" h="20" text="'type any message here'"/>
+
+    <!-- Here we create on-click handler wich shows our alert box with input message -->
+    <Button h="20" text="'Show me the alert!'" skin:Paint-color="0xbbbbbb" skin:Paint-border="1" on-click="
+        $Lib.current.addChild( $UIBuilder.buildFn('ui/alert.xml')(
+            {
+                message : #InputText(input).text
+            }
+        ) );
+    "/>
+</HBox>

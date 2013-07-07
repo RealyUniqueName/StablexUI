@@ -24,6 +24,6 @@ class Main extends flash.display.Sprite{
         UIBuilder.init();
 
         //Create our UI
-        Lib.current.addChild( UIBuilder.buildFn('main.xml')() );
+        Lib.current.addChild( UIBuilder.buildFn('ui/main.xml')() );
     }//function main()
 }//class Main

@@ -21,10 +21,10 @@ class Main extends Sprite{
         Lib.current.stage.scaleMode = StageScaleMode.NO_SCALE;
 
         //initialize StablexUI
-        UIBuilder.init('defaults.xml');
+        UIBuilder.init('ui/defaults.xml');
 
         //Create our UI
-        Lib.current.addChild( UIBuilder.buildFn('ui.xml')() );
+        Lib.current.addChild( UIBuilder.buildFn('ui/ui.xml')() );
     }//function main()
 
 
