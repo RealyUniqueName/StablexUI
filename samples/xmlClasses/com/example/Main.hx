@@ -12,13 +12,16 @@ import ru.stablex.ui.UIBuilder;
 class Main extends ru.stablex.ui.widgets.Widget{
 
     /**
-    * Enrty point after StablexUI was initialized
+    * Enrty point
     *
     */
     static public function main () : Void{
 
         Lib.current.stage.align     = StageAlign.TOP_LEFT;
         Lib.current.stage.scaleMode = StageScaleMode.NO_SCALE;
+
+        //initialize StablexUI
+        UIBuilder.init("ui/defaults.xml");
 
         //instantiate xml-based class
         var w = UIBuilder.create(Custom);
