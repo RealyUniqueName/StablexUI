@@ -14,6 +14,7 @@ $urls = array(
     'manual'  => DOC_BASE_URL.'##type#.html',
     'ru'      => DOC_BASE_URL.'##type#.html',
     'openfl'  => DOC_BASE_URL.'#http://nme.io/api/types/#type#.html',
+    'flash'   => DOC_BASE_URL.'#http://nme.io/api/types/#type#.html',
     'default' => DOC_BASE_URL.'#http://haxe.org/api/#type#'
 );
 

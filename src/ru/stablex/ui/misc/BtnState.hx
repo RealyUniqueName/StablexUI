@@ -32,7 +32,7 @@ class BtnState {
     * Getter for ico
     *
     */
-    private function get_ico () : Bmp {
+    @:noCompletion private function get_ico () : Bmp {
         //if ico is still not created, create it
         if( this._ico == null ){
             this._ico = UIBuilder.create(Bmp);
@@ -46,7 +46,7 @@ class BtnState {
     * Setter for ico
     *
     */
-    private function set_ico (ico:Bmp) : Bmp {
+    @:noCompletion private function set_ico (ico:Bmp) : Bmp {
         //destroy old ico
         if( this._ico != null ){
             this._ico.free();
@@ -59,7 +59,7 @@ class BtnState {
     * Setter for skinName
     *
     */
-    private function set_skinName (s:String) : String {
+    @:noCompletion private function set_skinName (s:String) : String {
         this.skin = UIBuilder.skin(s)();
         return this.skinName = s;
     }//function set_skinName()

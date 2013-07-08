@@ -18,6 +18,7 @@
     tip:Tip-skin:Paint-corners = "[10]"
 >
     <!-- test @arg placeholder -->
+    <Bmp src="'assets/haxe.png'" />
     <Text text="'Hello, ' + @data.name + '!'" format-size="40"/>
     <!-- test #widhetId placeholder -->
     <Text text="'My parent is ' + #root.id"/>

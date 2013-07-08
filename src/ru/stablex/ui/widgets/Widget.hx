@@ -16,15 +16,15 @@ import ru.stablex.ui.skins.Skin;
 */
 
 class Widget extends TweenSprite{
-    static private inline var _X_USE_LEFT          = 1;
-    static private inline var _X_USE_LEFT_PERCENT  = 2;
-    static private inline var _X_USE_RIGHT         = 3;
-    static private inline var _X_USE_RIGHT_PERCENT = 4;
+    @:noCompletion static private inline var _X_USE_LEFT          = 1;
+    @:noCompletion static private inline var _X_USE_LEFT_PERCENT  = 2;
+    @:noCompletion static private inline var _X_USE_RIGHT         = 3;
+    @:noCompletion static private inline var _X_USE_RIGHT_PERCENT = 4;
 
-    static private inline var _Y_USE_TOP            = 5;
-    static private inline var _Y_USE_TOP_PERCENT    = 6;
-    static private inline var _Y_USE_BOTTOM         = 7;
-    static private inline var _Y_USE_BOTTOM_PERCENT = 8;
+    @:noCompletion static private inline var _Y_USE_TOP            = 5;
+    @:noCompletion static private inline var _Y_USE_TOP_PERCENT    = 6;
+    @:noCompletion static private inline var _Y_USE_BOTTOM         = 7;
+    @:noCompletion static private inline var _Y_USE_BOTTOM_PERCENT = 8;
 
 
     //Name of section in default settings for this type of widgets
@@ -41,22 +41,22 @@ class Widget extends TweenSprite{
     public var w (get_w,set_w)   : Float;
     //Widget width in % of parent's width
     public var widthPt (get_widthPt,set_widthPt) : Float;
-    private var _width                   : Float = 0;
-    private var _widthPercent            : Float = 0;
-    private var _widthUsePercent         : Bool = false;
+    @:noCompletion private var _width                   : Float = 0;
+    @:noCompletion private var _widthPercent            : Float = 0;
+    @:noCompletion private var _widthUsePercent         : Bool = false;
 
     //Widget height height in pixels
     public var h (get_h,set_h)  : Float;
     //Widget height in % of parent's height
     public var heightPt (get_heightPt,set_heightPt) : Float;
-    private var _height                   : Float = 0;
-    private var _heightPercent            : Float = 0;
-    private var _heightUsePercent         : Bool = false;
+    @:noCompletion private var _height                   : Float = 0;
+    @:noCompletion private var _heightPercent            : Float = 0;
+    @:noCompletion private var _heightUsePercent         : Bool = false;
 
     //do not adjust widget position and do not fire event on setting widget size
-    private var _silentResize : Bool = false;
+    @:noCompletion private var _silentResize : Bool = false;
     //whether resizing is in progress
-    private var _resizing : Bool = false;
+    @:noCompletion private var _resizing : Bool = false;
 
     //Widget id (unique)
     public var id (default, set_id) : String;
@@ -65,19 +65,19 @@ class Widget extends TweenSprite{
     public var left (get_left,set_left) : Float;
     //position this widget by left border in % of parent's width
     public var leftPt (get_leftPt,set_leftPt) : Float;
-    private var _left                   : Float = 0;
-    private var _leftPercent            : Float = 0;
+    @:noCompletion private var _left                   : Float = 0;
+    @:noCompletion private var _leftPercent            : Float = 0;
 
     //position this widget by right border in pixels
     public var right (get_right,set_right) : Float;
     //position this widget by right border in % of parent's width
     public var rightPt (get_rightPt,set_rightPt)   : Float;
-    private var _right                     : Float = 0;
-    private var _rightPercent              : Float = 0;
+    @:noCompletion private var _right                     : Float = 0;
+    @:noCompletion private var _rightPercent              : Float = 0;
 
     //Wich one to use: left, right, leftPercent or rightPercent
-    private var _xUse : Int = _X_USE_LEFT;
-    private var _yUse : Int = _Y_USE_TOP;
+    @:noCompletion private var _xUse : Int = _X_USE_LEFT;
+    @:noCompletion private var _yUse : Int = _Y_USE_TOP;
 
     //Get parent if it is widget, returns null otherwise
     public var wparent (get_wparent,never) : Widget;
@@ -86,15 +86,15 @@ class Widget extends TweenSprite{
     public var top (get_top,set_top)   : Float;
     //position this widget by top border in % of parent's height
     public var topPt (get_topPt,set_topPt) : Float;
-    private var _top                   : Float = 0;
-    private var _topPercent            : Float = 0;
+    @:noCompletion private var _top                   : Float = 0;
+    @:noCompletion private var _topPercent            : Float = 0;
 
     //position this widget by bottom border in pixels
     public var bottom (get_bottom,set_bottom) : Float;
     //position this widget by bottom border in % of parent's height
     public var bottomPt (get_bottomPt,set_bottomPt)     : Float;
-    private var _bottom                       : Float = 0;
-    private var _bottomPercent                : Float = 0;
+    @:noCompletion private var _bottom                       : Float = 0;
+    @:noCompletion private var _bottomPercent                : Float = 0;
 
     //Skin processor (see ru.stablex.ui.skins package)
     public var skin : Skin;
@@ -102,7 +102,7 @@ class Widget extends TweenSprite{
     * Flag for <type>UIBuilder</type>. Do not modify this.
     * @private
     */
-    public var _skinQueued : Bool = false;
+    @:noCompletion public var _skinQueued : Bool = false;
     //skin name to use. One of registered with <type>ru.stablex.ui.UIBuilder</type>.regSkins()
     public var skinName (default,set_skinName) : String;
     //whether widget content out of widgt bounds is visible
@@ -141,7 +141,7 @@ class Widget extends TweenSprite{
     * were applied to widget and before creating children.
     * @private
     */
-    public function _onInitialize() : Void {
+    @:noCompletion public function _onInitialize() : Void {
         this.onInitialize();
         this.initialized = true;
     }//function _onInitialize()
@@ -162,7 +162,7 @@ class Widget extends TweenSprite{
     * @private
     * @dispatch <type>ru.stablex.ui.events.WidgetEvent</type>.CREATE
     */
-    @:final public function _onCreate () : Void{
+    @:final @:noCompletion public function _onCreate () : Void{
         //remove event listeners used for creation
         this.clearEvent(WidgetEvent.INITIAL_RESIZE);
 
@@ -238,7 +238,7 @@ class Widget extends TweenSprite{
     * Before adding to another widget display list
     *
     */
-    private function _newParent(newParent:Widget) : Void {
+    @:noCompletion private function _newParent(newParent:Widget) : Void {
         if( newParent != this.parent) this.onNewParent(newParent);
     }//function _newParent()
 
@@ -283,7 +283,7 @@ class Widget extends TweenSprite{
     * Process parent widget resizing
     *
     */
-    private function _onParentResize(e:WidgetEvent) : Void {
+    @:noCompletion private function _onParentResize(e:WidgetEvent) : Void {
         var parent : Widget = cast(e.currentTarget, Widget);
 
         //Resize if our size is defined in percents
@@ -343,7 +343,7 @@ class Widget extends TweenSprite{
     * @dispatch <type>ru.stablex.ui.events.WidgetEvent</type>.RESIZE
     * @dispatch <type>ru.stablex.ui.events.WidgetEvent</type>.INITIAL_RESIZE
     */
-    @:final private function _onResize() : Void {
+    @:final @:noCompletion private function _onResize() : Void {
         //positioning
         if( this.wparent != null ){
             switch( this._xUse ){
@@ -483,7 +483,7 @@ class Widget extends TweenSprite{
     * Look through children for widget with specified `name`
     *
     */
-    private function _findChildWidget(name:String) : Widget {
+    @:noCompletion private function _findChildWidget(name:String) : Widget {
         var child : DisplayObject = null;
 
         //check each child
@@ -551,7 +551,7 @@ class Widget extends TweenSprite{
     * Setter for `overflow`
     *
     */
-    private function set_overflow (o:Bool) : Bool {
+    @:noCompletion private function set_overflow (o:Bool) : Bool {
         if( !o ){
             this.scrollRect = new Rectangle(0, 0, this._width, this._height);
         }else{
@@ -566,7 +566,7 @@ class Widget extends TweenSprite{
     * Setter for `skinName`
     *
     */
-    private function set_skinName(sn:String) : String {
+    @:noCompletion private function set_skinName(sn:String) : String {
         this.skin = UIBuilder.skin(sn)();
         if( this.created ) UIBuilder.queueSkin(this);
         return this.skinName = sn;
@@ -590,7 +590,7 @@ class Widget extends TweenSprite{
     * Left setter
     *
     */
-    private function set_left(l:Float) : Float {
+    @:noCompletion private function set_left(l:Float) : Float {
         this._xUse = _X_USE_LEFT;
         this.x     = l;
         return this._left = l;
@@ -601,7 +601,7 @@ class Widget extends TweenSprite{
     * Left getter
     *
     */
-    private function get_left() : Float {
+    @:noCompletion private function get_left() : Float {
         return this.x;
     }//function get_left()
 
@@ -610,7 +610,7 @@ class Widget extends TweenSprite{
     * Right setter
     *
     */
-    private function set_right(r:Float) : Float {
+    @:noCompletion private function set_right(r:Float) : Float {
         this._xUse = _X_USE_RIGHT;
         if( this.wparent != null ){
             this.x = this.wparent._width - r - this.w;
@@ -623,7 +623,7 @@ class Widget extends TweenSprite{
     * Right getter
     *
     */
-    private function get_right() : Float {
+    @:noCompletion private function get_right() : Float {
         if( this._xUse == _X_USE_RIGHT ){
             return this._right;
         }
@@ -640,7 +640,7 @@ class Widget extends TweenSprite{
     * Left percent setter
     *
     */
-    private function set_leftPt(lp:Float) : Float {
+    @:noCompletion private function set_leftPt(lp:Float) : Float {
         this._xUse = _X_USE_LEFT_PERCENT;
 
         if( this.wparent != null ){
@@ -655,7 +655,7 @@ class Widget extends TweenSprite{
     * Left percent getter
     *
     */
-    private function get_leftPt() : Float {
+    @:noCompletion private function get_leftPt() : Float {
         if( this._xUse == _X_USE_LEFT_PERCENT ){
             return this._leftPercent;
         }
@@ -672,7 +672,7 @@ class Widget extends TweenSprite{
     * Right percent setter
     *
     */
-    private function set_rightPt(rp:Float) : Float {
+    @:noCompletion private function set_rightPt(rp:Float) : Float {
         this._xUse = _X_USE_RIGHT_PERCENT;
 
         if( this.wparent != null ){
@@ -687,7 +687,7 @@ class Widget extends TweenSprite{
     * Right percent getter
     *
     */
-    private function get_rightPt() : Float {
+    @:noCompletion private function get_rightPt() : Float {
         if( this._xUse == _X_USE_RIGHT_PERCENT ){
             return this._rightPercent;
         }
@@ -704,7 +704,7 @@ class Widget extends TweenSprite{
     * Top setter
     *
     */
-    private function set_top(t:Float) : Float {
+    @:noCompletion private function set_top(t:Float) : Float {
         this._yUse = _Y_USE_TOP;
         this.y     = t;
         return this._top = t;
@@ -715,7 +715,7 @@ class Widget extends TweenSprite{
     * Top getter
     *
     */
-    private function get_top() : Float {
+    @:noCompletion private function get_top() : Float {
         return this.y;
     }//function get_top()
 
@@ -724,7 +724,7 @@ class Widget extends TweenSprite{
     * Bottom setter
     *
     */
-    private function set_bottom(b:Float) : Float {
+    @:noCompletion private function set_bottom(b:Float) : Float {
         this._yUse = _Y_USE_BOTTOM;
         if( this.wparent != null ){
             this.y = this.wparent._height - b - this.h;
@@ -737,7 +737,7 @@ class Widget extends TweenSprite{
     * Bottom getter
     *
     */
-    private function get_bottom() : Float {
+    @:noCompletion private function get_bottom() : Float {
         if( this._yUse == _Y_USE_BOTTOM ) {
             return this._bottom;
         }
@@ -754,7 +754,7 @@ class Widget extends TweenSprite{
     * Top percent setter
     *
     */
-    private function set_topPt(tp:Float) : Float {
+    @:noCompletion private function set_topPt(tp:Float) : Float {
         this._yUse = _Y_USE_TOP_PERCENT;
 
         if( this.wparent != null ){
@@ -769,7 +769,7 @@ class Widget extends TweenSprite{
     * Top percent getter
     *
     */
-    private function get_topPt() : Float {
+    @:noCompletion private function get_topPt() : Float {
         if( this._yUse == _Y_USE_TOP_PERCENT ){
             return this._topPercent;
         }
@@ -786,7 +786,7 @@ class Widget extends TweenSprite{
     * Bottom percent setter
     *
     */
-    private function set_bottomPt(bp:Float) : Float {
+    @:noCompletion private function set_bottomPt(bp:Float) : Float {
         this._yUse = _Y_USE_BOTTOM_PERCENT;
 
         if( this.wparent != null ){
@@ -801,7 +801,7 @@ class Widget extends TweenSprite{
     * Bottom percent getter
     *
     */
-    private function get_bottomPt() : Float {
+    @:noCompletion private function get_bottomPt() : Float {
         if( this._yUse == _Y_USE_BOTTOM_PERCENT ){
             return this._bottomPercent;
         }
@@ -818,7 +818,7 @@ class Widget extends TweenSprite{
     * Width setter
     *
     */
-    private function set_w(w:Float) : Float {
+    @:noCompletion private function set_w(w:Float) : Float {
         this._width           = w;
         this._widthUsePercent = false;
         if( !this._silentResize ){
@@ -832,7 +832,7 @@ class Widget extends TweenSprite{
     * Width getter
     *
     */
-    private function get_w() : Float {
+    @:noCompletion private function get_w() : Float {
         return this._width;
     }//function get_w()
 
@@ -841,7 +841,7 @@ class Widget extends TweenSprite{
     * Height setter
     *
     */
-    private function set_h(h:Float) : Float {
+    @:noCompletion private function set_h(h:Float) : Float {
         this._height           = h;
         this._heightUsePercent = false;
         if( !this._silentResize ){
@@ -855,7 +855,7 @@ class Widget extends TweenSprite{
     * Height getter
     *
     */
-    private function get_h() : Float {
+    @:noCompletion private function get_h() : Float {
         return this._height;
     }//function get_h()
 
@@ -864,7 +864,7 @@ class Widget extends TweenSprite{
     * Width percent setter
     *
     */
-    private function set_widthPt(wp:Float) : Float {
+    @:noCompletion private function set_widthPt(wp:Float) : Float {
         this._widthPercent    = wp;
         this._widthUsePercent = true;
 
@@ -883,7 +883,7 @@ class Widget extends TweenSprite{
     * Width percent getter
     *
     */
-    private function get_widthPt() : Float {
+    @:noCompletion private function get_widthPt() : Float {
         if( this._widthUsePercent ){
             return this._widthPercent;
 
@@ -900,7 +900,7 @@ class Widget extends TweenSprite{
     * Height percent setter
     *
     */
-    private function set_heightPt(hp:Float) : Float {
+    @:noCompletion private function set_heightPt(hp:Float) : Float {
         this._heightPercent    = hp;
         this._heightUsePercent = true;
 
@@ -919,7 +919,7 @@ class Widget extends TweenSprite{
     * Height percent getter
     *
     */
-    private function get_heightPt() : Float {
+    @:noCompletion private function get_heightPt() : Float {
         if( this._heightUsePercent ){
             return this._heightPercent;
 
@@ -936,7 +936,7 @@ class Widget extends TweenSprite{
     * Id setter
     *
     */
-    @:final private function set_id (id:String) : String{
+    @:final @:noCompletion private function set_id (id:String) : String{
         if( id == null ){
             Err.trigger('Widget id cannot be null');
         }
@@ -959,7 +959,7 @@ class Widget extends TweenSprite{
     * Setter for `.tip`
     *
     */
-    private function set_tip(tip:Tip) : Tip {
+    @:noCompletion private function set_tip(tip:Tip) : Tip {
         if( this.tip != null ){
             this.tip.free();
         }

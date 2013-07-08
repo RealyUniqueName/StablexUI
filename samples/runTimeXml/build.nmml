@@ -12,6 +12,7 @@
 
     <haxelib name="openfl" />
     <haxelib name="actuate" />
+	<haxelib name="msignal" />
     <haxelib name="hscript" />
 
     <ndll name="std" />

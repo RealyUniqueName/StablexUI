@@ -50,7 +50,7 @@ class Progress extends Widget{
     * Setter for `.max`
     *
     */
-    private function set_max (m:Float) : Float {
+    @:noCompletion private function set_max (m:Float) : Float {
         if( this.created ){
             this._setBarWidth(this.value, m);
         }
@@ -62,7 +62,7 @@ class Progress extends Widget{
     * Setter for `.value`
     *
     */
-    private function set_value (v:Float) : Float {
+    @:noCompletion private function set_value (v:Float) : Float {
         this._setBarWidth(v, this.max);
         this._value = v;
         if( this.created ){
@@ -76,7 +76,7 @@ class Progress extends Widget{
     * Getter for `.value`
     *
     */
-    private function get_value () : Float {
+    @:noCompletion private function get_value () : Float {
         return this._value;
     }//function set_value()
 
@@ -98,7 +98,7 @@ class Progress extends Widget{
     * Setter `interactive`.
     *
     */
-    private function set_interactive (interactive:Bool) : Bool {
+    @:noCompletion private function set_interactive (interactive:Bool) : Bool {
         if( interactive ){
             this.addUniqueListener(MouseEvent.MOUSE_DOWN, this._slide);
         }else{

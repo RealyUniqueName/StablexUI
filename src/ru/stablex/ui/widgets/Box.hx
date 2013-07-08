@@ -57,7 +57,7 @@ class Box extends Widget{
         * get object width
         *
         */
-        static private inline function _objWidth (obj:DisplayObject) : Float {
+        @:noCompletion static private inline function _objWidth (obj:DisplayObject) : Float {
             // #if html5
                 if( Std.is(obj, Widget) ){
                     return cast(obj, Widget).w;
@@ -76,7 +76,7 @@ class Box extends Widget{
         * get object height
         *
         */
-        static private inline function _objHeight (obj:DisplayObject) : Float {
+        @:noCompletion static private inline function _objHeight (obj:DisplayObject) : Float {
             // #if html5
                 if( Std.is(obj, Widget) ){
                     return cast(obj, Widget).h;
@@ -95,7 +95,7 @@ class Box extends Widget{
         * Set object x
         *
         */
-        static private inline function _setObjX (obj:DisplayObject, x:Float) : Void {
+        @:noCompletion static private inline function _setObjX (obj:DisplayObject, x:Float) : Void {
             #if html5
                 obj.x = (Std.is(obj, flash.text.TextField) ? obj.x = x + 2 : x);
             #else
@@ -108,7 +108,7 @@ class Box extends Widget{
         * Set object y
         *
         */
-        static private inline function _setObjY (obj:DisplayObject, y:Float) : Void {
+        @:noCompletion static private inline function _setObjY (obj:DisplayObject, y:Float) : Void {
             #if html5
                 obj.y = (Std.is(obj, flash.text.TextField) ? obj.y = y + 2 : y);
             #else
@@ -156,7 +156,7 @@ class Box extends Widget{
     * Set width based on content width
     *
     */
-    private function _calcWidth () : Float {
+    @:noCompletion private function _calcWidth () : Float {
         //if this is vertical box, set width = max child width
         if( this.vertical ){
 
@@ -199,7 +199,7 @@ class Box extends Widget{
     * Set width based on content width
     *
     */
-    private function _calcHeight () : Float {
+    @:noCompletion private function _calcHeight () : Float {
         //if this is vertical box, set height = sum child height
         if( this.vertical ){
 
@@ -271,7 +271,7 @@ class Box extends Widget{
     * Set all children equal size
     *
     */
-    private function _unifyChildren () : Void {
+    @:noCompletion private function _unifyChildren () : Void {
         var visibleChildren : Int = 0;
         for(i in 0...this.numChildren){
             if( this.getChildAt(i).visible ){
@@ -316,7 +316,7 @@ class Box extends Widget{
     * Align top
     *
     */
-    private function _vAlignTop () : Void {
+    @:noCompletion private function _vAlignTop () : Void {
         //vertical box
         if( this.vertical ){
             var lastY : Float = this.paddingTop;
@@ -342,7 +342,7 @@ class Box extends Widget{
     * Align middle
     *
     */
-    private function _vAlignMiddle () : Void {
+    @:noCompletion private function _vAlignMiddle () : Void {
         //vertical box
         if(this.vertical){
             //count sum children height
@@ -385,7 +385,7 @@ class Box extends Widget{
     * Align bottom
     *
     */
-    private function _vAlignBottom () : Void {
+    @:noCompletion private function _vAlignBottom () : Void {
         //vertical box
         if( this.vertical ){
             var lastY : Float = this.h - this.paddingBottom;
@@ -413,7 +413,7 @@ class Box extends Widget{
     * Align left
     *
     */
-    private function _hAlignLeft () : Void {
+    @:noCompletion private function _hAlignLeft () : Void {
         //vertical box
         if(this.vertical){
             for(i in 0...this.numChildren){
@@ -439,7 +439,7 @@ class Box extends Widget{
     * Align right
     *
     */
-    private function _hAlignRight () : Void {
+    @:noCompletion private function _hAlignRight () : Void {
         //vertical box
         if(this.vertical){
             var child : DisplayObject;
@@ -467,7 +467,7 @@ class Box extends Widget{
     * Align center
     *
     */
-    private function _hAlignCenter () : Void {
+    @:noCompletion private function _hAlignCenter () : Void {
         //vertical box
         if(this.vertical){
             var child : DisplayObject;
@@ -566,7 +566,7 @@ class Box extends Widget{
     * Handle child resizing
     *
     */
-    private function _onChildResize (e:WidgetEvent = null) : Void {
+    @:noCompletion private function _onChildResize (e:WidgetEvent = null) : Void {
         if( this.created ){
             if( this.autoWidth || this.autoHeight ){
                 if( e != null ){
@@ -597,7 +597,7 @@ class Box extends Widget{
     * Setter for autoSize
     *
     */
-    private function set_autoSize (as:Bool) : Bool {
+    @:noCompletion private function set_autoSize (as:Bool) : Bool {
         return this.autoWidth = this.autoHeight = as;
     }//function set_autoSize()
 
@@ -606,7 +606,7 @@ class Box extends Widget{
     * If width is set, disable autoWidth
     *
     */
-    override private function set_w(w:Float) : Float {
+    @:noCompletion override private function set_w(w:Float) : Float {
         this.autoWidth = false;
         return super.set_w(w);
     }//function set_w()
@@ -616,7 +616,7 @@ class Box extends Widget{
     * If width is set, disable autoWidth
     *
     */
-    override private function set_widthPt(wp:Float) : Float {
+    @:noCompletion override private function set_widthPt(wp:Float) : Float {
         this.autoWidth = false;
         return super.set_widthPt(wp);
     }//function set_widthPt()
@@ -626,7 +626,7 @@ class Box extends Widget{
     * If height is set, disable autoHeight
     *
     */
-    override private function set_heightPt(hp:Float) : Float {
+    @:noCompletion override private function set_heightPt(hp:Float) : Float {
         this.autoHeight = false;
         return super.set_heightPt(hp);
     }//function set_heightPt()
@@ -646,7 +646,7 @@ class Box extends Widget{
     * Setter for padding
     *
     */
-    private function set_padding (p:Float) : Float {
+    @:noCompletion private function set_padding (p:Float) : Float {
         this.paddingTop = this.paddingBottom = this.paddingRight = this.paddingLeft = p;
         return p;
     }//function set_padding()

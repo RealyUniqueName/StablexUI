@@ -64,18 +64,6 @@ class Floating extends Box{
                 }
             }
         }
-
-        #if html5
-            /**
-            * Workaround for html5.
-            * Bug in nme-3.5.4: on html5 if container.visible = false, than on first
-            * show canvases are added to dom in wrong order
-            */
-            // this.parent.addChild(this);
-            // for(i in 0...this.numChildren){
-            //     this.addChild(this.getChildAt(0));
-            // }
-        #end
     }//function show()
 
 

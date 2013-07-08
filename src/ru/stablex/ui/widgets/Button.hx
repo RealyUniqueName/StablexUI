@@ -218,7 +218,7 @@ class Button extends Text{
     * Setter for `.icoBeforeLabel`
     *
     */
-    private function set_icoBeforeLabel(ibl:Bool) : Bool {
+    @:noCompletion private function set_icoBeforeLabel(ibl:Bool) : Bool {
         if( ibl ){
             this.setChildIndex(this.label, this.numChildren - 1);
         }else{
@@ -232,7 +232,7 @@ class Button extends Text{
     * Getter for ico
     *
     */
-    private function get_ico () : Bmp {
+    @:noCompletion private function get_ico () : Bmp {
         //if ico is still not created, create it
         if( this._ico == null ){
             this._ico = UIBuilder.create(Bmp);
@@ -247,7 +247,7 @@ class Button extends Text{
     * Setter for ico
     *
     */
-    private function set_ico (ico:Bmp) : Bmp {
+    @:noCompletion private function set_ico (ico:Bmp) : Bmp {
         //destroy old ico
         if( this._ico != null ){
             this._ico.free();
@@ -264,7 +264,7 @@ class Button extends Text{
     * Getter for icoHovered
     *
     */
-    private function get_icoHovered () : Bmp {
+    @:noCompletion private function get_icoHovered () : Bmp {
         //if ico is still not created, create it
         if( this._icoHovered == null ){
             this._icoHovered = UIBuilder.create(Bmp);
@@ -280,7 +280,7 @@ class Button extends Text{
     * Setter for icoHovered
     *
     */
-    private function set_icoHovered (ico:Bmp) : Bmp {
+    @:noCompletion private function set_icoHovered (ico:Bmp) : Bmp {
         //destroy old ico
         if( this._icoHovered != null ){
             this._icoHovered.free();
@@ -297,7 +297,7 @@ class Button extends Text{
     * Getter for icoPressed
     *
     */
-    private function get_icoPressed () : Bmp {
+    @:noCompletion private function get_icoPressed () : Bmp {
         //if ico is still not created, create it
         if( this._icoPressed == null ){
             this._icoPressed = UIBuilder.create(Bmp);
@@ -313,7 +313,7 @@ class Button extends Text{
     * Setter for icoPressed
     *
     */
-    private function set_icoPressed (ico:Bmp) : Bmp {
+    @:noCompletion private function set_icoPressed (ico:Bmp) : Bmp {
         //destroy old ico
         if( this._icoPressed != null ){
             this._icoPressed.free();
@@ -330,7 +330,7 @@ class Button extends Text{
     * Setter for skinHoveredName
     *
     */
-    private function set_skinHoveredName (s:String) : String {
+    @:noCompletion private function set_skinHoveredName (s:String) : String {
         this.skinHovered = UIBuilder.skin(s)();
         return this.skinHoveredName = s;
     }//function set_skinHoveredName()
@@ -340,7 +340,7 @@ class Button extends Text{
     * Setter for skinPressedName
     *
     */
-    private function set_skinPressedName (s:String) : String {
+    @:noCompletion private function set_skinPressedName (s:String) : String {
         this.skinPressed = UIBuilder.skin(s)();
         return this.skinPressedName = s;
     }//function set_skinPressedName()

@@ -1,4 +1,7 @@
 build/*
 build.build
 samples/*/build/*
+samples/*/build
+samples/tests/*
 docGen/doc/*
+*.zip

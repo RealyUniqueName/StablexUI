@@ -5,7 +5,7 @@ If you want to create your custom widget class, you have another option in addit
 one described in <type>manual.05_Custom_widgets</type>.
 
 StablexUI provides data-driven way to create classes based on xml. You can convert
-any ui xml file to class definition with <type>ru.stablex.ui.UIBuilder</type>.createClass()
+any ui xml file to class definition with <type>ru.stablex.ui.UIBuilder</type>.buildClass()
 
 Let's dig into example. Imagine, you need a square widget with button in the middle.
 And you need to use it in several places with different properties for button and different widget colors.
@@ -21,28 +21,41 @@ Let's start with xml for such widget - custom.xml:
 </Widget>
 </xml>
 
-Next step: create a class for this widget:
+Now we need to let compiler know where to look for new class. For this purpose create
+separate class Init.hx:
 
 <haxe>
+class Init{
     /**
-    * Enrty point
+    * Function called with `--macro` compiler flag
     *
     */
-    static public function main () : Void{
-
-        //register classes for usage in xml.
-        // UIBuilder.regClass(...);
-        // ...
-
-        //create class for custom widget
-        ru.stablex.ui.UIBuilder.createClass("custom.xml", "com.example.Custom");
-
-        //initialize StablexUI
-        ru.stablex.ui.UIBuilder.init("defaults.xml");
-
-        //...
-    }//function main()
+    macro static public function init () : Void{
+        //create xml-based classes for custom widgets
+        ru.stablex.ui.UIBuilder.buildClass("custom.xml", "com.example.Custom");
+    }//function init()
+}//class Init
 </haxe>
+
+And make compiler run Init.init() by adding `--macro` flag to your project file:
+
+<xml>
+<?xml version="1.0" encoding="utf-8"?>
+<|project>
+
+    <|meta title="StablexUI Handlers and Skins" package="ru.stablex.ui" version="0.0.1" company="R.U.N" />
+    <|app path="./build" file="stablexui" main="Main"/>
+
+    <|window width="800" height="600" background="0xFFFFFF" fps="60"/>
+
+    <!-- call this function before compilling the app -->
+    <|haxeflag name="--macro" value="Init.init()"/>
+
+    <|haxelib name="openfl" />
+    <|haxelib name="actuate" />
+    <|haxelib name="stablexui" />
+</|project>
+</xml>
 
 Now you can instantiate com.example.Custom or use 'Custom' tag in xml to create widgets!
 As a bonus this class also has fields 'box' and 'btn', which are <type>ru.stablex.ui.widgets.HBox</type> and <type>ru.stablex.ui.widgets.Button</type> instances.
@@ -82,12 +95,10 @@ Source code can be found in Github repository in <a href="https://github.com/Rea
 
 
 /**
-@manual Tips
+@manual Side effects
 
-Since generated classes don't exist untill compiler find <type>ru.stablex.ui.UIBuilder</type>.createClass(...) calls, you
-can get errors like "Class not found: com.example.Custom" if you try to import this class somewhere or extend it.
-To avoid this problem it's recommended to dedicate main haxe file (one with static main() function) to StablexUI initialization.
-Take a look at <a href="https://github.com/RealyUniqueName/StablexUI/tree/master/samples/xmlClasses" target="_blank">sample project</a> for this technique
-and for example of extending generated class.
-
+If you want to use custom widgets in your xml-based classes, you have to place
+<type>ru.stablex.ui.UIBuilder</type>.regClass("com.examle.MyWidget") calls in Init.init()
+right before the <type>ru.stablex.ui.UIBuilder</type>.buildClass() calls.
+You can find example <a href="https://github.com/RealyUniqueName/StablexUI/tree/master/samples/xmlClasses" target="_blank">here</a>
 */

@@ -9,34 +9,18 @@ import ru.stablex.ui.UIBuilder;
 class Init{
 
     /**
-    * Enrty point
+    * Function called with `--macro` compiler flag
     *
     */
-    static public function main () : Void{
+    macro static public function init () : Void{
 
         //register classes for usage in xml.
         UIBuilder.regClass("com.example.CustomExt");
 
         //create xml-based classes for custom widgets
-        UIBuilder.createClass("ui/custom.xml", "com.example.Custom");
+        UIBuilder.buildClass("ui/custom.xml", "com.example.Custom");
 
-        //initialize StablexUI
-        UIBuilder.init("ui/defaults.xml");
-
-        //Run application
-        Main.main();
-
-    }//function main()
-
-
-    /**
-    * constructor
-    *
-    */
-    public function new() : Void {
-    }//function new()
-
-
+    }//function init()
 
 }//class Init
 

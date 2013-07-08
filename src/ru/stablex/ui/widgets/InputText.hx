@@ -66,7 +66,7 @@ class InputText extends Text{
     * Text getter
     * we need this hack to get actual text of textfield
     */
-    override private function get_text() : String {
+    @:noCompletion override private function get_text() : String {
         return (
             this.label.type == flash.text.TextFieldType.INPUT
                 ? StringTools.replace( Reflect.field(this.label, 'nmeGraphics').nmeSurface.innerHTML, '&nbsp;', ' ' )

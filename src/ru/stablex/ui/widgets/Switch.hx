@@ -61,7 +61,7 @@ class Switch extends Widget{
     * Setter for `.selected`. Change switch state
     *
     */
-    private function set_selected(s:Bool) : Bool {
+    @:noCompletion private function set_selected(s:Bool) : Bool {
         this._selected = s;
         if( s ){
             this.slider.right = 0;
@@ -80,7 +80,7 @@ class Switch extends Widget{
     * Getter for `.selected`
     *
     */
-    private function get_selected() : Bool {
+    @:noCompletion private function get_selected() : Bool {
         return this._selected;
     }//function get_selected()
 

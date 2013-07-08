@@ -8,10 +8,8 @@ import sys.io.File;
 #else
 import ru.stablex.ui.skins.Skin;
 import Type;
-import flash.text.TextField;
 import ru.stablex.ui.widgets.Widget;
 #end
-
 
 #if haxe3
 private typedef Hash<T> = Map<String,T>;
@@ -42,6 +40,9 @@ class UIBuilder {
 
     static private var _events  : Hash<Array<String>> = new Hash();
     static private var _imports : Hash<String> = new Hash();
+
+    //for xml-based class generation
+    static private var _xmlClass : Hash<String> = new Hash();
 
     static private var _initialized : Bool = false;
     //all generated code will be saved in this direcory (see .init() method for details)
@@ -83,7 +84,7 @@ class UIBuilder {
     * If you get any compiler errors on your xml files, you can find corresponding
     * file with generated code to find out what was wrong.
     */
-    #if haxe3 macro #else @:macro #end static public function saveCodeTo (dir:String) : Expr {
+    #if !macro macro #end static public function saveCodeTo (dir:String) : Expr {
         var endSlash : EReg = ~/(\/|\\)$/;
         if( !endSlash.match(dir) ){
             dir += '/';
@@ -102,17 +103,21 @@ class UIBuilder {
     * @param defaultsXmlFile - path to xml file with default settings for widgets
     * @param enableRTXml - if you need to process xml at runtime, set this parameter to true
     */
-    #if haxe3 macro #else @:macro #end static public function init(defaultsXmlFile:String = null, enableRTXml:Bool = false) : Expr {
-        var code : String = '\nflash.Lib.current.stage.removeEventListener(flash.events.Event.ENTER_FRAME, ru.stablex.ui.UIBuilder.skinQueue);';
-        code += '\nflash.Lib.current.stage.addEventListener(flash.events.Event.ENTER_FRAME, ru.stablex.ui.UIBuilder.skinQueue);';
+    macro static public function init(defaultsXmlFile:String = null, enableRTXml:Bool = false) : Expr {
+        #if display
+            return macro true;
+        #end
+
+		var code : String = '\nflash.Lib.current.stage.removeEventListener(flash.events.Event.ENTER_FRAME, ru.stablex.ui.UIBuilder.skinQueue);';
+		code += '\nflash.Lib.current.stage.addEventListener(flash.events.Event.ENTER_FRAME, ru.stablex.ui.UIBuilder.skinQueue);';
 
         if( !UIBuilder._initialized ){
             UIBuilder._initialize();
+        }
 
-            //if need to register classes for runtime xml
-            if( enableRTXml ){
-                code += UIBuilder._regRTXml();
-            }
+        //if need to register classes for runtime xml
+        if( enableRTXml ){
+            code += UIBuilder._regRTXml();
         }
 
         //If provided with file for defaults, generate closures for applying defaults to widgets
@@ -129,6 +134,7 @@ class UIBuilder {
         }
 
         code = '(function() : Void {' + code + '})()';
+
         if( defaultsXmlFile != null ){
             UIBuilder._saveCode(defaultsXmlFile, code);
         }
@@ -145,6 +151,8 @@ class UIBuilder {
     */
     static private function _initialize() : Void {
         UIBuilder._initialized = true;
+
+        Context.onTypeNotFound(UIBuilder._createClass);
 
         //registering frequently used events
         UIBuilder.regEvent('enterFrame',    'flash.events.Event.ENTER_FRAME');
@@ -202,10 +210,10 @@ class UIBuilder {
         UIBuilder.registerClass('ru.stablex.ui.widgets.Slider');
         UIBuilder.registerClass('ru.stablex.ui.widgets.Switch');
         UIBuilder.registerClass('ru.stablex.ui.widgets.Clock');
-        UIBuilder.registerClass('ru.stablex.ui.widgets.WebView');
+        //UIBuilder.registerClass('ru.stablex.ui.widgets.WebView');
         UIBuilder.registerClass('ru.stablex.ui.widgets.Image');
         UIBuilder.registerClass('ru.stablex.ui.widgets.BmpPlus');
-        UIBuilder.registerClass('ru.stablex.ui.widgets.SVGImage');
+        //UIBuilder.registerClass('ru.stablex.ui.widgets.SVGImage');
         UIBuilder.registerClass('ru.stablex.ui.widgets.PowerWidget');
         UIBuilder.registerClass('ru.stablex.ui.widgets.RotateWidget');
 
@@ -239,10 +247,23 @@ class UIBuilder {
         UIBuilder.registerClass('flash.events.MouseEvent');
         UIBuilder.registerClass('flash.Lib');
 
-        //register default meta processors
-        UIBuilder._createCoreMeta();
+        #if !display
+            //register default meta processors
+            UIBuilder._createCoreMeta();
+        #end
     }//function _initialize()
 
+
+    /**
+    * Check `UIBuilder.init()` was called
+    *
+    * @throw <type>String</type> if `UIBuilder.init` was not called
+    */
+    static private function _checkInit () : Void {
+        if( !UIBuilder._initialized ) {
+            UIBuilder._initialize();
+        }
+    }//function _checkInit()
 
 
     /**
@@ -384,8 +405,9 @@ class UIBuilder {
     /**
     * Generate haxe code based on `element` attributes as properties of `obj`
     *
+    * @private
     */
-    static public function attr2Haxe (element:Xml, obj:String) : String {
+    @:noCompletion static public function attr2Haxe (element:Xml, obj:String) : String {
 
         var attributes : Iterator<String> = element.attributes();
         var post       : Array<String> = [];
@@ -484,8 +506,10 @@ class UIBuilder {
     *   #SomeClass(widgetId) - replaced with UIBuilder.getAs('widgetId', SomeClass);
     *                           SomeClass must be of <type>Class</type>&lt;<type>ru.stablex.ui.widgets.Widget</type>&gt;
     *   @someParam - replaced with arguments.someParam. Arguments can be passed by UIBuilder.buildFn(xmlFile)({arguments});
+    *
+    * @private
     */
-    static public function fillCodeShortcuts (thisObj:String, code:String) : String{
+    @:noCompletion static public function fillCodeShortcuts (thisObj:String, code:String) : String{
         var cls    = UIBuilder._erCls;
         var id     = UIBuilder._erId;
         var castId = UIBuilder._erCastId;
@@ -609,6 +633,38 @@ class UIBuilder {
         }
     }//function registerClass()
 
+
+    /**
+    * Callback for Context.onTypeNotFound()
+    *
+    */
+    static private function _createClass(cls:String) : TypeDefinition {
+        var xmlFile : String = UIBuilder._xmlClass.get(cls);
+        if( xmlFile != null ){
+            return ClassBuilder.createClass(xmlFile, cls);
+        }else{
+            return null;
+        }
+    }//function _createClass()
+
+
+    /**
+    * Create class for custom widget based on xml markup.
+    * This is available only from macro functions.
+    *
+    * @param xmlFile - source markup file for new class
+    * @param cls - fully qualified class name for new class (E.g. 'com.example.MyFancyWidget')
+    */
+    static public function buildClass(xmlFile:String, cls:String) : Void {
+        if( !UIBuilder._initialized ){
+            UIBuilder._initialize();
+        }
+        //register class
+        UIBuilder.registerClass(cls);
+        //save path to xml file for this class
+        UIBuilder._xmlClass.set(cls, xmlFile);
+    }//function buildClass()
+
 #end
 
     /**
@@ -626,17 +682,20 @@ class UIBuilder {
     *
     * @return <type>Dynamic</type>->Root_Xml_Element_Class<Widget>
     */
-    #if haxe3 macro #else @:macro #end static public function buildFn (xmlFile:String) : Expr{
-        if( !UIBuilder._initialized ) Err.trigger('Call UIBuilder.init()');
+    macro static public function buildFn (xmlFile:String) : Expr{
+        UIBuilder._checkInit();
 
         var element = Xml.parse( File.getContent(xmlFile) ).firstElement();
         var cls : String = UIBuilder._imports.get(element.nodeName);
 
-        var code : String = UIBuilder.construct(element);
-        code += '\nreturn __ui__widget1;';
-        code = 'function(__ui__arguments:Dynamic = null) : ' + cls + ' {' + code + '}';
-
-        UIBuilder._saveCode(xmlFile, code);
+        #if display
+            var code : String = 'function(__ui__arguments:Dynamic = null) : ' + cls + ' {return null;}';
+        #else
+            var code : String = UIBuilder.construct(element);
+            code += '\nreturn __ui__widget1;';
+            code = 'function(__ui__arguments:Dynamic = null) : ' + cls + ' {' + code + '}';
+            UIBuilder._saveCode(xmlFile, code);
+        #end
 
         return UIBuilder._parse(xmlFile, code);
     }//function buildFn()
@@ -650,7 +709,7 @@ class UIBuilder {
     *
     * @throw <type>String</type> if this shortcut is already used
     */
-    #if haxe3 macro #else @:macro #end static public function regEvent (shortcut:String, eventType:String, eventClass:String = 'flash.events.Event') : Expr{
+    macro static public function regEvent (shortcut:String, eventType:String, eventClass:String = 'flash.events.Event') : Expr{
         if( UIBuilder._events.exists(shortcut) ) Err.trigger('Event is already registered: ' + shortcut);
         UIBuilder._events.set(shortcut, [eventType, eventClass]);
         return Context.parse('true', Context.currentPos());
@@ -666,7 +725,7 @@ class UIBuilder {
     * can not be registered simultaneously, because both will be shortened to $MyClass for usage in xml.
     * You still can register one of them and use another one by it's full classpath in xml
     */
-    #if haxe3 macro #else @:macro #end static public function regClass (fullyQualifiedName:String) : Expr{
+    #if !macro macro #end static public function regClass (fullyQualifiedName:String) :  Expr{
         UIBuilder.registerClass(fullyQualifiedName);
         return Context.parse("true", Context.currentPos());
     }//function regClass()
@@ -678,8 +737,12 @@ class UIBuilder {
     * @throw <type>String</type> if one of tag names in xml does not match ~/^([a-z0-9_]+):([a-z0-9_]+)$/i
     * @throw <type>String</type> if class specified for skin system is not registered with .regClass
     */
-    #if haxe3 macro #else @:macro #end static public function regSkins(xmlFile:String) : Expr {
-        if( !UIBuilder._initialized ) Err.trigger('Call UIBuilder.init() first');
+    macro static public function regSkins(xmlFile:String) : Expr {
+        #if display
+            return macro true;
+        #end
+
+        UIBuilder._checkInit();
 
         var element = Xml.parse( File.getContent(xmlFile) ).firstElement();
 
@@ -714,15 +777,17 @@ class UIBuilder {
 
     /**
     * Create class for custom widget based on xml markup
+    *
+    * @deprecated
+    *
     * @param xmlFile - source markup file for new class
     * @param cls - fully qualified class name for new class (E.g. 'com.example.MyFancyWidget')
     */
-    #if haxe3 macro #else @:macro #end static public function createClass(xmlFile:String, cls:String) : Expr {
-        if( !UIBuilder._initialized ){
-            UIBuilder._initialize();
-        }
-        return ClassBuilder.createClass(xmlFile, cls);
+    #if !macro macro #end static public function createClass(xmlFile:String, cls:String) : Expr {
+        UIBuilder.buildClass(xmlFile, cls);
+        return macro true;
     }//function createClass()
+
 
 #if !macro
 
@@ -879,7 +944,7 @@ class UIBuilder {
     * Associate widget with its id, so it can be acquired by UIBuilder.get()
     * @private
     */
-    static public inline function save (obj:Widget) : Void{
+    @:noCompletion static public inline function save (obj:Widget) : Void{
         if( UIBuilder._objects.exists(obj.id) ){
             Err.trigger('Widget id "' + obj.id + '" is already used');
         }else{
@@ -892,7 +957,7 @@ class UIBuilder {
     * "Forget" widget. Free its id for using in other widgets
     * @private
     */
-    static public inline function forget (id:String) : Void{
+    @:noCompletion static public inline function forget (id:String) : Void{
         UIBuilder._objects.remove(id);
     }//function forget()
 
@@ -901,7 +966,7 @@ class UIBuilder {
     * Add widget to `apply skin` queue. Skin applied once per frame
     * @private
     */
-    static public inline function queueSkin (w:Widget) : Void {
+    @:noCompletion static public inline function queueSkin (w:Widget) : Void {
         if( w.skin != null && !w._skinQueued ){
             UIBuilder._skinQueue.add(w);
             w._skinQueued = true;
@@ -913,7 +978,7 @@ class UIBuilder {
     * Process skin UIBuilder._skinQueue
     * @private
     */
-    static public function skinQueue (e:flash.events.Event = null) : Void {
+    @:noCompletion static public function skinQueue (e:flash.events.Event = null) : Void {
         //if there is something to render in queue
         if( UIBuilder._skinQueue.length > 0 ){
             //get list we're going to process
