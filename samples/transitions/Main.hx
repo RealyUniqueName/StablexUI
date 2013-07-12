@@ -14,12 +14,6 @@ import ru.stablex.ui.widgets.HBox;
 */
 class Main extends flash.display.Sprite{
 
-
-    static public var view1 : ?Dynamic->Bmp;
-    static public var view2 : ?Dynamic->Widget;
-    static public var view3 : ?Dynamic->HBox;
-
-
     /**
     * Enrty point
     *
@@ -29,13 +23,8 @@ class Main extends flash.display.Sprite{
         //initialize StablexUI
         UIBuilder.init();
 
-        //build functions for creation of views
-        Main.view1 = UIBuilder.buildFn("ui/view1.xml");
-        Main.view2 = UIBuilder.buildFn("ui/view2.xml");
-        Main.view3 = UIBuilder.buildFn("ui/view3.xml");
-
         //Show main ui
-        Lib.current.addChild( UIBuilder.buildFn('ui/main.xml')() );
+        Lib.current.addChild( UIBuilder.buildFn('ui.xml')() );
     }//function main()
 
 
