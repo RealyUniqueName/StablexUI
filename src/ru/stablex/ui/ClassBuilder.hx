@@ -4,6 +4,7 @@ package ru.stablex.ui;
 
 import haxe.macro.Context;
 import haxe.macro.Expr;
+import haxe.macro.Type;
 import sys.io.File;
 
 
@@ -296,6 +297,21 @@ class ClassBuilder {
 
         return code;
     }//function _construct()
+
+
+    /**
+    * Get base class for Sprite
+    *
+    */
+    macro static public function getSpriteClass () : Type {
+        var cls : String = (
+            Context.defined("custom_api")
+                ? Context.definedValue("custom_api")
+                : "ru.stablex.dl"
+        ) + ".Sprite";
+
+        return Context.getType(cls);
+    }//function getSpriteClass()
 
 
 /*******************************************************************************
