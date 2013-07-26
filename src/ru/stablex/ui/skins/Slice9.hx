@@ -1,9 +1,9 @@
 package ru.stablex.ui.skins;
 
-import flash.display.BitmapData;
-import flash.geom.Matrix;
-import flash.geom.Point;
-import flash.geom.Rectangle;
+import ru.stablex.backend.display.BitmapData;
+import ru.stablex.backend.geom.Matrix;
+import ru.stablex.backend.geom.Point;
+import ru.stablex.backend.geom.Rectangle;
 import ru.stablex.Assets;
 import ru.stablex.ui.widgets.Widget;
 
@@ -13,8 +13,8 @@ import ru.stablex.ui.widgets.Widget;
 * 9-slice-scaling
 * `slice` property now takes 4 floats: vertical left, vertical right, horizontal top,
 * horizontal bottom guidelines for slicing
-* If the floats are less than one they indicate a percentage of the picture where it 
-* should be cut. 
+* If the floats are less than one they indicate a percentage of the picture where it
+* should be cut.
 * If they are larger than or equal to one they are pixels and should be integer values.
 */
 class Slice9 extends Slice3{

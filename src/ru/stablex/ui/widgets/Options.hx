@@ -1,8 +1,8 @@
 package ru.stablex.ui.widgets;
 
-import flash.display.DisplayObject;
+import ru.stablex.backend.display.DisplayObject;
 import ru.stablex.backend.events.MouseEvent;
-import flash.geom.Rectangle;
+import ru.stablex.backend.geom.Rectangle;
 import flash.Lib;
 import ru.stablex.ui.events.WidgetEvent;
 import ru.stablex.ui.skins.Skin;

@@ -1,6 +1,6 @@
 package ru.stablex.ui.widgets;
 
-import flash.display.DisplayObject;
+import ru.stablex.backend.display.DisplayObject;
 import ru.stablex.ui.transitions.Transition;
 
 

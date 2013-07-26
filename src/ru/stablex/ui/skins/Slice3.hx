@@ -1,9 +1,9 @@
 package ru.stablex.ui.skins;
 
-import flash.display.BitmapData;
-import flash.geom.Matrix;
-import flash.geom.Point;
-import flash.geom.Rectangle;
+import ru.stablex.backend.display.BitmapData;
+import ru.stablex.backend.geom.Matrix;
+import ru.stablex.backend.geom.Point;
+import ru.stablex.backend.geom.Rectangle;
 import ru.stablex.Assets;
 import ru.stablex.ui.widgets.Widget;
 
@@ -31,7 +31,7 @@ class Slice3 extends Skin{
     /**
     * Where to slice skin bitmap.
     * This array should contain zero, one or two floats.
-    * If the floats are less than one they indicate a percentage of the picture where it 
+    * If the floats are less than one they indicate a percentage of the picture where it
     * should be cut.
     * If they are larger than or equal to one they are pixels and should be integer values.
     * Zero - 3 slice scaling (horizontal). Bitmap is divided into two equal sized bitmaps.
@@ -161,7 +161,7 @@ class Slice3 extends Skin{
 
 
     /**
-    * Returns the correct slice value, depending on if the slice value is less 
+    * Returns the correct slice value, depending on if the slice value is less
     * than one or not.
     * If it's less than one we return a part of the total value passed.
     * If it's larger or equal to one we return the slice value rounded.

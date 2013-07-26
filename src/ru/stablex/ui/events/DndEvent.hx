@@ -2,7 +2,7 @@ package ru.stablex.ui.events;
 
 import ru.stablex.backend.display.DisplayObjectContainer;
 import ru.stablex.backend.events.Event;
-import flash.geom.Point;
+import ru.stablex.backend.geom.Point;
 import ru.stablex.ui.widgets.Widget;
 
 

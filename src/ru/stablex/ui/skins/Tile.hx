@@ -1,6 +1,6 @@
 package ru.stablex.ui.skins;
 
-import flash.display.BitmapData;
+import ru.stablex.backend.display.BitmapData;
 import ru.stablex.Assets;
 import ru.stablex.ui.widgets.Widget;
 

@@ -2,7 +2,7 @@ package ru.stablex.ui.widgets;
 
 
 import ru.stablex.backend.display.DisplayObject;
-import flash.geom.Rectangle;
+import ru.stablex.backend.geom.Rectangle;
 import ru.stablex.TweenSprite;
 import ru.stablex.ui.events.WidgetEvent;
 import ru.stablex.ui.layouts.Layout;
