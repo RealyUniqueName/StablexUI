@@ -14,7 +14,8 @@ import ru.stablex.ui.skins.Skin;
 */
 class StateButton extends Button{
 
-
+	//change states on click
+	public var cycleStates(default,set_cycleStates) : Bool;
     //object to define button states
     public var states : DynamicList<BtnState>;
     //defines states order. Only states defined in this array will apear on button clicking
@@ -33,9 +34,7 @@ class StateButton extends Button{
         super();
 
         this.states = new DynamicList(BtnState);
-
-        //change states on click
-        this.addEventListener(MouseEvent.CLICK, this.nextState);
+        this.cycleStates = true;
     }//function new()
 
 
@@ -76,13 +75,37 @@ class StateButton extends Button{
     }//function set_state()
 
 
+	/**
+	* Setter for cycleStates
+    *
+    */
+    @:noCompletion private function set_cycleStates (b:Bool) : Bool {
+    	if( b == this.cycleStates ) return b;
+    	if( b ){
+    		this.addEventListener(MouseEvent.CLICK, this.nextState);
+    	}else{
+    		this.removeEventListener(MouseEvent.CLICK, this.nextState);
+    	}
+    	this.cycleStates = b;
+        return b;
+    }//function set_cycleStates()
+
+
+	override public function free (recursive:Bool = true) : Void{
+		if( this.cycleStates ){
+			this.removeEventListener(MouseEvent.CLICK, this.nextState);
+		}
+		super.free(recursive);
+	}
+
+
     /**
     * Set next state
     *
     */
     public function nextState (e:MouseEvent = null) : Void {
         //order must be defined
-        if( this.order == null || this.order.length == 0 ) return;
+        if( !this.cycleStates || this.order == null || this.order.length == 0 ) return;
 
         if( this.order.length <= this._currentIdx + 1 ){
             this._currentIdx = 0;
