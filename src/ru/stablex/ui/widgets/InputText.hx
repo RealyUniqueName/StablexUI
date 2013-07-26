@@ -1,7 +1,7 @@
 package ru.stablex.ui.widgets;
 
 #if html5
-import flash.events.Event;
+import ru.stablex.backend.events.Event;
 #end
 
 

@@ -1,7 +1,7 @@
 package ru.stablex.ui.widgets;
 
-import flash.events.Event;
-import flash.events.MouseEvent;
+import ru.stablex.backend.events.Event;
+import ru.stablex.backend.events.MouseEvent;
 import flash.Lib;
 import ru.stablex.ui.events.WidgetEvent;
 

@@ -1,6 +1,6 @@
 package ru.stablex.ui.widgets;
 
-import flash.text.TextField;
+import ru.stablex.backend.text.TextField;
 import flash.text.TextFormat;
 import ru.stablex.Err;
 import ru.stablex.ui.UIBuilder;
@@ -10,7 +10,7 @@ import ru.stablex.ui.UIBuilder;
 * Text field
 */
 class Text extends Box{
-    //<type>flash.display.TextField</type> used to render text
+    //<type>flash.text.TextField</type> is used to render text
     public var label  : TextField;
     //Text format wich will be aplied to label on refresh
     public var format : TextFormat;

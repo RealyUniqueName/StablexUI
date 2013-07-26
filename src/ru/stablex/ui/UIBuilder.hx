@@ -108,8 +108,8 @@ class UIBuilder {
             return macro true;
         #end
 
-		var code : String = '\nflash.Lib.current.stage.removeEventListener(flash.events.Event.ENTER_FRAME, ru.stablex.ui.UIBuilder.skinQueue);';
-		code += '\nflash.Lib.current.stage.addEventListener(flash.events.Event.ENTER_FRAME, ru.stablex.ui.UIBuilder.skinQueue);';
+		var code : String = '\nflash.Lib.current.stage.removeEventListener(ru.stablex.backend.events.Event.ENTER_FRAME, ru.stablex.ui.UIBuilder.skinQueue);';
+		code += '\nflash.Lib.current.stage.addEventListener(ru.stablex.backend.events.Event.ENTER_FRAME, ru.stablex.ui.UIBuilder.skinQueue);';
 
         if( !UIBuilder._initialized ){
             UIBuilder._initialize();
@@ -155,11 +155,11 @@ class UIBuilder {
         Context.onTypeNotFound(UIBuilder._createClass);
 
         //registering frequently used events
-		UIBuilder.regEvent('enterFrame',  'flash.events.Event.ENTER_FRAME');
-        UIBuilder.regEvent('click',       'flash.events.MouseEvent.CLICK',                    'flash.events.MouseEvent');
-        UIBuilder.regEvent('mouseDown',   'flash.events.MouseEvent.MOUSE_DOWN',               'flash.events.MouseEvent');
-        UIBuilder.regEvent('mouseUp',     'flash.events.MouseEvent.MOUSE_UP',                 'flash.events.MouseEvent');
-        UIBuilder.regEvent('display',     'flash.events.Event.ADDED_TO_STAGE');
+		UIBuilder.regEvent('enterFrame',  'ru.stablex.backend.events.Event.ENTER_FRAME');
+        UIBuilder.regEvent('click',       'ru.stablex.backend.events.MouseEvent.CLICK',                    'ru.stablex.backend.events.MouseEvent');
+        UIBuilder.regEvent('mouseDown',   'ru.stablex.backend.events.MouseEvent.MOUSE_DOWN',               'ru.stablex.backend.events.MouseEvent');
+        UIBuilder.regEvent('mouseUp',     'ru.stablex.backend.events.MouseEvent.MOUSE_UP',                 'ru.stablex.backend.events.MouseEvent');
+        UIBuilder.regEvent('display',     'ru.stablex.backend.events.Event.ADDED_TO_STAGE');
         UIBuilder.regEvent('create',      'ru.stablex.ui.events.WidgetEvent.CREATE',        'ru.stablex.ui.events.WidgetEvent');
         UIBuilder.regEvent('free',        'ru.stablex.ui.events.WidgetEvent.FREE',          'ru.stablex.ui.events.WidgetEvent');
         UIBuilder.regEvent('resize',      'ru.stablex.ui.events.WidgetEvent.RESIZE',        'ru.stablex.ui.events.WidgetEvent');
@@ -216,8 +216,8 @@ class UIBuilder {
         UIBuilder.registerClass('ru.stablex.TweenSprite');
         UIBuilder.registerClass('ru.stablex.Assets');
 
-		UIBuilder.registerClass('flash.events.Event');
-        UIBuilder.registerClass('flash.events.MouseEvent');
+		UIBuilder.registerClass('ru.stablex.backend.events.Event');
+        UIBuilder.registerClass('ru.stablex.backend.events.MouseEvent');
         UIBuilder.registerClass('flash.Lib');
 
         #if !display
@@ -677,12 +677,12 @@ class UIBuilder {
     /**
     * Register event type to declare event listeners in xml (attributes prefixed with `on-[shortcut]`).
     *
-    * @param eventType - type of event we need to listen to. E.g. flash.events.MouseEvent.MOUSE_WHEEL
-    * @param eventType - expected class of event. E.g. flash.events.MouseEvent.
+    * @param eventType - type of event we need to listen to. E.g. ru.stablex.backend.events.MouseEvent.MOUSE_WHEEL
+    * @param eventType - expected class of event. E.g. ru.stablex.backend.events.MouseEvent.
     *
     * @throw <type>String</type> if this shortcut is already used
     */
-    macro static public function regEvent (shortcut:String, eventType:String, eventClass:String = 'flash.events.Event') : Expr{
+    macro static public function regEvent (shortcut:String, eventType:String, eventClass:String = 'ru.stablex.backend.events.Event') : Expr{
         if( UIBuilder._events.exists(shortcut) ) Err.trigger('Event is already registered: ' + shortcut);
         UIBuilder._events.set(shortcut, [eventType, eventClass]);
         return Context.parse('true', Context.currentPos());
@@ -951,7 +951,7 @@ class UIBuilder {
     * Process skin UIBuilder._skinQueue
     * @private
     */
-    @:noCompletion static public function skinQueue (e:flash.events.Event = null) : Void {
+    @:noCompletion static public function skinQueue (e:ru.stablex.backend.events.Event = null) : Void {
         //if there is something to render in queue
         if( UIBuilder._skinQueue.length > 0 ){
             //get list we're going to process

@@ -4,7 +4,6 @@ package ru.stablex.ui;
 
 import haxe.macro.Context;
 import haxe.macro.Expr;
-import haxe.macro.Type;
 import sys.io.File;
 
 
@@ -300,18 +299,22 @@ class ClassBuilder {
 
 
     /**
-    * Get base class for Sprite
+    * Get custom class for implementation of specified backend class
     *
+    * @param classpath - full class name (e.g. "flash.display.Sprite")
     */
-    macro static public function getSpriteClass () : Type {
-        var cls : String = (
-            Context.defined("custom_api")
-                ? Context.definedValue("custom_api")
-                : "ru.stablex.dl"
-        ) + ".Sprite";
+    macro static public function getBackendClass (classpath:String) : haxe.macro.Type {
+        //custom display list package is specified
+        if( Context.defined("SX_BACKEND") ){
+            var cls : String = classpath.split(".").pop();
 
-        return Context.getType(cls);
-    }//function getSpriteClass()
+            return Context.getType( Context.definedValue("SX_BACKEND" + "." + cls) );
+
+        //use default (flash) display list
+        }else{
+            return Context.getType(classpath);
+        }
+    }//function getBackendClass()
 
 
 /*******************************************************************************

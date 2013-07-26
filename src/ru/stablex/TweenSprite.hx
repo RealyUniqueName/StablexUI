@@ -14,8 +14,8 @@ import motion.easing.Quart;
 import motion.easing.Cubic;
 import motion.easing.Sine;
 
-import flash.display.DisplayObject;
-// import flash.display.Sprite;
+import ru.stablex.backend.display.DisplayObject;
+import ru.stablex.backend.display.Sprite;
 
 /**
 * class TweenSprite implements easy access to <type>motion.Actuate</type> methods and manages registered
@@ -23,7 +23,7 @@ import flash.display.DisplayObject;
 *
 */
 // @:build(ru.stablex.ui.ClassBuilder.changePackage())
-class TweenSprite extends haxe.macro.MacroType<[ru.stablex.ui.ClassBuilder.getSpriteClass()]>{
+class TweenSprite extends Sprite{
 
     //registered event listeners
     #if haxe3

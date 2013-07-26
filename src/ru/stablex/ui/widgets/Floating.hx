@@ -1,6 +1,6 @@
 package ru.stablex.ui.widgets;
 
-import flash.events.Event;
+import ru.stablex.backend.events.Event;
 import flash.Lib;
 
 

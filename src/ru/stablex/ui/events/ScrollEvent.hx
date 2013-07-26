@@ -1,6 +1,6 @@
 package ru.stablex.ui.events;
 
-import flash.events.Event;
+import ru.stablex.backend.events.Event;
 
 
 
@@ -16,8 +16,8 @@ class ScrollEvent extends Event{
     public var canceled (default,null) : Bool = false;
     /**
     * Event, wich started scrolling process
-    * <type>flash.events.MouseEvent</type>.WHEEL_EVENT for scrolling by wheel,
-    * <type>flash.events.MouseEvent</type>.MOUSE_DOWN for scrolling by dragging, etc.
+    * <type>ru.stablex.backend.events.MouseEvent</type>.WHEEL_EVENT for scrolling by wheel,
+    * <type>ru.stablex.backend.events.MouseEvent</type>.MOUSE_DOWN for scrolling by dragging, etc.
     */
     public var srcEvent (default, null) : Event;
 

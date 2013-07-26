@@ -1,10 +1,10 @@
 package ru.stablex.ui.widgets;
 
-import flash.display.DisplayObject;
-import flash.display.Sprite;
-import flash.events.Event;
-import flash.events.MouseEvent;
-import flash.events.TouchEvent;
+import ru.stablex.backend.display.DisplayObject;
+import ru.stablex.backend.display.Sprite;
+import ru.stablex.backend.events.Event;
+import ru.stablex.backend.events.MouseEvent;
+import ru.stablex.backend.events.TouchEvent;
 import flash.Lib;
 import ru.stablex.ui.events.ScrollEvent;
 import ru.stablex.ui.events.WidgetEvent;

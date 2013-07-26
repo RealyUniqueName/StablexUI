@@ -3,8 +3,8 @@ package ru.stablex.ui.widgets;
 import flash.display.DisplayObject;
 import ru.stablex.ui.skins.Skin;
 import ru.stablex.ui.UIBuilder;
-import flash.events.MouseEvent;
-import flash.events.MouseEvent;
+import ru.stablex.backend.events.MouseEvent;
+import ru.stablex.backend.events.MouseEvent;
 
 
 /**
@@ -163,8 +163,8 @@ class Button extends Text{
         this.addEventListener(MouseEvent.MOUSE_OUT, Button._onRelease);
         this.addEventListener(MouseEvent.MOUSE_UP, Button._onRelease);
         #if mobile
-            this.addEventListener(flash.events.TouchEvent.TOUCH_OUT, Button._onHout);
-            this.addEventListener(flash.events.TouchEvent.TOUCH_OUT, Button._onRelease);
+            this.addEventListener(ru.stablex.backend.events.TouchEvent.TOUCH_OUT, Button._onHout);
+            this.addEventListener(ru.stablex.backend.events.TouchEvent.TOUCH_OUT, Button._onRelease);
         #end
 
         this.pressed = false;
