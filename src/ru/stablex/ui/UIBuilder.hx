@@ -108,8 +108,8 @@ class UIBuilder {
             return macro true;
         #end
 
-		var code : String = '\nflash.Lib.current.stage.removeEventListener(ru.stablex.backend.events.Event.ENTER_FRAME, ru.stablex.ui.UIBuilder.skinQueue);';
-		code += '\nflash.Lib.current.stage.addEventListener(ru.stablex.backend.events.Event.ENTER_FRAME, ru.stablex.ui.UIBuilder.skinQueue);';
+		var code : String = '\nru.stablex.backend.Lib.current.stage.removeEventListener(ru.stablex.backend.events.Event.ENTER_FRAME, ru.stablex.ui.UIBuilder.skinQueue);';
+		code += '\nru.stablex.backend.Lib.current.stage.addEventListener(ru.stablex.backend.events.Event.ENTER_FRAME, ru.stablex.ui.UIBuilder.skinQueue);';
 
         if( !UIBuilder._initialized ){
             UIBuilder._initialize();
@@ -218,7 +218,7 @@ class UIBuilder {
 
 		UIBuilder.registerClass('ru.stablex.backend.events.Event');
         UIBuilder.registerClass('ru.stablex.backend.events.MouseEvent');
-        UIBuilder.registerClass('flash.Lib');
+        UIBuilder.registerClass('ru.stablex.backend.Lib');
 
         #if !display
             //register default meta processors

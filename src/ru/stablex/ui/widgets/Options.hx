@@ -3,7 +3,7 @@ package ru.stablex.ui.widgets;
 import ru.stablex.backend.display.DisplayObject;
 import ru.stablex.backend.events.MouseEvent;
 import ru.stablex.backend.geom.Rectangle;
-import flash.Lib;
+import ru.stablex.backend.Lib;
 import ru.stablex.ui.events.WidgetEvent;
 import ru.stablex.ui.skins.Skin;
 
@@ -29,7 +29,7 @@ class Options extends Button{
     public var value (get_value,set_value) : Dynamic;
     //defaults for options in list (each option is a <type>Toggle</type> widget)
     public var optionDefaults : String = 'Default';
-    //If this is true. List position will be overriden to make list appear under this control
+    //If this is true. List position will be overriden to make list appear under this widget
     public var alignList : Bool = true;
 
     //if `.options` changed, we need to rebuild list of options

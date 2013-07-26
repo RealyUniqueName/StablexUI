@@ -1,7 +1,7 @@
 package ru.stablex.ui.widgets;
 
 import ru.stablex.backend.events.Event;
-import flash.Lib;
+import ru.stablex.backend.Lib;
 
 
 /**

@@ -3,7 +3,7 @@ package ru.stablex.ui;
 import ru.stablex.backend.display.DisplayObjectContainer;
 import ru.stablex.backend.events.MouseEvent;
 import ru.stablex.backend.geom.Point;
-import flash.Lib;
+import ru.stablex.backend.Lib;
 import ru.stablex.ui.events.DndEvent;
 import ru.stablex.ui.widgets.Widget;
 import motion.actuators.GenericActuator;

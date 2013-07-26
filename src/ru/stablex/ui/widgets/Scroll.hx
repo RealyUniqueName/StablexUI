@@ -5,7 +5,7 @@ import ru.stablex.backend.display.Sprite;
 import ru.stablex.backend.events.Event;
 import ru.stablex.backend.events.MouseEvent;
 import ru.stablex.backend.events.TouchEvent;
-import flash.Lib;
+import ru.stablex.backend.Lib;
 import ru.stablex.ui.events.ScrollEvent;
 import ru.stablex.ui.events.WidgetEvent;
 
