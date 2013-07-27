@@ -301,18 +301,17 @@ class ClassBuilder {
     /**
     * Get custom class for implementation of specified backend class
     *
-    * @param classpath - full class name (e.g. "flash.display.Sprite")
+    * @param defaultPackage - default package to use if STABLEX_BACKEND conditional is not specified (e.g "flash")
+    * @param cls - full class name excluding `defaultPackage` (e.g. "display.Sprite")
     */
-    macro static public function getBackendClass (classpath:String) : haxe.macro.Type {
+    macro static public function getBackendClass (defaultPackage:String, cls:String) : haxe.macro.Type {
         //custom display list package is specified
         if( Context.defined("STABLEX_BACKEND") ){
-            var cls : String = classpath.split(".").pop();
-
             return Context.getType( Context.definedValue("STABLEX_BACKEND" + "." + cls) );
 
         //use default (flash) display list
         }else{
-            return Context.getType(classpath);
+            return Context.getType(defaultPackage + "." + cls);
         }
     }//function getBackendClass()
 
