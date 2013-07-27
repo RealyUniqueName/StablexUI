@@ -64,6 +64,7 @@ class Options extends Button{
         if( idx != this._selectedIdx ){
             this._rebuildList = true;
             this._selectedIdx = idx;
+            this.text = this.options[idx][0];
             this.dispatchEvent(new WidgetEvent(WidgetEvent.CHANGE));
         }
         return idx;
@@ -204,7 +205,6 @@ class Options extends Button{
             var idx : Int = Std.parseInt(obj.name);
             if( this.options != null && this.options.length > idx ){
                 this._selectedIdx = idx;
-                this.text = this.options[idx][0];
             }
         }
     }//function _onSelectOption()
