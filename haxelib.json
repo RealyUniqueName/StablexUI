@@ -4,8 +4,8 @@
     "license"      : "MIT",
     "tags"         : ["cross", "cpp", "flash", "html5", "ui"],
     "description"  : "StablexUI is a crossplatform UI engine.",
-    "version"      : "1.0.4",
-    "releasenote"  : "Minor fix for Options widget",
+    "version"      : "1.0.5",
+    "releasenote"  : "`rebuildList` property for Options widget",
     "contributors" : ["RealyUniqueName"],
     "dependencies" : {
         "openfl"        : "",
