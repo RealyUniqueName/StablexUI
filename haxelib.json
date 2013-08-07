@@ -4,8 +4,8 @@
     "license"      : "MIT",
     "tags"         : ["cross", "cpp", "flash", "html5", "ui"],
     "description"  : "StablexUI is a crossplatform UI engine.",
-    "version"      : "1.0.3",
-    "releasenote"  : "New way to build xml-based classes. Old way is deprecated, but still available.",
+    "version"      : "1.0.5",
+    "releasenote"  : "`rebuildList` property for Options widget",
     "contributors" : ["RealyUniqueName"],
     "dependencies" : {
         "openfl"        : "",
