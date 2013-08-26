@@ -1,6 +1,5 @@
 package ru.stablex.ui.widgets;
 
-import ru.stablex.backend.display.DisplayObject;
 import ru.stablex.backend.events.MouseEvent;
 import ru.stablex.backend.Lib;
 import ru.stablex.ui.events.WidgetEvent;

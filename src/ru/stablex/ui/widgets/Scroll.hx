@@ -1,7 +1,6 @@
 package ru.stablex.ui.widgets;
 
 import ru.stablex.backend.display.DisplayObject;
-import ru.stablex.backend.display.Sprite;
 import ru.stablex.backend.events.Event;
 import ru.stablex.backend.events.MouseEvent;
 import ru.stablex.backend.events.TouchEvent;
@@ -310,13 +309,13 @@ class Scroll extends Widget{
         //stop previous scrolling
         this.tweenStop(["scrollX", "scrollY"], false, true);
 
-        //Looks like html5 target does not respect .mouseChildren
-        #if html5
-            var blocker : Sprite = new Sprite();
-            blocker.graphics.beginFill(0x000000, 0);
-            blocker.graphics.drawRect(0, 0, this.w, this.h);
-            blocker.graphics.endFill();
-        #end
+        // //Looks like html5 target does not respect .mouseChildren
+        // #if html5
+        //     var blocker = new ru.stablex.backend.display.Sprite();
+        //     blocker.graphics.beginFill(0x000000, 0);
+        //     blocker.graphics.drawRect(0, 0, this.w, this.h);
+        //     blocker.graphics.endFill();
+        // #end
 
         //follow mouse pointer
         var fn = function(e:Event) : Void {
@@ -330,7 +329,7 @@ class Scroll extends Widget{
                 (hScroll && !scrolled && Math.abs(this.mouseX - startX) >= 5)
                 || (vScroll && !scrolled && Math.abs(this.mouseY - startY) >= 5)
             ){
-                #if html5 this.addChild(blocker); #end
+                // #if html5 this.addChild(blocker); #end
                 scrolled = true;
                 this.box.mouseEnabled = false;
                 this.box.mouseChildren = false;
@@ -369,7 +368,7 @@ class Scroll extends Widget{
                     this.tween(2, {scrollX:this.scrollX + lastDx * 20}, 'Expo.easeOut').onComplete(finish);
                 }
 
-                #if html5 if( blocker.parent == this) this.removeChild(blocker); #end
+                // #if html5 if( blocker.parent == this) this.removeChild(blocker); #end
                 this.box.mouseEnabled  = true;
                 this.box.mouseChildren = true;
             }

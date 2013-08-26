@@ -307,12 +307,15 @@ class ClassBuilder {
     macro static public function getBackendClass (defaultPackage:String, cls:String) : haxe.macro.Type {
         //custom display list package is specified
         if( Context.defined("STABLEX_BACKEND") ){
-            return Context.getType( Context.definedValue("STABLEX_BACKEND" + "." + cls) );
+            try{
+                return Context.getType( Context.definedValue("STABLEX_BACKEND") + "." + cls);
+            }catch(e:String){
+                //ignore "type not found"
+            }
+        }
 
         //use default (flash) display list
-        }else{
-            return Context.getType(defaultPackage + "." + cls);
-        }
+        return Context.getType(defaultPackage + "." + cls);
     }//function getBackendClass()
 
 
