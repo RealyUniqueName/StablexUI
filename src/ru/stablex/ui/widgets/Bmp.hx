@@ -1,6 +1,7 @@
 package ru.stablex.ui.widgets;
 
 import ru.stablex.backend.display.BitmapData;
+import ru.stablex.backend.display.BitmapDataTools;
 import ru.stablex.backend.geom.Matrix;
 import ru.stablex.backend.geom.Rectangle;
 import ru.stablex.backend.geom.Point;
@@ -95,7 +96,6 @@ class Bmp extends Widget{
     }//function refresh()
 
 
-
     /**
     * Draw bitmapdata specified by this.src
     *
@@ -123,24 +123,28 @@ class Bmp extends Widget{
             }else{
 
                 var mx : Matrix = new Matrix();
-                #if !html5
-                    mx.translate(-this.xOffset, -this.yOffset);
-                #else
-                    var dest = new BitmapData(Std.int(width), Std.int(height));
-                    dest.copyPixels(bmp, new Rectangle(this.xOffset, this.yOffset, width, height), new Point(0, 0));
-                    bmp = dest;
-                #end
+                mx.translate(-this.xOffset, -this.yOffset);
+                BitmapDataTools.drawRect(this, bmp, mx, 0, 0, width, height, this.smooth);
 
-                this.graphics.beginBitmapFill(bmp, mx, false, this.smooth);
-                this.graphics.drawRect(0, 0, width, height);
-                this.graphics.endFill();
+                // #if !html5
+                //     mx.translate(-this.xOffset, -this.yOffset);
+                // #else
+                //     var dest = new BitmapData(Std.int(width), Std.int(height));
+                //     dest.copyPixels(bmp, new Rectangle(this.xOffset, this.yOffset, width, height), new Point(0, 0));
+                //     bmp = dest;
+                // #end
+
+                // this.graphics.beginBitmapFill(bmp, mx, false, this.smooth);
+                // this.graphics.drawRect(0, 0, width, height);
+                // this.graphics.endFill();
             }
 
         //draw full image
         }else{
-            this.graphics.beginBitmapFill(bmp, null, false, this.smooth);
-            this.graphics.drawRect(0, 0, bmp.width, bmp.height);
-            this.graphics.endFill();
+            ru.stablex.backend.display.BitmapDataTools.drawRect(this, bmp, null, 0, 0, width, height, this.smooth);
+            // this.graphics.beginBitmapFill(bmp, null, false, this.smooth);
+            // this.graphics.drawRect(0, 0, bmp.width, bmp.height);
+            // this.graphics.endFill();
         }
     }//function _draw()
 

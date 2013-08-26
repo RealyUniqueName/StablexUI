@@ -10,6 +10,7 @@ typedef DisplayObject = haxe.macro.MacroType<[ru.stablex.ui.ClassBuilder.getBack
 
 /**
 * Reference for DisplayObject implementation (properties required by StablexUI)
+* You have to implement event management and bubbling by yourself.
 *
 */
 class DisplayObjectRef {

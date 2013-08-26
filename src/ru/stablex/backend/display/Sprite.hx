@@ -1,7 +1,9 @@
 package ru.stablex.backend.display;
 
+import ru.stablex.backend.geom.Rectangle;
+
 #if (flash || openfl)
-typedef Sprite = haxe.macro.MacroType<[ru.stablex.ui.ClassBuilder.getBackendClass("ru.stablex.backend", "display.SpriteExt")]>;
+typedef Sprite = haxe.macro.MacroType<[ru.stablex.ui.ClassBuilder.getBackendClass("ru.stablex.backend", "display.SpriteFlash")]>;
 
 #else
 typedef Sprite = haxe.macro.MacroType<[ru.stablex.ui.ClassBuilder.getBackendClass("ru.stablex.backend", "display.Sprite.SpriteRef")]>;
@@ -11,6 +13,8 @@ typedef Sprite = haxe.macro.MacroType<[ru.stablex.ui.ClassBuilder.getBackendClas
 *
 */
 class Sprite extends DisplayObjectRef {
+    /** Rectangle to specify visible area of this sprite */
+    public var scrollRect : Rectangle = null;
 
 
     /**

@@ -6,7 +6,7 @@ package ru.stablex.backend.display;
 * Sprite with improved management of event listeners
 *
 */
-class SpriteExt extends flash.display.Sprite{
+class SpriteFlash extends flash.display.Sprite{
 
     //registered event listeners
     #if haxe3
@@ -127,6 +127,6 @@ class SpriteExt extends flash.display.Sprite{
         return false;
     }//function hasListener()
 
-}//class SpriteExt
+}//class SpriteFlash
 
 #end
