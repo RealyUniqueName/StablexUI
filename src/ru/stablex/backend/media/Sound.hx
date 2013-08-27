@@ -4,7 +4,7 @@ package ru.stablex.backend.media;
 typedef Sound = haxe.macro.MacroType<[ru.stablex.ui.ClassBuilder.getBackendClass("flash", "media.Sound")]>;
 
 #else
-typedef Sound = haxe.macro.MacroType<[ru.stablex.ui.ClassBuilder.getBackendClass("ru.stablex.backend", "media.Sound.SoundRef")]>;
+typedef Sound = haxe.macro.MacroType<[ru.stablex.ui.ClassBuilder.getBackendClass("ru.stablex.backend", "media.Sound", "media.Sound.SoundRef")]>;
 
 /**
 * Reference for Sound implementation

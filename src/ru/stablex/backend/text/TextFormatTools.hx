@@ -1,10 +1,10 @@
 package ru.stablex.backend.text;
 
 #if (flash || openfl)
-typedef TextFormatTools = haxe.macro.MacroType<[ru.stablex.ui.ClassBuilder.getBackendClass("ru.stablex.backend", "text.TextFormatToolsFlash")]>;
+typedef TextFormatTools = haxe.macro.MacroType<[ru.stablex.ui.ClassBuilder.getBackendClass("ru.stablex.backend", "text.TextFormatTools", "text.TextFormatToolsFlash")]>;
 
 #else
-typedef TextFormatTools = haxe.macro.MacroType<[ru.stablex.ui.ClassBuilder.getBackendClass("ru.stablex.backend", "text.TextFormatTools.TextFormatToolsRef")]>;
+typedef TextFormatTools = haxe.macro.MacroType<[ru.stablex.ui.ClassBuilder.getBackendClass("ru.stablex.backend", "text.TextFormatTools", "text.TextFormatTools.TextFormatToolsRef")]>;
 
 
 

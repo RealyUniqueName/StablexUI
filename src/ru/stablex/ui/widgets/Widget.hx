@@ -13,7 +13,7 @@ import ru.stablex.ui.skins.Skin;
 /**
 * Basic widget
 */
-
+// @:autoBuild(ru.stablex.ui.ClassBuilder.debug())
 class Widget extends TweenSprite{
     @:noCompletion static private inline var _X_USE_LEFT          = 1;
     @:noCompletion static private inline var _X_USE_LEFT_PERCENT  = 2;
@@ -398,7 +398,7 @@ class Widget extends TweenSprite{
     * Add child to display list. If child is Widget child.onNewParent() is called
     *
     */
-    override public function addChild(child:DisplayObject) : DisplayObject {
+    override public function sxAddChild(child:DisplayObject) : DisplayObject {
         if( child.parent != null ){
             child.parent.removeChild(child);
         }
@@ -409,15 +409,15 @@ class Widget extends TweenSprite{
             this.addUniqueListener(WidgetEvent.INITIAL_RESIZE, cast(child, Widget)._onParentResize);
         }
 
-        return super.addChild(child);
-    }//function addChild()
+        return super.sxAddChild(child);
+    }//function sxAddChild()
 
 
     /**
     * Add child to display list at specified index. If child is Widget child.onNewParent() is called
     *
     */
-    override public function addChildAt(child:DisplayObject, idx:Int) : DisplayObject {
+    override public function sxAddChildAt(child:DisplayObject, idx:Int) : DisplayObject {
         if( child.parent != null ){
             child.parent.removeChild(child);
         }
@@ -428,35 +428,35 @@ class Widget extends TweenSprite{
             this.addUniqueListener(WidgetEvent.INITIAL_RESIZE, cast(child, Widget)._onParentResize);
         }
 
-        return super.addChildAt(child, idx);
-    }//function addChildAt()
+        return super.sxAddChildAt(child, idx);
+    }//function sxAddChildAt()
 
 
     /**
     * Remove child from display list
     *
     */
-    override public function removeChild(child:DisplayObject) : DisplayObject {
+    override public function sxRemoveChild(child:DisplayObject) : DisplayObject {
         if( Std.is(child, Widget) ){
             this.removeEventListener(WidgetEvent.RESIZE, cast(child, Widget)._onParentResize);
             this.removeEventListener(WidgetEvent.INITIAL_RESIZE, cast(child, Widget)._onParentResize);
         }
-        return super.removeChild(child);
-    }//function removeChild()
+        return super.sxRemoveChild(child);
+    }//function sxRemoveChild()
 
 
     /**
     * Remove child at specified index from display list
     *
     */
-    override public function removeChildAt(idx:Int) : DisplayObject {
+    override public function sxRemoveChildAt(idx:Int) : DisplayObject {
         var child : DisplayObject = this.getChildAt(idx);
         if( Std.is(child, Widget) ){
             this.removeEventListener(WidgetEvent.RESIZE, cast(child, Widget)._onParentResize);
             this.removeEventListener(WidgetEvent.INITIAL_RESIZE, cast(child, Widget)._onParentResize);
         }
-        return super.removeChildAt(idx);
-    }//function removeChild()
+        return super.sxRemoveChildAt(idx);
+    }//function sxRemoveChild()
 
 
     /**

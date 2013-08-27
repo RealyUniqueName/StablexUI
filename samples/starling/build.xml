@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project>
+
+    <meta title="StablexUI on Starling" package="ru.stablex.ui" version="0.0.1" company="R.U.N" />
+    <app path="./build" file="stablexui" main="Main"/>
+
+    <window width="800" height="600" background="0x555555" fps="60"/>
+    <haxeflag name="--macro" value="Init.init()"/>
+    <haxedef name="STABLEX_BACKEND" value="starlingbackend" />
+
+    <!-- source name="../../src/" / -->
+    <assets path="assets" include="*" />
+
+    <haxelib name="openfl" />
+    <haxelib name="actuate" />
+    <haxelib name="starling" />
+
+</project>

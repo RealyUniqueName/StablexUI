@@ -4,7 +4,7 @@ package ru.stablex.backend.geom;
 typedef Point = haxe.macro.MacroType<[ru.stablex.ui.ClassBuilder.getBackendClass("flash", "geom.Point")]>;
 
 #else
-typedef Point = haxe.macro.MacroType<[ru.stablex.ui.ClassBuilder.getBackendClass("ru.stablex.backend", "geom.Point.PointRef")]>;
+typedef Point = haxe.macro.MacroType<[ru.stablex.ui.ClassBuilder.getBackendClass("ru.stablex.backend", "geom.Point", "geom.Point.PointRef")]>;
 
 /**
 * Reference for Point implementation

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<HBox childPadding="10" top="300" left="400">
+    <Widget skin:ImageSkin-src="'assets/haxe.jpg'" />
+    <Text text="'Starling!'" label-fontSize="36"/>
+</HBox>

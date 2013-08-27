@@ -5,7 +5,7 @@ package ru.stablex.backend.text;
 typedef Font = haxe.macro.MacroType<[ru.stablex.ui.ClassBuilder.getBackendClass("flash", "text.Font")]>;
 
 #else
-typedef Font = haxe.macro.MacroType<[ru.stablex.ui.ClassBuilder.getBackendClass("ru.stablex.backend", "text.Font.FontRef")]>;
+typedef Font = haxe.macro.MacroType<[ru.stablex.ui.ClassBuilder.getBackendClass("ru.stablex.backend", "text.Font", "text.Font.FontRef")]>;
 
 /**
 * Reference for Font implementation

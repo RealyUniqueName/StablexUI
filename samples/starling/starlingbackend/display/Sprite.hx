@@ -1,12 +1,19 @@
-package ru.stablex.backend.display;
+package starlingbackend.display;
 
-#if (flash || openfl)
+import flash.display.Bitmap;
+import starling.display.Image;
+import starling.textures.Texture;
 
 /**
-* Sprite with improved management of event listeners
+* Sprite implementation
 *
 */
-class SpriteFlash extends flash.display.Sprite{
+class Sprite extends starling.display.Sprite{
+
+    /** display object for drawings */
+    @:noCompletion public var _graphics : Image;
+    /** index of grpahics object */
+    public var _graphicsIdx : Int = 0;
 
 
     /**
@@ -14,34 +21,55 @@ class SpriteFlash extends flash.display.Sprite{
     *
     */
     public function clearGraphics () : Void {
-        this.graphics.clear();
+        if( this._graphics != null ){
+            this.removeChild(this._graphics);
+        }
     }//function clearGraphics()
+
+
+    /**
+    * Set sprite graphics
+    *
+    */
+    public function setGraphics (bmp:Texture) : Void {
+        if( this._graphics == null ){
+            this._graphics = new Image(bmp);
+        }else{
+            this._graphics.texture = bmp;
+        }
+
+        if( this._graphics.parent != this ){
+            this.addChild(this._graphics);
+        }
+    }//function setGraphics()
 
 
 /*******************************************************************************
 *   LISTENERS MANAGEMENT
 *******************************************************************************/
 
+    /** for compatibility */
+    public var scrollRect : ru.stablex.backend.geom.Rectangle;
+    public var mouseEnabled : Bool = true;
+    public var mouseChildren : Bool = true;
+
+    /** x coordinate of mouse pointer in this sprite */
+    public var mouseX (get,never) : Float;
+    /** y coordinate of mouse pointer in this sprite */
+    public var mouseY (get,never) : Float;
+
     //registered event listeners
-    #if haxe3
     private var _listeners : Map<String,List<Dynamic->Void>>;
-    #else
-    private var _listeners : Hash<List<Dynamic->Void>>;
-    #end
 
 
     /**
     * Equal to <type>flash.display.Sprite</type>.addEventListener except this ignores `useCapture` and does not support weak references.
     *
     */
-    override public function addEventListener (type:String, listener:Dynamic->Void, useCapture:Bool = false, priority:Int = 0, useWeakReference:Bool = false) : Void{
+    override public function addEventListener (type:String, listener:Dynamic->Void) : Void{
         //if listeners list is not created
         if( this._listeners == null ){
-            #if haxe3
             this._listeners = new Map();
-            #else
-            this._listeners = new Hash();
-            #end
         }
 
         var listeners : List<Dynamic->Void> = this._listeners.get(type);
@@ -57,7 +85,7 @@ class SpriteFlash extends flash.display.Sprite{
             listeners.add(listener);
         }
 
-        super.addEventListener(type, listener, false, priority, useWeakReference);
+        super.addEventListener(type, listener);
     }//function addEventListener()
 
 
@@ -67,12 +95,12 @@ class SpriteFlash extends flash.display.Sprite{
     *
     * @return whether listener was added
     */
-    public function addUniqueListener (type:String, listener:Dynamic->Void, useCapture:Bool = false, priority:Int = 0, useWeakReference:Bool = false) : Bool{
+    public function addUniqueListener (type:String, listener:Dynamic->Void) : Bool{
         if( this.hasListener(type, listener) ){
             return false;
         }
 
-        this.addEventListener(type, listener, useCapture, priority, useWeakReference);
+        this.addEventListener(type, listener);
         return true;
     }//function addEventListener()
 
@@ -81,13 +109,13 @@ class SpriteFlash extends flash.display.Sprite{
     * Equal to <type>flash.display.Sprite</type>.removeEventListener except this ignores `useCapture`
     *
     */
-    override public function removeEventListener (type:String, listener:Dynamic->Void, useCapture:Bool = false) : Void{
+    override public function removeEventListener (type:String, listener:Dynamic->Void) : Void{
         //remove listener from the list of registered listeners
         if( this._listeners != null ){
             if( this._listeners.exists(type) ) this._listeners.get(type).remove(listener);
         }
 
-        super.removeEventListener(type, listener, false);
+        super.removeEventListener(type, listener);
     }//function removeEventListener()
 
 
@@ -99,9 +127,8 @@ class SpriteFlash extends flash.display.Sprite{
         if( this._listeners != null ){
             var listeners : List<Dynamic->Void> = this._listeners.get(type);
             if( listeners != null ){
-                while( listeners.length > 0 ){
-                    this.removeEventListener(type, listeners.first());
-                }
+                listeners.clear();
+                this.removeEventListeners(type);
             }
         }
     }//function clearEvent()
@@ -112,15 +139,7 @@ class SpriteFlash extends flash.display.Sprite{
     *
     */
     public function clearAllEvents () : Void {
-        //clear listeners
-        if( this._listeners != null ){
-            for(event in this._listeners.keys()){
-                var listeners : List<Dynamic->Void> = this._listeners.get(event);
-                while( !listeners.isEmpty() ){
-                    this.removeEventListener(event, listeners.first());
-                }
-            }
-        }
+        this.removeEventListeners();
     }//function clearAllEvents()
 
 
@@ -146,11 +165,19 @@ class SpriteFlash extends flash.display.Sprite{
 *   CHILDREN MANAGEMENT
 *******************************************************************************/
 
+    /** dispose children after removal */
+    public var disposeRemovedChild : Bool = false;
+
+
     /**
     * Add child to display list of this container
     *
     */
     public function sxAddChild (child:DisplayObject) : DisplayObject {
+        if( this._graphics == child ){
+            this._graphicsIdx = this.getChildIndex(this._graphics);
+        }
+
         return super.addChild(child);
     }//function sxAddChild()
 
@@ -160,7 +187,13 @@ class SpriteFlash extends flash.display.Sprite{
     *
     */
     public function sxRemoveChild (child:DisplayObject) : DisplayObject {
-        return super.removeChild(child);
+        if( child == this._graphics ){
+            this._graphicsIdx == -1;
+        }else if( this.getChildIndex(child) < this._graphicsIdx ){
+            this._graphicsIdx --;
+        }
+
+        return super.removeChild(child, this.disposeRemovedChild);
     }//function sxRemoveChild()
 
 
@@ -169,6 +202,10 @@ class SpriteFlash extends flash.display.Sprite{
     *
     */
     public function sxAddChildAt (child:DisplayObject, index:Int) : DisplayObject {
+        if( this._graphics != null && this._graphicsIdx >= index ){
+            this._graphicsIdx ++;
+        }
+
         return super.addChildAt(child, index);
     }//function sxAddChildAt()
 
@@ -178,7 +215,15 @@ class SpriteFlash extends flash.display.Sprite{
     *
     */
     public function sxRemoveChildAt (index:Int) : DisplayObject {
-        return super.removeChildAt(index);
+        if( this._graphics != null ){
+            if( index == this._graphicsIdx ){
+                index ++;
+            }else if( index < this._graphicsIdx ){
+                this._graphicsIdx --;
+            }
+        }
+
+        return super.removeChildAt(index, this.disposeRemovedChild);
     }//function sxRemoveChildAt()
 
 
@@ -205,7 +250,8 @@ class SpriteFlash extends flash.display.Sprite{
     * Remove child from display list
     *
     */
-    override public function removeChild (child:DisplayObject) : DisplayObject {
+    override public function removeChild (child:DisplayObject, dispose:Bool = false) : DisplayObject {
+        this.disposeRemovedChild = dispose;
         return this.sxRemoveChild(child);
     }//function removeChild()
 
@@ -223,7 +269,8 @@ class SpriteFlash extends flash.display.Sprite{
     * Remove child from specified index in display list
     *
     */
-    override public function removeChildAt (index:Int) : DisplayObject {
+    override public function removeChildAt (index:Int, dispose:Bool = false) : DisplayObject {
+        this.disposeRemovedChild = dispose;
         return this.sxRemoveChildAt(index);
     }//function removeChildAt()
 
@@ -237,6 +284,22 @@ class SpriteFlash extends flash.display.Sprite{
         this.sxSwapChildren(child1, child2);
     }//function swapChildren()
 
-}//class SpriteFlash
 
-#end
+    /**
+    * Getter `mouseX`.
+    *
+    */
+    private function get_mouseX () : Float {
+        return flash.Lib.current.mouseX;
+    }//function get_mouseX
+
+
+    /**
+    * Getter `mouseY`.
+    *
+    */
+    private function get_mouseY () : Float {
+        return flash.Lib.current.mouseY;
+    }//function get_mouseY
+
+}//class Sprite

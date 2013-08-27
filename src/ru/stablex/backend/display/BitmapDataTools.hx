@@ -1,10 +1,10 @@
 package ru.stablex.backend.display;
 
 #if (flash || openfl)
-typedef BitmapDataTools = haxe.macro.MacroType<[ru.stablex.ui.ClassBuilder.getBackendClass("ru.stablex.backend", "display.BitmapDataToolsFlash")]>;
+typedef BitmapDataTools = haxe.macro.MacroType<[ru.stablex.ui.ClassBuilder.getBackendClass("ru.stablex.backend", "display.BitmapDataTools", "display.BitmapDataToolsFlash")]>;
 
 #else
-typedef BitmapDataTools = haxe.macro.MacroType<[ru.stablex.ui.ClassBuilder.getBackendClass("ru.stablex.backend", "display.BitmapDataTools.BitmapDataToolsRef")]>;
+typedef BitmapDataTools = haxe.macro.MacroType<[ru.stablex.ui.ClassBuilder.getBackendClass("ru.stablex.backend", "display.BitmapDataTools", "display.BitmapDataTools.BitmapDataToolsRef")]>;
 
 
 

@@ -5,7 +5,7 @@ package ru.stablex.backend.display;
 typedef Stage = haxe.macro.MacroType<[ru.stablex.ui.ClassBuilder.getBackendClass("flash", "display.Stage")]>;
 
 #else
-typedef Stage = haxe.macro.MacroType<[ru.stablex.ui.ClassBuilder.getBackendClass("ru.stablex.backend", "display.Stage.StageRef")]>;
+typedef Stage = haxe.macro.MacroType<[ru.stablex.ui.ClassBuilder.getBackendClass("ru.stablex.backend", "display.Stage.Stage", "display.Stage.StageRef")]>;
 
 /**
 * Reference for Stage implementation

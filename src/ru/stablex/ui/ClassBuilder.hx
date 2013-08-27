@@ -304,7 +304,7 @@ class ClassBuilder {
     * @param defaultPackage - default package to use if STABLEX_BACKEND conditional is not specified (e.g "flash")
     * @param cls - full class name excluding `defaultPackage` (e.g. "display.Sprite")
     */
-    macro static public function getBackendClass (defaultPackage:String, cls:String) : haxe.macro.Type {
+    macro static public function getBackendClass (defaultPackage:String, cls:String, defaultImplementation:String = null) : haxe.macro.Type {
         //custom display list package is specified
         if( Context.defined("STABLEX_BACKEND") ){
             try{
@@ -315,9 +315,22 @@ class ClassBuilder {
         }
 
         //use default (flash) display list
-        return Context.getType(defaultPackage + "." + cls);
+        return Context.getType(defaultPackage + "." + (defaultImplementation == null ? cls : defaultImplementation));
     }//function getBackendClass()
 
+
+    /**
+    * Description
+    *
+    */
+    macro static public function debug (/* args */) : Array<Field> {
+        var pos    = Context.currentPos();
+        var cls    = Context.getLocalClass();
+        var fields = Context.getBuildFields();
+trace(cls);
+
+        return fields;
+    }//function debug()
 
 /*******************************************************************************
 *   INSTANCE METHODS

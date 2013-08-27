@@ -4,7 +4,7 @@ package ru.stablex.backend.geom;
 typedef Matrix = haxe.macro.MacroType<[ru.stablex.ui.ClassBuilder.getBackendClass("flash", "geom.Matrix")]>;
 
 #else
-typedef Matrix = haxe.macro.MacroType<[ru.stablex.ui.ClassBuilder.getBackendClass("ru.stablex.backend", "geom.Matrix.MatrixRef")]>;
+typedef Matrix = haxe.macro.MacroType<[ru.stablex.ui.ClassBuilder.getBackendClass("ru.stablex.backend", "geom.Matrix", "geom.Matrix.MatrixRef")]>;
 
 
 /**

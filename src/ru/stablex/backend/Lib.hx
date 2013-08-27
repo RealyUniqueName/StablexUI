@@ -4,7 +4,7 @@ package ru.stablex.backend;
 typedef Lib = haxe.macro.MacroType<[ru.stablex.ui.ClassBuilder.getBackendClass("flash", "Lib")]>;
 
 #else
-typedef Lib = haxe.macro.MacroType<[ru.stablex.ui.ClassBuilder.getBackendClass("ru.stablex.backend", "Lib.LibRef")]>;
+typedef Lib = haxe.macro.MacroType<[ru.stablex.ui.ClassBuilder.getBackendClass("ru.stablex.backend", "Lib", "Lib.LibRef")]>;
 
 
 /**

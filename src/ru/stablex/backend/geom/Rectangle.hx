@@ -4,7 +4,7 @@ package ru.stablex.backend.geom;
 typedef Rectangle = haxe.macro.MacroType<[ru.stablex.ui.ClassBuilder.getBackendClass("flash", "geom.Rectangle")]>;
 
 #else
-typedef Rectangle = haxe.macro.MacroType<[ru.stablex.ui.ClassBuilder.getBackendClass("ru.stablex.backend", "geom.Rectangle.RectangleRef")]>;
+typedef Rectangle = haxe.macro.MacroType<[ru.stablex.ui.ClassBuilder.getBackendClass("ru.stablex.backend", "geom.Rectangle", "geom.Rectangle.RectangleRef")]>;
 
 
 /**

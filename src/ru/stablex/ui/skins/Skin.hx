@@ -28,7 +28,7 @@ class Skin {
     */
     public function apply (w:Widget) : Void{
         if( this.clear ){
-            w.graphics.clear();
+            w.clearGraphics();
         }
 
         this.draw(w);

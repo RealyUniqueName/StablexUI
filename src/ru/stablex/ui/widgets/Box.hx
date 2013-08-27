@@ -538,8 +538,8 @@ class Box extends Widget{
     * Remove child
     *
     */
-    override public function removeChild (child:DisplayObject) : DisplayObject {
-        super.removeChild(child);
+    override public function sxRemoveChild (child:DisplayObject) : DisplayObject {
+        super.sxRemoveChild(child);
         child.removeEventListener(WidgetEvent.RESIZE, this._onChildResize);
         if( !this.destroyed ){
             this._onChildResize();
@@ -552,8 +552,8 @@ class Box extends Widget{
     * Remove child at specified index
     *
     */
-    override public function removeChildAt (idx:Int) : DisplayObject {
-        var child : DisplayObject = super.removeChildAt(idx);
+    override public function sxRemoveChildAt (idx:Int) : DisplayObject {
+        var child : DisplayObject = super.sxRemoveChildAt(idx);
         child.removeEventListener(WidgetEvent.RESIZE, this._onChildResize);
         if( !this.destroyed ){
             this._onChildResize();

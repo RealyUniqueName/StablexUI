@@ -100,7 +100,7 @@ class TweenSprite extends Sprite{
     public function freeChildren(recursive:Bool = true) : Void {
         var child : DisplayObject;
         while( this.numChildren > 0 ){
-            child = this.removeChildAt(0);
+            child = this.sxRemoveChildAt(0);
 
             if( recursive && Std.is(child, TweenSprite) ){
                 cast(child, TweenSprite).free(true);

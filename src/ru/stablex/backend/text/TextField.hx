@@ -2,12 +2,12 @@ package ru.stablex.backend.text;
 
 
 #if (flash || openfl)
-typedef TextField = haxe.macro.MacroType<[ru.stablex.ui.ClassBuilder.getBackendClass("ru.stablex.backend", "text.TextFieldFlash")]>;
+typedef TextField = haxe.macro.MacroType<[ru.stablex.ui.ClassBuilder.getBackendClass("ru.stablex.backend", "text.TextField", "text.TextFieldFlash")]>;
 
 #else
 import ru.stablex.backend.display.DisplayObject;
 
-typedef TextField = haxe.macro.MacroType<[ru.stablex.ui.ClassBuilder.getBackendClass("ru.stablex.backend", "text.TextField.TextFieldRef")]>;
+typedef TextField = haxe.macro.MacroType<[ru.stablex.ui.ClassBuilder.getBackendClass("ru.stablex.backend", "text.TextField", "text.TextField.TextFieldRef")]>;
 
 /**
 * Reference for TextField implementation
@@ -24,6 +24,10 @@ class TextFieldRef extends DisplayObject{
     public var text : String;
     /** enable/disable word wrapping */
     public var wordWrap : Bool = false;
+    /** width of text */
+    public var textWidth : Float = 0;
+    /** height of text */
+    public var textHeight : Float = 0;
 
 
     /**

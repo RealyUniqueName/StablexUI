@@ -4,7 +4,7 @@ package ru.stablex.backend.events;
 typedef TouchEvent = haxe.macro.MacroType<[ru.stablex.ui.ClassBuilder.getBackendClass("flash", "events.TouchEvent")]>;
 
 #else
-typedef TouchEvent = haxe.macro.MacroType<[ru.stablex.ui.ClassBuilder.getBackendClass("flash", "events.TouchEvent")]>;
+typedef TouchEvent = haxe.macro.MacroType<[ru.stablex.ui.ClassBuilder.getBackendClass("flash", "events.TouchEvent", "events.TouchEvent")]>;
 
 /**
 * Reference for TouchEvent implementation

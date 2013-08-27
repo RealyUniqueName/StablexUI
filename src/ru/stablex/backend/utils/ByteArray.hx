@@ -4,7 +4,7 @@ package ru.stablex.backend.utils;
 typedef ByteArray = haxe.macro.MacroType<[ru.stablex.ui.ClassBuilder.getBackendClass("flash", "utils.ByteArray")]>;
 
 #else
-typedef ByteArray = haxe.macro.MacroType<[ru.stablex.ui.ClassBuilder.getBackendClass("ru.stablex.backend", "utils.ByteArray.ByteArrayRef")]>;
+typedef ByteArray = haxe.macro.MacroType<[ru.stablex.ui.ClassBuilder.getBackendClass("ru.stablex.backend", "utils.ByteArray", "utils.ByteArray.ByteArrayRef")]>;
 
 /**
 * Reference for ByteArray implementation

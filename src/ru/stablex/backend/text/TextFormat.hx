@@ -4,7 +4,7 @@ package ru.stablex.backend.text;
 typedef TextFormat = haxe.macro.MacroType<[ru.stablex.ui.ClassBuilder.getBackendClass("flash", "text.TextFormat")]>;
 
 #else
-typedef TextFormat = haxe.macro.MacroType<[ru.stablex.ui.ClassBuilder.getBackendClass("ru.stablex.backend", "text.TextFormat.TextFormatRef")]>;
+typedef TextFormat = haxe.macro.MacroType<[ru.stablex.ui.ClassBuilder.getBackendClass("ru.stablex.backend", "text.TextFormat", "text.TextFormat.TextFormatRef")]>;
 
 /**
 * Reference for Textformat implementation

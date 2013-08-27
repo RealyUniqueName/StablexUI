@@ -4,7 +4,7 @@ package ru.stablex.backend.events;
 typedef Event = haxe.macro.MacroType<[ru.stablex.ui.ClassBuilder.getBackendClass("flash", "events.Event")]>;
 
 #else
-typedef Event = haxe.macro.MacroType<[ru.stablex.ui.ClassBuilder.getBackendClass("ru.stablex.backend", "events.Event.EventRef")]>;
+typedef Event = haxe.macro.MacroType<[ru.stablex.ui.ClassBuilder.getBackendClass("ru.stablex.backend", "events.Event", "events.Event.EventRef")]>;
 
 
 /**

@@ -8,7 +8,7 @@ typedef DisplayObject = haxe.macro.MacroType<[ru.stablex.ui.ClassBuilder.getBack
 import ru.stablex.backend.geom.Point;
 import ru.stablex.backend.geom.Rectangle;
 
-typedef DisplayObject = haxe.macro.MacroType<[ru.stablex.ui.ClassBuilder.getBackendClass("ru.stablex.backend", "display.DisplayObject.DisplayObjectRef")]>;
+typedef DisplayObject = haxe.macro.MacroType<[ru.stablex.ui.ClassBuilder.getBackendClass("ru.stablex.backend", "display.DisplayObject.DisplayObject", "display.DisplayObject.DisplayObjectRef")]>;
 
 /**
 * Reference for DisplayObject implementation (properties required by StablexUI)
