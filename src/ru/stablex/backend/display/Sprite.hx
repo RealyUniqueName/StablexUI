@@ -16,6 +16,14 @@ class Sprite extends DisplayObjectRef {
     /** Rectangle to specify visible area of this sprite */
     public var scrollRect : Rectangle = null;
 
+    /** Mouse X coordinates in axes of this sprite */
+    public var mouseX : Float = 0;
+    /** Mouse Y coordinates in axes of this sprite */
+    public var mouseY : Float = 0;
+    /** Enable mouse pointer interactions */
+    public var mouseEnabled : Bool = true;
+    /** Enable mouse pointer interactions for children of this sprite*/
+    public var mouseChildren : Bool = true;
 
     /**
     * Removes all listeners registered for this event

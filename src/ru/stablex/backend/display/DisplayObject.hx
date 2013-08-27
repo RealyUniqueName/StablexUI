@@ -30,6 +30,8 @@ class DisplayObjectRef {
     public var parent : DisplayObjectContainer;
     /** name for this object */
     public var name : String = null;
+    /** the Stage of the display object */
+    public var stage : Stage;
 
 
     /**

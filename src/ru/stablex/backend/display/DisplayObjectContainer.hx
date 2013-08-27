@@ -1,6 +1,5 @@
 package ru.stablex.backend.display;
 
-import ru.stablex.backend.display.DisplayObject;
 
 #if (flash || openfl)
 typedef DisplayObjectContainer = haxe.macro.MacroType<[ru.stablex.ui.ClassBuilder.getBackendClass("flash", "display.DisplayObjectContainer")]>;
