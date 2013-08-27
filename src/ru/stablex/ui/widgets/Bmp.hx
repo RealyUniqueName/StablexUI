@@ -121,30 +121,14 @@ class Bmp extends Widget{
             if( width <= 0 || height <= 0 ){
                 return;
             }else{
-
                 var mx : Matrix = new Matrix();
                 mx.translate(-this.xOffset, -this.yOffset);
                 BitmapDataTools.drawRect(this, bmp, mx, 0, 0, width, height, this.smooth);
-
-                // #if !html5
-                //     mx.translate(-this.xOffset, -this.yOffset);
-                // #else
-                //     var dest = new BitmapData(Std.int(width), Std.int(height));
-                //     dest.copyPixels(bmp, new Rectangle(this.xOffset, this.yOffset, width, height), new Point(0, 0));
-                //     bmp = dest;
-                // #end
-
-                // this.graphics.beginBitmapFill(bmp, mx, false, this.smooth);
-                // this.graphics.drawRect(0, 0, width, height);
-                // this.graphics.endFill();
             }
 
         //draw full image
         }else{
-            ru.stablex.backend.display.BitmapDataTools.drawRect(this, bmp, null, 0, 0, width, height, this.smooth);
-            // this.graphics.beginBitmapFill(bmp, null, false, this.smooth);
-            // this.graphics.drawRect(0, 0, bmp.width, bmp.height);
-            // this.graphics.endFill();
+            ru.stablex.backend.display.BitmapDataTools.drawRect(this, bmp, null, 0, 0, bmp.width, bmp.height, this.smooth);
         }
     }//function _draw()
 
