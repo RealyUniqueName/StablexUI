@@ -1,11 +1,13 @@
 package ru.stablex.backend.display;
 
-import ru.stablex.backend.geom.Point;
 
 #if (flash || openfl)
 typedef DisplayObject = haxe.macro.MacroType<[ru.stablex.ui.ClassBuilder.getBackendClass("flash", "display.DisplayObject")]>;
 
 #else
+import ru.stablex.backend.geom.Point;
+import ru.stablex.backend.geom.Rectangle;
+
 typedef DisplayObject = haxe.macro.MacroType<[ru.stablex.ui.ClassBuilder.getBackendClass("ru.stablex.backend", "display.DisplayObject.DisplayObjectRef")]>;
 
 /**
@@ -70,6 +72,15 @@ class DisplayObjectRef {
         //code...
     }//function removeEventListener()
 
+
+    /**
+    * Returns a rectangle that defines the boundary of the display object, based
+    * on the coordinate system defined by the targetCoordinateSpace parameter
+    *
+    */
+    public function getRect (targetCoordinateSpace:DisplayObject) : Rectangle {
+        //code...
+    }//function getRect()
 
 }//class DisplayObjectRef
 

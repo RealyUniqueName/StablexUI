@@ -3,8 +3,6 @@ package ru.stablex.ui.widgets;
 import ru.stablex.backend.display.BitmapData;
 import ru.stablex.backend.display.BitmapDataTools;
 import ru.stablex.backend.geom.Matrix;
-import ru.stablex.backend.geom.Rectangle;
-import ru.stablex.backend.geom.Point;
 import ru.stablex.Err;
 
 
