@@ -2,6 +2,7 @@ package ru.stablex.ui.widgets;
 
 import ru.stablex.backend.text.TextField;
 import ru.stablex.backend.text.TextFormat;
+import ru.stablex.backend.text.TextFormatTools;
 import ru.stablex.Err;
 import ru.stablex.ui.UIBuilder;
 
@@ -30,14 +31,9 @@ class Text extends Box{
     public function new() : Void {
         super();
 
-        this.label = cast(this.addChild(new TextField()), TextField);
-        this.label.autoSize   = flash.text.TextFieldAutoSize.LEFT;
-        this.label.multiline  = true;
-        // this.label.embedFonts = true;
-
+        this.label  = cast this.addChild(new TextField());
         this.format = this.label.defaultTextFormat;
-
-        this.align    = 'top,left';
+        this.align  = 'top,left';
     }//function new()
 
 
@@ -49,28 +45,7 @@ class Text extends Box{
     @:noCompletion private function get_highlightFormat () : TextFormat {
         if( this._hightlightFormat == null ){
             //clone current format
-            this._hightlightFormat = new TextFormat(
-                this.format.font,
-                this.format.size,
-                this.format.color,
-                this.format.bold,
-                this.format.italic,
-                this.format.underline,
-                this.format.url,
-                this.format.target,
-                this.format.align,
-                #if html5
-                    Std.int(this.format.leftMargin),
-                    Std.int(this.format.rightMargin),
-                    Std.int(this.format.indent),
-                    Std.int(this.format.leading)
-                #else
-                    this.format.leftMargin,
-                    this.format.rightMargin,
-                    this.format.indent,
-                    this.format.leading
-                #end
-            );
+            this._hightlightFormat = TextFormatTools.copy(this.format);
         }
         return this._hightlightFormat;
     }//function get_highlightFormat()

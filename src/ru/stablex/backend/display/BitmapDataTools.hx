@@ -29,6 +29,13 @@ class BitmapDataToolsRef {
     }//function drawRect()
 
 
+    /**
+    * Instantiating is not allowed
+    *
+    */
+    private function new () : Void {
+    }//function new()
+
 }//class BitmapDataToolsRef
 
 #end
