@@ -85,8 +85,8 @@ function generate($srcPath, $dstPath = 'doc/', $imports = array()){
 function genDoc($fname, $imports = array()){
     $doc = '';
 
-
     $lines = file($fname);
+
     $cLines = count($lines);
 
     $classOpened = false;
@@ -108,20 +108,22 @@ function genDoc($fname, $imports = array()){
         #comment
         if( preg_match('/^\s*\/\*\*/', $ln) ){
             $comment .= $ln;
-            $skip    = false;
-            $cnt     = 1;
-            while( $cnt > 0 ){
-                $i ++;
-                $ln = $lines[$i];
-                if( preg_match('/\@private/', $ln) ){
-                    $skip = true;
+            if( !preg_match('/^\s*\/\*/', $ln) ){
+                $skip    = false;
+                $cnt     = 1;
+                while( $cnt > 0 ){
+                    $i ++;
+                    $ln = $lines[$i];
+                    if( preg_match('/\@private/', $ln) ){
+                        $skip = true;
+                    }
+                    $comment .= $ln;
+                    if( preg_match('/\*\//', $ln) ) $cnt --;
+                    if( preg_match('/^\s*\/\*/', $ln) ) $cnt ++;
                 }
-                $comment .= $ln;
-                if( preg_match('/\*\//', $ln) ) $cnt --;
-                if( preg_match('/^\s*\/\*/', $ln) ) $cnt ++;
-            }
-            if($skip){
-                $comment = '';
+                if($skip){
+                    $comment = '';
+                }
             }
         }elseif( preg_match('/^\s*\/\//', $ln) ){
             $comment .= $ln;
