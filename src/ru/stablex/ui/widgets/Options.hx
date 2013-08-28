@@ -32,8 +32,8 @@ class Options extends Button{
     //If this is true. List position will be overriden to make list appear under this control
     public var alignList : Bool = true;
 
-    //if `.options` changed, we need to rebuild list of options
-    private var _rebuildList : Bool = true;
+    //if `rebuildList` is true, options list will be rebuilt before next show
+    public var rebuildList : Bool = true;
     //currently selected option index in `.options`
     private var _selectedIdx (default,set__selectedIdx) : Int = 0;
 
@@ -62,8 +62,9 @@ class Options extends Button{
     */
     @:noCompletion private function set__selectedIdx (idx:Int) : Int {
         if( idx != this._selectedIdx ){
-            this._rebuildList = true;
+            this.rebuildList = true;
             this._selectedIdx = idx;
+            this.text = this.options[idx][0];
             this.dispatchEvent(new WidgetEvent(WidgetEvent.CHANGE));
         }
         return idx;
@@ -86,6 +87,7 @@ class Options extends Button{
             }
         }
 
+        this.rebuildList  = true;
         this._selectedIdx = 0;
         this.text         = o[ this._selectedIdx ][0];
 
@@ -138,9 +140,9 @@ class Options extends Button{
 
         //show list
         }else{
-            if( this._rebuildList ){
+            if( this.rebuildList ){
                 this._buildList();
-                this._rebuildList = false;
+                this.rebuildList = false;
             }
 
             if( this.alignList ){
@@ -204,7 +206,6 @@ class Options extends Button{
             var idx : Int = Std.parseInt(obj.name);
             if( this.options != null && this.options.length > idx ){
                 this._selectedIdx = idx;
-                this.text = this.options[idx][0];
             }
         }
     }//function _onSelectOption()
