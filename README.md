@@ -21,6 +21,8 @@ Another example:
 
 More simple demoes: http://ui.stablex.ru/demo
 
+**ATTENTION** Due to [bug](https://github.com/jgranick/actuate/issues/13) in latest versions of Actuate library you need to use actuate 1.6.3
+
 
 Features:
 ---------------

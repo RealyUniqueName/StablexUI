@@ -4,12 +4,12 @@
     "license"      : "MIT",
     "tags"         : ["cross", "cpp", "flash", "html5", "ui"],
     "description"  : "StablexUI is a crossplatform UI engine.",
-    "version"      : "1.0.5",
-    "releasenote"  : "`rebuildList` property for Options widget",
+    "version"      : "1.0.6",
+    "releasenote"  : "actuate 1.6.3 dependency",
     "contributors" : ["RealyUniqueName"],
     "dependencies" : {
         "openfl"        : "",
-        "actuate"       : "",
+        "actuate"       : "1.6.3",
         "hscript"       : ""
     }
 }
