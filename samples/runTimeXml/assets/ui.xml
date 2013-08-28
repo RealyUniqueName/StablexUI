@@ -16,13 +16,22 @@
     tip:Tip-skin:Paint-color   = "0x000000"
     tip:Tip-skin:Paint-alpha   = "0.8"
     tip:Tip-skin:Paint-corners = "[10]"
+
+    on-click="
+        $this.tween(0.5, {
+            top  : $this.top - 100 + 200 * $Math.random(),
+            left : $this.left - 100 + 200 * $Math.random(),
+        });
+    "
 >
     <!-- test @arg placeholder -->
-    <Text text="'Hello, ' + @data.name + '!'" format-size="40"/>
+    <Text name="'txtName'" text="'Hello, ' + @data.name + ' from!'" format-size="40"/>
     <!-- test #widhetId placeholder -->
     <Text text="'My parent is ' + #root.id"/>
     <!-- test #ClassName(widgetId) placeholder -->
     <Text text="'`.childPadding` of my parent is ' + #VBox(root).childPadding + ' px'"/>
     <!-- test $ClassName placeholder -->
     <Text text="'Main class said: ' + $Main.test()"/>
+
+    <Text text="'Click me!'"/>
 </VBox>

@@ -570,6 +570,9 @@ class UIBuilder {
         for(cls in UIBuilder._imports.iterator()){
             code += "\nru.stablex.ui.RTXml.regClass(" + cls + ");";
         }
+        for(shortcut in UIBuilder._events.keys()){
+            code += "\nru.stablex.ui.RTXml.regEvent('" + shortcut + "', " + UIBuilder._events.get(shortcut)[0] + ");";
+        }
 
         return code;
     }//function _regRTXml()
