@@ -135,9 +135,7 @@ class UIBuilder {
 
         code = '(function() : Void {' + code + '})()';
 
-        if( defaultsXmlFile != null ){
-            UIBuilder._saveCode(defaultsXmlFile, code);
-        }
+        UIBuilder._saveCode((defaultsXmlFile == null ? 'UIBuilder_init.hx' : defaultsXmlFile), code);
 
         return UIBuilder._parse((defaultsXmlFile == null ? 'UIBuilder.hx' : defaultsXmlFile), code);
     }//function _init()
