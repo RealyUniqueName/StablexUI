@@ -119,11 +119,11 @@ class Scroll extends Widget{
         if( this.box._width > this._width ){
             if( x > 0 ) x = 0;
             if( x + this.box._width < this._width ) x = this._width - this.box._width;
-	} else {
-	    x = 0;
-	}
+    	} else {
+    	    x = 0;
+    	}
 
-	this.box.left = x;
+        this.box.left = x;
 
         if( this.hBar != null && Math.abs(this.hBar.value + x) >= 1 ) this.hBar.value = -x;
 
@@ -149,8 +149,8 @@ class Scroll extends Widget{
             if( y > 0 ) y = 0;
             if( y + this.box._height < this._height ) y = this._height - this.box._height;
         } else {
-	    y = 0;
-	}
+    	    y = 0;
+    	}
 
         this.box.top = y;
 
@@ -224,7 +224,7 @@ class Scroll extends Widget{
             this.hBar.addUniqueListener(WidgetEvent.CHANGE, this._onHBarChange);
         }
 
-	// Check so that we are not scrolled too far 
+	// Check so that we are not scrolled too far
 	if (scrollY < this.height - this.box.height) {
 	    scrollY = this.height - this.box.height;
 	}
