@@ -119,11 +119,13 @@ class Scroll extends Widget{
         if( this.box._width > this._width ){
             if( x > 0 ) x = 0;
             if( x + this.box._width < this._width ) x = this._width - this.box._width;
+    	} else {
+    	    x = 0;
+    	}
 
-            this.box.left = x;
+        this.box.left = x;
 
-            if( this.hBar != null && Math.abs(this.hBar.value + x) >= 1 ) this.hBar.value = -x;
-        }
+        if( this.hBar != null && Math.abs(this.hBar.value + x) >= 1 ) this.hBar.value = -x;
 
         return x;
     }//function set_scrollX()
@@ -146,11 +148,13 @@ class Scroll extends Widget{
         if( this.box._height > this._height ){
             if( y > 0 ) y = 0;
             if( y + this.box._height < this._height ) y = this._height - this.box._height;
+        } else {
+    	    y = 0;
+    	}
 
-            this.box.top = y;
+        this.box.top = y;
 
-            if( this.vBar != null && Math.abs(this.vBar.value - y) >= 1 ) this.vBar.value = y;
-        }
+        if( this.vBar != null && Math.abs(this.vBar.value - y) >= 1 ) this.vBar.value = y;
 
         return y;
     }//function set_scrollY()
@@ -219,6 +223,14 @@ class Scroll extends Widget{
             this.hBar.refresh();
             this.hBar.addUniqueListener(WidgetEvent.CHANGE, this._onHBarChange);
         }
+
+	// Check so that we are not scrolled too far
+	if (scrollY < this.height - this.box.height) {
+	    scrollY = this.height - this.box.height;
+	}
+	if (scrollX < this.width - this.box.width) {
+	   scrollX = this.width - this.box.width;
+	}
     }//function refresh()
 
 
@@ -415,3 +427,4 @@ class Scroll extends Widget{
     }//function stopScrolling()
 
 }//class Scroll
+
