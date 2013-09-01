@@ -55,9 +55,41 @@ class Tile extends Rect{
     override public function draw (w:Widget) : Void {
         var bmp : BitmapData = this._getBmp();
 
-        w.graphics.beginBitmapFill(bmp, null, true, this.smooth);
-        super.draw(w);
-        w.graphics.endFill();
+        #if !cpp
+            w.graphics.beginBitmapFill(bmp, null, true, this.smooth);
+            super.draw(w);
+            w.graphics.endFill();
+        #else
+            if( (this.corners == null || this.corners.length == 0) && (w.w > bmp.width || w.h > bmp.height) ){
+                var x : Float = 0;
+                var y : Float = 0;
+                var mx = new flash.geom.Matrix();
+
+                while( x < w.w ){
+                    y = 0;
+                    while( y < w.h ){
+                        mx.identity();
+                        mx.translate(x, y);
+                        w.graphics.beginBitmapFill(bmp, mx, false, this.smooth);
+                        w.graphics.drawRect(
+                            x,
+                            y,
+                            (x + bmp.width < w.w ? bmp.width : w.w - x),
+                            (y + bmp.height < w.h ? bmp.height : w.h - y)
+                        );
+                        w.graphics.endFill();
+
+                        y += bmp.height;
+                    }
+                    x += bmp.width;
+                }
+
+            }else{
+                w.graphics.beginBitmapFill(bmp, null, true, this.smooth);
+                super.draw(w);
+                w.graphics.endFill();
+            }
+        #end
     }//function draw()
 
 

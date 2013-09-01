@@ -4,8 +4,8 @@
     "license"      : "MIT",
     "tags"         : ["cross", "cpp", "flash", "html5", "ui"],
     "description"  : "StablexUI is a crossplatform UI engine.",
-    "version"      : "1.0.7",
-    "releasenote"  : "Scroll bugfix for removing children",
+    "version"      : "1.0.8",
+    "releasenote"  : "Tile skin workaround for non-2n-sized images on cpp target",
     "contributors" : ["RealyUniqueName"],
     "dependencies" : {
         "openfl"        : "",
