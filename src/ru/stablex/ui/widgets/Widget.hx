@@ -276,6 +276,9 @@ class Widget extends TweenSprite{
                 case _Y_USE_TOP_PERCENT: this.y = newParent._height * this._topPercent / 100;
             }//switch()
         //}
+        
+        //notify
+        UIBuilder.dispatcher.dispatchEvent(new WidgetEvent( WidgetEvent.ADDED, this ));
     }//function onNewParent()
 
 
@@ -441,6 +444,7 @@ class Widget extends TweenSprite{
         if( Std.is(child, Widget) ){
             this.removeEventListener(WidgetEvent.RESIZE, cast(child, Widget)._onParentResize);
             this.removeEventListener(WidgetEvent.INITIAL_RESIZE, cast(child, Widget)._onParentResize);
+            UIBuilder.dispatcher.dispatchEvent(new WidgetEvent( WidgetEvent.REMOVED, cast child ));
         }
         return super.removeChild(child);
     }//function removeChild()
@@ -455,6 +459,7 @@ class Widget extends TweenSprite{
         if( Std.is(child, Widget) ){
             this.removeEventListener(WidgetEvent.RESIZE, cast(child, Widget)._onParentResize);
             this.removeEventListener(WidgetEvent.INITIAL_RESIZE, cast(child, Widget)._onParentResize);
+            UIBuilder.dispatcher.dispatchEvent(new WidgetEvent( WidgetEvent.REMOVED, cast child ));
         }
         return super.removeChildAt(idx);
     }//function removeChild()
