@@ -758,7 +758,7 @@ class UIBuilder {
     /**
     * Create class for custom widget based on xml markup
     *
-    * @deprecated
+    * @deprecated - use `buildClass()` instead
     *
     * @param xmlFile - source markup file for new class
     * @param cls - fully qualified class name for new class (E.g. 'com.example.MyFancyWidget')
