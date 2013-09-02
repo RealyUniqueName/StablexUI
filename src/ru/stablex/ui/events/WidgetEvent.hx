@@ -27,15 +27,31 @@ class WidgetEvent extends Event{
     static public inline var ADDED = 'widgetAdded';
     //Dispatched when a widget is removed from another
     static public inline var REMOVED = 'widgetRemoved';
+    //widget which dispatched this event
+    public var widget (get,never) : Widget;
+    private var _widget : Widget;
 
-    public var widget : Widget;
 
     /**
     * Constructor
     *
     */
-    public function new(type:String, ?widget:Widget) : Void {
+    public function new(type:String, widget:Widget = null) : Void {
         super(type);
-        this.widget = widget;
+        this._widget = widget;
     }//function new()
+
+
+    /**
+    * Getter for `widget`
+    *
+    */
+    @:noCompletion private function get_widget () : Widget {
+        if( this._widget == null && Std.is(this.currentTarget, Widget) ){
+            this._widget = cast this.currentTarget;
+        }
+
+        return this._widget;
+    }//function get_widget()
+
 }//class WidgetEvent

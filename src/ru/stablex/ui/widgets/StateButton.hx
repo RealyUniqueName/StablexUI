@@ -79,24 +79,18 @@ class StateButton extends Button{
     * Setter for cycleStates
     *
     */
-    @:noCompletion private function set_cycleStates (b:Bool) : Bool {
-        if( b == this.cycleStates ) return b;
-        if( b ){
-            this.addEventListener(MouseEvent.CLICK, this.nextState);
-        }else{
-            this.removeEventListener(MouseEvent.CLICK, this.nextState);
+    @:noCompletion private function set_cycleStates (cycleStates:Bool) : Bool {
+        if( this.cycleStates != cycleStates ){
+            if( cycleStates ){
+                this.addEventListener(MouseEvent.CLICK, this.nextState);
+            }else{
+                this.removeEventListener(MouseEvent.CLICK, this.nextState);
+            }
+            this.cycleStates = cycleStates;
         }
-        this.cycleStates = b;
-        return b;
+
+        return cycleStates;
     }//function set_cycleStates()
-
-
-    override public function free (recursive:Bool = true) : Void{
-        if( this.cycleStates ){
-            this.removeEventListener(MouseEvent.CLICK, this.nextState);
-        }
-        super.free(recursive);
-    }
 
 
     /**
