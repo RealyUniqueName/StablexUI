@@ -66,6 +66,9 @@ class UIBuilder {
     //Closures for applaying default settings to widgets. Closures created with UIBuilder.init('defaults.xml')
     static public var defaults : Hash<Hash<Widget->Void>> = new Hash();
 
+    //provides a facade for system-wide dispatches
+    static public var dispatcher : flash.events.EventDispatcher = new flash.events.EventDispatcher();
+
     //Widgets created with UIBuilder.buildFn() or UIBuilder.create()
     static private var _objects : Hash<Widget> = new Hash();
 
@@ -756,7 +759,7 @@ class UIBuilder {
     /**
     * Create class for custom widget based on xml markup
     *
-    * @deprecated
+    * @deprecated - use `buildClass()` instead
     *
     * @param xmlFile - source markup file for new class
     * @param cls - fully qualified class name for new class (E.g. 'com.example.MyFancyWidget')

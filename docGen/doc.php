@@ -193,7 +193,7 @@ function comment($str, $imports = array()){
         $ln = preg_replace('/^\s*\*\//', '', $ln); # */
         $ln = preg_replace('/^\s*\*/', '', $ln); # *
         $ln = preg_replace('/^\s*\/\//', '', $ln); # //
-        $ln = preg_replace('/^(\s*)\@(dispatch|param|result|return|author|throws|throw|exception)/', '\\1<span class="tag \\2">@\\2</span>', $ln); # @tags
+        $ln = preg_replace('/^(\s*)\@(deprecated|dispatch|param|result|return|author|throws|throw|exception)/', '\\1<span class="tag \\2">@\\2</span>', $ln); # @tags
 
         if( trim($ln) ){
             $str .= $ln . "\n";
