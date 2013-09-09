@@ -4,8 +4,8 @@
     "license"      : "MIT",
     "tags"         : ["cross", "cpp", "flash", "html5", "ui"],
     "description"  : "StablexUI is a crossplatform UI engine.",
-    "version"      : "1.0.9",
-    "releasenote"  : "StateBytton.cycleStates & system wide notifications on adding/removing widgets by Zjnue",
+    "version"      : "1.0.10",
+    "releasenote"  : "Fix 'Scroll has no scrollX property' error",
     "contributors" : ["RealyUniqueName"],
     "dependencies" : {
         "openfl"        : "",
