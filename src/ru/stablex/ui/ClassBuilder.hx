@@ -31,7 +31,12 @@ class ClassBuilder {
         cls = pack.pop();
 
         //parse xml file
-        var root = Xml.parse( File.getContent(xmlFile) ).firstElement();
+        var root;
+        try{
+            root = Xml.parse( File.getContent(xmlFile) ).firstElement();
+        }catch(e:Dynamic){
+            Context.error(e, pos);
+        }
 
         //get parent
         var parentPack : Array<String> = ClassBuilder.getPack(root.nodeName);
