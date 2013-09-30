@@ -63,11 +63,11 @@ class Tile extends Rect{
             w.graphics.endFill();
         #else
             if( (this.corners == null || this.corners.length == 0) && (w.w > bmp.width || w.h > bmp.height) ){
-                var x : Float = this.paddingTop;
-                var y : Float = this.paddingLeft;
+                var x : Float = this.paddingLeft;
+                var y : Float = this.paddingTop;
 
                 while( x < w.w - this.paddingRight ){
-                    y = this.paddingLeft;
+                    y = this.paddingTop;
                     while( y < w.h - this.paddingBottom ){
                         mx.identity();
                         mx.translate(x, y);
