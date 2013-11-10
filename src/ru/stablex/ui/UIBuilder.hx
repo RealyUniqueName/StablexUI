@@ -66,6 +66,9 @@ class UIBuilder {
     //Closures for applaying default settings to widgets. Closures created with UIBuilder.init('defaults.xml')
     static public var defaults : Hash<Hash<Widget->Void>> = new Hash();
 
+    //provides a facade for system-wide dispatches
+    static public var dispatcher : flash.events.EventDispatcher = new flash.events.EventDispatcher();
+
     //Widgets created with UIBuilder.buildFn() or UIBuilder.create()
     static private var _objects : Hash<Widget> = new Hash();
 
@@ -338,7 +341,7 @@ class UIBuilder {
                 // code += "\nru.stablex.ui.UIBuilder.applyDefaults(" + wname + n + ");";
             //}
         }
-        code += UIBuilder.attr2Haxe(element, wname + n);
+        code += UIBuilder.attr2Haxe(element, wname + n, cls);
 
         //call .onInitialize method to notify widget that it is initialized
         if( zeroElementCls == null ){
@@ -380,7 +383,7 @@ class UIBuilder {
     *
     * @private
     */
-    @:noCompletion static public function attr2Haxe (element:Xml, obj:String) : String {
+    @:noCompletion static public function attr2Haxe (element:Xml, obj:String, thisClass:String = null) : String {
 
         var attributes : Iterator<String> = element.attributes();
         var post       : Array<String> = [];
@@ -401,21 +404,21 @@ class UIBuilder {
             }
 
             value = element.get(attr);
-            //required code replacements
-            value = UIBuilder.fillCodeShortcuts(obj, value);
 
             //if this attribute defines event listener
             if( UIBuilder._erEvent.match(attr) ){
                 var event : Array<String> = UIBuilder._events.get( UIBuilder._erEvent.matched(1) );
                 if( event == null ) Err.trigger('Event is not registered: ' + UIBuilder._erEvent.matched(1));
-
+                //required code replacements
+                value = UIBuilder.fillCodeShortcuts("event.currentTarget", value, thisClass);
                 code += '\n' + obj + '.addEventListener('+ event[0] +', function(event:' + event[1] + '){' + value + '});';
 
             //just apply attribute value to appropriate widget property
             }else{
                 //change '-' to '.', so 'someProp-nestedProp' becomes 'someProp.nestedProp'
                 attr  = StringTools.replace(attr, '-', '.');
-
+                //required code replacements
+                value = UIBuilder.fillCodeShortcuts(obj, value);
                 code += '\n' + obj + '.' + attr + ' = ' + value + ';';
             }
         }//while( attributes.length )
@@ -482,7 +485,7 @@ class UIBuilder {
     *
     * @private
     */
-    @:noCompletion static public function fillCodeShortcuts (thisObj:String, code:String) : String{
+    @:noCompletion static public function fillCodeShortcuts (thisObj:String, code:String, thisClass:String = null) : String{
         var cls    = UIBuilder._erCls;
         var id     = UIBuilder._erId;
         var castId = UIBuilder._erCastId;
@@ -491,7 +494,11 @@ class UIBuilder {
 
         //this
         while( erThis.match(code) ){
-            code = erThis.replace(code, '$1' + thisObj+'$2');
+            if( thisClass == null ){
+                code = erThis.replace(code, '$1' + thisObj+'$2');
+            }else{
+                code = erThis.replace(code, '$1cast(' + thisObj+', ' + thisClass + ')$2');
+            }
         }
 
         //class names
@@ -751,7 +758,7 @@ class UIBuilder {
     /**
     * Create class for custom widget based on xml markup
     *
-    * @deprecated
+    * @deprecated - use `buildClass()` instead
     *
     * @param xmlFile - source markup file for new class
     * @param cls - fully qualified class name for new class (E.g. 'com.example.MyFancyWidget')

@@ -24,13 +24,13 @@ class InputText extends Text{
             //due to strange bug we need this hack
             this.addEventListener(Event.ADDED_TO_STAGE, function(e:Event){
                 this.label.type = flash.text.TextFieldType.INPUT;
-                Reflect.field(this.label, 'nmeGraphics').nmeSurface.style.width = this.w + "px";
-                Reflect.field(this.label, 'nmeGraphics').nmeSurface.style.height = this.h + "px";
-                Reflect.field(this.label, 'nmeGraphics').nmeSurface.style.overflow = "hidden";
+                Reflect.field(this.label, '__graphics').__surface.style.width = this.w + "px";
+                Reflect.field(this.label, '__graphics').__surface.style.height = this.h + "px";
+                Reflect.field(this.label, '__graphics').__surface.style.overflow = "hidden";
                 if( this.label.wordWrap ){
-                    Reflect.field(this.label, 'nmeGraphics').nmeSurface.style.whiteSpace = "normal";
+                    Reflect.field(this.label, '__graphics').__surface.style.whiteSpace = "normal";
                 }else{
-                    Reflect.field(this.label, 'nmeGraphics').nmeSurface.style.whiteSpace = "nowrap";
+                    Reflect.field(this.label, '__graphics').__surface.style.whiteSpace = "nowrap";
                 }
             });
         #end
@@ -51,12 +51,12 @@ class InputText extends Text{
         super.refresh();
 
         #if html5
-            Reflect.field(this.label, 'nmeGraphics').nmeSurface.style.width = this.w + "px";
-            Reflect.field(this.label, 'nmeGraphics').nmeSurface.style.height = this.h + "px";
+            Reflect.field(this.label, '__graphics').__surface.style.width = this.w + "px";
+            Reflect.field(this.label, '__graphics').__surface.style.height = this.h + "px";
             if( this.label.wordWrap ){
-                Reflect.field(this.label, 'nmeGraphics').nmeSurface.style.whiteSpace = "normal";
+                Reflect.field(this.label, '__graphics').__surface.style.whiteSpace = "normal";
             }else{
-                Reflect.field(this.label, 'nmeGraphics').nmeSurface.style.whiteSpace = "nowrap";
+                Reflect.field(this.label, '__graphics').__surface.style.whiteSpace = "nowrap";
             }
         #end
     }//function refresh()
@@ -69,9 +69,20 @@ class InputText extends Text{
     @:noCompletion override private function get_text() : String {
         return (
             this.label.type == flash.text.TextFieldType.INPUT
-                ? StringTools.replace( Reflect.field(this.label, 'nmeGraphics').nmeSurface.innerHTML, '&nbsp;', ' ' )
+                ? StringTools.replace( Reflect.field(this.label, '__graphics').__surface.innerHTML, '&nbsp;', ' ' )
                 : this.label.text
         );
     }//function get_text()
+	
+	/**
+    * Text setter
+    *
+    */
+    @:noCompletion override private function set_text(txt:String) : String {
+        if( this.label.type == flash.text.TextFieldType.INPUT ) {
+            Reflect.field(this.label, '__graphics').__surface.innerHTML = txt;
+        }
+        return super.set_text(txt);
+    }//function set_text()
 #end
 }//class InputText
