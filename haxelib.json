@@ -4,7 +4,7 @@
     "license"      : "MIT",
     "tags"         : ["cross", "cpp", "flash", "html5", "ui"],
     "description"  : "StablexUI is a crossplatform UI engine.",
-    "version"      : "1.0.11",
+    "version"      : "1.0.12",
     "releasenote"  : "minor InputText update for openfl-1.1 html5 target",
     "contributors" : ["RealyUniqueName"],
     "dependencies" : {
