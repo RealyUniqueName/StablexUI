@@ -163,13 +163,13 @@ class Widget extends TweenSprite{
     * @dispatch <type>ru.stablex.ui.events.WidgetEvent</type>.CREATE
     */
     @:final @:noCompletion public function _onCreate () : Void{
-        //remove event listeners used for creation
-        this.clearEvent(WidgetEvent.INITIAL_RESIZE);
-
         this.onCreate();
 
         //refresh widget
         this.refresh();
+
+        //remove event listeners used for creation
+        this.clearEvent(WidgetEvent.INITIAL_RESIZE);
 
         this.created = true;
 
@@ -276,7 +276,7 @@ class Widget extends TweenSprite{
                 case _Y_USE_TOP_PERCENT: this.y = newParent._height * this._topPercent / 100;
             }//switch()
         //}
-        
+
         //notify
         UIBuilder.dispatcher.dispatchEvent(new WidgetEvent( WidgetEvent.ADDED, this ));
     }//function onNewParent()
