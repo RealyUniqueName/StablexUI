@@ -304,7 +304,7 @@ class UIBuilder {
     * @private
     * @throw <type>String</type> if one of used in xml widgets, classes or events was not registered by .regClass() or .regEvent()
     */
-    static public function construct (element:Xml, n:Int = 1, zeroElementCls:String = null, wname:String = "__ui__widget") : String{
+    @:noCompletion static public function construct (element:Xml, n:Int = 1, zeroElementCls:String = null, wname:String = "__ui__widget") : String{
         //get class for widget
         var cls  : String = UIBuilder._imports.get(zeroElementCls == null ? element.nodeName : zeroElementCls);
         if( cls == null ) Err.trigger('Widget class is not registered: ' + (zeroElementCls == null ? element.nodeName : zeroElementCls));

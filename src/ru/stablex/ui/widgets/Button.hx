@@ -25,7 +25,10 @@ class Button extends Text{
     //icon for pressed state
     public var icoPressed (get_icoPressed,set_icoPressed) : Bmp;
     private var _icoPressed : Bmp;
-    //whether icon should appear before text (on left or on top of text), set to false to move icon to the right (or below) text
+    /**
+    * Whether icon should appear before text (on left or on top of text), set to false to move icon to the right (or below) text
+    * If you want icon to appear on top of label (or below) you also need to set button.vertical = true.
+    */
     public var icoBeforeLabel (default,set_icoBeforeLabel) : Bool = true;
     //skin name for hovered state (skin must be registered with <type>UIBuilder</type>.regSkins() )
     public var skinHoveredName (default,set_skinHoveredName) : String;
