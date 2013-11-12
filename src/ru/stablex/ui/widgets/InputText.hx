@@ -11,6 +11,12 @@ import flash.events.Event;
 */
 class InputText extends Text{
 
+    #if html5
+    public var fontFamily : String;
+    public var fontPath : String;
+    static var familyMap : Map<String, js.html.StyleElement>;
+    #end
+
     /**
     * Constructor
     *
@@ -32,6 +38,9 @@ class InputText extends Text{
                 }else{
                     Reflect.field(this.label, '__graphics').__surface.style.whiteSpace = "nowrap";
                 }
+                if( this.label.embedFonts && fontFamily != null ){
+                    this.label.mFace = fontFamily;
+                }
             });
         #end
 
@@ -45,9 +54,6 @@ class InputText extends Text{
     *
     */
     override public function refresh () : Void {
-        this.label.width  = this.w - this.paddingLeft - this.paddingRight;
-        this.label.height = this.h - this.paddingTop - this.paddingBottom;
-
         super.refresh();
 
         #if html5
@@ -57,6 +63,18 @@ class InputText extends Text{
                 Reflect.field(this.label, '__graphics').__surface.style.whiteSpace = "normal";
             }else{
                 Reflect.field(this.label, '__graphics').__surface.style.whiteSpace = "nowrap";
+            }
+            if( this.label.embedFonts ){
+                if( fontFamily != null ){
+                    this.label.mFace = fontFamily;
+                    if( familyMap == null ) familyMap = new Map();
+                    if( !familyMap.exists(fontFamily) ){
+                        var css = js.Browser.document.createStyleElement();
+                        js.Browser.document.getElementsByTagName("head")[0].appendChild( css );
+                        css.innerHTML = "@font-face { font-family: " + fontFamily + "; src: url('" + fontPath + "'); }";
+                        familyMap.set(fontFamily, css);
+                    }
+                }
             }
         #end
     }//function refresh()
