@@ -4,12 +4,12 @@
     "license"      : "MIT",
     "tags"         : ["cross", "cpp", "flash", "html5", "ui"],
     "description"  : "StablexUI is a crossplatform UI engine.",
-    "version"      : "1.0.13",
-    "releasenote"  : "minor fix for proper handling resizes of Bmp widget",
+    "version"      : "1.0.14",
+    "releasenote"  : "Various bugfixes",
     "contributors" : ["RealyUniqueName"],
     "dependencies" : {
         "openfl"        : "",
-        "actuate"       : "1.6.3",
+        "actuate"       : "",
         "hscript"       : ""
     }
 }

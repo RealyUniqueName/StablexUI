@@ -16,7 +16,7 @@ class Progress extends Widget{
     //Maximum value.
     public var max (default,set_max) : Float = 100;
     //current value
-    @:isVar public var value (get_value,set_value) : Float = 0;
+    public var value (get_value,set_value) : Float;
     private var _value : Float = 0;
     //bar
     public var bar : Widget;

@@ -48,9 +48,9 @@ class Scroll extends Widget{
     public var wheelScrollSpeed : Float = 10;
 
     //scroll position along x axes
-    @:isVar public var scrollX (get_scrollX,set_scrollX) : Float;
+    public var scrollX (get_scrollX,set_scrollX) : Float;
     //scroll position along y axes
-    @:isVar public var scrollY (get_scrollY,set_scrollY) : Float;
+    public var scrollY (get_scrollY,set_scrollY) : Float;
     //vertical scroll bar
     public var vBar (default,set_vBar) : Slider;
     //horizontal scroll bar
