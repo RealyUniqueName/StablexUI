@@ -214,7 +214,9 @@ class TabStack extends Box{
         var child : DisplayObject = super.removeChildAt(idx);
         if( Std.is(child, TabPage) ){
             child.removeEventListener(MouseEvent.CLICK, this._onChange);
-            this.tabBar.removeChild(cast(child, TabPage).title);
+            if( !this.tabBar.destroyed ){
+                this.tabBar.removeChild(cast(child, TabPage).title);
+            }
         }
         return child;
     }//function removeChildAt()

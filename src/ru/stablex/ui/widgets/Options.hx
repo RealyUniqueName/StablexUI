@@ -136,6 +136,7 @@ class Options extends Button{
     public function toggleList (e:MouseEvent = null) : Void {
         //if list is shown, hide it
         if( this.list.shown ){
+            Lib.current.stage.removeEventListener(MouseEvent.MOUSE_DOWN, this._onClickStage);
             this.list.hide();
 
         //show list
@@ -165,8 +166,7 @@ class Options extends Button{
                 //}
             }
 
-            //always render list on top of the stage
-            this.list.renderTo = null;
+            Lib.current.stage.addEventListener(MouseEvent.MOUSE_DOWN, this._onClickStage);
             this.list.show();
         }
     }//function toggleList()
@@ -212,10 +212,31 @@ class Options extends Button{
 
 
     /**
+    * Hide list if user clicked outside of widget
+    *
+    */
+    private function _onClickStage (e:MouseEvent) : Void {
+        if( !this.list.shown ) return;
+
+        var obj : DisplayObject = e.target;
+        while( obj != null ){
+            //clicked this widget
+            if( obj == this || obj == this.list ){
+                return;
+            }
+            obj = obj.parent;
+        }
+
+        this.toggleList();
+    }//function _onClickStage()
+
+
+    /**
     * Destroy widget and list
     *
     */
     override public function free (recursive:Bool = true) : Void {
+        Lib.current.stage.removeEventListener(MouseEvent.MOUSE_DOWN, this._onClickStage);
         this.list.free();
         super.free(recursive);
     }//function free()
