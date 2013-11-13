@@ -10,7 +10,7 @@ class Toggle extends StateButton{
     //should we `.highlight()` the text when button is toggled?
     public var highlightOnSelect : Bool = false;
     //whether button is in down/selected state
-    @:isVar public var selected (get_selected,set_selected) : Bool = false;
+    public var selected (get_selected,set_selected) : Bool;
 
 
     /**
