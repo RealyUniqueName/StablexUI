@@ -200,10 +200,20 @@ class Scroll extends Widget{
     override public function refresh () : Void {
         this.box.refresh();
         super.refresh();
+        this.box.addUniqueListener(WidgetEvent.INITIAL_RESIZE, this._update);
+        this.box.addUniqueListener(WidgetEvent.RESIZE, this._update);
+        this._update();
+    }//function refresh()
 
+
+    /**
+    * Update bars, scrollX/scrollY etc.
+    *
+    */
+    private function _update (e:Event = null) : Void {
         //vertical bar
         if( this.vBar != null ){
-            this.addChildAt(this.vBar, 1);
+            if( this.vBar.parent == null ) this.addChildAt(this.vBar, 1);
             this.vBar.min = (this.h - this.box.h < 0 ? this.h - this.box.h : 0);
             this.vBar.max = 0;
             var k : Float = this.vBar.h / this.box.h;
@@ -211,10 +221,11 @@ class Scroll extends Widget{
             this.vBar.slider.h = this.h * k;
             this.vBar.refresh();
             this.vBar.addUniqueListener(WidgetEvent.CHANGE, this._onVBarChange);
+            this.vBar.value = this.scrollY;
         }
         //verticalhorizontal bar
         if( this.hBar != null ){
-            this.addChildAt(this.hBar, 1);
+            if( this.hBar.parent == null ) this.addChildAt(this.hBar, 1);
             this.hBar.max = -(this.w - this.box.w < 0 ? this.w - this.box.w : 0);
             this.hBar.min = 0;
             var k : Float = this.hBar.w / this.box.w;
@@ -222,16 +233,17 @@ class Scroll extends Widget{
             this.hBar.slider.w = this.hBar.w * k;
             this.hBar.refresh();
             this.hBar.addUniqueListener(WidgetEvent.CHANGE, this._onHBarChange);
+            this.hBar.value = -this.scrollX;
         }
 
-	// Check so that we are not scrolled too far
-	if (scrollY < this.height - this.box.height) {
-	    scrollY = this.height - this.box.height;
-	}
-	if (scrollX < this.width - this.box.width) {
-	   scrollX = this.width - this.box.width;
-	}
-    }//function refresh()
+        // Check so that we are not scrolled too far
+        if (scrollY < this.h - this.box.h) {
+            scrollY = this.h - this.box.h;
+        }
+        if (scrollX < this.w - this.box.w) {
+           scrollX = this.w - this.box.w;
+        }
+    }//function _update()
 
 
     /**
