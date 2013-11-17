@@ -127,7 +127,7 @@ class Scroll extends Widget{
 
         if( this.hBar != null && Math.abs(this.hBar.value + x) >= 1 ) this.hBar.value = -x;
 
-        return this.scrollX = x;
+        return x;
     }//function set_scrollX()
 
 
@@ -156,7 +156,7 @@ class Scroll extends Widget{
 
         if( this.vBar != null && Math.abs(this.vBar.value - y) >= 1 ) this.vBar.value = y;
 
-        return this.scrollY = y;
+        return y;
     }//function set_scrollY()
 
 
