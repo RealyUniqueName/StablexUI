@@ -67,7 +67,7 @@ class Assets{
     *
     */
     macro static public function embed (file:String) : Expr{
-        return Context.parse( File.getContent(file), Context.makePosition({min:0, max:1, file:file}));
+        return Context.parseInlineString( File.getContent(file), Context.makePosition({min:0, max:1, file:file}));
     }//function embed()
 
 
