@@ -97,7 +97,7 @@ class Progress extends Widget{
     */
     private inline function _setBarWidth (value:Float, max:Float) : Void {
         this.bar.left = this.paddingLeft;
-        var width : Float = 100 * (max <= 0 || value <= 0 ? 0 : value / max) - (this.paddingLeft + this.paddingRight) / this.w * 100;
+        var width : Float = 100 * (max <= 0 || value <= 0 ? 0 : value / max) - (this.w == 0 ? 0 : (this.paddingLeft + this.paddingRight) / this.w * 100);
 
         //use scrollRect instead of resizing bar widget
         if( this.useScrollRect ){
