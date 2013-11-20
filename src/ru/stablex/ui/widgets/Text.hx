@@ -115,7 +115,7 @@ class Text extends Box{
      */
     public function highlight () : Void {
         this.highlighted = true;
-        super.refresh();
+        this.refresh();
     }//function highlight()
 
 
@@ -124,7 +124,7 @@ class Text extends Box{
      */
     public function unhighlight () : Void {
         this.highlighted = false;
-        super.refresh();
+        this.refresh();
     }//function unhighlight()
 
 
