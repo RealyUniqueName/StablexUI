@@ -18,7 +18,7 @@ class Skins {
     static public function green () : Paint {
         var skin : Paint = new Paint();
         skin.color   = 0x00FF00;
-        skin.corners = [10];
+        skin.corners = [20];
 
         return skin;
     }//function green()

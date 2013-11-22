@@ -41,6 +41,7 @@ class Main extends Theme {
         tf.y = 100;
         tf.text = 'Hello, world!';
 
+        Skins.green();
     }//function main()
 
 }//class Main

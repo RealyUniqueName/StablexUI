@@ -11,6 +11,8 @@ using StringTools;
 #if macro
 import haxe.macro.Context;
 import haxe.macro.Expr;
+import haxe.macro.Type;
+import haxe.macro.TypeTools;
 import sys.FileSystem;
 import sys.io.File;
 
@@ -190,7 +192,7 @@ class Theme {
             fname = fullpath.replace(dir, '');
             if( fname.charAt(0) == '/' ) fname = fname.substr(1, fname.length - 1);
             name  = _erNonAlphaNum.replace(fname, '_');
-trace(fname);
+
             //asset type
             var ext  : String = fullpath.split('.').pop();
             var type : AssetType = (_erImg.match(ext) ? AImage : (_erFont.match(ext) ? AFont : null));
@@ -274,6 +276,70 @@ trace(fname);
 
         return fields;
     }//function addAssets()
+
+
+    /**
+    * Get list of skins defined by specified theme.
+    * Returns Map<skinName,skinType>
+    *
+    */
+    static public function getSkinList (theme:String) : Map<String,String> {
+        var skins : Map<String,String> = new Map();
+        var definitions : Type = null;
+        try{
+            definitions = Context.getType(theme + '.Skins');
+        }catch(e:Dynamic){
+            return skins;
+        }
+
+        //Skins must be a class
+        switch(definitions){
+            case TInst(t,[]):
+                //check if static fields describe skins
+                for(field in t.get().statics.get()){
+                    switch(field.kind){
+                        case FMethod(_):
+                            switch(field.type){
+                                case TLazy(_):
+                                    var type : String = TypeTools.toString(field.type);
+                                    type = type.substring(type.lastIndexOf('->') + 2, type.length).trim();
+
+                                    if( Theme.isSkin( Context.getType(type) ) ){
+                                        skins.set(field.name, type);
+                                    }
+                                case _:
+                            }
+                        case _:
+                    }
+                }
+            case _: throw theme + '.Skins must be a class without type parameters';
+        }
+
+        return skins;
+    }//function getSkinList()
+
+
+    /**
+    * Check if specified type is descendant of ru.stablex.ui.skins.Skin
+    *
+    */
+    static private function isSkin (type:Type) : Bool {
+        switch(type){
+            case TInst(t,_):
+                var cls = t.get();
+                if( cls.pack.join('.') + '.' + cls.name == 'ru.stablex.ui.skins.Skin' ){
+                    return true;
+                }
+                return (
+                    cls.superClass == null
+                        ? false
+                        : Theme.isSkin( Context.getType(cls.superClass.t.toString()) )
+                );
+            case _: return false;
+        }
+
+        return false;
+    }//function isSkin()
 
 #end
 

@@ -1,5 +1,6 @@
 package ru.stablex.ui;
 
+import haxe.macro.Compiler;
 import haxe.macro.Context;
 import haxe.macro.Expr;
 #if macro
@@ -59,6 +60,10 @@ class UIBuilder {
     * @return - valid haxe code to inject in generated code
     */
     static public var meta : Hash<Xml->String->String> = new Hash();
+
+    /** theme package */
+    static private var _theme : String;
+
 #end
 
 
@@ -136,7 +141,7 @@ class UIBuilder {
             }
         }
 
-        code = '(function() : Void {' + code + '})()';
+        code = '(function() : Void {' + code + '\nru.stablex.ui.UIBuilder.regSkins();})()';
 
         UIBuilder._saveCode((defaultsXmlFile == null ? 'UIBuilder_init.hx' : defaultsXmlFile), code);
 
@@ -718,42 +723,79 @@ class UIBuilder {
     * @throw <type>String</type> if one of tag names in xml does not match ~/^([a-z0-9_]+):([a-z0-9_]+)$/i
     * @throw <type>String</type> if class specified for skin system is not registered with .regClass
     */
-    macro static public function regSkins(xmlFile:String) : Expr {
+    macro static public function regSkins(xmlFile:String = null) : Expr {
         #if display
-            return macro true;
+            return macro {};
         #end
+        if( Context.defined('display') ) return macro {};
 
         UIBuilder._checkInit();
+        var code : String = '';
 
-        var element = Xml.parse( File.getContent(xmlFile) ).firstElement();
+        //get list of skins in theme
+        var themeSkins : Map<String,String> = Theme.getSkinList(UIBuilder._theme);
 
-        var code   : String = '';
-        var erSkin : EReg = ~/^([a-z0-9_]+):([a-z0-9_]+)$/i;
-        var local  : String = '';
-        //process every skin
-        for(node in element.elements()){
-            if( !erSkin.match(node.nodeName) ) Err.trigger('Wrong skin format: ' + node.nodeName);
+        //load skins from xml files
+        if( xmlFile != null ){
+            var element = Xml.parse( File.getContent(xmlFile) ).firstElement();
 
-            var name : String = erSkin.matched(1);
-            var cls  : String = erSkin.matched(2);
+            var erSkin    : EReg = ~/^([a-z0-9_]+):([a-z0-9_]+)$/i;
+            var local     : String = '';
+            //process every skin
+            for(node in element.elements()){
+                if( !erSkin.match(node.nodeName) ) Err.trigger('Wrong skin format: ' + node.nodeName);
 
-            if( !UIBuilder._imports.exists(cls) ) Err.trigger('Class is not imported: ' + cls);
-            cls = UIBuilder._imports.get(cls);
+                var name : String = erSkin.matched(1);
+                var cls  : String = erSkin.matched(2);
 
-            local = '\nvar skin = new ' +  cls + '();';
+                if( !UIBuilder._imports.exists(cls) ) Err.trigger('Class is not imported: ' + cls);
+                cls = UIBuilder._imports.get(cls);
 
-            //apply xml attributes to skin
-            local += UIBuilder.attr2Haxe(node, 'skin');
+                //if user defined skin iterfer with theme skin
+                var themeCls : String = themeSkins.get(name);
+                if( themeCls != null ){
+                    if( themeCls != cls ){
+                        throw 'Skin defined by UIBuilder.regSkins() conflicts with skin defined by theme. `$cls` should be `$themeCls`';
+                    }
+                    local = '\nvar skin = ' + UIBuilder._theme + '.Skins.$name();';
+                    themeSkins.remove(name);
+                //theme does not have skin with such name
+                }else{
+                    local = '\nvar skin = new ' +  cls + '();';
+                }
 
-            code += '\nru.stablex.ui.UIBuilder.skins.set("' + name + '", function():ru.stablex.ui.skins.Skin{' + local + '\nreturn skin;\n});';
-        }//for(nodes)
+                //apply xml attributes to skin
+                local += UIBuilder.attr2Haxe(node, 'skin');
+
+                code += '\nru.stablex.ui.UIBuilder.skins.set("' + name + '", function():ru.stablex.ui.skins.Skin{' + local + '\nreturn skin;\n});';
+            }//for(nodes)
+        }//if( xmlFile )
+
+        //add theme skins
+        for(name in themeSkins.keys()){
+            code += '\nru.stablex.ui.UIBuilder.skins.set("$name", ${UIBuilder._theme}.Skins.$name);';
+        }
 
         code = '(function(){' + code + '})()';
 
+        if( xmlFile == null ) xmlFile = 'No-file';
         UIBuilder._saveCode(xmlFile, code);
 
         return UIBuilder._parse(xmlFile, code);
     }//function regSkins()
+
+
+    /**
+    * Set theme
+    *
+    * @param theme - package containing theme
+    */
+    #if !macro macro #end static public function setTheme (theme:String) : Expr {
+        Compiler.include(theme);
+        UIBuilder._theme = theme;
+
+        return macro {};
+    }//function setTheme()
 
 
     /**
