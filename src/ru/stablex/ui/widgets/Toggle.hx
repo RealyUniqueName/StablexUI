@@ -80,10 +80,11 @@ class Toggle extends StateButton{
     */
     override public function refresh() : Void {
         if( this.highlightOnSelect && this.state == 'down' ){
-            this.highlight();
+            this.highlighted = true;
         }else if( this.highlightOnSelect ){
-            this.unhighlight();
+            this.highlighted = false;
         }
+
         super.refresh();
     }//function refresh()
 
