@@ -124,16 +124,35 @@ class Theme {
         };
     }//function _genCacheField()
 
-#end
 
     /**
-    * Get directory of a file where this method is called
+    * Get file list in directory. Recursive
     *
     */
-    macro static public function dir () : ExprOf<String> {
-        var dir : String = Theme._dir();
-        return macro $v{dir};
-    }//function dir()
+    static public function listFiles (dir:String) : Array<String> {
+        var inspect : Array<String> = [];
+        for(fname in FileSystem.readDirectory(dir)){
+            inspect.push(dir + fname);
+        }
+
+        var files   : Array<String> = [];
+
+        var fname : String;
+        while( inspect.length > 0 ){
+            fname = inspect.pop();
+
+            //skip directories for now
+            if( FileSystem.isDirectory(fname) ) {
+                for(path in FileSystem.readDirectory(fname)){
+                    inspect.push(fname + '/' + path);
+                }
+            }else{
+                files.push(fname);
+            }
+        }
+
+        return files;
+    }//function listFiles()
 
 
     /**
@@ -141,11 +160,10 @@ class Theme {
     * Path should be relative to calling file.
     *
     */
-    macro static public function addAssets (path:String) : Array<Field> {
-        if( Context.defined('display') ) return null;
+    static public function addAssets (fields:Array<Field>, path:String) : Array<Field> {
+        if( Context.defined('display') ) return fields;
 
         var pos = Context.currentPos();
-        var fields : Array<Field> = Context.getBuildFields();
 
         //cache for bitmaps
         fields.push(Theme._genCacheField('bitmapDataCache', 'flash.display.BitmapData'));
@@ -166,13 +184,13 @@ class Theme {
         ).replace('\\', '/');
         var dir : String = Theme._dir().replace('\\', '/') + path;
 
-        for(fname in FileSystem.readDirectory(dir)){
-            var name     : String = _erNonAlphaNum.replace(fname, '_');
-            var fullpath : String = Context.resolvePath(dir + fname);
-
-            //skip directories for now
-            if( FileSystem.isDirectory(fullpath) ) continue;
-
+        var name  : String;
+        var fname : String;
+        for(fullpath in Theme.listFiles(dir)){
+            fname = fullpath.replace(dir, '');
+            if( fname.charAt(0) == '/' ) fname = fname.substr(1, fname.length - 1);
+            name  = _erNonAlphaNum.replace(fname, '_');
+trace(fname);
             //asset type
             var ext  : String = fullpath.split('.').pop();
             var type : AssetType = (_erImg.match(ext) ? AImage : (_erFont.match(ext) ? AFont : null));
@@ -196,7 +214,7 @@ class Theme {
             Context.defineType(cls);
 
             //add code to asset getters
-            var src = path + fname;
+            var src = /* path + */ fname;
             switch(type){
                 //getImageData
                 case AImage:
@@ -256,6 +274,31 @@ class Theme {
 
         return fields;
     }//function addAssets()
+
+#end
+
+    /**
+    * Get directory of a file where this method is called
+    *
+    */
+    macro static public function dir () : ExprOf<String> {
+        var dir : String = Theme._dir();
+        return macro $v{dir};
+    }//function dir()
+
+
+    /**
+    * Register your theme using build macro with this method
+    *
+    */
+    macro static public function register () : Array<Field> {
+        var fields : Array<Field> = Context.getBuildFields();
+
+        Theme.addAssets(fields, 'assets');
+
+        return fields;
+    }//function register()
+
 
 #if !macro
 

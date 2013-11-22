@@ -12,7 +12,7 @@ import flash.text.TextFormat;
 * Entry
 *
 */
-@:build(ru.stablex.ui.Theme.addAssets('assets'))
+@:build(ru.stablex.ui.Theme.register())
 class Main extends Theme {
 
 
@@ -22,7 +22,7 @@ class Main extends Theme {
     */
     static public function main () : Void {
 
-        var bmp = Main.getBitmapData('assets/bg.png');
+        var bmp = Main.getBitmapData('nested/evenMore/bg.png');
 
         Lib.current.addChild(new flash.display.Bitmap(bmp));
 
@@ -31,7 +31,7 @@ class Main extends Theme {
         tf.embedFonts = true;
 
         var format = new TextFormat();
-        format.font = Main.getFontName('assets/kata.ttf');
+        format.font = Main.getFontName('kata.ttf');
         format.size = 30;
         tf.defaultTextFormat = format;
         tf.width = 400;
