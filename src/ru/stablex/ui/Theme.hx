@@ -32,7 +32,11 @@ enum AssetType {
 *
 */
 class Theme {
-
+    /**
+    * Replacement for non-alphanumeric characters in class names generated from file names.
+    * Using underscore '_' breaks compatibility with HTML5 target
+    */
+    static public inline var _NON_ALPHANUM_REPLACEMENT = 'DDOTT';
 #if !macro
 
 
@@ -92,9 +96,9 @@ class Theme {
     */
     static private inline function _getPrefix(type:AssetType) {
             return switch (type) {
-                case AImage : "Bitmap_";
-                case ASound : "Sound_";
-                case AFont  : "Font_";
+                case AImage : "Bitmap" + _NON_ALPHANUM_REPLACEMENT;
+                case ASound : "Sound" + _NON_ALPHANUM_REPLACEMENT;
+                case AFont  : "Font" + _NON_ALPHANUM_REPLACEMENT;
             }
     }//functionget _getPrefix()
 
@@ -190,7 +194,7 @@ class Theme {
         for(fullpath in Theme.listFiles(dir)){
             fname = fullpath.replace(dir, '');
             if( fname.charAt(0) == '/' ) fname = fname.substr(1, fname.length - 1);
-            name  = _erNonAlphaNum.replace(fname, '_');
+            name  = _erNonAlphaNum.replace(fname, _NON_ALPHANUM_REPLACEMENT);
 
             //asset type
             var ext  : String = fullpath.split('.').pop();
@@ -459,23 +463,6 @@ class Theme {
 
         return fields;
     }//function register()
-
-
-//     /**
-//     * Description
-//     *
-//     */
-//     macro static public function build () : Array<Field> {
-// trace('---------' + Context.getLocalClass().toString() + '----------');
-//         for(meta in Context.getLocalClass().get().meta.get()){
-//             trace(meta.name);
-//             // trace(meta.params);
-//             for(p in meta.params){
-//                 trace(haxe.macro.ExprTools.toString(p));
-//             }
-//         }
-//         return null;
-//     }//function build()
 
 
 #if !macro
