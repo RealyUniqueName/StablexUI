@@ -211,7 +211,6 @@ class Theme {
                     isExtern : false,
                     kind     : Theme._getKind(type),
             };
-
             Context.defineType(cls);
 
             //add code to asset getters
@@ -285,7 +284,7 @@ class Theme {
         var defDir : String = Theme._themeDirectory.get(theme) + 'defaults';
         var themeDefaults : Map<String,Array<String>> = new Map();
 
-        if( Context.defined('display') ){
+        if( Context.defined('display') || !FileSystem.exists(defDir) ){
             Theme._defaults.set(theme, themeDefaults);
             return;
         }
@@ -460,6 +459,23 @@ class Theme {
 
         return fields;
     }//function register()
+
+
+//     /**
+//     * Description
+//     *
+//     */
+//     macro static public function build () : Array<Field> {
+// trace('---------' + Context.getLocalClass().toString() + '----------');
+//         for(meta in Context.getLocalClass().get().meta.get()){
+//             trace(meta.name);
+//             // trace(meta.params);
+//             for(p in meta.params){
+//                 trace(haxe.macro.ExprTools.toString(p));
+//             }
+//         }
+//         return null;
+//     }//function build()
 
 
 #if !macro
