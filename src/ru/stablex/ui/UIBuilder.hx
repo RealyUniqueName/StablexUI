@@ -113,8 +113,9 @@ class UIBuilder {
     */
     macro static public function init(defaultsXmlFile:String = null, enableRTXml:Bool = false) : Expr {
         #if display
-            return macro true;
+            return macro {};
         #end
+        if( Context.defined('display') ) return macro {};
 
 		var code : String = '\nflash.Lib.current.stage.removeEventListener(flash.events.Event.ENTER_FRAME, ru.stablex.ui.UIBuilder.skinQueue);';
 		code += '\nflash.Lib.current.stage.addEventListener(flash.events.Event.ENTER_FRAME, ru.stablex.ui.UIBuilder.skinQueue);';
@@ -128,20 +129,56 @@ class UIBuilder {
             code += UIBuilder._regRTXml();
         }
 
+        var themeDefaults : Map<String,Array<String>> = (UIBuilder._theme == null ? new Map() : Theme.getDefaultsList(UIBuilder._theme));
+
         //If provided with file for defaults, generate closures for applying defaults to widgets
         if( defaultsXmlFile != null ){
             var root : Xml = Xml.parse( File.getContent(defaultsXmlFile) ).firstElement();
             for(widget in root.elements()){
-                code += '\nif( !ru.stablex.ui.UIBuilder.defaults.exists("' + widget.nodeName + '") ) ru.stablex.ui.UIBuilder.defaults.set("' + widget.nodeName + #if haxe3 '", new Map());' #else '", new Hash());' #end;
+                code += '\nif( !ru.stablex.ui.UIBuilder.defaults.exists("' + widget.nodeName + '") ) ru.stablex.ui.UIBuilder.defaults.set("' + widget.nodeName + '", new Map());';
+
+                var themeDef : Array<String> = themeDefaults.get(widget.nodeName);
+                themeDef = (themeDef == null ? [] : themeDef.copy());
+
+                //add defaults from custom xml
                 for(node in widget.elements()){
                     code += '\nru.stablex.ui.UIBuilder.defaults.get("' + widget.nodeName + '").set("' + node.nodeName + '", function(__ui__widget0:ru.stablex.ui.widgets.Widget) : Void {';
+
+                    //apply theme defaults
+                    if( Lambda.has(themeDef, node.nodeName) ){
+                        themeDef.remove(node.nodeName);
+                        code += '\n${UIBuilder._theme}.defaults.${widget.nodeName}.${node.nodeName}(__ui__widget0);';
+                    }
+
+                    //apply custom defaults
                     code += UIBuilder.construct(node, 1, widget.nodeName);
                     code += '\n});';
+                }
+
+                //add theme defaults which does not have custom overrides
+                for(def in themeDef){
+                    code += '\nru.stablex.ui.UIBuilder.defaults.get("${widget.nodeName}").set("$def", ${UIBuilder._theme}.defaults.${widget.nodeName}.${def});';
+                }
+            }
+        //custom defaults file is not specified, use theme only
+        }else{
+            for(widget in themeDefaults.keys()){
+                code += '\nif( !ru.stablex.ui.UIBuilder.defaults.exists("$widget") ) ru.stablex.ui.UIBuilder.defaults.set("$widget", new Map());';
+                var themeDef : Array<String> = themeDefaults.get(widget);
+                if( themeDef != null ){
+                    for(def in themeDef){
+                        code += '\nru.stablex.ui.UIBuilder.defaults.get("${widget}").set("$def", ${UIBuilder._theme}.defaults.${widget}.${def});';
+                    }
                 }
             }
         }
 
-        code = '(function() : Void {' + code + '\nru.stablex.ui.UIBuilder.regSkins();})()';
+        if( UIBuilder._theme != null ){
+            code += '\nru.stablex.ui.UIBuilder.regSkins();';
+            code += '\n${UIBuilder._theme}.Main.main();';
+        }
+
+        code = '(function() : Void {' + code + '})()';
 
         UIBuilder._saveCode((defaultsXmlFile == null ? 'UIBuilder_init.hx' : defaultsXmlFile), code);
 

@@ -50,6 +50,9 @@ class Theme {
     static private var _erFont : EReg = ~/^(ttf)$/i;
     /** non alphanumeric characters */
     static private var _erNonAlphaNum : EReg = ~/[^0-9a-zA-Z]/g;
+    /** defauls from registered themes */
+    static private var _defaults : Map<String, Map<String,Array<String>> > = new Map();
+
 
     /**
     * Get directory of a file for current context
@@ -279,6 +282,55 @@ class Theme {
 
 
     /**
+    * Register defaults of currently built theme
+    *
+    */
+    static public function addDefaults () : Void {
+        var theme : String = Context.getLocalClass().toString();
+        theme = theme.substring(0, theme.lastIndexOf('.'));
+
+        var defDir : String = Theme._dir() + 'defaults';
+        var themeDefaults = new Map();
+
+        for(fname in FileSystem.readDirectory(defDir)){
+            if( fname.lastIndexOf('.hx') != fname.length - 3) continue;
+
+            var name : String = fname.substr(0, fname.length - 3);
+            var cls  : String = theme + '.defaults.' + name;
+
+            var defaults : Array<String> = [];
+
+            //get type
+            var definitions : Type = null;
+            try{
+                definitions = Context.getType(cls);
+            }catch(e:Dynamic){
+                continue;
+            }
+
+            //collect fields as defaults
+            switch(definitions){
+                case TInst(t,[]):
+                    //check if static fields describe defaults
+                    for(field in t.get().statics.get()){
+                        var type = TypeTools.toString(field.type);
+                        type = type.substring(type.indexOf(':') + 1, type.length).trim();
+
+                        if( type == 'ru.stablex.ui.widgets.Widget -> Void' ){
+                            defaults.push(field.name);
+                        }
+                    }
+                case _: throw cls + ' must be a class without type parameters';
+            }
+
+            themeDefaults.set(name, defaults);
+        }
+
+        Theme._defaults.set(theme, themeDefaults);
+    }//function addDefaults()
+
+
+    /**
     * Get list of skins defined by specified theme.
     * Returns Map<skinName,skinType>
     *
@@ -304,7 +356,7 @@ class Theme {
                                     var type : String = TypeTools.toString(field.type);
                                     type = type.substring(type.lastIndexOf('->') + 2, type.length).trim();
 
-                                    if( Theme.isSkin( Context.getType(type) ) ){
+                                    if( Theme.isDescendantFor(Context.getType(type), 'ru.stablex.ui.skins.Skin') ){
                                         skins.set(field.name, type);
                                     }
                                 case _:
@@ -320,20 +372,28 @@ class Theme {
 
 
     /**
+    * Get list of defaults for specified theme
+    * Returns Map<WidgetName,Array<DefaultsName>>
+    */
+    static public function getDefaultsList (theme:String) : Map<String, Array<String>> {
+        return Theme._defaults.get(theme);
+    }//function getDefaultsList()
+
+    /**
     * Check if specified type is descendant of ru.stablex.ui.skins.Skin
     *
     */
-    static private function isSkin (type:Type) : Bool {
+    static private function isDescendantFor (type:Type, parent:String) : Bool {
         switch(type){
             case TInst(t,_):
                 var cls = t.get();
-                if( cls.pack.join('.') + '.' + cls.name == 'ru.stablex.ui.skins.Skin' ){
+                if( cls.pack.join('.') + '.' + cls.name == parent ){
                     return true;
                 }
                 return (
                     cls.superClass == null
                         ? false
-                        : Theme.isSkin( Context.getType(cls.superClass.t.toString()) )
+                        : Theme.isDescendantFor(Context.getType(cls.superClass.t.toString()), parent)
                 );
             case _: return false;
         }
@@ -361,6 +421,7 @@ class Theme {
         var fields : Array<Field> = Context.getBuildFields();
 
         Theme.addAssets(fields, 'assets');
+        Theme.addDefaults();
 
         return fields;
     }//function register()
