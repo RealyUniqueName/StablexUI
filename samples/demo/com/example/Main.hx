@@ -28,6 +28,9 @@ class Main extends ru.stablex.ui.widgets.Widget{
 
         // UIBuilder.saveCodeTo('_genCode_');
 
+        //set theme
+        UIBuilder.setTheme('ru.stablex.ui.themes.android4');
+
         //register main class to access it's methods and properties in xml
         UIBuilder.regClass('com.example.Main');
 

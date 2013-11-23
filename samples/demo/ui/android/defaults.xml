@@ -2,37 +2,7 @@
 
 <Defaults>
 
-    <Text>
-        <Default
-            format-font      = "$Assets.getFont('ui/android/fonts/regular.ttf').fontName"
-            format-size      = "14"
-            format-color     = "0xFFFFFF"
-            label-selectable = "false"
-            label-embedFonts = "true"
-        />
-        <Dark format-color="0x111111"/>
-        <DarkTip format-color="0x7f7f7f" format-size="12" label-wordWrap="true" widthPt="100"/>
-        <LightTip format-color="0xbbbbbb" format-size="12" label-wordWrap="true" widthPt="100"/>
-        <H1 format-size="22" padding="10"/>
-
-    </Text>
-
-
     <Scroll>
-        <!-- Screen container -->
-        <Screen
-            widthPt      = "100"
-            heightPt     = "100"
-            hScroll      = "false"
-            hBar         = "null"
-            vBar-visible = "false"
-            vBar-w       = "5"
-            vBar-right   = "2"
-            skinName     = "'Black1'"
-
-            on-scrollStart = "$this.vBar.visible = true;"
-            on-scrollStop  = "$this.vBar.visible = false;"
-        />
         <Level1 skinName="'BlackGradient1'"/>
         <Level2 skin:Paint-color="0xf2f2f2"/>
     </Scroll>
@@ -40,27 +10,6 @@
 
 
     <Slider>
-        <Default
-            w = "20"
-            h = "20"
-            skin:Paint-color   = "0x969696"
-            skin:Paint-padding = "2"
-            slider-skin:Paint-color   = "0x33b5e5"
-            slider-skin:Paint-corners = "[10]"
-        />
-
-        <Settings
-            w = "20"
-            h = "20"
-            slider-w = "20"
-            slider-h = "20"
-            skin:Paint-color   = "0x969696"
-            skin:Paint-corners = "[20]"
-            skin:Paint-padding="8"
-            slider-skin:Paint-color   = "0x33b5e5"
-            slider-skin:Paint-corners = "[20]"
-        />
-
         <Haxe
             w = "20"
             h = "20"
@@ -96,241 +45,29 @@
 
     <VBox>
         <Menu widthPt="100" childPadding="2" paddingTop="4" paddingBottom="4"/>
-        <LightGray skin:Paint-color="0x555555" widthPt="100" heightPt="100" childPadding="10" padding="5"/>
-        <DarkGray skin:Paint-color="0x222222" widthPt="100" heightPt="100" childPadding="10" padding="5"/>
+        <LightGray skinName="'LightGray'" widthPt="100" heightPt="100" childPadding="10" padding="5"/>
+        <DarkGray skinName="'DarkGray'" widthPt="100" heightPt="100" childPadding="10" padding="5"/>
     </VBox>
 
 
     <Button>
-        <Default
-            w                = "185"
-            h                = "40"
-            label-embedFonts = "true"
-            format-size      = "14"
-            format-color     = "0xFFFFFF"
-            format-font      = "$Assets.getFont('ui/android/fonts/regular.ttf').fontName"
-            skinName         = "'button'"
-            skinHoveredName  = "'buttonHovered'"
-            skinPressedName  = "'buttonPressed'"
-        />
-
-        <Settings
-            ico-src        = "'ui/android/img/ico/dark/settings.png'"
-            autoWidth      = "true"
-            childPadding   = "0"
-            icoBeforeLabel = "false"
-            apart          = "true"
-        />
-
-        <MainBack ico-src="'ui/android/img/ico/light/mainBack.png'" />
-        <MainHome ico-src="'ui/android/img/ico/light/mainHome.png'" />
-        <MainRecent ico-src="'ui/android/img/ico/light/mainRecent.png'" />
-
-        <MenuItem
-            align            = "'middle'"
-            h                = "44"
-            widthPt          = "100"
-            padding          = "5"
-            label-embedFonts = "true"
-            format-font      = "$Assets.getFont('ui/android/fonts/regular.ttf').fontName"
-            format-size      = "16"
-            format-color     = "0xFFFFFF"
-            apart            = "true"
-            ico-src          = "'ui/android/img/ico/light/next.png'"
-            icoBeforeLabel   = "false"
-            skin:Paint-color = "0x111111"
-            skinPressed:Paint-color = "0x257390"
-        />
+        <MainBack ico-src="'ui/android/img/mainBack.png'" />
+        <MainHome ico-src="'ui/android/img/mainHome.png'" />
+        <MainRecent ico-src="'ui/android/img/mainRecent.png'" />
     </Button>
 
 
-    <Toggle>
-        <Default
-            w                = "185"
-            h                = "40"
-            format-size      = "14"
-            format-color     = "0xFFFFFF"
-            format-font      = "$Assets.getFont('ui/android/fonts/regular.ttf').fontName"
-            label-embedFonts = "true"
-            skinName         = "'button'"
-            skinHoveredName  = "'buttonHovered'"
-            skinPressedName  = "'buttonPressed'"
-
-            states-up-skinName   = "'button'"
-            states-down-skinName = "'buttonPressed'"
-        />
-    </Toggle>
-
-
-    <StateButton>
-        <Default
-            w                = "185"
-            h                = "40"
-            format-size      = "14"
-            format-color     = "0xFFFFFF"
-            format-font      = "$Assets.getFont('ui/android/fonts/regular.ttf').fontName"
-            label-embedFonts = "true"
-            skinName         = "'button'"
-            skinHoveredName  = "'buttonHovered'"
-            skinPressedName  = "'buttonPressed'"
-        />
-    </StateButton>
-
-
-    <Widget>
-        <HR skinName="'hr'" h="1" widthPt="100"/>
-        <HRLight skinName="'hr'" h="1" widthPt="100" skin:Paint-color="0xa9a9a9"/>
-    </Widget>
-
-
     <Switch>
-        <Default
-            w        = "97"
-            h        = "24"
-            skinName = "'switch'"
-
-            slider-w = "47"
-
-            labelOff-left = "0"
-            labelOn-left  = "0"
-            labelOff-top  = "0"
-            labelOn-top   = "0"
-
-            labelOn-widthPt   = "100"
-            labelOff-widthPt  = "100"
-            labelOn-heightPt  = "100"
-            labelOff-heightPt = "100"
-            labelOff-visible  = "false"
-
-            labelOn-align  = "'center,middle'"
-            labelOff-align = "'center,middle'"
-
-            on-create = "
-                if( $this.selected ){
-                    $this.labelOn.text = 'ON';
-                    //$this.labelOff.visible = false;
-                    $this.slider.skinName = 'switchSliderOn';
-                }else{
-                    //$this.labelOff.visible = true;
-                    $this.labelOn.text = 'OFF';
-                    $this.slider.skinName = 'switchSliderOff';
-                }
-            "
-            on-change = "
-                if( $this.selected ){
-                    $this.labelOn.text = 'ON';
-                    //$this.labelOff.visible = false;
-                    $this.slider.skinName = 'switchSliderOn';
-                }else{
-                    //$this.labelOff.visible = true;
-                    $this.labelOn.text = 'OFF';
-                    $this.slider.skinName = 'switchSliderOff';
-                }
-            "
-        />
-
-            
         <Dark skin:Paint-alpha="0.6" />
-        <Classic
-            w        = "97"
-            h        = "24"
-            skinName = "'switch'"
-            slider-w = "47"
-            slider-skinName = "'switchSliderOn'"
-            labelOn-format-color = "0x33b5e5"
-        />
         <DayNight
             labelOn-format-color="0xFFFFFF"
             labelOff-format-color="0x999999"
             w        = "97"
             h        = "24"
-            skinName = "'switch'"
+            skinName = "'switcher'"
             slider-w = "47"
             slider-skinName = "'switchSliderDayNight'"
         />
     </Switch>
 
-
-    <Checkbox>
-        <Default
-            format-font  = "$Assets.getFont('ui/android/fonts/regular.ttf').fontName"
-            format-size  = "14"
-            format-color = "0xFFFFFF"
-
-            states-up-ico-src   = "'ui/android/img/checkbox.png'"
-            states-down-ico-src = "'ui/android/img/checkboxChecked.png'"
-        />
-    </Checkbox>
-
-    <Radio>
-        <Default
-            format-font  = "$Assets.getFont('ui/android/fonts/regular.ttf').fontName"
-            format-size  = "14"
-            format-color = "0xFFFFFF"
-
-            states-up-ico-src   = "'ui/android/img/radio.png'"
-            states-down-ico-src = "'ui/android/img/radioChecked.png'"
-        />
-    </Radio>
-
-
-    <Progress>
-        <Default
-            h = "20"
-            w = "100"
-            skinName     = "'progress'"
-            bar-skinName = "'progressBar'"
-        />
-    </Progress>
-
-
-    <Options>
-        <Default
-            w                = "185"
-            h                = "40"
-            format-size      = "14"
-            format-color     = "0xFFFFFF"
-            format-font      = "$Assets.getFont('ui/android/fonts/regular.ttf').fontName"
-            skinName         = "'button'"
-            skinHoveredName  = "'buttonHovered'"
-            skinPressedName  = "'buttonPressed'"
-            ico-src          = "'ui/android/img/options.png'"
-            icoBeforeLabel   = "false"
-            apart            = "true"
-            box-skinName     = "'optionsBg'"
-            box-padding      = "15"
-            box-childPadding = "5"
-        />
-        <Picker
-            alignList     = "false"
-            list-skinName = "'popup'"
-            list-widthPt  = "100"
-            list-heightPt = "100"
-        />
-    </Options>
-
-
-    <TabStack>
-        <Default
-            tabBar-skin:Paint-color = "0x474747"
-            tabBar-unifyChildren = "true"
-            tabBar-childPadding  = "1"
-            widthPt  = "100"
-            heightPt = "100"
-            wrap     = "true"
-        />
-    </TabStack>
-
-
-    <TabPage>
-        <Default
-            title-w = "120"
-            title-h = "48"
-            title-states-up-ico        = "null"
-            title-states-down-ico      = "null"
-            title-skinPressedName      = "'tabPressed'"
-            title-states-up-skinName   = "'tab'"
-            title-states-down-skinName = "'tabActive'"
-        />
-    </TabPage>
 </Defaults>

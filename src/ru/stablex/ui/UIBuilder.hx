@@ -134,6 +134,7 @@ class UIBuilder {
         }
 
         var themeDefaults : Map<String,Array<String>> = (UIBuilder._theme == null ? new Map() : Theme.getDefaultsList(UIBuilder._theme));
+        var processedThemeDefaults : Array<String> = [];
 
         //If provided with file for defaults, generate closures for applying defaults to widgets
         if( defaultsXmlFile != null ){
@@ -163,16 +164,18 @@ class UIBuilder {
                 for(def in themeDef){
                     code += '\nru.stablex.ui.UIBuilder.defaults.get("${widget.nodeName}").set("$def", ${UIBuilder._theme}.defaults.${widget.nodeName}.${def});';
                 }
+                processedThemeDefaults.push(widget.nodeName);
             }
-        //custom defaults file is not specified, use theme only
-        }else{
-            for(widget in themeDefaults.keys()){
-                code += '\nif( !ru.stablex.ui.UIBuilder.defaults.exists("$widget") ) ru.stablex.ui.UIBuilder.defaults.set("$widget", new Map());';
-                var themeDef : Array<String> = themeDefaults.get(widget);
-                if( themeDef != null ){
-                    for(def in themeDef){
-                        code += '\nru.stablex.ui.UIBuilder.defaults.get("${widget}").set("$def", ${UIBuilder._theme}.defaults.${widget}.${def});';
-                    }
+        }
+        //process theme defaults which were not found in custom defaults file
+        for(widget in themeDefaults.keys()){
+            if( Lambda.has(processedThemeDefaults, widget) ) continue;
+
+            code += '\nif( !ru.stablex.ui.UIBuilder.defaults.exists("$widget") ) ru.stablex.ui.UIBuilder.defaults.set("$widget", new Map());';
+            var themeDef : Array<String> = themeDefaults.get(widget);
+            if( themeDef != null ){
+                for(def in themeDef){
+                    code += '\nru.stablex.ui.UIBuilder.defaults.get("${widget}").set("$def", ${UIBuilder._theme}.defaults.${widget}.${def});';
                 }
             }
         }

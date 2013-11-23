@@ -65,11 +65,10 @@ class Switch {
     *
     */
     static public function Classic (w:Widget) : Void {
-        Switch.Default(w);
         var swch = cast(w, WSwitch);
         swch.w                    = 97;
         swch.h                    = 24;
-        swch.skinName             = 'switch';
+        swch.skinName             = 'switcher';
         swch.slider.w             = 47;
         swch.slider.skinName      = 'switchSliderOn';
         swch.labelOn.format.color = 0x33b5e5;
