@@ -24,8 +24,6 @@ enum AssetType {
 
 #else
 
-import haxe.io.Bytes;
-import flash.display.BitmapData;
 
 #end
 
@@ -36,10 +34,7 @@ import flash.display.BitmapData;
 class Theme {
 
 #if !macro
-    /** _bmpMeta */
-    static public var bmpMeta : Map<String,{width:Int,height:Int}> = new Map();
-    /** cache of bitmaps retreived from assets */
-    static private var _bmpCache : Map<String,BitmapData> = new Map();
+
 
 #else
     /** match file name in full file path */
@@ -290,7 +285,12 @@ class Theme {
         theme = theme.substring(0, theme.lastIndexOf('.'));
 
         var defDir : String = Theme._dir() + 'defaults';
-        var themeDefaults = new Map();
+        var themeDefaults : Map<String,Array<String>> = new Map();
+
+        if( Context.defined('display') ){
+            Theme._defaults.set(theme, themeDefaults);
+            return;
+        }
 
         for(fname in FileSystem.readDirectory(defDir)){
             if( fname.lastIndexOf('.hx') != fname.length - 3) continue;
@@ -313,6 +313,9 @@ class Theme {
                 case TInst(t,[]):
                     //check if static fields describe defaults
                     for(field in t.get().statics.get()){
+                        //skip private fields
+                        if( !field.isPublic ) continue;
+
                         var type = TypeTools.toString(field.type);
                         type = type.substring(type.indexOf(':') + 1, type.length).trim();
 
@@ -337,6 +340,8 @@ class Theme {
     */
     static public function getSkinList (theme:String) : Map<String,String> {
         var skins : Map<String,String> = new Map();
+        if( Context.defined('display') ) return skins;
+
         var definitions : Type = null;
         try{
             definitions = Context.getType(theme + '.Skins');
@@ -376,6 +381,8 @@ class Theme {
     * Returns Map<WidgetName,Array<DefaultsName>>
     */
     static public function getDefaultsList (theme:String) : Map<String, Array<String>> {
+        //make compiler load theme files
+        Context.getType(theme + '.Main');
         return Theme._defaults.get(theme);
     }//function getDefaultsList()
 
@@ -400,6 +407,24 @@ class Theme {
 
         return false;
     }//function isSkin()
+
+
+    /**
+    * Check if theme has entry point defined in main class
+    *
+    */
+    static public function hasMain (theme:String) : Bool {
+        var type : Type = Context.getType('$theme.Main');
+        switch(type){
+            case TInst(t,_):
+                for(field in t.get().statics.get()){
+                    if( field.name == 'main' ) return true;
+                }
+            case _:
+        }
+
+        return false;
+    }//function hasMain()
 
 #end
 

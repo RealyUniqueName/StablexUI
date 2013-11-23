@@ -175,7 +175,9 @@ class UIBuilder {
 
         if( UIBuilder._theme != null ){
             code += '\nru.stablex.ui.UIBuilder.regSkins();';
-            code += '\n${UIBuilder._theme}.Main.main();';
+            if( Theme.hasMain(UIBuilder._theme) ){
+                code += '\n${UIBuilder._theme}.Main.main();';
+            }
         }
 
         code = '(function() : Void {' + code + '})()';

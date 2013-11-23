@@ -1,4 +1,4 @@
-package ru.stablex.themes.test.defaults;
+package ru.stablex.ui.themes.test.defaults;
 
 import ru.stablex.ui.widgets.Widget;
 import ru.stablex.ui.widgets.Button in WButton;

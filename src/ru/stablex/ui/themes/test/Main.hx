@@ -1,4 +1,4 @@
-package ru.stablex.themes.test;
+package ru.stablex.ui.themes.test;
 
 import ru.stablex.ui.Theme;
 
