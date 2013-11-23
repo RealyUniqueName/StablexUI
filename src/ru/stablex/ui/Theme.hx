@@ -47,7 +47,8 @@ class Theme {
     static private var _erNonAlphaNum : EReg = ~/[^0-9a-zA-Z]/g;
     /** defauls from registered themes */
     static private var _defaults : Map<String, Map<String,Array<String>> > = new Map();
-
+    /** directories of themes */
+    static private var _themeDirectory : Map<String,String> = new Map();
 
     /**
     * Get directory of a file for current context
@@ -280,11 +281,8 @@ class Theme {
     * Register defaults of currently built theme
     *
     */
-    static public function addDefaults () : Void {
-        var theme : String = Context.getLocalClass().toString();
-        theme = theme.substring(0, theme.lastIndexOf('.'));
-
-        var defDir : String = Theme._dir() + 'defaults';
+    static public function addDefaults (theme:String) : Void {
+        var defDir : String = Theme._themeDirectory.get(theme) + 'defaults';
         var themeDefaults : Map<String,Array<String>> = new Map();
 
         if( Context.defined('display') ){
@@ -383,8 +381,16 @@ class Theme {
     static public function getDefaultsList (theme:String) : Map<String, Array<String>> {
         //make compiler load theme files
         Context.getType(theme + '.Main');
-        return Theme._defaults.get(theme);
+
+        var defaults = Theme._defaults.get(theme);
+        if( defaults == null ){
+            Theme.addDefaults(theme);
+            defaults = Theme._defaults.get(theme);
+        }
+
+        return defaults;
     }//function getDefaultsList()
+
 
     /**
     * Check if specified type is descendant of ru.stablex.ui.skins.Skin
@@ -446,7 +452,11 @@ class Theme {
         var fields : Array<Field> = Context.getBuildFields();
 
         Theme.addAssets(fields, 'assets');
-        Theme.addDefaults();
+        // Theme.addDefaults();
+
+        var theme : String = Context.getLocalClass().toString();
+        theme = theme.substring(0, theme.lastIndexOf('.'));
+        Theme._themeDirectory.set(theme, Theme._dir());
 
         return fields;
     }//function register()

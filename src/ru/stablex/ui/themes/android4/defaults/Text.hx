@@ -1,5 +1,6 @@
 package ru.stablex.ui.themes.android4.defaults;
 
+import ru.stablex.ui.themes.android4.Main;
 import ru.stablex.ui.widgets.Text in WText;
 import ru.stablex.ui.widgets.Widget;
 
@@ -35,7 +36,7 @@ class Text {
     static public function Default (w:Widget) : Void {
         var txt = cast(w, WText);
 
-        txt.format.font      = Main.getFontName('fonts/regular.ttf');
+        txt.format.font      = Main.FONT;
         txt.format.size      = 14;
         txt.format.color     = 0xFFFFFF;
         txt.label.selectable = false;
@@ -58,7 +59,7 @@ class Text {
     * Common for hints
     *
     */
-    static private function _tip (txt:Widget) : Void {
+    static private function _tip (txt:WText) : Void {
         txt.format.size    = 12;
         txt.label.wordWrap = true;
         txt.widthPt        = 100;
@@ -69,7 +70,7 @@ class Text {
     * Hints with dark text
     *
     */
-    static public function DarkTip () : Void {
+    static public function DarkTip (w:Widget) : Void {
         var txt = cast(w, WText);
         _applyDefault(txt);
         _tip(txt);
@@ -81,7 +82,7 @@ class Text {
     * Hints with light text
     *
     */
-    static public function LightTip () : Void {
+    static public function LightTip (w:Widget) : Void {
         var txt = cast(w, WText);
         _applyDefault(txt);
         _tip(txt);

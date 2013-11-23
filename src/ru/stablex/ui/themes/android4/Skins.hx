@@ -3,6 +3,9 @@ package ru.stablex.ui.themes.android4;
 import ru.stablex.ui.skins.Gradient;
 import ru.stablex.ui.skins.Layer;
 import ru.stablex.ui.skins.Paint;
+import ru.stablex.ui.skins.Rect;
+import ru.stablex.ui.skins.Skin;
+import ru.stablex.ui.UIBuilder;
 
 
 
@@ -37,13 +40,25 @@ class Skins {
 
 
     /**
+    * Skin for pressed states of elements
+    *
+    */
+    static public function pressed () : Paint {
+        var skin = new Paint();
+        skin.color = 0x257390;
+        return skin;
+    }//function pressed()
+
+
+    /**
     * Pressed buttons
     *
     */
-    static public function buttonPressed () : Paint {
-        var skin = new Paint();
-        skin.color   = 0x257390;
-        skin.corners = [5];
+    static public function buttonPressed () : Skin {
+        var skin = UIBuilder.skin('pressed')();
+        if( Std.is(skin, Rect) ){
+            skin.as(Rect).corners = [5];
+        }
         return skin;
     }//function buttonPressed()
 
@@ -52,12 +67,12 @@ class Skins {
     * on/off switches
     *
     */
-    static public function switch () : Paint {
+    static public function switcher () : Paint {
         var skin = new Paint();
         skin.color = 0x555555;
         skin.alpha = 0.3;
         return skin;
-    }//function switch()
+    }//function switcher()
 
 
     /**
@@ -167,11 +182,11 @@ class Skins {
         var skin = new Layer();
 
         skin.current = new Paint();
-        skin.current.color = 0x333333;
-        skin.current.paddingBottom = 6;
+        skin.current.as(Paint).color = 0x333333;
+        skin.current.as(Paint).paddingBottom = 6;
 
         skin.behind = new Paint();
-        skin.behind.color = 0x33b5e5;
+        skin.behind.as(Paint).color = 0x33b5e5;
 
         return skin;
     }//function tabActive()
@@ -185,11 +200,11 @@ class Skins {
         var skin = new Layer();
 
         skin.current = new Paint();
-        skin.current.color = 0x33819d;
-        skin.current.paddingBottom = 6;
+        skin.current.as(Paint).color = 0x33819d;
+        skin.current.as(Paint).paddingBottom = 6;
 
         skin.behind = new Paint();
-        skin.behind.color = 0x33b5e5;
+        skin.behind.as(Paint).color = 0x33b5e5;
 
         return skin;
     }//function tabPressed()
@@ -225,13 +240,35 @@ class Skins {
         var skin = new Layer();
 
         skin.current = new Paint();
-        skin.current.color = 0x000000;
-        skin.current.paddingBottom = 3;
+        skin.current.as(Paint).color = 0x000000;
+        skin.current.as(Paint).paddingBottom = 3;
 
         skin.behind = new Paint();
-        skin.behind.color = 0x33b5e5;
+        skin.behind.as(Paint).color = 0x33b5e5;
 
         return skin;
     }//function BlackBlueStripe()
+
+
+    /**
+    * Dark gray fill
+    *
+    */
+    static public function DarkGray () : Paint {
+        var skin = new Paint();
+        skin.color = 0x222222;
+        return skin;
+    }//function DarkGray()
+
+
+    /**
+    * Light gray fill
+    *
+    */
+    static public function LightGray () : Paint {
+        var skin = new Paint();
+        skin.color = 0x555555;
+        return skin;
+    }//function LightGray()
 
 }//class Skins

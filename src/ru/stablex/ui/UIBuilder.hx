@@ -117,6 +117,10 @@ class UIBuilder {
         #end
         if( Context.defined('display') ) return macro {};
 
+        if( UIBuilder._theme != null ){
+            Compiler.include(UIBuilder._theme);
+        }
+
 		var code : String = '\nflash.Lib.current.stage.removeEventListener(flash.events.Event.ENTER_FRAME, ru.stablex.ui.UIBuilder.skinQueue);';
 		code += '\nflash.Lib.current.stage.addEventListener(flash.events.Event.ENTER_FRAME, ru.stablex.ui.UIBuilder.skinQueue);';
 
@@ -830,7 +834,6 @@ class UIBuilder {
     * @param theme - package containing theme
     */
     #if !macro macro #end static public function setTheme (theme:String) : Expr {
-        Compiler.include(theme);
         UIBuilder._theme = theme;
 
         return macro {};
