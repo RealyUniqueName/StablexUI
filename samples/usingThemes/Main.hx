@@ -22,47 +22,6 @@ class Main extends flash.display.Sprite{
         UIBuilder.init();
 
         Lib.current.addChild( UIBuilder.buildFn('ui/main.xml')() );
-
-        // //Create some widgets {
-        //     Lib.current.addChild( UIBuilder.create(Button, {
-        //         left : 100,
-        //         top  : 50,
-        //         text : 'Hit me!'
-        //     }) );
-
-        //     var opts : Array<Array<Dynamic>> = [['apple', 'wow'], ['pancakes', 'yay'], ['peanut butter jelly time!', 'doh']];
-        //     Lib.current.addChild( UIBuilder.create(Options, {
-        //         left    : 100,
-        //         top     : 150,
-        //         options : opts
-        //     }) );
-
-        //     Lib.current.addChild( UIBuilder.create(Checkbox, {
-        //         left : 100,
-        //         top  : 250,
-        //         text : 'Check me!'
-        //     }) );
-
-        //     Lib.current.addChild( UIBuilder.create(Slider, {
-        //         left : 100,
-        //         top  : 350,
-        //         w    : 300
-        //     }) );
-
-        //     Lib.current.addChild( UIBuilder.create(Switch, {
-        //         left : 400,
-        //         top  : 50
-        //     }) );
-
-        //     Lib.current.addChild( UIBuilder.create(Progress, {
-        //         left         : 400,
-        //         top          : 150,
-        //         w            : 300,
-        //         interactive  : true,
-        //         smoothChange : true,
-        //         value        : 40
-        //     }) );
-        // //}
     }//function main()
 
 
