@@ -541,6 +541,22 @@ class Widget extends TweenSprite{
 
 
     /**
+    * Climb up the display list and return a first met object of specified class
+    *
+    */
+    public function getNearestParent<T> (cls:Class<T>) : Null<T> {
+        var p = this.parent;
+
+        while( p != null ){
+            if( Std.is(p, cls) ) return cast p;
+            p = p.parent;
+        }
+
+        return null;
+    }//function getNearestParent()
+
+
+    /**
     * Cast this instance to specified class
     *
     */
