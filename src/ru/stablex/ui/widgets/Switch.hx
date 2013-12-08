@@ -8,6 +8,8 @@ import ru.stablex.ui.events.WidgetEvent;
 
 /**
 * Switch (on/off)
+*
+* @dispatch <type>ru.stablex.ui.events.WidgetEvent</type>.CHANGE - on state change
 */
 class Switch extends Widget{
 

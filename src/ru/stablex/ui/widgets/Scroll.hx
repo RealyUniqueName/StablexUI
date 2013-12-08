@@ -16,6 +16,10 @@ import ru.stablex.ui.events.WidgetEvent;
 * First child of this widget will be used as container for scrolled content.
 * When scrolling is about to start, <type>ru.stablex.ui.events.ScrollEvent</type>.BEFORE_SCROLL is dispatched.
 * Handle this event to cancel scrolling if needed.
+*
+* @dispatch <type>ru.stablex.ui.events.WidgetEvent</type>.SCROLL_START - on start scrolling
+* @dispatch <type>ru.stablex.ui.events.WidgetEvent</type>.SCROLL_STOP - on stop scrolling
+* @dispatch <type>ru.stablex.ui.events.ScrollEvent</type>.BEFORE_SCROLL - dispatched when scrolling is about to start
 */
 class Scroll extends Widget{
 

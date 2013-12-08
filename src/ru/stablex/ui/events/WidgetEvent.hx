@@ -27,6 +27,7 @@ class WidgetEvent extends Event{
     static public inline var ADDED = 'widgetAdded';
     //Dispatched when a widget is removed from another
     static public inline var REMOVED = 'widgetRemoved';
+
     //widget which dispatched this event
     public var widget (get,never) : Widget;
     private var _widget : Widget;

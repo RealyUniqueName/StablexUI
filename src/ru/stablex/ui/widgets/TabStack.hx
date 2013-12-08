@@ -3,15 +3,16 @@ package ru.stablex.ui.widgets;
 import flash.display.DisplayObject;
 import flash.events.MouseEvent;
 import ru.stablex.Err;
-import ru.stablex.ui.widgets.StateButton;
 import ru.stablex.ui.widgets.ViewStack;
+import ru.stablex.ui.events.WidgetEvent;
+
 
 /**
 * The TabStack is comprised of a set of <type>TabPage</type>s.
 * Only one tab can be selected at a time.
 *
+* @dispatch <type>ru.stablex.ui.events.WidgetEvent</type>.CHANGE - on tab change
 */
-
 class TabStack extends Box{
 
     //widget, wich will contain tabs headers
@@ -136,9 +137,11 @@ class TabStack extends Box{
     /**
     * Handle tabs selection
     *
+    * @dispatch <type>ru.stablex.ui.events.WidgetEvent</type>.CHANGE
     */
     private function _onChange(e:MouseEvent) : Void {
         this.refresh();
+        this.dispatchEvent( new WidgetEvent(WidgetEvent.REMOVED) );
     }//function _onChange()
 
 
@@ -199,7 +202,7 @@ class TabStack extends Box{
     */
     override public function removeChild(child:DisplayObject) : DisplayObject {
         if( Std.is(child, TabPage) ){
-            child.removeEventListener(MouseEvent.CLICK, this._onChange);
+            cast(child, TabPage).title.removeEventListener(MouseEvent.CLICK, this._onChange);
             this.tabBar.removeChild(cast(child, TabPage).title);
         }
         return super.removeChild(child);
@@ -213,7 +216,7 @@ class TabStack extends Box{
     override public function removeChildAt(idx:Int) : DisplayObject {
         var child : DisplayObject = super.removeChildAt(idx);
         if( Std.is(child, TabPage) ){
-            child.removeEventListener(MouseEvent.CLICK, this._onChange);
+            cast(child, TabPage).title.removeEventListener(MouseEvent.CLICK, this._onChange);
             if( !this.tabBar.destroyed ){
                 this.tabBar.removeChild(cast(child, TabPage).title);
             }

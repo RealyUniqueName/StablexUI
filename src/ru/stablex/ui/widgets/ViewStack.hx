@@ -1,12 +1,16 @@
 package ru.stablex.ui.widgets;
 
 import flash.display.DisplayObject;
+import ru.stablex.ui.events.WidgetEvent;
 import ru.stablex.ui.transitions.Transition;
 
 
 /**
 * There can be only one child element visible in ViewStack
 * By default visible child is one with childIndex = 0
+*
+* @dispatch <type>ru.stablex.ui.events.WidgetEvent</type>.CHANGE
+*       On change active child
 */
 class ViewStack extends Widget{
 
@@ -74,6 +78,8 @@ class ViewStack extends Widget{
             if( !ignoreHistory ){
                 this._history.push(idx);
             }
+
+            this.dispatchEvent(new WidgetEvent(WidgetEvent.CHANGE));
         }
     }//function showIdx()
 
@@ -99,6 +105,8 @@ class ViewStack extends Widget{
                 toShow.visible = true;
                 if( cb != null ) cb();
             }
+
+            this.dispatchEvent(new WidgetEvent(WidgetEvent.CHANGE));
         }
     }//function show()
 

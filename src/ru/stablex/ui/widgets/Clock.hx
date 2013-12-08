@@ -8,6 +8,7 @@ import ru.stablex.ui.events.WidgetEvent;
 /**
 * Clock / timer widget
 *
+* @dispatch <type>ru.stablex.ui.events.WidgetEvent</type>.CHANGE - on change value
 */
 class Clock extends Text{
 

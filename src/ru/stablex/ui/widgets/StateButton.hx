@@ -11,6 +11,8 @@ import ru.stablex.ui.skins.Skin;
 * State button. Iterate through defined states with each click.
 * Simple case: toggle button
 * See samples/toggles on <a href="https://github.com/RealyUniqueName/StablexUI" target="_blank">GitHub</a>
+*
+* @dispatch <type>ru.stablex.ui.events.WidgetEvent</type>.CHANGE - on state change
 */
 class StateButton extends Button{
 

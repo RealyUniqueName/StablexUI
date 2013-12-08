@@ -5,6 +5,7 @@ package ru.stablex.ui.widgets;
 /**
 * Simple <type>StateButton</type> with two states expected: "up" and "down"
 *
+* @dispatch <type>ru.stablex.ui.events.WidgetEvent</type>.CHANGE - on state change
 */
 class Toggle extends StateButton{
     //should we `.highlight()` the text when button is toggled?
