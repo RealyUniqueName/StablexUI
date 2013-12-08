@@ -23,6 +23,7 @@ $hide = array("ru.stablex.ui.ClassBuilder");
 file_put_contents(
     'doc/menu.html',
     "<ul>\n"
+        ."<li class=\"package\"><a href=\"https://groups.google.com/forum/#!forum/stablexui\" class=\"class\">MAILING LIST</a></li>\n"
         ."<li class=\"package\"><a href=\"". DOC_BASE_URL ."\" class=\"class\">FEEDBACK</a></li>\n"
         . generate(DOC_ROOT, 'doc/')
         ."<li class=\"package\"><span class=\"package\">API</span>\n"
