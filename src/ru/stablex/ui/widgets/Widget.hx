@@ -13,8 +13,12 @@ import ru.stablex.ui.skins.Skin;
 
 /**
 * Basic widget
+*
+* @dispatch <type>ru.stablex.ui.events.WidgetEvent</type>.RESIZE - on change width and/or height of widget
+* @dispatch <type>ru.stablex.ui.events.WidgetEvent</type>.INITIAL_RESIZE - on change width and/or height of widget before widget creation is finished
+* @dispatch <type>ru.stablex.ui.events.WidgetEvent</type>.CREATE - on widget creation complete (after `.onCreate()` method was called)
+* @dispatch <type>ru.stablex.ui.events.WidgetEvent</type>.FREE - on widget destroy (`.free()` method was called)
 */
-
 class Widget extends TweenSprite{
     @:noCompletion static private inline var _X_USE_LEFT          = 1;
     @:noCompletion static private inline var _X_USE_LEFT_PERCENT  = 2;

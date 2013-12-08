@@ -4,8 +4,8 @@
     "license"      : "MIT",
     "tags"         : ["cross", "cpp", "flash", "html5", "ui"],
     "description"  : "StablexUI is a crossplatform UI engine.",
-    "version"      : "1.0.16",
-    "releasenote"  : "Fixes for Toggle and Text widgets",
+    "version"      : "1.0.17",
+    "releasenote"  : "Dispatch events on change active child of TabStack & ViewStack",
     "contributors" : ["RealyUniqueName"],
     "dependencies" : {
         "openfl"        : "",

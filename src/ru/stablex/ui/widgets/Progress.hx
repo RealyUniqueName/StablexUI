@@ -11,6 +11,7 @@ import ru.stablex.ui.events.WidgetEvent;
 /**
 * Progress bar
 *
+* @dispatch <type>ru.stablex.ui.events.WidgetEvent</type>.CHANGE - on change value
 */
 class Progress extends Widget{
     //Maximum value.

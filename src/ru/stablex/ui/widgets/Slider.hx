@@ -8,7 +8,8 @@ import ru.stablex.ui.events.WidgetEvent;
 
 /**
 * Slider implementation.
-* If `.value` is changed <type>ru.stablex.ui.events.WidgetEvent</type>.CHANGE will be dispatched
+*
+* @dispatch <type>ru.stablex.ui.events.WidgetEvent</type>.CHANGE - on change value
 */
 class Slider extends Widget{
     //Minimum value

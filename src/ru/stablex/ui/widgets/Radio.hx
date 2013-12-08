@@ -12,6 +12,7 @@ private typedef Hash<T> = Map<String,T>;
 /**
 * Basic "option box" control
 *
+* @dispatch <type>ru.stablex.ui.events.WidgetEvent</type>.CHANGE - on state change
 */
 class Radio extends Checkbox{
     //all registered groups

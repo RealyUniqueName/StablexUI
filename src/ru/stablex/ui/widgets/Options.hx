@@ -13,6 +13,8 @@ import ru.stablex.ui.skins.Skin;
 * Simple options box.
 * E.g. drop-down. Or list can appear fullscreen - `phone`-style. See samples/optionsList on github.
 * <type>ru.stablex.ui.widgets.Button</type> widget is used to render options in list.
+*
+* @dispatch <type>ru.stablex.ui.events.WidgetEvent</type>.CHANGE - on change value
 */
 class Options extends Button{
     /**
