@@ -19,6 +19,8 @@ class Main extends flash.display.Sprite{
         Lib.current.stage.align     = StageAlign.TOP_LEFT;
         Lib.current.stage.scaleMode = StageScaleMode.NO_SCALE;
 
+        UIBuilder.dipFactor = Math.min(Lib.current.stage.stageWidth / 800, Lib.current.stage.stageHeight / 600);
+
         //initialize StablexUI
         UIBuilder.init();
 
