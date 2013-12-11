@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<VBox w="$Lib.current.stage.stageWidth" h="$Lib.current.stage.stageHeight" skin:Paint-color="0x555555">
+<VBox w="800" h="600" skin:Paint-color="0x555555">
 
     <!-- without stretching -->
     <HBox padding="50" childPadding="30" widthPt="100">
@@ -12,7 +12,7 @@
         <Bmp src="'assets/haxe.png'" xOffset="72" yOffset="72" w="76" h="76"/>
 
         <!-- part of image with autoWidth -->
-        <Bmp src="'assets/haxe.png'" xOffset="0" yOffset="0" autoWidth="true" h="148"/>
+        <Bmp src="'assets/haxe.png'" xOffset="0" yOffset="0" autoWidth="true" h="148" />
     </HBox>
 
     <!-- with stretching -->
