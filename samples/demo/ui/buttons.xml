@@ -7,7 +7,7 @@
         <!-- simple button -->
         <HBox childPadding="10">
             <Button id="'simpleButton'" text="'Simple'" h="60"/>
-            <Button defaults="'Default,Settings'" on-click="
+            <Button defaults="'Settings'" on-click="
                 #ViewStack(screens).show('simpleButtonSettings');
             "/>
         </HBox>
@@ -15,7 +15,7 @@
         <!-- Toggle button -->
         <HBox childPadding="10">
             <Toggle states-up-text="'Toggle up'" states-down-text="'Toggle down'"/>
-            <Button defaults="'Default,Settings'" on-click="
+            <Button defaults="'Settings'" on-click="
                 var popup = $Main.alert({
                     msg:'Toggle button has the same settings as simple one. Plus it has separate skin / icon / text for each state.'
                 });
@@ -32,7 +32,7 @@
                 states-third-text  = "'Third state'"
                 states-fourth-text = "'Fourth state'"
             />
-            <Button defaults="'Default,Settings'" on-click="
+            <Button defaults="'Settings'" on-click="
                 var popup = $Main.alert({
                     msg:'Multi-state button has the same settings as simple one. Plus it has separate skin / icon / text for each state.'
                 });

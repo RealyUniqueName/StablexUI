@@ -2,6 +2,7 @@ package ru.stablex.ui.widgets;
 
 import flash.events.Event;
 import flash.events.MouseEvent;
+import flash.geom.Rectangle;
 import flash.Lib;
 import ru.stablex.ui.events.WidgetEvent;
 
@@ -20,10 +21,19 @@ class Progress extends Widget{
     private var _value : Float = 0;
     //bar
     public var bar : Widget;
+    /** distance from left border of background to left border of bar */
+    public var paddingLeft : Float = 0;
+    /** distance from right border of background to right border of bar */
+    public var paddingRight : Float = 0;
     //Whether user can click/tap/slide progress bar to change value
     public var interactive (default,set_interactive) : Bool = false;
     //Visualize progress bar changes smoothly
-    public var smoothChange : Bool;
+    public var smoothChange : Bool = false;
+    /**
+    * Apply scrollRect to bar and reduce rectangle width on value change instead of reducing width of bar widget.
+    * `.smoothChange` has no effect if this property is set to true.
+    */
+    public var useScrollRect : Bool = false;
 
 
     /**
@@ -87,10 +97,26 @@ class Progress extends Widget{
     *
     */
     private inline function _setBarWidth (value:Float, max:Float) : Void {
-        if( !this.smoothChange ){
-            this.bar.widthPt = 100 * (max <= 0 || value <= 0 ? 0 : value / max);
+        this.bar.left = this.paddingLeft;
+        var width : Float = 100 * (max <= 0 || value <= 0 ? 0 : value / max) - (this.w == 0 ? 0 : (this.paddingLeft + this.paddingRight) / this.w * 100);
+
+        //use scrollRect instead of resizing bar widget
+        if( this.useScrollRect ){
+            var rect    = (this.bar.scrollRect == null ? new Rectangle() : this.bar.scrollRect);
+            rect.width  = this.w * width / 100;
+            rect.height = this.bar.h;
+            this.bar.scrollRect = rect;
+            if( !this.created ){
+                this.bar.w = this.w - this.paddingLeft - this.paddingRight;
+            }
+
+        //resize bar widget
         }else{
-            this.bar.tween(0.1, {widthPt: 100 * (max <= 0 || value <= 0 ? 0 : value / max)}, "Quad.easeIn");
+            if( !this.smoothChange ){
+                this.bar.widthPt = width;
+            }else{
+                this.bar.tween(0.1, {widthPt: width}, "Quad.easeIn");
+            }
         }
     }//function _setBarWidth()
 
