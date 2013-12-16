@@ -118,6 +118,9 @@ class Widget extends TweenSprite{
     //layout manager
     public var layout : Layout;
 
+    /** device-independent-pixel factor */
+    public var dipFactor : Float = 1;
+
 
 /*******************************************************************************
 *       STATIC METHODS
@@ -135,9 +138,27 @@ class Widget extends TweenSprite{
     */
     public function new() : Void {
         super();
-
-        this.id = UIBuilder.createId();
+        this.dipFactor = UIBuilder.dipFactor;
+        this.id        = UIBuilder.createId();
     }//function new()
+
+
+    /**
+    * Convert dips to pixels
+    *
+    */
+    public inline function dip2px (dip:Float) : Float {
+        return dip * this.dipFactor;
+    }//function dip2px()
+
+
+    /**
+    * Convert pixels to dips
+    *
+    */
+    public inline function px2dip (px:Float) : Float {
+        return px / this.dipFactor;
+    }//function px2dip()
 
 
     /**
@@ -264,20 +285,20 @@ class Widget extends TweenSprite{
         //positioning {
             switch ( this._xUse ) {
                 //by right border
-                case _X_USE_RIGHT: this.x = newParent._width - this._right - this._width;
+                case _X_USE_RIGHT: this.x = this.dip2px(newParent._width - this._right - this._width);
                 //by right percent
-                case _X_USE_RIGHT_PERCENT: this.x = newParent._width - newParent._width * this._rightPercent / 100 - this._width;
+                case _X_USE_RIGHT_PERCENT: this.x = this.dip2px(newParent._width - newParent._width * this._rightPercent / 100 - this._width);
                 //by left percent
-                case _X_USE_LEFT_PERCENT: this.x = newParent._width * this._leftPercent / 100;
+                case _X_USE_LEFT_PERCENT: this.x = this.dip2px(newParent._width * this._leftPercent / 100);
             }//switch()
 
             switch ( this._yUse ) {
                 //by bottom border
-                case _Y_USE_BOTTOM: this.y = newParent._height - this._bottom - this._height;
+                case _Y_USE_BOTTOM: this.y = this.dip2px(newParent._height - this._bottom - this._height);
                 //by bottom percent
-                case _Y_USE_BOTTOM_PERCENT: this.y = newParent._height - newParent._height * this._bottomPercent / 100 - this._height;
+                case _Y_USE_BOTTOM_PERCENT: this.y = this.dip2px(newParent._height - newParent._height * this._bottomPercent / 100 - this._height);
                 //by top percent
-                case _Y_USE_TOP_PERCENT: this.y = newParent._height * this._topPercent / 100;
+                case _Y_USE_TOP_PERCENT: this.y = this.dip2px(newParent._height * this._topPercent / 100);
             }//switch()
         //}
 
@@ -305,20 +326,20 @@ class Widget extends TweenSprite{
         //positioning {
             switch ( this._xUse ) {
                 //by right border
-                case _X_USE_RIGHT: this.x = parent._width - this._right - this._width;
+                case _X_USE_RIGHT: this.x = this.dip2px(parent._width - this._right - this._width);
                 //by right percent
-                case _X_USE_RIGHT_PERCENT: this.x = parent._width - parent._width * this._rightPercent / 100 - this.w;
+                case _X_USE_RIGHT_PERCENT: this.x = this.dip2px(parent._width - parent._width * this._rightPercent / 100 - this.w);
                 //by left percent
-                case _X_USE_LEFT_PERCENT: this.x = parent._width * this._leftPercent / 100;
+                case _X_USE_LEFT_PERCENT: this.x = this.dip2px(parent._width * this._leftPercent / 100);
             }//switch()
 
             switch ( this._yUse ) {
                 //by bottom border
-                case _Y_USE_BOTTOM: this.y = parent._height - this._bottom - this._height;
+                case _Y_USE_BOTTOM: this.y = this.dip2px(parent._height - this._bottom - this._height);
                 //by bottom percent
-                case _Y_USE_BOTTOM_PERCENT: this.y = parent._height - parent._height * this._bottomPercent / 100 - this._height;
+                case _Y_USE_BOTTOM_PERCENT: this.y = this.dip2px(parent._height - parent._height * this._bottomPercent / 100 - this._height);
                 //by top percent
-                case _Y_USE_TOP_PERCENT: this.y = parent._height * this._topPercent / 100;
+                case _Y_USE_TOP_PERCENT: this.y = this.dip2px(parent._height * this._topPercent / 100);
             }//switch()
         //}
     }//function _onParentResize()
@@ -355,22 +376,22 @@ class Widget extends TweenSprite{
         if( this.wparent != null ){
             switch( this._xUse ){
                 //by right border
-                case _X_USE_RIGHT: this.x = this.wparent._width - this._right - this._width;
+                case _X_USE_RIGHT: this.x = this.dip2px(this.wparent._width - this._right - this._width);
                 //by right percent
-                case _X_USE_RIGHT_PERCENT: this.x = this.wparent._width - this.wparent._width * this._rightPercent / 100 - this._width;
+                case _X_USE_RIGHT_PERCENT: this.x = this.dip2px(this.wparent._width - this.wparent._width * this._rightPercent / 100 - this._width);
             }//switch()
 
             switch ( this._yUse ) {
                 //by bottom border
-                case _Y_USE_BOTTOM: this.y = this.wparent._height - this._bottom - this._height;
+                case _Y_USE_BOTTOM: this.y = this.dip2px(this.wparent._height - this._bottom - this._height);
                 //by bottom percent
-                case _Y_USE_BOTTOM_PERCENT: this.y = this.wparent._height - this.wparent._height * this._bottomPercent / 100 - this._height;
+                case _Y_USE_BOTTOM_PERCENT: this.y = this.dip2px(this.wparent._height - this.wparent._height * this._bottomPercent / 100 - this._height);
             }//switch()
         }//if()
 
         //handle overflow visibility
         if( !this.overflow ){
-            this.scrollRect = new Rectangle(0, 0, this._width, this._height);
+            this.scrollRect = new Rectangle(0, 0, this.dip2px(this._width), this.dip2px(this._height));
         }
 
         //to prevent infinite loops
@@ -578,7 +599,7 @@ class Widget extends TweenSprite{
     */
     @:noCompletion private function set_overflow (o:Bool) : Bool {
         if( !o ){
-            this.scrollRect = new Rectangle(0, 0, this._width, this._height);
+            this.scrollRect = new Rectangle(0, 0, this.dip2px(this._width), this.dip2px(this._height));
         }else{
             this.scrollRect = null;
         }
@@ -617,7 +638,7 @@ class Widget extends TweenSprite{
     */
     @:noCompletion private function set_left(l:Float) : Float {
         this._xUse = _X_USE_LEFT;
-        this.x     = l;
+        this.x     = this.dip2px(l);
         return this._left = l;
     }//function set_left()
 
@@ -627,7 +648,7 @@ class Widget extends TweenSprite{
     *
     */
     @:noCompletion private function get_left() : Float {
-        return this.x;
+        return this.px2dip(this.x);
     }//function get_left()
 
 
@@ -638,7 +659,7 @@ class Widget extends TweenSprite{
     @:noCompletion private function set_right(r:Float) : Float {
         this._xUse = _X_USE_RIGHT;
         if( this.wparent != null ){
-            this.x = this.wparent._width - r - this.w;
+            this.x = this.dip2px(this.wparent._width - r - this.w);
         }
         return this._right = r;
     }//function set_right()
@@ -654,7 +675,7 @@ class Widget extends TweenSprite{
         }
 
         if( this.wparent != null ){
-            return this.wparent._width - this.x - this.w;
+            return this.wparent._width - this.px2dip(this.x) - this.w;
         }
 
         return 0;
@@ -669,7 +690,7 @@ class Widget extends TweenSprite{
         this._xUse = _X_USE_LEFT_PERCENT;
 
         if( this.wparent != null ){
-            this.x = this.wparent._width * lp / 100;
+            this.x = this.dip2px(this.wparent._width * lp / 100);
         }
 
         return this._leftPercent = lp;
@@ -686,7 +707,7 @@ class Widget extends TweenSprite{
         }
 
         if( this.wparent != null &&  this.wparent._width != 0 ){
-            return this.x / this.wparent._width * 100;
+            return this.px2dip(this.x) / this.wparent._width * 100;
         }
 
         return 0;
@@ -701,7 +722,7 @@ class Widget extends TweenSprite{
         this._xUse = _X_USE_RIGHT_PERCENT;
 
         if( this.wparent != null ){
-            this.x = this.wparent._width - this.wparent._width * rp / 100 - this.w;
+            this.x = this.dip2px(this.wparent._width - this.wparent._width * rp / 100 - this.w);
         }
 
         return this._rightPercent = rp;
@@ -718,7 +739,7 @@ class Widget extends TweenSprite{
         }
 
         if( this.wparent != null && this.wparent._width != 0 ) {
-            return (this.wparent._width - this.x - this._width) / this.wparent._width * 100;
+            return (this.wparent._width - this.px2dip(this.x) - this._width) / this.wparent._width * 100;
         }
 
         return 0;
@@ -731,7 +752,7 @@ class Widget extends TweenSprite{
     */
     @:noCompletion private function set_top(t:Float) : Float {
         this._yUse = _Y_USE_TOP;
-        this.y     = t;
+        this.y     = this.dip2px(t);
         return this._top = t;
     }//function set_top()
 
@@ -741,7 +762,7 @@ class Widget extends TweenSprite{
     *
     */
     @:noCompletion private function get_top() : Float {
-        return this.y;
+        return this.px2dip(this.y);
     }//function get_top()
 
 
@@ -752,7 +773,7 @@ class Widget extends TweenSprite{
     @:noCompletion private function set_bottom(b:Float) : Float {
         this._yUse = _Y_USE_BOTTOM;
         if( this.wparent != null ){
-            this.y = this.wparent._height - b - this.h;
+            this.y = this.dip2px(this.wparent._height - b - this.h);
         }
         return this._bottom = b;
     }//function set_bottom()
@@ -768,7 +789,7 @@ class Widget extends TweenSprite{
         }
 
         if( this.wparent != null ){
-            return this.wparent._height - this.y - this.h;
+            return this.wparent._height - this.px2dip(this.y) - this.h;
         }
 
         return 0;
@@ -783,7 +804,7 @@ class Widget extends TweenSprite{
         this._yUse = _Y_USE_TOP_PERCENT;
 
         if( this.wparent != null ){
-            this.y = this.wparent._height * tp / 100;
+            this.y = this.dip2px(this.wparent._height * tp / 100);
         }
 
         return this._topPercent = tp;
@@ -800,7 +821,7 @@ class Widget extends TweenSprite{
         }
 
         if( this.wparent != null &&  this.wparent._height != 0 ){
-            return this.y / this.wparent._height * 100;
+            return this.px2dip(this.y) / this.wparent._height * 100;
         }
 
         return 0;
@@ -815,7 +836,7 @@ class Widget extends TweenSprite{
         this._yUse = _Y_USE_BOTTOM_PERCENT;
 
         if( this.wparent != null ){
-            this.y = this.wparent._height - this.wparent._height * bp / 100 - this.h;
+            this.y = this.dip2px(this.wparent._height - this.wparent._height * bp / 100 - this.h);
         }
 
         return this._bottomPercent = bp;
@@ -832,7 +853,7 @@ class Widget extends TweenSprite{
         }
 
         if( this.wparent != null && this.wparent._height != 0 ) {
-            return (this.wparent._height - this.y - this._height) / this.wparent._height * 100;
+            return (this.wparent._height - this.px2dip(this.y) - this._height) / this.wparent._height * 100;
         }
 
         return 0;

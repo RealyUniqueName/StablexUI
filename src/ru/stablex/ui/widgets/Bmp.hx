@@ -63,15 +63,15 @@ class Bmp extends Widget{
             //keep aspect ratio
             if( widget.keepAspect ){
                 var scale : Float = Math.min(
-                    (widget.autoWidth ? 1 : widget.w / bmp.width),
-                    (widget.autoHeight ? 1 : widget.h / bmp.height)
+                    (widget.autoWidth ? 1 : widget.w / widget.px2dip(bmp.width)),
+                    (widget.autoHeight ? 1 : widget.h / widget.px2dip(bmp.height))
                 );
                 mx.scale(scale, scale);
             //distort
             }else{
                 mx.scale(
-                    (widget.autoWidth ? 1 : widget.w / bmp.width),
-                    (widget.autoHeight ? 1 : widget.h / bmp.height)
+                    (widget.autoWidth ? 1 : widget.w / widget.px2dip(bmp.width)),
+                    (widget.autoHeight ? 1 : widget.h / widget.px2dip(bmp.height))
                 );
             }
         }
@@ -101,15 +101,20 @@ class Bmp extends Widget{
             if(
                 this.autoWidth && this.autoHeight
                 && (
-                    this._width != (this.drawPortion ? bmp.width - this.xOffset : bmp.width)
-                    || this._height != (this.drawPortion ? bmp.height - this.yOffset : bmp.height)
+                    this._width != this.dip2px(this.drawPortion ? bmp.width - this.xOffset : bmp.width)
+                    || this._height != this.dip2px(this.drawPortion ? bmp.height - this.yOffset : bmp.height)
                 )
             ){
-                this.resize(bmp.width, bmp.height);
-            }else if( this.autoWidth && this._width != (this.drawPortion ? bmp.width - this.xOffset : bmp.width) ){
+                this.resize(
+                    (this.drawPortion ? bmp.width - this.xOffset : bmp.width),
+                    (this.drawPortion ? bmp.height - this.yOffset : bmp.height)
+                );
+            }else if( this.autoWidth && this._width != this.dip2px(this.drawPortion ? bmp.width - this.xOffset : bmp.width) ){
                 this.w = (this.drawPortion ? bmp.width - this.xOffset : bmp.width);
-            }else if( this.autoHeight && this._height != (this.drawPortion ? bmp.height - this.yOffset : bmp.height) ){
+                this.autoWidth = true;
+            }else if( this.autoHeight && this._height != this.dip2px(this.drawPortion ? bmp.height - this.yOffset : bmp.height) ){
                 this.h = (this.drawPortion ? bmp.height - this.yOffset : bmp.height);
+                this.autoHeight = true;
             }
 
             super.refresh();
@@ -136,10 +141,11 @@ class Bmp extends Widget{
                     ? bmp.width
                     : (this._width > bmp.width - this.xOffset ? bmp.width - this.xOffset : this._width)
             );
+
             var height : Float = (
                 this.autoHeight
-                    ? bmp.height
-                    : (this._height > bmp.height - this.yOffset ? bmp.height - this.yOffset : Std.int(this._height))
+                    ? this.dip2px(bmp.height)
+                    : (this._height > bmp.height - this.yOffset ? bmp.height - this.yOffset : this._height)
             );
 
             //draw zero?
@@ -149,7 +155,7 @@ class Bmp extends Widget{
 
                 var mx : Matrix = new Matrix();
                 #if !html5
-                    //stretching makes no sense for drawing portion of image singe image width and height is taken from this.w and this.h
+                    //stretching makes no sense for drawing portion of image since image width and height is taken from this.w and this.h
                     // Bmp._applyScalingToMx(mx, bmp, this);
                     mx.translate(-this.xOffset, -this.yOffset);
                 #else
@@ -159,21 +165,25 @@ class Bmp extends Widget{
                     // Bmp._applyScalingToMx(mx, bmp, this);
                 #end
 
+                mx.scale(this.dipFactor, this.dipFactor);
+
                 this.graphics.beginBitmapFill(bmp, mx, false, this.smooth);
-                this.graphics.drawRect(0, 0, width, height);
+                this.graphics.drawRect(0, 0, this.dip2px(width), this.dip2px(height));
                 this.graphics.endFill();
             }
 
         //draw full image
         }else{
+            var mx : Matrix = new Matrix();
+
             if( this.stretch ){
-                var mx : Matrix = new Matrix();
                 Bmp._applyScalingToMx(mx, bmp, this);
                 this.graphics.beginBitmapFill(bmp, mx, false, this.smooth);
                 this.graphics.drawRect(0, 0, bmp.width * mx.a, bmp.height * mx.d);
             }else{
-                this.graphics.beginBitmapFill(bmp, null, false, this.smooth);
-                this.graphics.drawRect(0, 0, bmp.width, bmp.height);
+                mx.scale(this.dipFactor, this.dipFactor);
+                this.graphics.beginBitmapFill(bmp, mx, false, this.smooth);
+                this.graphics.drawRect(0, 0, this.dip2px(bmp.width), this.dip2px(bmp.height));
             }
 
             this.graphics.endFill();

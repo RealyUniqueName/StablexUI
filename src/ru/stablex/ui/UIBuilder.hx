@@ -85,6 +85,9 @@ class UIBuilder {
 
     //list of widgets waiting for skin applying
     static private var _skinQueue : List<Widget> = new List();
+
+    /** default dip factor for new widgets */
+    static public var dipFactor : Float = 1;
 #end
 
     /**
