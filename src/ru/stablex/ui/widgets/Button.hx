@@ -386,7 +386,7 @@ class Button extends Text{
     *
     */
     private inline function _switchSkin (skin:Skin) : Void {
-        if( this._appliedSkin != skin && skin != null ){
+        if( /* this._appliedSkin != skin && */ skin != null ){
             skin.apply(this);
             this._appliedSkin = skin;
         }else if( skin == null && this.skin != null ){
