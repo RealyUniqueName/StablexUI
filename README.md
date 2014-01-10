@@ -1,5 +1,6 @@
 StablexUI
 =========
+Google group: https://groups.google.com/forum/#!forum/stablexui
 
 Macro driven ui engine for Haxe OpenFL It's designed to give developer as much freedom as possible in customizing UI.
 Supported targets: cpp (iOS, Android, Blackberry, webOS, Windows, Linux, MacOS), flash, html5, neko.
