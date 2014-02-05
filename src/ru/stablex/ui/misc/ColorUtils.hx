@@ -19,6 +19,8 @@ class ColorUtils
         return (Std.int((Alpha > 1) ? Alpha : (Alpha * 255)) & 0xFF) << 24 | (Red & 0xFF) << 16 | (Green & 0xFF) << 8 | (Blue & 0xFF);
     }
 
+
+
     /**
      * Generate a Flash <code>uint</code> color from HSBA components.
      *
@@ -110,6 +112,7 @@ class ColorUtils
         return { red: red, green: green, blue: blue, alpha: alpha };
     }
 
+
     /**
      * Loads an array with the HSB values of a Flash <code>uint</code> color.
      * Hue is a value between 0 and 360. Saturation, Brightness and Alpha
@@ -167,8 +170,13 @@ class ColorUtils
 
         alpha = roundDecimal(((Color >> 24) & 0xFF) / 255, 4);
 
-        if (Results != null)
-            Results = { hue: Std.int(hue), brightness: brightness, saturation: saturation, alpha: alpha };
+        if (Results != null){
+            Results.hue        = Std.int(hue);
+            Results.brightness = brightness;
+            Results.saturation = saturation;
+            Results.alpha      = alpha;
+            return Results;
+        }
         return { hue: Std.int(hue), brightness: brightness, saturation: saturation, alpha: alpha };
     }
 
@@ -761,7 +769,12 @@ class ColorUtils
     // AUX MATH
     // -----------------------
 
+
+
 }
+
+
+
 
 typedef RGBA = {
     var red:Int;
@@ -782,6 +795,13 @@ typedef HSV = {
     var saturation:Float;
     var lightness:Float;
     var value:Float;
+}
+
+typedef HSLA = {
+    hue        : Int,
+    saturation : Float,
+    lightness  : Float,
+    alpha      : Float
 }
 
 typedef Harmony = {

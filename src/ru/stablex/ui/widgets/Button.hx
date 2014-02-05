@@ -442,7 +442,7 @@ class Button extends Text{
                 }
             }
 
-            Box._setObjX(this.label, this._width -  this.paddingRight - Box._objWidth(this.label));
+            this._setObjX(this.label, this._width -  this.paddingRight - this._objWidth(this.label));
 
         //ico to the right border, label to the left border
         }else{
@@ -455,7 +455,7 @@ class Button extends Text{
                 }
             }
 
-            Box._setObjX(this.label, this.paddingLeft);
+            this._setObjX(this.label, this.paddingLeft);
         }
     }//function _moveApart()
 

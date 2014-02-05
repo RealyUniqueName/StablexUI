@@ -38,7 +38,8 @@ class Box extends Widget{
     public var autoHeight                    : Bool = true;
     //if this is set to true, all children will be set to equal size to fit box size
     public var unifyChildren : Bool = false;
-
+    /** should children' positions be convertent to int numbers? Use this to workaround problem of blurry images */
+    public var intPositions : Bool = false;
 
 /*******************************************************************************
 *       STATIC METHODS
@@ -57,7 +58,7 @@ class Box extends Widget{
         * get object width
         *
         */
-        @:noCompletion static private inline function _objWidth (obj:DisplayObject) : Float {
+        @:noCompletion private inline function _objWidth (obj:DisplayObject) : Float {
             // #if html5
                 if( Std.is(obj, Widget) ){
                     return cast(obj, Widget).w;
@@ -76,7 +77,7 @@ class Box extends Widget{
         * get object height
         *
         */
-        @:noCompletion static private inline function _objHeight (obj:DisplayObject) : Float {
+        @:noCompletion private inline function _objHeight (obj:DisplayObject) : Float {
             // #if html5
                 if( Std.is(obj, Widget) ){
                     return cast(obj, Widget).h;
@@ -95,12 +96,15 @@ class Box extends Widget{
         * Set object x
         *
         */
-        @:noCompletion static private inline function _setObjX (obj:DisplayObject, x:Float) : Void {
+        @:noCompletion private inline function _setObjX (obj:DisplayObject, x:Float) : Void {
             #if html5
                 obj.x = (Std.is(obj, flash.text.TextField) ? obj.x = x + 2 : x);
             #else
                 obj.x = x;
             #end
+            if( this.intPositions ){
+                obj.x = Std.int(obj.x);
+            }
         }//function _setObjX()
 
 
@@ -108,12 +112,15 @@ class Box extends Widget{
         * Set object y
         *
         */
-        @:noCompletion static private inline function _setObjY (obj:DisplayObject, y:Float) : Void {
+        @:noCompletion private inline function _setObjY (obj:DisplayObject, y:Float) : Void {
             #if html5
                 obj.y = (Std.is(obj, flash.text.TextField) ? obj.y = y + 2 : y);
             #else
                 obj.y = y;
             #end
+            if( this.intPositions ){
+                obj.y = Std.int(obj.y);
+            }
         }//function _setObjY()
 
     /**
@@ -168,7 +175,7 @@ class Box extends Widget{
                 child = this.getChildAt(i);
                 child = this.getChildAt(i);
                 if( child.visible ){
-                    childW = Box._objWidth(child);
+                    childW = this._objWidth(child);
                     if( childW > w ){
                         w = childW;
                     }
@@ -185,7 +192,7 @@ class Box extends Widget{
             for(i in 0...this.numChildren){
                 child = this.getChildAt(i);
                 if( child.visible ){
-                    w += Box._objWidth(child);
+                    w += this._objWidth(child);
                     visibleChildren ++;
                 }
             }
@@ -210,7 +217,7 @@ class Box extends Widget{
             for(i in 0...this.numChildren){
                 child = this.getChildAt(i);
                 if( child.visible ){
-                    h += Box._objHeight(child);
+                    h += this._objHeight(child);
                     visibleChildren ++;
                 }
             }
@@ -227,7 +234,7 @@ class Box extends Widget{
             for(i in 0...this.numChildren){
                 child = this.getChildAt(i);
                 if( child.visible ){
-                    childH = Box._objHeight(child);
+                    childH = this._objHeight(child);
                     if( childH > h ){
                         h = childH;
                     }
@@ -325,14 +332,14 @@ class Box extends Widget{
             for(i in 0...this.numChildren){
                 child   = this.getChildAt(i);
                 if( !child.visible ) continue;
-                Box._setObjY(child, lastY);
-                lastY += Box._objHeight(child) + this.childPadding;
+                this._setObjY(child, lastY);
+                lastY += this._objHeight(child) + this.childPadding;
             }
 
         //horizontal box
         }else{
             for(i in 0...this.numChildren){
-                Box._setObjY(this.getChildAt(i), this.paddingTop);
+                this._setObjY(this.getChildAt(i), this.paddingTop);
             }
         }
     }//function _vAlignTop()
@@ -354,7 +361,7 @@ class Box extends Widget{
                 child = this.getChildAt(i);
                 if( !child.visible ) continue;
                 visibleChildren ++;
-                height += Box._objHeight(child);
+                height += this._objHeight(child);
             }
 
             //add padding
@@ -366,8 +373,8 @@ class Box extends Widget{
             for(i in 0...this.numChildren){
                 child   = this.getChildAt(i);
                 if( !child.visible ) continue;
-                Box._setObjY(child, lastY);
-                lastY   += Box._objHeight(child) + this.childPadding;
+                this._setObjY(child, lastY);
+                lastY   += this._objHeight(child) + this.childPadding;
             }
 
         //horizontal box
@@ -375,7 +382,7 @@ class Box extends Widget{
             var child : DisplayObject;
             for(i in 0...this.numChildren){
                 child   = this.getChildAt(i);
-                Box._setObjY(child, (this.h - Box._objHeight(child)) / 2);
+                this._setObjY(child, (this.h - this._objHeight(child)) / 2);
             }
         }
     }//function _vAlignMiddle()
@@ -394,7 +401,7 @@ class Box extends Widget{
             for(i in 0...this.numChildren){
                 child   = this.getChildAt(this.numChildren - 1 - i);
                 if( !child.visible ) continue;
-                Box._setObjY(child, lastY - Box._objHeight(child));
+                this._setObjY(child, lastY - this._objHeight(child));
                 lastY   = child.y - this.childPadding #if html5 - (Std.is(child, flash.text.TextField) ? 2 : 0) #end;
             }
 
@@ -403,7 +410,7 @@ class Box extends Widget{
             var child : DisplayObject;
             for(i in 0...this.numChildren){
                 child = this.getChildAt(i);
-                Box._setObjY(child, this.h - this.paddingBottom - Box._objHeight(child));
+                this._setObjY(child, this.h - this.paddingBottom - this._objHeight(child));
             }
         }
     }//function _vAlignBottom()
@@ -417,7 +424,7 @@ class Box extends Widget{
         //vertical box
         if(this.vertical){
             for(i in 0...this.numChildren){
-                Box._setObjX(this.getChildAt(i), this.paddingLeft);
+                this._setObjX(this.getChildAt(i), this.paddingLeft);
             }
 
         //horizontal box
@@ -428,8 +435,8 @@ class Box extends Widget{
             for(i in 0...this.numChildren){
                 child   = this.getChildAt(i);
                 if( !child.visible ) continue;
-                Box._setObjX(child, lastX);
-                lastX   += Box._objWidth(child) + this.childPadding;
+                this._setObjX(child, lastX);
+                lastX   += this._objWidth(child) + this.childPadding;
             }
         }
     }//function _hAlignLeft()
@@ -445,7 +452,7 @@ class Box extends Widget{
             var child : DisplayObject;
             for(i in 0...this.numChildren){
                 child = this.getChildAt(i);
-                Box._setObjX(child, this.w - this.paddingRight - Box._objWidth(child));
+                this._setObjX(child, this.w - this.paddingRight - this._objWidth(child));
             }
 
         //horizontal box
@@ -456,7 +463,7 @@ class Box extends Widget{
             for(i in 0...this.numChildren){
                 child = this.getChildAt(this.numChildren - 1 - i);
                 if( !child.visible ) continue;
-                Box._setObjX(child, lastX - Box._objWidth(child));
+                this._setObjX(child, lastX - this._objWidth(child));
                 lastX = child.x #if html5 - (Std.is(child, flash.text.TextField) ? 2 : 0) #end - this.childPadding;
             }
         }
@@ -473,7 +480,7 @@ class Box extends Widget{
             var child : DisplayObject;
             for(i in 0...this.numChildren){
                 child   = this.getChildAt(i);
-                Box._setObjX(child, (this.w - Box._objWidth(child)) / 2);
+                this._setObjX(child, (this.w - this._objWidth(child)) / 2);
             }
 
         //horizontal box
@@ -487,7 +494,7 @@ class Box extends Widget{
                 child = this.getChildAt(i);
                 if( !child.visible ) continue;
                 visibleChildren ++;
-                width += Box._objWidth(child);
+                width += this._objWidth(child);
             }
 
             //add padding
@@ -499,8 +506,8 @@ class Box extends Widget{
             for(i in 0...this.numChildren){
                 child   = this.getChildAt(i);
                 if( !child.visible ) continue;
-                Box._setObjX(child, lastX);
-                lastX += Box._objWidth(child) + this.childPadding;
+                this._setObjX(child, lastX);
+                lastX += this._objWidth(child) + this.childPadding;
             }
         }
     }//function _hAlignCenter()
