@@ -74,7 +74,7 @@ class Progress extends Widget{
     *
     */
     @:noCompletion private function set_value (v:Float) : Float {
-        this._setBarWidth(v, this.max);
+        this._setBarWidth((v > this.max ? this.max : v), this.max);
         this._value = v;
         if( this.created ){
             this.dispatchEvent(new WidgetEvent(WidgetEvent.CHANGE));
