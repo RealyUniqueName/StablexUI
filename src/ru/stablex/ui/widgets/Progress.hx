@@ -34,6 +34,8 @@ class Progress extends Widget{
     * `.smoothChange` has no effect if this property is set to true.
     */
     public var useScrollRect : Bool = false;
+    /** animation duration if `smoothChange` = true */
+    public var changeDuration : Float = 0.1;
 
 
     /**
@@ -115,7 +117,7 @@ class Progress extends Widget{
             if( !this.smoothChange ){
                 this.bar.widthPt = width;
             }else{
-                this.bar.tween(0.1, {widthPt: width}, "Quad.easeIn");
+                this.bar.tween(this.changeDuration, {widthPt: width}, "Quad.easeOut");
             }
         }
     }//function _setBarWidth()
