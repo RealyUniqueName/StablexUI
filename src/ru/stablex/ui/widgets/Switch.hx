@@ -136,6 +136,9 @@ class Switch extends Widget{
     private inline function _slide (e:MouseEvent) : Void {
         var dx     : Float = this.mouseX - this.slider.left;
         var startX : Float = this.mouseX;
+       // Remove the Mouseup event for parent widget
+       this.removeEventListener(MouseEvent.MOUSE_UP, this._onRelease); // added row
+        
         //indicate user is actually moving slider
         var slided : Bool = false;
 
@@ -174,6 +177,8 @@ class Switch extends Widget{
             //remove listeners
             this.removeEventListener(Event.ENTER_FRAME, fn);
             Lib.current.stage.removeEventListener(MouseEvent.MOUSE_UP, fnRelease);
+            // Add the Mouseup event for parent widget
+            this.addEventListener(MouseEvent.MOUSE_UP, this._onRelease); // added row
         };
 
         //listen for MOUSE_UP
