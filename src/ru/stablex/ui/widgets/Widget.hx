@@ -30,7 +30,15 @@ class Widget extends TweenSprite{
     @:noCompletion static private inline var _Y_USE_BOTTOM         = 7;
     @:noCompletion static private inline var _Y_USE_BOTTOM_PERCENT = 8;
 
+    @:noCompletion static private inline var _X_REG_LEFT   = 9;
+    @:noCompletion static private inline var _X_REG_CENTER = 10;
+    @:noCompletion static private inline var _X_REG_RIGHT  = 11;
 
+    @:noCompletion static private inline var _Y_REG_TOP    = 12;
+    @:noCompletion static private inline var _Y_REG_MIDDLE = 13;
+    @:noCompletion static private inline var _Y_REG_BOTTOM = 14;
+
+	
     //Name of section in default settings for this type of widgets
     public var defaults : String = 'Default';
 
@@ -82,6 +90,18 @@ class Widget extends TweenSprite{
     //Wich one to use: left, right, leftPercent or rightPercent
     @:noCompletion private var _xUse : Int = _X_USE_LEFT;
     @:noCompletion private var _yUse : Int = _Y_USE_TOP;
+
+	// registration of widget
+    /**
+    * This should be like 'left,top' or 'bottom' or 'center,middle' etc.
+    * Vertical: left, right, center. Horizontal: top, bottom, middle.
+    * Default is 'left,top' and any unrecognized string reverts to this.
+    */
+    public var registration (default, set_registration): String = 'left,top';
+	
+    //Wich one to use: left, right, center, etc.
+    @:noCompletion private var _xReg : Int = _X_USE_LEFT;
+    @:noCompletion private var _yReg : Int = _Y_USE_TOP;
 
     //Get parent if it is widget, returns null otherwise
     public var wparent (get_wparent,never) : Widget;
@@ -270,6 +290,12 @@ class Widget extends TweenSprite{
                 //by left percent
                 case _X_USE_LEFT_PERCENT: this.x = newParent._width * this._leftPercent / 100;
             }//switch()
+			switch( this._xReg ) {
+				//from right
+				case _X_REG_RIGHT: this.x -= this._width;
+				// from center
+				case _X_REG_CENTER: this.x -= (this._width / 2);
+			}//switch()
 
             switch ( this._yUse ) {
                 //by bottom border
@@ -279,6 +305,12 @@ class Widget extends TweenSprite{
                 //by top percent
                 case _Y_USE_TOP_PERCENT: this.y = newParent._height * this._topPercent / 100;
             }//switch()
+			switch( this._yReg ) {
+				//from bottom
+				case _Y_REG_BOTTOM: this.y -= this._height;
+				// from middle
+				case _Y_REG_MIDDLE: this.y -= (this._height / 2);
+			}//switch()
         //}
 
         //notify
@@ -311,6 +343,12 @@ class Widget extends TweenSprite{
                 //by left percent
                 case _X_USE_LEFT_PERCENT: this.x = parent._width * this._leftPercent / 100;
             }//switch()
+			switch( this._xReg ) {
+				//from right
+				case _X_REG_RIGHT: this.x -= this._width;
+				// from center
+				case _X_REG_CENTER: this.x -= (this._width / 2);
+			}//switch()
 
             switch ( this._yUse ) {
                 //by bottom border
@@ -320,6 +358,12 @@ class Widget extends TweenSprite{
                 //by top percent
                 case _Y_USE_TOP_PERCENT: this.y = parent._height * this._topPercent / 100;
             }//switch()
+			switch( this._yReg ) {
+				//from bottom
+				case _Y_REG_BOTTOM: this.y -= this._height;
+				// from middle
+				case _Y_REG_MIDDLE: this.y -= (this._height / 2);
+			}//switch()
         //}
     }//function _onParentResize()
 
@@ -359,6 +403,12 @@ class Widget extends TweenSprite{
                 //by right percent
                 case _X_USE_RIGHT_PERCENT: this.x = this.wparent._width - this.wparent._width * this._rightPercent / 100 - this._width;
             }//switch()
+			switch( this._xReg ) {
+				//from right
+				case _X_REG_RIGHT: this.x -= this._width;
+				// from center
+				case _X_REG_CENTER: this.x -= (this._width / 2);
+			}//switch()
 
             switch ( this._yUse ) {
                 //by bottom border
@@ -366,6 +416,12 @@ class Widget extends TweenSprite{
                 //by bottom percent
                 case _Y_USE_BOTTOM_PERCENT: this.y = this.wparent._height - this.wparent._height * this._bottomPercent / 100 - this._height;
             }//switch()
+			switch( this._yReg ) {
+				//from bottom
+				case _Y_REG_BOTTOM: this.y -= this._height;
+				// from middle
+				case _Y_REG_MIDDLE: this.y -= (this._height / 2);
+			}//switch()
         }//if()
 
         //handle overflow visibility
@@ -975,5 +1031,40 @@ class Widget extends TweenSprite{
         tip.bindTo(this);
         return this.tip = tip;
     }//function set_tip()
+	
+    /**
+    * Registration setter
+    *
+    */
+    @:final @:noCompletion private function set_registration (regs:String) : String {
+        var registrations : Array<String> = regs.split(',');
+		
+		this._yReg = _Y_REG_TOP;
+		this._xReg = _X_REG_LEFT;
 
+        for(reg in registrations){
+            switch(reg){
+                case 'top'    : this._yReg = _Y_REG_TOP;
+                case 'middle' : this._yReg = _Y_REG_MIDDLE;
+                case 'bottom' : this._yReg = _Y_REG_BOTTOM;
+                case 'left'   : this._xReg = _X_REG_LEFT;
+                case 'center' : this._xReg = _X_REG_CENTER;
+                case 'right'  : this._xReg = _X_REG_RIGHT;
+            }
+        }
+		
+		registration = (switch(this._xReg) {
+			case _X_REG_LEFT   : 'left';
+			case _X_REG_CENTER : 'center';
+			case _X_REG_RIGHT  : 'right';
+			default            : 'left';
+		}) + ',' + (switch(this._yReg) {
+			case _Y_REG_TOP    : 'top';
+			case _Y_REG_MIDDLE : 'middle';
+			case _Y_REG_BOTTOM : 'bottom';
+			default            : 'top';
+		});
+		
+		return registration;
+	}
 }//class Widget
