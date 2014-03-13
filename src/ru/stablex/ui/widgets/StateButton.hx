@@ -149,7 +149,10 @@ class StateButton extends Button{
                 this.skin = state.skin;
             }
             if( state._ico != null ){
+                if( this._icoHovered != null ) this._icoHovered.visible = false;
+                if( this._icoPressed != null ) this._icoPressed.visible = false;
                 this.ico = state._ico;
+                this.ico.visible = true;
             }
 
             if( this.created ){
