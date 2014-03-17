@@ -673,7 +673,13 @@ class UIBuilder {
     static private function _createClass(cls:String) : TypeDefinition {
         var xmlFile : String = UIBuilder._xmlClass.get(cls);
         if( xmlFile != null ){
-            return ClassBuilder.createClass(xmlFile, cls);
+            try{
+                return ClassBuilder.createClass(xmlFile, cls);
+            }catch(e:Dynamic){
+                Sys.println(haxe.CallStack.toString(haxe.CallStack.exceptionStack()));
+                Context.error(Std.string(e), Context.currentPos());
+                return null;
+            }
         }else{
             return null;
         }

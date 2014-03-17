@@ -21,7 +21,7 @@ class Img extends Skin{
     public var bitmapData (get_bitmapData,set_bitmapData) : BitmapData;
     private var _bitmapData : BitmapData = null;
     //Smooth bitmap?
-    public var smooth : Bool;
+    public var smooth : Bool = true;
 
 
     /**
