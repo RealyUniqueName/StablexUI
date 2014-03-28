@@ -147,14 +147,13 @@ class Slice3 extends Skin{
     *
     */
     private function _skinDrawSlice(w:Widget, bmp:BitmapData, src:Rectangle, dst:Rectangle) : Void {
-        var fill:BitmapData = new BitmapData(Std.int(src.width), Std.int(src.height), true);
-        fill.copyPixels(bmp, src, new Point(0, 0));
 
         var mx : Matrix = new Matrix();
-        mx.scale(dst.width / fill.width, dst.height / fill.height);
+		mx.translate(-src.x, -src.y);
+        mx.scale(dst.width / src.width, dst.height / src.height);
         mx.translate(dst.x, dst.y);
 
-        w.graphics.beginBitmapFill(fill, mx, false, this.smooth);
+        w.graphics.beginBitmapFill(bmp, mx, false, this.smooth);
         w.graphics.drawRect(dst.x, dst.y, dst.width, dst.height);
         w.graphics.endFill();
     }//function _skinDrawSlice()
