@@ -949,7 +949,7 @@ class UIBuilder {
 
             //go deeper for nested properties
             if( Type.typeof(Reflect.field(properties, property)) == TObject ){
-                UIBuilder.apply(Reflect.field(obj, property), Reflect.field(properties, property));
+                UIBuilder.apply(Reflect.getProperty(obj, property), Reflect.field(properties, property));
 
             //set scalar property
             }else{

@@ -55,7 +55,7 @@ class Rect extends Skin{
         if( this.border > 0 ){
             w.graphics.lineStyle(this.border, this.borderColor, this.borderAlpha);
         }
-
+// try{
         if( this.corners == null || this.corners.length == 0 ){
             w.graphics.drawRect(
                 this.paddingLeft,
@@ -73,6 +73,13 @@ class Rect extends Skin{
                 (this.corners.length > 1 ? this.corners[1] : this.corners[0])
             );
         }
+// }catch(e:Dynamic){
+//     while(w != null){
+//         trace({id:w.id, name:w.name});
+//         w = w.wparent;
+//     }
+//     throw 'wtf';
+// }
     }//function draw()
 
 
