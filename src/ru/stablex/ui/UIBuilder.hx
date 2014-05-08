@@ -605,9 +605,9 @@ class UIBuilder {
         }
 
         if( cls != null ){
-            if( UIBuilder._imports.exists(cls) ) Err.trigger('Class is already imported: ' + cls);
-            UIBuilder._imports.set(cls, fullyQualifiedName);
-
+            if( !UIBuilder._imports.exists(cls) ){  // Err.trigger('Class is already imported: ' + cls);
+				UIBuilder._imports.set(cls, fullyQualifiedName);
+			}
         }else{
             Err.trigger('Wrong class name: ' + fullyQualifiedName);
         }
