@@ -2,6 +2,7 @@ package ru.stablex.ui.layouts;
 
 import flash.display.DisplayObject;
 import ru.stablex.ui.widgets.Widget;
+import ru.stablex.ui.widgets.Box; // To acces static method _objHeight
 
 
 
@@ -29,6 +30,7 @@ class Row extends Layout{
     *  - positive numbers greater than 1 define row height in pixels;
     *  - positive numbers between 0 and 1 define row height in % (0.1 for 10%, 0.65 for 65%, etc.);
     *  - negative numbers mean columns will share free space left after using previous rules.
+    *  - zero means, the column will take the space of the containing widget
     * E.g. [150, -2, -1, 0.3] means: first child will be 150 pixels height, last
     * child will be 30% height, the second and third children will take left space,
     * and second will take 2/3 of left space, while third will take 1/3.
@@ -38,7 +40,6 @@ class Row extends Layout{
 /*******************************************************************************
 *       STATIC METHODS
 *******************************************************************************/
-
 
 
 /*******************************************************************************
@@ -64,6 +65,8 @@ class Row extends Layout{
                     freeSpace -= arows[i] = this.rows[i];
                 }else if( this.rows[i] < 0 ){
                     negParts += arows[i] = this.rows[i];
+                }else if (this.rows[i] == 0) {
+                  freeSpace -= arows[i] = Box._objHeight(holder.getChildAt(i));
                 }else{
                     freeSpace -= arows[i] = height * this.rows[i];
                 }
