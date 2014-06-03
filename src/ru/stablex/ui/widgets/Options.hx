@@ -5,6 +5,7 @@ import flash.events.MouseEvent;
 import flash.geom.Rectangle;
 import flash.Lib;
 import ru.stablex.ui.events.WidgetEvent;
+import ru.stablex.ui.transitions.Transition;
 import ru.stablex.ui.skins.Skin;
 
 
@@ -39,6 +40,8 @@ class Options extends Button{
     //currently selected option index in `.options`
     private var _selectedIdx (default,set__selectedIdx) : Int = 0;
 
+    //transition for changing children
+    public var trans : Transition = null;
 
     /**
     * Constructor
@@ -139,7 +142,11 @@ class Options extends Button{
         //if list is shown, hide it
         if( this.list.shown ){
             Lib.current.stage.removeEventListener(MouseEvent.MOUSE_DOWN, this._onClickStage);
-            this.list.hide();
+            if (trans != null) {
+              this.trans.change(this.list, this.box, null, this.list.hide);
+            } else {
+              this.list.hide();
+            }
 
         //show list
         }else{
@@ -169,7 +176,12 @@ class Options extends Button{
             }
 
             Lib.current.stage.addEventListener(MouseEvent.MOUSE_DOWN, this._onClickStage);
-            this.list.show();
+            if (trans != null) {
+              this.list.show();
+              this.trans.change(this.list, null, this.box);
+            } else {
+              this.list.show();
+            }
         }
     }//function toggleList()
 
