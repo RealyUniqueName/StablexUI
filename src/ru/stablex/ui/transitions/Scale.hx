@@ -2,12 +2,11 @@ package ru.stablex.ui.transitions;
 
 import flash.display.DisplayObject;
 import ru.stablex.ui.widgets.Widget;
-import ru.stablex.ui.widgets.ViewStack;
 import motion.Actuate;
 
 
 /**
-* This transition method manipulates `.alpha` of changing viewstack children
+* This transition method manipulates `.alpha` of changing a widgets children
 *
 */
 class Scale extends Transition{
@@ -21,9 +20,14 @@ class Scale extends Transition{
     *
     * @param cb - callback to call after visible object was hidden
     */
-    override public function change (vs:ViewStack, toHide:DisplayObject, toShow:DisplayObject, cb:Void->Void = null) : Void{
+    override public function change (vs:Widget, toHide:DisplayObject, toShow:DisplayObject, cb:Void->Void = null) : Void{
         if( this.scaleUp ){
-            this._scaleUp(vs, toHide, toShow, cb);
+            if (toShow != null) {
+              this._scaleUp(vs, toHide, toShow, cb);
+            } else {
+              // If there is nothing to show, the scaleUp is a scaleDown of the object to hide
+              this._scaleDown(vs, toHide, toShow, cb);
+            }
         }else{
             this._scaleDown(vs, toHide, toShow, cb);
         }
@@ -34,24 +38,33 @@ class Scale extends Transition{
     * Set `.visible` = false for provided object
     *
     */
-    private function _hide (vs:ViewStack, toHide:DisplayObject, toShow:DisplayObject, swap:Bool, cb:Void->Void = null) : Void {
+    private function _hide (vs:Widget, toHide:DisplayObject, toShow:DisplayObject, swap:Bool, toHideReset : {left : Float, top : Float, scaleX : Float, scaleY : Float}, cb:Void->Void = null) : Void {
         vs.mouseChildren = true;
         var w : Widget;
 
-        if( Std.is(toHide, Widget) ){
-            w = cast(toHide, Widget);
-            w.top = w.left = 0;
-            toHide.scaleX  = toHide.scaleY = 1;
+        if (toHide != null) {
+          toHide.visible = false;
+        }
+        if (toShow != null) {
+          toShow.visible = true;
         }
 
+        if( Std.is(toHide, Widget) ){
+            w = cast(toHide, Widget);
+            if (toHideReset != null) {
+              w.top = toHideReset.top;
+              w.left = toHideReset.left;
+              toHide.scaleX = toHideReset.scaleX;
+              toHide.scaleY = toHideReset.scaleY;
+            }
+        }
+
+        /* To show is at its final position, no need to change anything
         if( Std.is(toShow, Widget) ){
             w = cast(toShow, Widget);
             w.top = w.left = 0;
             toShow.scaleX = toShow.scaleY = 1;
-        }
-
-        toHide.visible = false;
-        toShow.visible = true;
+        }*/
 
         //if objects were swapped, swap them back
         if( swap ){
@@ -66,7 +79,7 @@ class Scale extends Transition{
     * Scale DOWN
     *
     */
-    private inline function _scaleDown (vs:ViewStack, toHide:DisplayObject, toShow:DisplayObject, cb:Void->Void = null) : Void {
+    private inline function _scaleDown (vs:Widget, toHide:DisplayObject, toShow:DisplayObject, cb:Void->Void = null) : Void {
         vs.mouseChildren = false;
         //hide
         if( Std.is(toHide, Widget) ){
@@ -82,25 +95,25 @@ class Scale extends Transition{
                 vs.swapChildren(toHide, toShow);
             }
 
-            w.top = w.left = 0;
-            w.scaleX = w.scaleY = 1;
             w.tween(this.duration, {
-                top    : vs.h / 2,
-                left   : vs.w / 2,
+                top    : w.top + w.height / 2,
+                left   : w.left + w.width / 2,
                 scaleX : 0,
                 scaleY : 0
-            }).onComplete(this._hide, [vs, toHide, toShow, swap, cb]);
+            }).onComplete(this._hide, [vs, toHide, toShow, swap, {left : w.left, top : w.top, scaleX : w.scaleX, scaleY : w.scaleY}, cb]);
         }else{
-            toHide.visible = false;
+            if (toHide != null) {
+              toHide.visible = false;
+            }
             if( cb != null ) cb();
         }
 
         //show
-        toShow.visible = true;
-        if( Std.is(toShow, Widget) ){
+        if (toShow != null) {
+          toShow.visible = true;
+          if( Std.is(toShow, Widget) ){
             cast(toShow, Widget).tweenStop(["scaleX", "scaleY", "left", "top"], true, true);
-        }else{
-            toShow.visible = true;
+          }
         }
     }//function _scaleDown()
 
@@ -109,17 +122,21 @@ class Scale extends Transition{
     * Scale UP
     *
     */
-    private inline function _scaleUp (vs:ViewStack, toHide:DisplayObject, toShow:DisplayObject, cb:Void->Void = null) : Void {
+    private inline function _scaleUp (vs:Widget, toHide:DisplayObject, toShow:DisplayObject, cb:Void->Void = null) : Void {
         vs.mouseChildren = false;
         //hide
         if( Std.is(toHide, Widget) ){
             cast(toHide, Widget).tweenStop(["scaleX", "scaleY", "left", "top"], true, true);
         }else{
-            toHide.visible = false;
+            if (toHide != null) {
+              toHide.visible = false;
+            }
         }
 
         //show
-        toShow.visible = true;
+        if (toShow != null) {
+          toShow.visible = true;
+        }
         if( Std.is(toShow, Widget) ){
             var w    : Widget = cast(toShow, Widget);
             var swap : Bool = false;
@@ -133,17 +150,20 @@ class Scale extends Transition{
                 vs.swapChildren(toHide, toShow);
             }
 
-            w.top  = vs.h / 2;
-            w.left = vs.w / 2;
+            var topGoal = w.top;
+            var leftGoal = w.left;
+            var scaleXGoal = w.scaleX;
+            var scaleYGoal = w.scaleY;
+            w.top  = w.top  + w.height / 2;
+            w.left = w.left + w.width / 2;
             w.scaleX = w.scaleY = 0;
             w.tween(this.duration, {
-                top    : 0,
-                left   : 0,
-                scaleX : 1,
-                scaleY : 1
-            }).onComplete(this._hide, [vs, toHide, toShow, swap, cb]);
+                top    : topGoal,
+                left   : leftGoal,
+                scaleX : scaleXGoal,
+                scaleY : scaleYGoal
+            }).onComplete(this._hide, [vs, toHide, toShow, swap, null, cb]);
         }else{
-            toShow.visible = true;
             if( cb != null ) cb();
         }
     }//function _scaleUp()

@@ -1,7 +1,6 @@
 package ru.stablex.ui.transitions;
 
 import flash.display.DisplayObject;
-import ru.stablex.ui.widgets.ViewStack;
 import ru.stablex.ui.widgets.Widget;
 
 
@@ -19,13 +18,21 @@ class Slide extends Transition{
     */
     public var direction : String = 'left';
 
+    /** Remember object to hide original position, so that it can be reseted after the animation
+      */
+    private var _reset_x : Float;
+    private var _reset_y : Float;
 
     /**
     * Switch children visibility
     *
     * @param cb - callback to call after visible object was hidden
     */
-    override public function change (vs:ViewStack, toHide:DisplayObject, toShow:DisplayObject, cb:Void->Void = null) : Void{
+    override public function change (vs:Widget, toHide:DisplayObject, toShow:DisplayObject, cb:Void->Void = null) : Void{
+        if(toHide != null){
+          _reset_x = toHide.x;
+          _reset_y = toHide.y;
+        }
         switch(this.direction){
             case 'right':   this._slideRight(vs, toHide, toShow, cb);
             case 'top':     this._slideTop(vs, toHide, toShow, cb);
@@ -36,28 +43,43 @@ class Slide extends Transition{
 
 
     /**
-    * Set `.visible` = false for provided object
+    * Set `.visible` = false for provided object, reset object position and call callback.
     *
     */
     private function _hide (obj:DisplayObject, cb:Void->Void = null) : Void {
-        obj.visible = false;
-        if( cb != null ) cb();
+        if (obj != null) {
+          obj.visible = false;
+          cast(obj, Widget).left = _reset_x;
+          cast(obj, Widget).top  = _reset_y;
+        }
+        _callCallback(cb);
     }//function _hide()
 
+    /**
+      * Call the callback function if it is not null.
+      */
+    private function _callCallback(cb:Void->Void = null) {
+      if (cb != null) cb();
+    }//function _callCallback
 
     /**
     * Slide left
     *
     */
-    private inline function _slideLeft (vs:ViewStack, toHide:DisplayObject, toShow:DisplayObject, cb:Void->Void = null) : Void {
+    private inline function _slideLeft (vs:Widget, toHide:DisplayObject, toShow:DisplayObject, cb:Void->Void = null) : Void {
         var w : Widget;
 
         //hide
         if( Std.is(toHide, Widget) ){
             w = cast(toHide, Widget);
             w.tweenStop("right", true, true);
-            w.top = w.right = 0;
-            w.tween(this.duration, {right:vs.w});
+            w.tween(this.duration, {right:vs.w}).onComplete(this._hide,[toHide,cb]);
+            // Set cb to null, so that it is not called bellow
+            cb = null;
+        } else {
+          if (toHide != null) {
+            toHide.visible = false;
+          }
         }
 
         //show
@@ -65,14 +87,17 @@ class Slide extends Transition{
             w = cast(toShow, Widget);
             w.tweenStop("left", true, true);
             w.visible = true;
+            var leftGoal = w.left;
             w.left    = vs.w;
-            w.top     = 0;
-            w.tween(this.duration, {left:0}).onComplete(this._hide, [toHide, cb]);
+            w.tween(this.duration, {left:leftGoal}).onComplete(_callCallback, [cb]);
+            // Set cb to null, so that it is not called bellow
+            cb = null;
         }else{
-            toHide.visible = false;
-            toShow.visible = true;
-            if( cb != null ) cb();
+            if (toShow != null) {
+              toShow.visible = true;
+            }
         }
+        if( cb != null ) cb();
     }//function _slideLeft()
 
 
@@ -80,15 +105,20 @@ class Slide extends Transition{
     * Slide right
     *
     */
-    private inline function _slideRight (vs:ViewStack, toHide:DisplayObject, toShow:DisplayObject, cb:Void->Void = null) : Void {
+    private inline function _slideRight (vs:Widget, toHide:DisplayObject, toShow:DisplayObject, cb:Void->Void = null) : Void {
         var w : Widget;
 
         //hide
         if( Std.is(toHide, Widget) ){
             w = cast(toHide, Widget);
-            w.tweenStop("left");
-            w.top = w.left = 0;
-            w.tween(this.duration, {left:vs.w});
+            w.tweenStop("left", true, true);
+            w.tween(this.duration, {left:vs.w}).onComplete(this._hide,[toHide,cb]);
+            // Set cb to null, so that it is not called bellow
+            cb = null;
+        } else {
+          if (toHide != null) {
+            toHide.visible = false;
+          }
         }
 
         //show
@@ -96,14 +126,17 @@ class Slide extends Transition{
             w = cast(toShow, Widget);
             w.tweenStop("left", true, true);
             w.visible = true;
-            w.right   = vs.w;
-            w.top     = 0;
-            w.tween(this.duration, {left:0}).onComplete(this._hide, [toHide, cb]);
+            var leftGoal = w.left;
+            w.right    = vs.w;
+            w.tween(this.duration, {left:leftGoal}).onComplete(_callCallback, [cb]);
+            // Set cb to null, so that it is not called bellow
+            cb = null;
         }else{
-            toHide.visible = false;
-            toShow.visible = true;
-            if( cb != null ) cb();
+            if (toShow != null) {
+              toShow.visible = true;
+            }
         }
+        if( cb != null ) cb();
     }//function _slideRight()
 
 
@@ -111,15 +144,20 @@ class Slide extends Transition{
     * Slide top
     *
     */
-    private inline function _slideTop (vs:ViewStack, toHide:DisplayObject, toShow:DisplayObject, cb:Void->Void = null) : Void {
+    private inline function _slideTop (vs:Widget, toHide:DisplayObject, toShow:DisplayObject, cb:Void->Void = null) : Void {
         var w : Widget;
 
         //hide
         if( Std.is(toHide, Widget) ){
             w = cast(toHide, Widget);
-            w.tweenStop("top", true, true);
-            w.left = w.top = 0;
-            w.tween(this.duration, {bottom:vs.h});
+            w.tweenStop("bottom", true, true);
+            w.tween(this.duration, {bottom:vs.h}).onComplete(this._hide,[toHide,cb]);
+            // Set cb to null, so that it is not called bellow
+            cb = null;
+        } else {
+          if (toHide != null) {
+            toHide.visible = false;
+          }
         }
 
         //show
@@ -127,14 +165,17 @@ class Slide extends Transition{
             w = cast(toShow, Widget);
             w.tweenStop("top", true, true);
             w.visible = true;
-            w.top     = vs.h;
-            w.left    = 0;
-            w.tween(this.duration, {top:0}).onComplete(this._hide, [toHide, cb]);
+            var topGoal = w.top;
+            w.top    = vs.h;
+            w.tween(this.duration, {top:topGoal}).onComplete(_callCallback, [cb]);
+            // Set cb to null, so that it is not called bellow
+            cb = null;
         }else{
-            toHide.visible = false;
-            toShow.visible = true;
-            if( cb != null ) cb();
+            if (toShow != null) {
+              toShow.visible = true;
+            }
         }
+        if( cb != null ) cb();
     }//function _slideTop()
 
 
@@ -142,15 +183,20 @@ class Slide extends Transition{
     * Slide bottom
     *
     */
-    private inline function _slideBottom (vs:ViewStack, toHide:DisplayObject, toShow:DisplayObject, cb:Void->Void = null) : Void {
+    private inline function _slideBottom (vs:Widget, toHide:DisplayObject, toShow:DisplayObject, cb:Void->Void = null) : Void {
         var w : Widget;
 
         //hide
         if( Std.is(toHide, Widget) ){
             w = cast(toHide, Widget);
             w.tweenStop("top", true, true);
-            w.left = w.top = 0;
-            w.tween(this.duration, {top:vs.h});
+            w.tween(this.duration, {top:vs.h}).onComplete(this._hide,[toHide,cb]);
+            // Set cb to null, so that it is not called bellow
+            cb = null;
+        } else {
+          if (toHide != null) {
+            toHide.visible = false;
+          }
         }
 
         //show
@@ -158,13 +204,16 @@ class Slide extends Transition{
             w = cast(toShow, Widget);
             w.tweenStop("top", true, true);
             w.visible = true;
-            w.bottom  = vs.h;
-            w.left    = 0;
-            w.tween(this.duration, {top:0}).onComplete(this._hide, [toHide, cb]);
+            var topGoal = w.top;
+            w.bottom    = vs.h;
+            w.tween(this.duration, {top:topGoal}).onComplete(_callCallback, [cb]);
+            // Set cb to null, so that it is not called bellow
+            cb = null;
         }else{
-            toHide.visible = false;
-            toShow.visible = true;
-            if( cb != null ) cb();
+            if (toShow != null) {
+              toShow.visible = true;
+            }
         }
+        if( cb != null ) cb();
     }//function _slideBottom()
 }//class Slide

@@ -2,7 +2,6 @@ package ru.stablex.ui.transitions;
 
 import flash.display.DisplayObject;
 import ru.stablex.ui.widgets.Widget;
-import ru.stablex.ui.widgets.ViewStack;
 
 
 /**
@@ -16,7 +15,7 @@ class Fade extends Transition{
     *
     * @param cb - callback to call after visible object was hidden
     */
-    override public function change (vs:ViewStack, toHide:DisplayObject, toShow:DisplayObject, cb:Void->Void = null) : Void{
+    override public function change (vs:Widget, toHide:DisplayObject, toShow:DisplayObject, cb:Void->Void = null) : Void{
         var w : Widget;
 
         //hide
@@ -26,6 +25,8 @@ class Fade extends Transition{
             w.alpha = 1;
             w.top   = w.left = 0;
             w.tween(this.duration, {alpha:0}).onComplete(this._hide, [toHide, cb]);
+            // Ensure callback is not called below
+            cb = null;
         }
 
         //show
@@ -37,8 +38,12 @@ class Fade extends Transition{
             w.top     = w.left = 0;
             w.tween(this.duration, {alpha:1}).onComplete(this._hide, [toHide, cb]);
         }else{
-            toHide.visible = false;
-            toShow.visible = true;
+            if (toHide != null) {
+              toHide.visible = false;
+            }
+            if (toShow != null) {
+              toShow.visible = true;
+            }
             if( !Std.is(toHide, Widget) && cb != null ) cb();
         }
     }//function change()
@@ -49,8 +54,10 @@ class Fade extends Transition{
     *
     */
     private function _hide (obj:DisplayObject, cb:Void->Void = null) : Void {
-        obj.alpha   = 1;
-        obj.visible = false;
+        if (obj != null) {
+          obj.alpha   = 1;
+          obj.visible = false;
+        }
         if( cb != null ) cb();
     }//function _hide()
 }//class Fade

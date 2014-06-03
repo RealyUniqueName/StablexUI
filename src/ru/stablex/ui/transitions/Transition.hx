@@ -1,12 +1,12 @@
 package ru.stablex.ui.transitions;
 
 import flash.display.DisplayObject;
-import ru.stablex.ui.widgets.ViewStack;
+import ru.stablex.ui.widgets.Widget;
 
 
 
 /**
-* Base class for implementing transitions on child changing for <type>ru.stablex.ui.widgets.ViewStack</type>
+* Base class for implementing transitions on child changing for <type>ru.stablex.ui.widgets.Widget</type>, for exmaple <type>ru.stablex.ui.widgets.ViewStack</type>
 *
 */
 class Transition {
@@ -28,7 +28,7 @@ class Transition {
     *
     * @param cb - callback to call after visible object was hidden
     */
-    public function change (vs:ViewStack, toHide:DisplayObject, toShow:DisplayObject, cb:Void->Void = null) : Void{
+    public function change (vs:Widget, toHide:DisplayObject, toShow:DisplayObject, cb:Void->Void = null) : Void{
     }//function change()
 
 
