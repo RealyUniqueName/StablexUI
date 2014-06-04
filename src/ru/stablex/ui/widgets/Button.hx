@@ -18,6 +18,8 @@ class Button extends Text{
     public var hovered (default,null) : Bool = false;
     //whether button is currently disabled
     public var disabled (default,set_disabled) : Bool = false;
+    /** this.mouseChildren value before this.disabled was set to true */
+    private var _mouseChildrenBeforeDisabled : Bool = false;
     //default icon for button
     public var ico (get_ico,set_ico): Bmp;
     private var _ico : Bmp;
@@ -64,7 +66,7 @@ class Button extends Text{
         static private function _onHover (e:MouseEvent) : Void {
             var btn : Button = cast(e.currentTarget, Button);
             if (btn.disabled) {
-              return;
+                return;
             }
 
             //if button is already hovered, do nothing
@@ -88,7 +90,7 @@ class Button extends Text{
         static private function _onHout (e:MouseEvent) : Void {
             var btn : Button = cast(e.currentTarget, Button);
             if (btn.disabled) {
-              return;
+                return;
             }
 
             //if button is not hovered, do nothing
@@ -112,7 +114,7 @@ class Button extends Text{
         static private function _onPress (e:MouseEvent) : Void {
             var btn : Button = cast(e.currentTarget, Button);
             if (btn.disabled) {
-              return;
+                return;
             }
 
             //if button is already pressed, do nothing
@@ -136,7 +138,7 @@ class Button extends Text{
         static private function _onRelease (e:MouseEvent) : Void {
             var btn : Button = cast(e.currentTarget, Button);
             if (btn.disabled) {
-              return;
+                return;
             }
 
             //if button is not pressed, do nothing
@@ -191,8 +193,8 @@ class Button extends Text{
             this.addEventListener(flash.events.TouchEvent.TOUCH_OUT, Button._onRelease);
         #end
 
-        this.pressed = false;
-        this.hovered = false;
+        this.pressed  = false;
+        this.hovered  = false;
         this.disabled = false;
 
         this.align = "center,middle";
@@ -238,19 +240,31 @@ class Button extends Text{
 
     }//function onHout()
 
-    /** Setter for `.disabled`
-      *
-      */
-    @:noCompletion private function set_disabled(d:Bool) : Bool {
-      if (d) {   //switch icon
-        _switchIco(_icoDisabled);
-        _switchSkin(skinDisabled);
-      } else {
-        _switchIco(_ico);
-        _switchSkin(skin);
-      }
-      return disabled = d;
-    }
+
+    /**
+    * Setter for `.disabled`
+    *
+    */
+    @:noCompletion private function set_disabled(disabled:Bool) : Bool {
+        if (disabled) {   //switch icon
+            if (!this.disabled) {
+                this._mouseChildrenBeforeDisabled = this.mouseChildren;
+            }
+            this.mouseEnabled = false;
+            this._switchIco(this._icoDisabled);
+            this._switchSkin(this.skinDisabled);
+        } else {
+            if (this.disabled) {
+                this.mouseChildren = this._mouseChildrenBeforeDisabled;
+            }
+            this.mouseEnabled = true;
+            this._switchIco(this._ico);
+            this._switchSkin(this.skin);
+        }
+
+        return this.disabled = disabled;
+    }//function set_disabled()
+
 
     /**
     * Setter for `.icoBeforeLabel`
@@ -262,6 +276,7 @@ class Button extends Text{
         }else{
             this.setChildIndex(this.label, 0);
         }
+
         return this.icoBeforeLabel = ibl;
     }//function set_icoBeforeLabel()
 
@@ -294,6 +309,7 @@ class Button extends Text{
         if( ico != null ){
             this._addIco(ico);
         }
+
         return this._ico = ico;
     }//function set_ico()
 
@@ -327,6 +343,7 @@ class Button extends Text{
         if( ico != null ){
             this._addIco(ico);
         }
+
         return this._icoHovered = ico;
     }//function set_icoHovered()
 
@@ -360,6 +377,7 @@ class Button extends Text{
         if( ico != null ){
             this._addIco(ico);
         }
+
         return this._icoPressed = ico;
     }//function set_icoPressed()
 
@@ -443,9 +461,10 @@ class Button extends Text{
     *
     */
     private inline function _switchIco (ico:Bmp) : Void {
-        if( this._ico        != null ) this._ico.visible = false;
-        if( this._icoHovered != null ) this._icoHovered.visible = false;
-        if( this._icoPressed != null ) this._icoPressed.visible = false;
+        if( this._ico         != null ) this._ico.visible = false;
+        if( this._icoHovered  != null ) this._icoHovered.visible = false;
+        if( this._icoPressed  != null ) this._icoPressed.visible = false;
+        if( this._icoDisabled != null ) this._icoDisabled.visible = false;
 
         if( ico != null ){
             ico.visible = true;
@@ -480,9 +499,9 @@ class Button extends Text{
         // Ensure skin is applied in applySkin ...
         this._appliedSkin = null;
 
-        if( this._ico        != null ) this._ico.refresh();
-        if( this._icoHovered != null ) this._icoHovered.refresh();
-        if( this._icoPressed != null ) this._icoPressed.refresh();
+        if( this._ico         != null ) this._ico.refresh();
+        if( this._icoHovered  != null ) this._icoHovered.refresh();
+        if( this._icoPressed  != null ) this._icoPressed.refresh();
         if( this._icoDisabled != null ) this._icoDisabled.refresh();
 
         super.refresh();
@@ -494,22 +513,23 @@ class Button extends Text{
     */
     override public function applySkin () : Void {
         if( this.initialized){
-          if (disabled) {
-            _switchSkin(this.skinDisabled);
-            return;
-          }
-          if (pressed) {
-            _switchSkin(this.skinPressed);
-            return;
-          }
-          if (hovered) {
-            _switchSkin(this.skinHovered);
-            return;
-          }
-          // Default, super function
-          super.applySkin();
+            if (this.disabled) {
+                this._switchSkin(this.skinDisabled);
+                return;
+            }
+            if (this.pressed) {
+                this._switchSkin(this.skinPressed);
+                return;
+            }
+            if (this.hovered) {
+                this._switchSkin(this.skinHovered);
+                return;
+            }
+            // Default, super function
+            super.applySkin();
         }
     }//function applySkin()
+
 
     /**
     * Align elements according to this.align

@@ -92,5 +92,18 @@
             "/>
         </HBox>
         <Widget defaults="'HRLight'" />
+
+        <!-- Disabled -->
+        <HBox widthPt="100" align="'middle'">
+            <VBox left="10" align="'left,middle'" widthPt="60">
+                <Text defaults="'Default,Dark'" text="'Disable'" />
+                <Text defaults="'Default,DarkTip'" text="'Make button ignore mouse events'" />
+            </VBox>
+
+            <Switch right="10" selected="false" on-change="
+                #Button(simpleButton).disabled = $this.selected;
+            "/>
+        </HBox>
+        <Widget defaults="'HRLight'" />
     </VBox>
 </Scroll>
