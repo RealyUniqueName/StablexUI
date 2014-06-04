@@ -16,6 +16,8 @@ class Button extends Text{
     public var pressed (default,null) : Bool = false;
     //Wether mouse pointer is currently over this button
     public var hovered (default,null) : Bool = false;
+    //whether button is currently disabled
+    public var disabled (default,set_disabled) : Bool = false;
     //default icon for button
     public var ico (get_ico,set_ico): Bmp;
     private var _ico : Bmp;
@@ -25,6 +27,9 @@ class Button extends Text{
     //icon for pressed state
     public var icoPressed (get_icoPressed,set_icoPressed) : Bmp;
     private var _icoPressed : Bmp;
+    //icon for disabled state
+    public var icoDisabled (get_icoDisabled,set_icoDisabled) : Bmp;
+    private var _icoDisabled : Bmp;
     /**
     * Whether icon should appear before text (on left or on top of text), set to false to move icon to the right (or below) text
     * If you want icon to appear on top of label (or below) you also need to set button.vertical = true.
@@ -38,6 +43,10 @@ class Button extends Text{
     public var skinPressedName (default,set_skinPressedName) : String;
     //skin for pressed state
     public var skinPressed : Skin;
+    //skin name for disabled state (skin must be registered with <type>UIBuilder</type>.regSkins() )
+    public var skinDisabledName (default,set_skinDisabledName) : String;
+    //skin for disabled state
+    public var skinDisabled : Skin;
     //to test whether we trying to apply already applied skin
     private var _appliedSkin : Skin;
     //stick ico and text to opposite borders
@@ -54,6 +63,9 @@ class Button extends Text{
         */
         static private function _onHover (e:MouseEvent) : Void {
             var btn : Button = cast(e.currentTarget, Button);
+            if (btn.disabled) {
+              return;
+            }
 
             //if button is already hovered, do nothing
             if( btn.hovered ) return;
@@ -75,6 +87,9 @@ class Button extends Text{
         */
         static private function _onHout (e:MouseEvent) : Void {
             var btn : Button = cast(e.currentTarget, Button);
+            if (btn.disabled) {
+              return;
+            }
 
             //if button is not hovered, do nothing
             if( !btn.hovered ) return;
@@ -96,6 +111,9 @@ class Button extends Text{
         */
         static private function _onPress (e:MouseEvent) : Void {
             var btn : Button = cast(e.currentTarget, Button);
+            if (btn.disabled) {
+              return;
+            }
 
             //if button is already pressed, do nothing
             if( btn.pressed ) return;
@@ -117,6 +135,9 @@ class Button extends Text{
         */
         static private function _onRelease (e:MouseEvent) : Void {
             var btn : Button = cast(e.currentTarget, Button);
+            if (btn.disabled) {
+              return;
+            }
 
             //if button is not pressed, do nothing
             if( !btn.pressed ) return;
@@ -172,6 +193,7 @@ class Button extends Text{
 
         this.pressed = false;
         this.hovered = false;
+        this.disabled = false;
 
         this.align = "center,middle";
     }//function new()
@@ -216,6 +238,19 @@ class Button extends Text{
 
     }//function onHout()
 
+    /** Setter for `.disabled`
+      *
+      */
+    @:noCompletion private function set_disabled(d:Bool) : Bool {
+      if (d) {   //switch icon
+        _switchIco(_icoDisabled);
+        _switchSkin(skinDisabled);
+      } else {
+        _switchIco(_ico);
+        _switchSkin(skin);
+      }
+      return disabled = d;
+    }
 
     /**
     * Setter for `.icoBeforeLabel`
@@ -330,6 +365,39 @@ class Button extends Text{
 
 
     /**
+    * Getter for icoDisabled
+    *
+    */
+    @:noCompletion private function get_icoDisabled () : Bmp {
+        //if ico is still not created, create it
+        if( this._icoDisabled == null ){
+            this._icoDisabled = UIBuilder.create(Bmp);
+            this._icoDisabled.visible = false;
+            this._addIco(this._icoDisabled);
+        }
+
+        return this._icoDisabled;
+    }//function get_icoDisabled()
+
+
+    /**
+    * Setter for icoDisabled
+    *
+    */
+    @:noCompletion private function set_icoDisabled (ico:Bmp) : Bmp {
+        //destroy old ico
+        if( this._icoDisabled != null ){
+            this._icoDisabled.free();
+        }
+        //add new ico
+        if( ico != null ){
+            this._addIco(ico);
+        }
+        return this._icoDisabled = ico;
+    }//function set_icoDisabled()
+
+
+    /**
     * Setter for skinHoveredName
     *
     */
@@ -348,6 +416,14 @@ class Button extends Text{
         return this.skinPressedName = s;
     }//function set_skinPressedName()
 
+    /**
+    * Setter for skinDisabledName
+    *
+    */
+    @:noCompletion private function set_skinDisabledName (s:String) : String {
+        this.skinDisabled = UIBuilder.skin(s)();
+        return this.skinDisabledName = s;
+    }//function set_skinDisabledName()
 
     /**
     * Adds icon object to the button's display list according to `icoBeforeLabel` property
@@ -401,15 +477,39 @@ class Button extends Text{
     *
     */
     override public function refresh () : Void {
-        this._appliedSkin = this.skin;
+        // Ensure skin is applied in applySkin ...
+        this._appliedSkin = null;
 
         if( this._ico        != null ) this._ico.refresh();
         if( this._icoHovered != null ) this._icoHovered.refresh();
         if( this._icoPressed != null ) this._icoPressed.refresh();
+        if( this._icoDisabled != null ) this._icoDisabled.refresh();
 
         super.refresh();
     }//function refresh()
 
+    /**
+    * Apply skin defined by `.skin*` properties
+    *
+    */
+    override public function applySkin () : Void {
+        if( this.initialized){
+          if (disabled) {
+            _switchSkin(this.skinDisabled);
+            return;
+          }
+          if (pressed) {
+            _switchSkin(this.skinPressed);
+            return;
+          }
+          if (hovered) {
+            _switchSkin(this.skinHovered);
+            return;
+          }
+          // Default, super function
+          super.applySkin();
+        }
+    }//function applySkin()
 
     /**
     * Align elements according to this.align
