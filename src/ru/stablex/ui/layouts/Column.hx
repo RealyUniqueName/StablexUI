@@ -2,6 +2,7 @@ package ru.stablex.ui.layouts;
 
 import flash.display.DisplayObject;
 import ru.stablex.ui.widgets.Widget;
+import ru.stablex.ui.widgets.Box; // To accrss static method _objWidth
 
 
 
@@ -29,6 +30,7 @@ class Column extends Layout{
     *  - positive numbers greater than 1 define column width in pixels;
     *  - positive numbers between 0 and 1 define column width in % (0.1 for 10%, 0.65 for 65%, etc.);
     *  - negative numbers mean columns will share free space left after using previous rules.
+    *  - zero means, the column will take the space of the containing widget
     * E.g. [150, -2, -1, 0.3] means: first child will be 150 pixels width, last
     * child will be 30% width, the second and third children will take left space,
     * and second will take 2/3 of left space, while third will take 1/3.
@@ -64,6 +66,8 @@ class Column extends Layout{
                     freeSpace -= acols[i] = this.cols[i];
                 }else if( this.cols[i] < 0 ){
                     negParts += acols[i] = this.cols[i];
+                }else if (this.cols[i] == 0){
+                    freeSpace -= acols[i] = Box._objWidth(holder.getChildAt(i));
                 }else{
                     freeSpace -= acols[i] = width * this.cols[i];
                 }

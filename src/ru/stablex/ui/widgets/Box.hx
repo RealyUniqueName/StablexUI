@@ -57,7 +57,7 @@ class Box extends Widget{
         * get object width
         *
         */
-        @:noCompletion static private inline function _objWidth (obj:DisplayObject) : Float {
+        @:noCompletion static public inline function _objWidth (obj:DisplayObject) : Float {
             // #if html5
                 if( Std.is(obj, Widget) ){
                     return cast(obj, Widget).w;
@@ -76,7 +76,7 @@ class Box extends Widget{
         * get object height
         *
         */
-        @:noCompletion static private inline function _objHeight (obj:DisplayObject) : Float {
+        @:noCompletion static public inline function _objHeight (obj:DisplayObject) : Float {
             // #if html5
                 if( Std.is(obj, Widget) ){
                     return cast(obj, Widget).h;
