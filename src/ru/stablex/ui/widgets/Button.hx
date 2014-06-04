@@ -49,8 +49,6 @@ class Button extends Text{
     public var skinDisabledName (default,set_skinDisabledName) : String;
     //skin for disabled state
     public var skinDisabled : Skin;
-    //to test whether we trying to apply already applied skin
-    private var _appliedSkin : Skin;
     //stick ico and text to opposite borders
     public var apart : Bool = false;
 
@@ -483,10 +481,8 @@ class Button extends Text{
     private inline function _switchSkin (skin:Skin) : Void {
         if( this._appliedSkin != skin && skin != null ){
             skin.apply(this);
-            this._appliedSkin = skin;
         }else if( skin == null && this.skin != null ){
             this.skin.apply(this);
-            this._appliedSkin = skin;
         }
     }//function _switchSkin()
 
@@ -496,9 +492,6 @@ class Button extends Text{
     *
     */
     override public function refresh () : Void {
-        // Ensure skin is applied in applySkin ...
-        this._appliedSkin = null;
-
         if( this._ico         != null ) this._ico.refresh();
         if( this._icoHovered  != null ) this._icoHovered.refresh();
         if( this._icoPressed  != null ) this._icoPressed.refresh();
