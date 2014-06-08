@@ -591,7 +591,20 @@ class Box extends Widget{
 /*******************************************************************************
 *       GETTERS / SETTERS
 *******************************************************************************/
+    /**
+      * Get the height of the content
+      */
+    @:noCompletion override private function get_contentHeight() : Float {
+      return h - paddingTop - paddingBottom;
+    }//function get_content Height
 
+    /**
+      * Get the width of the content
+      */
+
+    @:noCompletion override private function get_contentWidth() : Float {
+      return w - paddingLeft - paddingRight;
+    }//function get_contentWidth()
 
     /**
     * Setter for autoSize
