@@ -329,6 +329,9 @@ class Widget extends TweenSprite{
     *
     */
     public function resize(width:Float, height:Float, keepPercentage:Bool = false) : Void {
+        if (_width == width && _height == height) {
+          return;
+        }
         if( !keepPercentage ){
             this._silentResize = true;
             this.w = width;
