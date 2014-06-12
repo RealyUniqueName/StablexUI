@@ -3,6 +3,7 @@ package ru.stablex.ui.widgets;
 
 import flash.display.DisplayObject;
 import flash.display.DisplayObjectContainer;
+import flash.geom.Matrix;
 import flash.geom.Rectangle;
 import ru.stablex.TweenSprite;
 import ru.stablex.ui.events.WidgetEvent;
@@ -99,6 +100,10 @@ class Widget extends TweenSprite{
     */
     public var registration (default, set_registration): String = 'left,top';
 	
+	// rotation
+	public var rot_center (default, set_rot_center): Float = 0;
+	private var _initialTransformMatrix:Matrix;
+	
     //Wich one to use: left, right, center, etc.
     @:noCompletion private var _xReg : Int = _X_USE_LEFT;
     @:noCompletion private var _yReg : Int = _Y_USE_TOP;
@@ -157,6 +162,7 @@ class Widget extends TweenSprite{
         super();
 
         this.id = UIBuilder.createId();
+		this._initialTransformMatrix = this.transform.matrix.clone();
     }//function new()
 
 
@@ -281,37 +287,7 @@ class Widget extends TweenSprite{
             );
         }
 
-        //positioning {
-            switch ( this._xUse ) {
-                //by right border
-                case _X_USE_RIGHT: this.x = newParent._width - this._right - this._width;
-                //by right percent
-                case _X_USE_RIGHT_PERCENT: this.x = newParent._width - newParent._width * this._rightPercent / 100 - this._width;
-                //by left percent
-                case _X_USE_LEFT_PERCENT: this.x = newParent._width * this._leftPercent / 100;
-            }//switch()
-			switch( this._xReg ) {
-				//from right
-				case _X_REG_RIGHT: this.x -= this._width;
-				// from center
-				case _X_REG_CENTER: this.x -= (this._width / 2);
-			}//switch()
-
-            switch ( this._yUse ) {
-                //by bottom border
-                case _Y_USE_BOTTOM: this.y = newParent._height - this._bottom - this._height;
-                //by bottom percent
-                case _Y_USE_BOTTOM_PERCENT: this.y = newParent._height - newParent._height * this._bottomPercent / 100 - this._height;
-                //by top percent
-                case _Y_USE_TOP_PERCENT: this.y = newParent._height * this._topPercent / 100;
-            }//switch()
-			switch( this._yReg ) {
-				//from bottom
-				case _Y_REG_BOTTOM: this.y -= this._height;
-				// from middle
-				case _Y_REG_MIDDLE: this.y -= (this._height / 2);
-			}//switch()
-        //}
+		_do_positioning(newParent);
 
         //notify
         UIBuilder.dispatcher.dispatchEvent(new WidgetEvent( WidgetEvent.ADDED, this ));
@@ -334,37 +310,7 @@ class Widget extends TweenSprite{
             );
         }
 
-        //positioning {
-            switch ( this._xUse ) {
-                //by right border
-                case _X_USE_RIGHT: this.x = parent._width - this._right - this._width;
-                //by right percent
-                case _X_USE_RIGHT_PERCENT: this.x = parent._width - parent._width * this._rightPercent / 100 - this.w;
-                //by left percent
-                case _X_USE_LEFT_PERCENT: this.x = parent._width * this._leftPercent / 100;
-            }//switch()
-			switch( this._xReg ) {
-				//from right
-				case _X_REG_RIGHT: this.x -= this._width;
-				// from center
-				case _X_REG_CENTER: this.x -= (this._width / 2);
-			}//switch()
-
-            switch ( this._yUse ) {
-                //by bottom border
-                case _Y_USE_BOTTOM: this.y = parent._height - this._bottom - this._height;
-                //by bottom percent
-                case _Y_USE_BOTTOM_PERCENT: this.y = parent._height - parent._height * this._bottomPercent / 100 - this._height;
-                //by top percent
-                case _Y_USE_TOP_PERCENT: this.y = parent._height * this._topPercent / 100;
-            }//switch()
-			switch( this._yReg ) {
-				//from bottom
-				case _Y_REG_BOTTOM: this.y -= this._height;
-				// from middle
-				case _Y_REG_MIDDLE: this.y -= (this._height / 2);
-			}//switch()
-        //}
+		_do_positioning(parent);
     }//function _onParentResize()
 
 
@@ -386,6 +332,78 @@ class Widget extends TweenSprite{
         this._onResize();
     }//function resize()
 
+	@:final @:noCompletion private function _do_positioning( myParent:Widget ) : Void {
+		switch( this._xUse ) {
+			//by left border
+			case _X_USE_LEFT: this.x = this._left + _xRegCorrection(_X_USE_LEFT);
+			//by left percent
+			case _X_USE_LEFT_PERCENT: this.x = (myParent._width * this._leftPercent / 100) + _xRegCorrection(_X_USE_LEFT);
+			//by right border
+			case _X_USE_RIGHT: this.x = (myParent._width - this._right - this.get_rotated_w()) + _xRegCorrection(_X_USE_RIGHT);
+			//by right percent
+			case _X_USE_RIGHT_PERCENT: this.x = ((myParent._width * ((100 - this._rightPercent) / 100)) - this.get_rotated_w()) + _xRegCorrection(_X_USE_RIGHT);
+		}//switch()
+
+		switch ( this._yUse ) {
+			//by top border
+			case _Y_USE_TOP: this.y = this._top + _yRegCorrection(_Y_USE_TOP);
+			//by top percent
+			case _Y_USE_TOP_PERCENT: this.y = (myParent._height * this._topPercent / 100) + _yRegCorrection(_Y_USE_TOP);
+			//by bottom border
+			case _Y_USE_BOTTOM: this.y = (myParent._height - this._bottom - this.get_rotated_h()) + _yRegCorrection(_Y_USE_BOTTOM);
+			//by bottom percent
+			case _Y_USE_BOTTOM_PERCENT: this.y = ((myParent._height * ((100 - this._bottomPercent) / 100)) - this.get_rotated_h()) + _yRegCorrection(_Y_USE_BOTTOM);
+		}//switch()
+	}
+	
+	@:final @:noCompletion private function _xRegCorrection ( xUse:Int ) : Float
+	{
+		if ( (xUse == _X_USE_RIGHT) || (xUse == _X_USE_RIGHT_PERCENT) )
+		{
+			switch ( this._xReg )
+			{
+				case _X_REG_LEFT: return this.get_rotated_w();
+				//case _X_REG_RIGHT: return 0;
+				case _X_REG_CENTER: return (this.get_rotated_w() / 2);
+			}
+		}
+		else // assume LEFT
+		{
+			switch ( this._xReg )
+			{
+				//case _X_REG_LEFT: return 0;
+				case _X_REG_RIGHT: return -this.get_rotated_w();
+				case _X_REG_CENTER: return -(this.get_rotated_w() / 2);
+			}
+		}
+		
+		return 0;
+	}
+	
+	@:final @:noCompletion private function _yRegCorrection ( yUse:Int ) : Float
+	{
+		if ( (yUse == _Y_USE_BOTTOM) || (yUse == _Y_USE_BOTTOM_PERCENT) )
+		{
+			switch ( this._yReg )
+			{
+				case _Y_REG_TOP: return this.get_rotated_h();
+				//case _Y_REG_BOTTOM: return 0;
+				case _Y_REG_MIDDLE: return (this.get_rotated_h() / 2);
+			}
+		}
+		else // assume TOP
+		{
+			switch ( this._yReg )
+			{
+				//case _Y_REG_TOP: return 0;
+				case _Y_REG_BOTTOM: return -this.get_rotated_h();
+				case _Y_REG_MIDDLE: return -(this.get_rotated_h() / 2);
+			}
+		}
+		
+		return 0;
+	}
+	
 
     /**
     * Called every time this object is resized. This methods calls `.refresh()` and `.onResize()` wich
@@ -396,32 +414,8 @@ class Widget extends TweenSprite{
     */
     @:final @:noCompletion private function _onResize() : Void {
         //positioning
-        if( this.wparent != null ){
-            switch( this._xUse ){
-                //by right border
-                case _X_USE_RIGHT: this.x = this.wparent._width - this._right - this._width;
-                //by right percent
-                case _X_USE_RIGHT_PERCENT: this.x = this.wparent._width - this.wparent._width * this._rightPercent / 100 - this._width;
-            }//switch()
-			switch( this._xReg ) {
-				//from right
-				case _X_REG_RIGHT: this.x -= this._width;
-				// from center
-				case _X_REG_CENTER: this.x -= (this._width / 2);
-			}//switch()
-
-            switch ( this._yUse ) {
-                //by bottom border
-                case _Y_USE_BOTTOM: this.y = this.wparent._height - this._bottom - this._height;
-                //by bottom percent
-                case _Y_USE_BOTTOM_PERCENT: this.y = this.wparent._height - this.wparent._height * this._bottomPercent / 100 - this._height;
-            }//switch()
-			switch( this._yReg ) {
-				//from bottom
-				case _Y_REG_BOTTOM: this.y -= this._height;
-				// from middle
-				case _Y_REG_MIDDLE: this.y -= (this._height / 2);
-			}//switch()
+        if ( this.wparent != null ) {
+			_do_positioning(this.wparent);
         }//if()
 
         //handle overflow visibility
@@ -903,6 +897,23 @@ class Widget extends TweenSprite{
 
 
     /**
+    * Rotated Width getter
+    *
+    */
+    @:noCompletion private function get_rotated_w() : Float {
+		var rads:Float = Math.PI / 180 * this.rot_center;
+		return Math.abs((Math.sin(rads) * this._height)) + Math.abs((Math.cos(rads) * this._width));
+
+		//if ( (this.rotation % 90 == 0) && (this.rotation % 180 != 0) )
+		//{
+			//return this._height;
+		//}
+		//
+        //return this._width;
+    }//function get_w()
+
+
+    /**
     * Height setter
     *
     */
@@ -922,6 +933,22 @@ class Widget extends TweenSprite{
     */
     @:noCompletion private function get_h() : Float {
         return this._height;
+    }//function get_h()
+
+
+    /**
+    * Rotated Height getter
+    *
+    */
+    @:noCompletion private function get_rotated_h() : Float {
+		var rads:Float = Math.PI / 180 * this.rot_center;
+		return Math.abs((Math.sin(rads) * this._width)) + Math.abs((Math.cos(rads) * this._height));
+		//if ( (this.rotation % 90 == 0) && (this.rotation % 180 != 0) )
+		//{
+			//return this._width;
+		//}
+		//
+        //return this._height;
     }//function get_h()
 
 
@@ -1066,5 +1093,24 @@ class Widget extends TweenSprite{
 		});
 		
 		return registration;
+	}
+	
+	@:final @:noCompletion private function set_rot_center ( rot: Float ) : Float
+	{
+		var centerX:Float = x + (w / 2);
+		var centerY:Float = y + (h / 2);
+		var mat:Matrix = _initialTransformMatrix.clone();
+		
+		rot_center = rot;
+		
+		mat.translate( -centerX, -centerY);
+		mat.rotate (rot_center * (Math.PI / 180));
+		mat.translate(centerX, centerY);
+		
+		transform.matrix = mat;
+		
+		trace("set rotation around center, rot:" + rot + ", x:" + x + ", y:" + y + ", w:" + w + ", h:" + h);
+		
+		return rot_center;
 	}
 }//class Widget

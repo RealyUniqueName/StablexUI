@@ -57,8 +57,11 @@ class Box extends Widget{
         * get object width
         *
         */
-        @:noCompletion static private inline function _objWidth (obj:DisplayObject) : Float {
+        @:noCompletion static private function _objWidth (obj:DisplayObject, ignoreRot:Bool=false) : Float {
             // #if html5
+				if ( !ignoreRot && (obj.rotation % 90 == 0) && (obj.rotation % 180 != 0) ) {
+					return Box._objHeight(obj, true);
+				}
                 if( Std.is(obj, Widget) ){
                     return cast(obj, Widget).w;
                 }else if( Std.is(obj, flash.text.TextField) ){
@@ -76,8 +79,11 @@ class Box extends Widget{
         * get object height
         *
         */
-        @:noCompletion static private inline function _objHeight (obj:DisplayObject) : Float {
+        @:noCompletion static private function _objHeight (obj:DisplayObject, ignoreRot:Bool=false) : Float {
             // #if html5
+				if ( !ignoreRot && (obj.rotation % 90 == 0) && (obj.rotation % 180 != 0) ) {
+					return Box._objWidth(obj, true);
+				}
                 if( Std.is(obj, Widget) ){
                     return cast(obj, Widget).h;
                 }else if( Std.is(obj, flash.text.TextField) ){
@@ -126,29 +132,38 @@ class Box extends Widget{
 *******************************************************************************/
 
 
+	override  public function onCreate() : Void {
+		super.onCreate();
+		//trace("onCreate Box - " + name);
+		alignElements();
+	}
+
     /**
     * Refresh widgets. Re-apply skin box and realigns children
     *
     */
     override public function refresh() : Void {
+		//trace("Box starting refresh - " + name);
         if( this.autoWidth || this.autoHeight ){
             var w : Float = (this.autoWidth ? this._calcWidth() : this._width);
             var h : Float = (this.autoHeight ? this._calcHeight() : this._height);
 
             if( this._width != w || this._height != h ){
-
                 this._width = w;
                 this._height = h;
 
-                this.dispatchEvent(new WidgetEvent(WidgetEvent.RESIZE));
+				_onResize();
+                //this.dispatchEvent(new WidgetEvent(WidgetEvent.RESIZE));
             }
         }//if( autoSize )
 
         super.refresh();
 
-        if( this.layout == null ){
+        if ( this.layout == null ) {
+			//trace("  Box align in refresh");
             this.alignElements();
         }
+		//trace("Box ending refresh");
     }//function refresh()
 
 
@@ -244,6 +259,7 @@ class Box extends Widget{
     *
     */
     public function alignElements () : Void {
+		//trace("   in align - " + name);
         if( this.unifyChildren ){
             this._unifyChildren();
         }
@@ -317,6 +333,7 @@ class Box extends Widget{
     *
     */
     @:noCompletion private function _vAlignTop () : Void {
+		//trace("    align top - " + name);
         //vertical box
         if( this.vertical ){
             var lastY : Float = this.paddingTop;
@@ -343,6 +360,7 @@ class Box extends Widget{
     *
     */
     @:noCompletion private function _vAlignMiddle () : Void {
+		//trace("    align middle - " + name);
         //vertical box
         if(this.vertical){
             //count sum children height
@@ -386,6 +404,7 @@ class Box extends Widget{
     *
     */
     @:noCompletion private function _vAlignBottom () : Void {
+		//trace("    align bottom - " + name);
         //vertical box
         if( this.vertical ){
             var lastY : Float = this.h - this.paddingBottom;
@@ -414,6 +433,7 @@ class Box extends Widget{
     *
     */
     @:noCompletion private function _hAlignLeft () : Void {
+		//trace("    align left - " + name);
         //vertical box
         if(this.vertical){
             for(i in 0...this.numChildren){
@@ -440,6 +460,7 @@ class Box extends Widget{
     *
     */
     @:noCompletion private function _hAlignRight () : Void {
+		//trace("    align right - " + name);
         //vertical box
         if(this.vertical){
             var child : DisplayObject;
@@ -468,6 +489,7 @@ class Box extends Widget{
     *
     */
     @:noCompletion private function _hAlignCenter () : Void {
+		//trace("    align center - " + name);
         //vertical box
         if(this.vertical){
             var child : DisplayObject;
@@ -567,6 +589,7 @@ class Box extends Widget{
     *
     */
     @:noCompletion private function _onChildResize (e:WidgetEvent = null) : Void {
+		//trace("resized child of " + name);
         if( this.created ){
             if( this.autoWidth || this.autoHeight ){
                 if( e != null ){
@@ -575,7 +598,8 @@ class Box extends Widget{
                         child != null && child.visible != false
                         && !(this.autoWidth && child._widthUsePercent)
                         && !(this.autoHeight && child._heightUsePercent)
-                    ){
+                    ) {
+						//trace("  child is " + child.name);
                         this.refresh();
                     }
                 }else{
