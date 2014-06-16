@@ -101,7 +101,7 @@ class Widget extends TweenSprite{
     public var registration (default, set_registration): String = 'left,top';
 	
 	// rotation
-	public var rotate (get_rotate, set_rotate): Float = 0;
+	public var rotate (get_rotate, set_rotate): Float;
 	
     //Wich one to use: left, right, center, etc.
     @:noCompletion private var _xReg : Int = _X_USE_LEFT;
