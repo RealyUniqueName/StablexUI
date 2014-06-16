@@ -101,8 +101,7 @@ class Widget extends TweenSprite{
     public var registration (default, set_registration): String = 'left,top';
 	
 	// rotation
-	public var rot_center (default, set_rot_center): Float = 0;
-	private var _initialTransformMatrix:Matrix;
+	public var rot (get_rot, set_rot): Float = 0;
 	
     //Wich one to use: left, right, center, etc.
     @:noCompletion private var _xReg : Int = _X_USE_LEFT;
@@ -162,7 +161,6 @@ class Widget extends TweenSprite{
         super();
 
         this.id = UIBuilder.createId();
-		this._initialTransformMatrix = this.transform.matrix.clone();
     }//function new()
 
 
@@ -901,16 +899,9 @@ class Widget extends TweenSprite{
     *
     */
     @:noCompletion private function get_rotated_w() : Float {
-		var rads:Float = Math.PI / 180 * this.rot_center;
-		return Math.abs((Math.sin(rads) * this._height)) + Math.abs((Math.cos(rads) * this._width));
-
-		//if ( (this.rotation % 90 == 0) && (this.rotation % 180 != 0) )
-		//{
-			//return this._height;
-		//}
-		//
-        //return this._width;
-    }//function get_w()
+		var rads:Float = Math.PI / 180 * this.rotation;
+		return (Math.sin(rads) * -this._height) + (Math.cos(rads) * this._width);
+    }//function get_rotated_w()
 
 
     /**
@@ -941,15 +932,9 @@ class Widget extends TweenSprite{
     *
     */
     @:noCompletion private function get_rotated_h() : Float {
-		var rads:Float = Math.PI / 180 * this.rot_center;
-		return Math.abs((Math.sin(rads) * this._width)) + Math.abs((Math.cos(rads) * this._height));
-		//if ( (this.rotation % 90 == 0) && (this.rotation % 180 != 0) )
-		//{
-			//return this._width;
-		//}
-		//
-        //return this._height;
-    }//function get_h()
+		var rads:Float = Math.PI / 180 * this.rotation;
+		return (Math.sin(rads) * this._width) + (Math.cos(rads) * this._height);
+    }//function get_rotated_h()
 
 
     /**
@@ -1095,22 +1080,20 @@ class Widget extends TweenSprite{
 		return registration;
 	}
 	
-	@:final @:noCompletion private function set_rot_center ( rot: Float ) : Float
+	@:final @:noCompletion private function set_rot ( rot: Float ) : Float
 	{
-		var centerX:Float = x + (w / 2);
-		var centerY:Float = y + (h / 2);
-		var mat:Matrix = _initialTransformMatrix.clone();
+		this.rotation = rot;
 		
-		rot_center = rot;
+		if ( this.wparent != null )
+		{
+			_do_positioning(this.wparent);
+        }
 		
-		mat.translate( -centerX, -centerY);
-		mat.rotate (rot_center * (Math.PI / 180));
-		mat.translate(centerX, centerY);
-		
-		transform.matrix = mat;
-		
-		trace("set rotation around center, rot:" + rot + ", x:" + x + ", y:" + y + ", w:" + w + ", h:" + h);
-		
-		return rot_center;
+		return this.rotation;
 	}
+	
+	@:final @:noCompletion private function get_rot ( ) : Float
+	{
+		return this.rotation;
+	}	
 }//class Widget
