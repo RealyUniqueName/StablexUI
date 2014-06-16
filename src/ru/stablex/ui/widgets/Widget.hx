@@ -101,7 +101,7 @@ class Widget extends TweenSprite{
     public var registration (default, set_registration): String = 'left,top';
 	
 	// rotation
-	public var rot (get_rot, set_rot): Float = 0;
+	public var rotate (get_rotate, set_rotate): Float = 0;
 	
     //Wich one to use: left, right, center, etc.
     @:noCompletion private var _xReg : Int = _X_USE_LEFT;
@@ -1080,7 +1080,7 @@ class Widget extends TweenSprite{
 		return registration;
 	}
 	
-	@:final @:noCompletion private function set_rot ( rot: Float ) : Float
+	@:final @:noCompletion private function set_rotate ( rot: Float ) : Float
 	{
 		this.rotation = rot;
 		
@@ -1092,7 +1092,7 @@ class Widget extends TweenSprite{
 		return this.rotation;
 	}
 	
-	@:final @:noCompletion private function get_rot ( ) : Float
+	@:final @:noCompletion private function get_rotate ( ) : Float
 	{
 		return this.rotation;
 	}	
