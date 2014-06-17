@@ -649,7 +649,7 @@ class Widget extends TweenSprite{
     */
     @:noCompletion private function set_left(l:Float) : Float {
         this._xUse = _X_USE_LEFT;
-        this.x     = l;
+        this.x     = l + _xRegCorrection(this._xUse);
         return this._left = l;
     }//function set_left()
 
@@ -670,7 +670,7 @@ class Widget extends TweenSprite{
     @:noCompletion private function set_right(r:Float) : Float {
         this._xUse = _X_USE_RIGHT;
         if( this.wparent != null ){
-            this.x = this.wparent._width - r - this.w;
+            this.x = this.wparent._width - r - this.w + _xRegCorrection(this._xUse);
         }
         return this._right = r;
     }//function set_right()
@@ -701,7 +701,7 @@ class Widget extends TweenSprite{
         this._xUse = _X_USE_LEFT_PERCENT;
 
         if( this.wparent != null ){
-            this.x = this.wparent._width * lp / 100;
+            this.x = (this.wparent._width * lp / 100) + _xRegCorrection(this._xUse);
         }
 
         return this._leftPercent = lp;
@@ -733,7 +733,7 @@ class Widget extends TweenSprite{
         this._xUse = _X_USE_RIGHT_PERCENT;
 
         if( this.wparent != null ){
-            this.x = this.wparent._width - this.wparent._width * rp / 100 - this.w;
+            this.x = (this.wparent._width - this.wparent._width * rp / 100 - this.w) + _xRegCorrection(this._xUse);
         }
 
         return this._rightPercent = rp;
@@ -763,7 +763,7 @@ class Widget extends TweenSprite{
     */
     @:noCompletion private function set_top(t:Float) : Float {
         this._yUse = _Y_USE_TOP;
-        this.y     = t;
+        this.y     = t + _yRegCorrection(this._yUse);
         return this._top = t;
     }//function set_top()
 
@@ -784,7 +784,7 @@ class Widget extends TweenSprite{
     @:noCompletion private function set_bottom(b:Float) : Float {
         this._yUse = _Y_USE_BOTTOM;
         if( this.wparent != null ){
-            this.y = this.wparent._height - b - this.h;
+            this.y = (this.wparent._height - b - this.h) + _yRegCorrection(this._yUse);
         }
         return this._bottom = b;
     }//function set_bottom()
@@ -815,7 +815,7 @@ class Widget extends TweenSprite{
         this._yUse = _Y_USE_TOP_PERCENT;
 
         if( this.wparent != null ){
-            this.y = this.wparent._height * tp / 100;
+            this.y = (this.wparent._height * tp / 100) + _yRegCorrection(this._yUse);
         }
 
         return this._topPercent = tp;
@@ -847,7 +847,7 @@ class Widget extends TweenSprite{
         this._yUse = _Y_USE_BOTTOM_PERCENT;
 
         if( this.wparent != null ){
-            this.y = this.wparent._height - this.wparent._height * bp / 100 - this.h;
+            this.y = (this.wparent._height - this.wparent._height * bp / 100 - this.h) + _yRegCorrection(this._yUse);
         }
 
         return this._bottomPercent = bp;
