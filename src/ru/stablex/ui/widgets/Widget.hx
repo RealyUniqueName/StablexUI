@@ -360,9 +360,9 @@ class Widget extends TweenSprite{
 		{
 			switch ( this._xReg )
 			{
-				case _X_REG_LEFT: return this.get_rotated_w();
+				case _X_REG_LEFT: return this.get_rotated_w() * this.scaleX;
 				//case _X_REG_RIGHT: return 0;
-				case _X_REG_CENTER: return (this.get_rotated_w() / 2);
+				case _X_REG_CENTER: return (this.get_rotated_w() / 2) * this.scaleX;
 			}
 		}
 		else // assume LEFT
@@ -370,8 +370,8 @@ class Widget extends TweenSprite{
 			switch ( this._xReg )
 			{
 				//case _X_REG_LEFT: return 0;
-				case _X_REG_RIGHT: return -this.get_rotated_w();
-				case _X_REG_CENTER: return -(this.get_rotated_w() / 2);
+				case _X_REG_RIGHT: return -this.get_rotated_w() * this.scaleX;
+				case _X_REG_CENTER: return -(this.get_rotated_w() / 2) * this.scaleX;
 			}
 		}
 		
@@ -384,9 +384,9 @@ class Widget extends TweenSprite{
 		{
 			switch ( this._yReg )
 			{
-				case _Y_REG_TOP: return this.get_rotated_h();
+				case _Y_REG_TOP: return this.get_rotated_h() * this.scaleY;
 				//case _Y_REG_BOTTOM: return 0;
-				case _Y_REG_MIDDLE: return (this.get_rotated_h() / 2);
+				case _Y_REG_MIDDLE: return (this.get_rotated_h() / 2) * this.scaleY;
 			}
 		}
 		else // assume TOP
@@ -394,8 +394,8 @@ class Widget extends TweenSprite{
 			switch ( this._yReg )
 			{
 				//case _Y_REG_TOP: return 0;
-				case _Y_REG_BOTTOM: return -this.get_rotated_h();
-				case _Y_REG_MIDDLE: return -(this.get_rotated_h() / 2);
+				case _Y_REG_BOTTOM: return -this.get_rotated_h() * this.scaleY;
+				case _Y_REG_MIDDLE: return -(this.get_rotated_h() / 2) * this.scaleY;
 			}
 		}
 		
