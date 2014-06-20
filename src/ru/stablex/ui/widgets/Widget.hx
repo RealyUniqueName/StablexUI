@@ -1053,7 +1053,7 @@ class Widget extends TweenSprite{
 		
 		this._yReg = _Y_REG_TOP;
 		this._xReg = _X_REG_LEFT;
-
+		
         for(reg in registrations){
             switch(reg){
                 case 'top'    : this._yReg = _Y_REG_TOP;

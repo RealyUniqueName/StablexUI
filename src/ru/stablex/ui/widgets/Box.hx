@@ -59,11 +59,8 @@ class Box extends Widget{
         */
         @:noCompletion static private function _objWidth (obj:DisplayObject, ignoreRot:Bool=false) : Float {
             // #if html5
-				if ( !ignoreRot && (obj.rotation % 90 == 0) && (obj.rotation % 180 != 0) ) {
-					return Box._objHeight(obj, true);
-				}
                 if( Std.is(obj, Widget) ){
-                    return cast(obj, Widget).w;
+                    return cast(obj, Widget).get_rotated_w() * cast(obj, Widget).scaleX;
                 }else if( Std.is(obj, flash.text.TextField) ){
                     return cast(obj, flash.text.TextField).textWidth + 4;
                 }else{
@@ -81,11 +78,8 @@ class Box extends Widget{
         */
         @:noCompletion static private function _objHeight (obj:DisplayObject, ignoreRot:Bool=false) : Float {
             // #if html5
-				if ( !ignoreRot && (obj.rotation % 90 == 0) && (obj.rotation % 180 != 0) ) {
-					return Box._objWidth(obj, true);
-				}
                 if( Std.is(obj, Widget) ){
-                    return cast(obj, Widget).h;
+                    return cast(obj, Widget).get_rotated_h() * cast(obj, Widget).scaleY;
                 }else if( Std.is(obj, flash.text.TextField) ){
                     return cast(obj, flash.text.TextField).textHeight + 4;
                 }else{
@@ -180,7 +174,6 @@ class Box extends Widget{
             var childW : Float = 0;
 
             for(i in 0...this.numChildren){
-                child = this.getChildAt(i);
                 child = this.getChildAt(i);
                 if( child.visible ){
                     childW = Box._objWidth(child);
