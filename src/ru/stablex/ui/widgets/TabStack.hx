@@ -141,7 +141,7 @@ class TabStack extends Box{
     */
     private function _onChange(e:MouseEvent) : Void {
         this.refresh();
-        this.dispatchEvent( new WidgetEvent(WidgetEvent.REMOVED) );
+        this.dispatchEvent( new WidgetEvent(WidgetEvent.CHANGE) );
     }//function _onChange()
 
 
