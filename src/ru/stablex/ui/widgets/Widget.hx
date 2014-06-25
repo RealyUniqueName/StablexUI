@@ -1095,5 +1095,23 @@ class Widget extends TweenSprite{
 	@:final @:noCompletion private function get_rotate ( ) : Float
 	{
 		return this.rotation;
-	}	
+	}
+	
+	public function x_relativeTo ( p_widget:Widget ) : Float
+	{
+		return this.x + ( ( (this.wparent != null) && (this.wparent != p_widget) ) ?
+			this.wparent.x_relativeTo(p_widget) : 0 );
+	}
+	
+	public function y_relativeTo ( p_widget:Widget ) : Float
+	{
+		return this.y + ( ( (this.wparent != null) && (this.wparent != p_widget) ) ?
+			this.wparent.y_relativeTo(p_widget) : 0 );
+	}
+	
+	public function rotation_relativeTo ( p_widget:Widget ) : Float
+	{
+		return this.rotate + ( ( (this.wparent != null) && (this.wparent != p_widget) ) ?
+			this.wparent.rotation_relativeTo(p_widget) : 0 );
+	}
 }//class Widget
