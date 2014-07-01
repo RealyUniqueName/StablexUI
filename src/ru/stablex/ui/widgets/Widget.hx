@@ -106,6 +106,8 @@ class Widget extends TweenSprite{
 
     //Skin processor (see ru.stablex.ui.skins package)
     public var skin : Skin;
+    //The currently applied skin
+    private var _appliedSkin : Skin = null;
     /**
     * Flag for <type>UIBuilder</type>. Do not modify this.
     * @private

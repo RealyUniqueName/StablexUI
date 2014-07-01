@@ -16,22 +16,21 @@ class Layer extends Skin{
 
 
     /**
-    * Apply skin to widget
+    *Draw, unDraw and reDraw skin to widget
     *
     */
-    override public function apply (w:Widget) : Void {
-        if( this.clear ){
-            w.graphics.clear();
-        }
+    override public function draw (w:Widget) : Void {
+      this.behind.draw(w);
+      this.current.draw(w);
+    }//function draw()
 
-        if( this.behind != null ){
-            this.behind.clear = false;
-            this.behind.apply(w);
-        }
+    override public function unDraw (w:Widget) : Void {
+      this.behind.unDraw(w);
+      this.current.unDraw(w);
+    }//function unDraw()
 
-        if( this.current != null ){
-            this.current.clear = false;
-            this.current.apply(w);
-        }
-    }//function apply()
+    override public function reDraw (w:Widget) : Void {
+      this.behind.reDraw(w);
+      this.current.reDraw(w);
+    }//function draw()
 }//class Layer
