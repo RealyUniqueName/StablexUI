@@ -43,6 +43,8 @@ class Widget extends TweenSprite{
 
     //Widget width in pixels
     public var w (get_w,set_w)   : Float;
+    //Width of content area
+    public var contentWidth (get_contentWidth, null) : Float;
     //Widget width in % of parent's width
     public var widthPt (get_widthPt,set_widthPt) : Float;
     @:noCompletion private var _width                   : Float = 0;
@@ -51,6 +53,8 @@ class Widget extends TweenSprite{
 
     //Widget height height in pixels
     public var h (get_h,set_h)  : Float;
+    //Height of content area
+    public var contentHeight (get_contentHeight, null) : Float;
     //Widget height in % of parent's height
     public var heightPt (get_heightPt,set_heightPt) : Float;
     @:noCompletion private var _height                   : Float = 0;
@@ -255,8 +259,8 @@ class Widget extends TweenSprite{
         //Resize if our size is defined in percents
         if( this._widthUsePercent || this._heightUsePercent ){
             this.resize(
-                (this._widthUsePercent ? newParent._width * this._widthPercent / 100 : this._width),
-                (this._heightUsePercent ? newParent._height * this._heightPercent / 100 : this._height),
+                (this._widthUsePercent ? newParent.contentWidth * this._widthPercent / 100 : this._width),
+                (this._heightUsePercent ? newParent.contentHeight * this._heightPercent / 100 : this._height),
                 true
             );
         }
@@ -296,8 +300,8 @@ class Widget extends TweenSprite{
         //Resize if our size is defined in percents
         if( this._widthUsePercent || this._heightUsePercent ){
             this.resize(
-                (this._widthUsePercent ? parent._width * this._widthPercent / 100 : this._width),
-                (this._heightUsePercent ? parent._height * this._heightPercent / 100 : this._height),
+                (this._widthUsePercent ? parent.contentWidth * this._widthPercent / 100 : this._width),
+                (this._heightUsePercent ? parent.contentHeight * this._heightPercent / 100 : this._height),
                 true
             );
         }
@@ -868,6 +872,20 @@ class Widget extends TweenSprite{
         return this._height;
     }//function get_h()
 
+    /**
+      * Get the height of the content
+      */
+    @:noCompletion private function get_contentHeight() : Float {
+      return h;
+    }//function get_content Height
+
+    /**
+      * Get the width of the content
+      */
+
+    @:noCompletion private function get_contentWidth() : Float {
+      return w;
+    }//function get_contentWidth()
 
     /**
     * Width percent setter
@@ -878,7 +896,7 @@ class Widget extends TweenSprite{
         this._widthUsePercent = true;
 
         if( this.wparent != null ){
-            this._width = this.wparent._width * wp / 100;
+            this._width = this.wparent.contentWidth * wp / 100;
             if( !this._silentResize ){
                 this._onResize();
             }
@@ -914,7 +932,7 @@ class Widget extends TweenSprite{
         this._heightUsePercent = true;
 
         if( this.wparent != null ){
-            this._height = this.wparent._height * hp / 100;
+            this._height = this.wparent.contentHeight * hp / 100;
             if( !this._silentResize ){
                 this._onResize();
             }
