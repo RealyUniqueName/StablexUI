@@ -90,6 +90,8 @@ class Text extends Box{
     *
     */
     override public function refresh() : Void {
+        this.label.width  = this.w - this.paddingLeft - this.paddingRight;
+        this.label.height = this.h - this.paddingTop - this.paddingBottom;
         if( this.highlighted ){
             this.label.defaultTextFormat = this.highlightFormat;
             if( this.label.text.length > 0 ){
