@@ -15,28 +15,32 @@ class InputText extends Text{
     * Constructor
     *
     */
+    public var disabled :Bool = false;
+    
     public function new () : Void {
         super();
 
-        #if !html5
-            this.label.type = flash.text.TextFieldType.INPUT;
-        #else
-            //due to strange bug we need this hack
-            this.addEventListener(Event.ADDED_TO_STAGE, function(e:Event){
+        if (!disabled){
+            #if !html5
                 this.label.type = flash.text.TextFieldType.INPUT;
-                Reflect.field(this.label, '__graphics').__surface.style.width = this.w + "px";
-                Reflect.field(this.label, '__graphics').__surface.style.height = this.h + "px";
-                Reflect.field(this.label, '__graphics').__surface.style.overflow = "hidden";
-                if( this.label.wordWrap ){
-                    Reflect.field(this.label, '__graphics').__surface.style.whiteSpace = "normal";
-                }else{
-                    Reflect.field(this.label, '__graphics').__surface.style.whiteSpace = "nowrap";
-                }
-            });
-        #end
+            #else
+                //due to strange bug we need this hack
+                this.addEventListener(Event.ADDED_TO_STAGE, function(e:Event){
+                    this.label.type = flash.text.TextFieldType.INPUT;
+                    Reflect.field(this.label, '__graphics').__surface.style.width = this.w + "px";
+                    Reflect.field(this.label, '__graphics').__surface.style.height = this.h + "px";
+                    Reflect.field(this.label, '__graphics').__surface.style.overflow = "hidden";
+                    if( this.label.wordWrap ){
+                        Reflect.field(this.label, '__graphics').__surface.style.whiteSpace = "normal";
+                    }else{
+                        Reflect.field(this.label, '__graphics').__surface.style.whiteSpace = "nowrap";
+                    }
+                });
+            #end
 
-        this.label.autoSize = flash.text.TextFieldAutoSize.NONE;
-        this.format.align   = flash.text.TextFormatAlign.LEFT;
+            this.label.autoSize = flash.text.TextFieldAutoSize.NONE;
+            this.format.align   = flash.text.TextFormatAlign.LEFT;
+        }
     }//function new()
 
 
@@ -59,6 +63,10 @@ class InputText extends Text{
                 Reflect.field(this.label, '__graphics').__surface.style.whiteSpace = "nowrap";
             }
         #end
+        if (disabled)
+           {this.label.type = null;}
+        else {this.label.type = flash.text.TextFieldType.INPUT;}  
+        
     }//function refresh()
 
 #if html5
