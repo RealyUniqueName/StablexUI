@@ -6,6 +6,7 @@
     "description"  : "StablexUI is a crossplatform UI engine.",
     "version"      : "1.0.17",
     "releasenote"  : "Dispatch events on change active child of TabStack & ViewStack",
+    "classPath"    : "src",
     "contributors" : ["RealyUniqueName"],
     "dependencies" : {
         "openfl"        : "",
