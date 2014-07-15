@@ -1,5 +1,6 @@
 package ru.stablex.ui;
 
+import haxe.macro.Compiler;
 import haxe.macro.Context;
 import haxe.macro.Expr;
 #if macro
@@ -59,6 +60,10 @@ class UIBuilder {
     * @return - valid haxe code to inject in generated code
     */
     static public var meta : Hash<Xml->String->String> = new Hash();
+
+    /** theme package */
+    static private var _theme : String;
+
 #end
 
 
@@ -108,8 +113,13 @@ class UIBuilder {
     */
     macro static public function init(defaultsXmlFile:String = null, enableRTXml:Bool = false) : Expr {
         #if display
-            return macro true;
+            return macro {};
         #end
+        if( Context.defined('display') ) return macro {};
+
+        if( UIBuilder._theme != null ){
+            Compiler.include(UIBuilder._theme);
+        }
 
 		var code : String = '\nflash.Lib.current.stage.removeEventListener(flash.events.Event.ENTER_FRAME, ru.stablex.ui.UIBuilder.skinQueue);';
 		code += '\nflash.Lib.current.stage.addEventListener(flash.events.Event.ENTER_FRAME, ru.stablex.ui.UIBuilder.skinQueue);';
@@ -123,24 +133,63 @@ class UIBuilder {
             code += UIBuilder._regRTXml();
         }
 
+        var themeDefaults : Map<String,Array<String>> = (UIBuilder._theme == null ? new Map() : Theme.getDefaultsList(UIBuilder._theme));
+        var processedThemeDefaults : Array<String> = [];
+
         //If provided with file for defaults, generate closures for applying defaults to widgets
         if( defaultsXmlFile != null ){
             var root : Xml = Xml.parse( File.getContent(Context.resolvePath(defaultsXmlFile)) ).firstElement();
             for(widget in root.elements()){
-                code += '\nif( !ru.stablex.ui.UIBuilder.defaults.exists("' + widget.nodeName + '") ) ru.stablex.ui.UIBuilder.defaults.set("' + widget.nodeName + #if haxe3 '", new Map());' #else '", new Hash());' #end;
+                code += '\nif( !ru.stablex.ui.UIBuilder.defaults.exists("' + widget.nodeName + '") ) ru.stablex.ui.UIBuilder.defaults.set("' + widget.nodeName + '", new Map());';
+
+                var themeDef : Array<String> = themeDefaults.get(widget.nodeName);
+                themeDef = (themeDef == null ? [] : themeDef.copy());
+
+                //add defaults from custom xml
                 for(node in widget.elements()){
                     code += '\nru.stablex.ui.UIBuilder.defaults.get("' + widget.nodeName + '").set("' + node.nodeName + '", function(__ui__widget0:ru.stablex.ui.widgets.Widget) : Void {';
+
+                    //apply theme defaults
+                    if( Lambda.has(themeDef, node.nodeName) ){
+                        themeDef.remove(node.nodeName);
+                        code += '\n${UIBuilder._theme}.defaults.${widget.nodeName}.${node.nodeName}(__ui__widget0);';
+                    }
+
+                    //apply custom defaults
                     code += UIBuilder.construct(node, 1, widget.nodeName);
                     code += '\n});';
                 }
+
+                //add theme defaults which does not have custom overrides
+                for(def in themeDef){
+                    code += '\nru.stablex.ui.UIBuilder.defaults.get("${widget.nodeName}").set("$def", ${UIBuilder._theme}.defaults.${widget.nodeName}.${def});';
+                }
+                processedThemeDefaults.push(widget.nodeName);
+            }
+        }
+        //process theme defaults which were not found in custom defaults file
+        for(widget in themeDefaults.keys()){
+            if( Lambda.has(processedThemeDefaults, widget) ) continue;
+
+            code += '\nif( !ru.stablex.ui.UIBuilder.defaults.exists("$widget") ) ru.stablex.ui.UIBuilder.defaults.set("$widget", new Map());';
+            var themeDef : Array<String> = themeDefaults.get(widget);
+            if( themeDef != null ){
+                for(def in themeDef){
+                    code += '\nru.stablex.ui.UIBuilder.defaults.get("${widget}").set("$def", ${UIBuilder._theme}.defaults.${widget}.${def});';
+                }
+            }
+        }
+
+        if( UIBuilder._theme != null ){
+            code += '\nru.stablex.ui.UIBuilder.regSkins();';
+            if( Theme.hasMain(UIBuilder._theme) ){
+                code += '\n${UIBuilder._theme}.Main.main();';
             }
         }
 
         code = '(function() : Void {' + code + '})()';
 
-        if( defaultsXmlFile != null ){
-            UIBuilder._saveCode(defaultsXmlFile, code);
-        }
+        UIBuilder._saveCode((defaultsXmlFile == null ? 'UIBuilder_init.hx' : defaultsXmlFile), code);
 
         return UIBuilder._parse((defaultsXmlFile == null ? 'UIBuilder.hx' : defaultsXmlFile), code);
     }//function _init()
@@ -573,6 +622,9 @@ class UIBuilder {
         for(cls in UIBuilder._imports.iterator()){
             code += "\nru.stablex.ui.RTXml.regClass(" + cls + ");";
         }
+        for(shortcut in UIBuilder._events.keys()){
+            code += "\nru.stablex.ui.RTXml.regEvent('" + shortcut + "', " + UIBuilder._events.get(shortcut)[0] + ");";
+        }
 
         return code;
     }//function _regRTXml()
@@ -621,7 +673,13 @@ class UIBuilder {
     static private function _createClass(cls:String) : TypeDefinition {
         var xmlFile : String = UIBuilder._xmlClass.get(cls);
         if( xmlFile != null ){
-            return ClassBuilder.createClass(xmlFile, cls);
+            try{
+                return ClassBuilder.createClass(xmlFile, cls);
+            }catch(e:Dynamic){
+                Sys.println(haxe.CallStack.toString(haxe.CallStack.exceptionStack()));
+                Context.error(Std.string(e), Context.currentPos());
+                return null;
+            }
         }else{
             return null;
         }
@@ -717,42 +775,78 @@ class UIBuilder {
     * @throw <type>String</type> if one of tag names in xml does not match ~/^([a-z0-9_]+):([a-z0-9_]+)$/i
     * @throw <type>String</type> if class specified for skin system is not registered with .regClass
     */
-    macro static public function regSkins(xmlFile:String) : Expr {
+    macro static public function regSkins(xmlFile:String = null) : Expr {
         #if display
-            return macro true;
+            return macro {};
         #end
+        if( Context.defined('display') ) return macro {};
 
         UIBuilder._checkInit();
+        var code : String = '';
 
-        var element = Xml.parse( File.getContent(Context.resolvePath(xmlFile)) ).firstElement();
+        //get list of skins in theme
+        var themeSkins : Map<String,String> = Theme.getSkinList(UIBuilder._theme);
 
-        var code   : String = '';
-        var erSkin : EReg = ~/^([a-z0-9_]+):([a-z0-9_]+)$/i;
-        var local  : String = '';
-        //process every skin
-        for(node in element.elements()){
-            if( !erSkin.match(node.nodeName) ) Err.trigger('Wrong skin format: ' + node.nodeName);
+        //load skins from xml files
+        if( xmlFile != null ){
+            var element = Xml.parse( File.getContent(xmlFile) ).firstElement();
 
-            var name : String = erSkin.matched(1);
-            var cls  : String = erSkin.matched(2);
+            var erSkin    : EReg = ~/^([a-z0-9_]+):([a-z0-9_]+)$/i;
+            var local     : String = '';
+            //process every skin
+            for(node in element.elements()){
+                if( !erSkin.match(node.nodeName) ) Err.trigger('Wrong skin format: ' + node.nodeName);
 
-            if( !UIBuilder._imports.exists(cls) ) Err.trigger('Class is not imported: ' + cls);
-            cls = UIBuilder._imports.get(cls);
+                var name : String = erSkin.matched(1);
+                var cls  : String = erSkin.matched(2);
 
-            local = '\nvar skin = new ' +  cls + '();';
+                if( !UIBuilder._imports.exists(cls) ) Err.trigger('Class is not imported: ' + cls);
+                cls = UIBuilder._imports.get(cls);
 
-            //apply xml attributes to skin
-            local += UIBuilder.attr2Haxe(node, 'skin');
+                //if user defined skin iterfer with theme skin
+                var themeCls : String = themeSkins.get(name);
+                if( themeCls != null ){
+                    if( themeCls != cls ){
+                        throw 'Skin defined by UIBuilder.regSkins() conflicts with skin defined by theme. `$cls` should be `$themeCls`';
+                    }
+                    local = '\nvar skin = ' + UIBuilder._theme + '.Skins.$name();';
+                    themeSkins.remove(name);
+                //theme does not have skin with such name
+                }else{
+                    local = '\nvar skin = new ' +  cls + '();';
+                }
 
-            code += '\nru.stablex.ui.UIBuilder.skins.set("' + name + '", function():ru.stablex.ui.skins.Skin{' + local + '\nreturn skin;\n});';
-        }//for(nodes)
+                //apply xml attributes to skin
+                local += UIBuilder.attr2Haxe(node, 'skin');
+
+                code += '\nru.stablex.ui.UIBuilder.skins.set("' + name + '", function():ru.stablex.ui.skins.Skin{' + local + '\nreturn skin;\n});';
+            }//for(nodes)
+        }//if( xmlFile )
+
+        //add theme skins
+        for(name in themeSkins.keys()){
+            code += '\nru.stablex.ui.UIBuilder.skins.set("$name", ${UIBuilder._theme}.Skins.$name);';
+        }
 
         code = '(function(){' + code + '})()';
 
+        if( xmlFile == null ) xmlFile = 'No-file';
         UIBuilder._saveCode(xmlFile, code);
 
         return UIBuilder._parse(xmlFile, code);
     }//function regSkins()
+
+
+    /**
+    * Set theme
+    *
+    * @param theme - package containing theme
+    */
+    #if !macro macro #end static public function setTheme (theme:String) : Expr {
+        UIBuilder._theme = theme;
+
+        return macro {};
+    }//function setTheme()
 
 
     /**
@@ -855,7 +949,7 @@ class UIBuilder {
 
             //go deeper for nested properties
             if( Type.typeof(Reflect.field(properties, property)) == TObject ){
-                UIBuilder.apply(Reflect.field(obj, property), Reflect.field(properties, property));
+                UIBuilder.apply(Reflect.getProperty(obj, property), Reflect.field(properties, property));
 
             //set scalar property
             }else{

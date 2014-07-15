@@ -4,21 +4,21 @@
 <Scroll name="'scale9Skin'" defaults="'Screen,Level2'">
     <VBox widthPt="100" childPadding="10" paddingTop="20">
         <VBox widthPt="100">
-            <Text defaults="'Default,Dark'" text="'Tile skin options'" widthPt="100" align="'center,middle'"/>
-            <Text defaults="'Default,DarkTip'" text="'There are more settings described in docs'" widthPt="100" align="'center,middle'" />
+            <Text defaults="'Dark'" text="'Tile skin options'" widthPt="100" align="'center,middle'"/>
+            <Text defaults="'DarkTip'" text="'There are more settings described in docs'" widthPt="100" align="'center,middle'" />
             <Widget defaults="'HRLight'" />
         </VBox>
 
         <!-- Size -->
         <HBox widthPt="100" align="'middle,center'" unifyChildren="true">
-            <Text defaults="'Default,Dark'" text="'Width'" />
-            <Slider defaults="'Settings'" min="10" max="$Lib.current.stage.stageWidth * 0.9" value="64" on-change="
+            <Text defaults="'Dark'" text="'Width'" />
+            <Slider min="10" max="$Lib.current.stage.stageWidth * 0.9" value="64" on-change="
                 #sex.w = $this.value;
             "/>
         </HBox>
         <HBox widthPt="100" align="'middle,center'" unifyChildren="true">
-            <Text defaults="'Default,Dark'" text="'Height'" />
-            <Slider defaults="'Settings'" min="10" max="200" value="64" on-change="
+            <Text defaults="'Dark'" text="'Height'" />
+            <Slider min="10" max="200" value="64" on-change="
                 #sex.h = $this.value;
             "/>
         </HBox>

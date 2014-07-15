@@ -54,28 +54,29 @@ class Tile extends Rect{
     */
     override public function draw (w:Widget) : Void {
         var bmp : BitmapData = this._getBmp();
+        var mx = new flash.geom.Matrix();
 
         #if !cpp
-            w.graphics.beginBitmapFill(bmp, null, true, this.smooth);
+            mx.translate(this.paddingLeft, this.paddingTop);
+            w.graphics.beginBitmapFill(bmp, mx, true, this.smooth);
             super.draw(w);
             w.graphics.endFill();
         #else
             if( (this.corners == null || this.corners.length == 0) && (w.w > bmp.width || w.h > bmp.height) ){
-                var x : Float = 0;
-                var y : Float = 0;
-                var mx = new flash.geom.Matrix();
+                var x : Float = this.paddingLeft;
+                var y : Float = this.paddingTop;
 
-                while( x < w.w ){
-                    y = 0;
-                    while( y < w.h ){
+                while( x < w.w - this.paddingRight ){
+                    y = this.paddingTop;
+                    while( y < w.h - this.paddingBottom ){
                         mx.identity();
                         mx.translate(x, y);
                         w.graphics.beginBitmapFill(bmp, mx, false, this.smooth);
                         w.graphics.drawRect(
                             x,
                             y,
-                            (x + bmp.width < w.w ? bmp.width : w.w - x),
-                            (y + bmp.height < w.h ? bmp.height : w.h - y)
+                            (x + bmp.width < w.w - this.paddingRight ? bmp.width : w.w - this.paddingRight - x),
+                            (y + bmp.height < w.h - this.paddingBottom ? bmp.height : w.h - this.paddingBottom - y)
                         );
                         w.graphics.endFill();
 
@@ -85,6 +86,7 @@ class Tile extends Rect{
                 }
 
             }else{
+                mx.translate(this.paddingLeft, this.paddingTop);
                 w.graphics.beginBitmapFill(bmp, null, true, this.smooth);
                 super.draw(w);
                 w.graphics.endFill();

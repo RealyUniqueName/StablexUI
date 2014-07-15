@@ -1,46 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <Skins>
-    <!-- buttons -->
-    <button:Paint color="0x999999" corners="[5]" />
-    <buttonHovered:Paint color="0x33b5e5" corners="[5]" />
-    <buttonPressed:Paint color="0x257390" corners="[5]" />
-
-    <!-- on/off switches -->
-    <switch:Paint color="0x555555" alpha="0.3"/>
-    <switchSliderOff:Paint color="0x555555" padding="1" corners="[5]"/>
-    <switchSliderOn:Paint color="0x0099cc" padding="1" corners="[5]"/>
-    <switchSliderDayNight:Gradient colors="[0xAAAAAA, 0x333333]" rotation="0" border="1" padding="2" corners="[20]" borderColor="0x333333" />
-
-    <!-- progress bar -->
-    <progress:Gradient
-        colors  = "[0x9c9e9c, 0x737573, 0x5a5d5a, 0x737173]"
-        ratios  = "[0, 127, 190, 255]"
-        corners = "[15]"
+    <switchSliderDayNight:Gradient
+        colors      = "[0xAAAAAA, 0x333333]"
+        rotation    = "0"
+        border      = "1"
+        padding     = "2"
+        corners     = "[20]"
+        borderColor = "0x333333"
     />
-    <progressBar:Paint color="0xFFFF00" corners="[15]" alpha="0.7" />
 
-    <!-- popups -->
-    <popup:Paint color="0x000000" alpha="0.8" />
-
-    <!-- HR lines -->
-    <hr:Paint color="0x282828" paddingLeft="10" paddingRight="10" />
-
-    <!-- options -->
-    <optionsBg:Paint color="0x444444" />
-
-    <!-- tabs -->
-    <tab:Paint color="0x333333" />
-    <tabActive:Layer
-        current:Paint-color = "0x333333"
-        current:Paint-paddingBottom = "6"
-        behind:Paint-color = "0x33b5e5"
-    />
-    <tabPressed:Layer
-        current:Paint-color = "0x33819d"
-        current:Paint-paddingBottom = "6"
-        behind:Paint-color = "0x33b5e5"
-    />
     <tabBottomActive:Layer
         current:Paint-color = "0x333333"
         current:Paint-paddingTop = "6"
@@ -52,11 +21,4 @@
         behind:Paint-color = "0x33b5e5"
     />
 
-    <Black1:Paint color="0x111111"/>
-    <BlackGradient1:Gradient colors="[0x000000, 0x2b3034]"/>
-    <BlackBlueStripe:Layer
-        current:Paint-color         = "0x000000"
-        current:Paint-paddingBottom = "3"
-        behind:Paint-color          = "0x33b5e5"
-    />
 </Skins>

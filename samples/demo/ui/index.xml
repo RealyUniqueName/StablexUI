@@ -16,8 +16,8 @@
 
     <!-- Header -->
     <HBox id="'topMenu'" defaults="'TopMenu'">
-        <Bmp src="'ui/android/img/ico/light/settings.png'" />
-        <Text defaults="'Default,H1'" text="'StablexUI'"/>
+        <Bmp bitmapData="ru.stablex.ui.themes.android4.Main.getBitmapData('img/ico/light/settings.png')" />
+        <Text defaults="'H1'" text="'StablexUI'"/>
     </HBox>
 
     <!-- Screens holder -->

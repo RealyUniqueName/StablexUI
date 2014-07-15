@@ -1,6 +1,7 @@
 package ru.stablex.ui.events;
 
 import flash.events.Event;
+import ru.stablex.ui.widgets.Scroll;
 
 
 
@@ -20,7 +21,8 @@ class ScrollEvent extends Event{
     * <type>flash.events.MouseEvent</type>.MOUSE_DOWN for scrolling by dragging, etc.
     */
     public var srcEvent (default, null) : Event;
-
+    /** scroll widget which dispatched this event */
+    public var scroll (get,never) : Scroll;
 
 /*******************************************************************************
 *   STATIC METHODS
@@ -65,6 +67,16 @@ class ScrollEvent extends Event{
 *   GETTERS / SETTERS
 *******************************************************************************/
 
-
+    /**
+    * Getter for `.scroll`
+    *
+    */
+    private inline function get_scroll () : Scroll {
+        return (
+            this.srcEvent != null && Std.is(this.srcEvent.target, Scroll)
+                ? cast this.srcEvent.target
+                : null
+        );
+    }//function get_scroll()
 
 }//class ScrollEvent

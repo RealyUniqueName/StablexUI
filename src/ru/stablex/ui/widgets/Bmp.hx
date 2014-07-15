@@ -17,6 +17,10 @@ class Bmp extends Widget{
     @:noCompletion public var _src : String = null;
     //Should we use smoothing?
     public var smooth : Bool = true;
+    /** Does image should be scaled to actual size of widget? */
+    public var stretch : Bool = false;
+    /** keep aspect ratio if `.stretch` is set to true? */
+    public var keepAspect : Bool = false;
     //set size depending on bitmap size
     public var autoSize (never,set_autoSize) : Bool;
     //set width depending on bitmap width
@@ -50,7 +54,28 @@ class Bmp extends Widget{
 *       STATIC METHODS
 *******************************************************************************/
 
-
+    /**
+    * Apply scaling transformations to matrix
+    *
+    */
+    static private inline function _applyScalingToMx (mx:Matrix, bmp:BitmapData, widget:Bmp) : Void {
+        if( widget.stretch ){
+            //keep aspect ratio
+            if( widget.keepAspect ){
+                var scale : Float = Math.min(
+                    (widget.autoWidth ? 1 : widget.w / bmp.width),
+                    (widget.autoHeight ? 1 : widget.h / bmp.height)
+                );
+                mx.scale(scale, scale);
+            //distort
+            }else{
+                mx.scale(
+                    (widget.autoWidth ? 1 : widget.w / bmp.width),
+                    (widget.autoHeight ? 1 : widget.h / bmp.height)
+                );
+            }
+        }
+    }//function _applyScalingToMx()
 
 /*******************************************************************************
 *       INSTANCE METHODS
@@ -124,11 +149,14 @@ class Bmp extends Widget{
 
                 var mx : Matrix = new Matrix();
                 #if !html5
+                    //stretching makes no sense for drawing portion of image singe image width and height is taken from this.w and this.h
+                    // Bmp._applyScalingToMx(mx, bmp, this);
                     mx.translate(-this.xOffset, -this.yOffset);
                 #else
                     var dest = new BitmapData(Std.int(width), Std.int(height));
                     dest.copyPixels(bmp, new Rectangle(this.xOffset, this.yOffset, width, height), new Point(0, 0));
                     bmp = dest;
+                    // Bmp._applyScalingToMx(mx, bmp, this);
                 #end
 
                 this.graphics.beginBitmapFill(bmp, mx, false, this.smooth);
@@ -138,8 +166,16 @@ class Bmp extends Widget{
 
         //draw full image
         }else{
-            this.graphics.beginBitmapFill(bmp, null, false, this.smooth);
-            this.graphics.drawRect(0, 0, bmp.width, bmp.height);
+            if( this.stretch ){
+                var mx : Matrix = new Matrix();
+                Bmp._applyScalingToMx(mx, bmp, this);
+                this.graphics.beginBitmapFill(bmp, mx, false, this.smooth);
+                this.graphics.drawRect(0, 0, bmp.width * mx.a, bmp.height * mx.d);
+            }else{
+                this.graphics.beginBitmapFill(bmp, null, false, this.smooth);
+                this.graphics.drawRect(0, 0, bmp.width, bmp.height);
+            }
+
             this.graphics.endFill();
         }
     }//function _draw()

@@ -1,0 +1,78 @@
+package ru.stablex.ui.misc;
+
+import flash.display.DisplayObject;
+import flash.text.TextField;
+import ru.stablex.ui.widgets.Widget;
+
+
+/**
+* Size calculations required due to some platforms inconsistency
+*
+*/
+class SizeTools {
+
+
+    /**
+    * Get object width
+    *
+    */
+    @:noCompletion static public inline function width (obj:DisplayObject) : Float {
+        // #if html5
+            if( Std.is(obj, Widget) ){
+                return cast(obj, Widget).w;
+            }else if( Std.is(obj, TextField) ){
+                return cast(obj, TextField).textWidth + 4;
+            }else{
+                return obj.width;
+            }
+        // #else
+        //     return (Std.is(obj, Widget) ? cast(obj, Widget).w : obj.width);
+        // #end
+    }//function width()
+
+
+    /**
+    * Get object height
+    *
+    */
+    @:noCompletion static public inline function height (obj:DisplayObject) : Float {
+        // #if html5
+            if( Std.is(obj, Widget) ){
+                return cast(obj, Widget).h;
+            }else if( Std.is(obj, TextField) ){
+                return cast(obj, TextField).textHeight + 4;
+            }else{
+                return obj.height;
+            }
+        // #else
+        //     return (Std.is(obj, Widget) ? cast(obj, Widget).h : obj.height);
+        // #end
+    }//function height()
+
+
+    /**
+    * Set object x
+    *
+    */
+    static public inline function setX (obj:DisplayObject, x:Float) : Void {
+        #if html5
+            obj.x = (Std.is(obj, TextField) ? obj.x = x + 2 : x);
+        #else
+            obj.x = x;
+        #end
+    }//function setX()
+
+
+    /**
+    * Set object y
+    *
+    */
+    static public inline function setY (obj:DisplayObject, y:Float) : Void {
+        #if html5
+            obj.y = (Std.is(obj, TextField) ? obj.y = y + 2 : y);
+        #else
+            obj.y = y;
+        #end
+    }//function setY()
+
+}//class SizeTools

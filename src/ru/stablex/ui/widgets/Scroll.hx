@@ -434,4 +434,13 @@ class Scroll extends Widget{
     }//function _wheelScroll()
 
 
+    /**
+    * Stop scrolling. Use this method to interrupt inertial scrolling
+    *
+    */
+    public function stopScrolling () : Void {
+        this.tweenStop(['scrollX', 'scrollY']);
+    }//function stopScrolling()
+
 }//class Scroll
+

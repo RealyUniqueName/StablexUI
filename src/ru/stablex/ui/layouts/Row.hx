@@ -1,6 +1,7 @@
 package ru.stablex.ui.layouts;
 
 import flash.display.DisplayObject;
+import ru.stablex.ui.misc.SizeTools;
 import ru.stablex.ui.widgets.Widget;
 import ru.stablex.ui.widgets.Box; // To acces static method _objHeight
 
@@ -66,7 +67,7 @@ class Row extends Layout{
                 }else if( this.rows[i] < 0 ){
                     negParts += arows[i] = this.rows[i];
                 }else if (this.rows[i] == 0) {
-                  freeSpace -= arows[i] = Box._objHeight(holder.getChildAt(i));
+                  freeSpace -= arows[i] = SizeTools.height(holder.getChildAt(i));
                 }else{
                     freeSpace -= arows[i] = height * this.rows[i];
                 }

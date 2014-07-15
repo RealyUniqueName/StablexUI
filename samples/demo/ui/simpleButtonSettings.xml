@@ -3,22 +3,22 @@
 <!-- settings for simple button -->
 <Scroll name="'simpleButtonSettings'" defaults="'Screen,Level2'">
     <VBox widthPt="100" childPadding="2" paddingTop="20">
-        <Text defaults="'Default,Dark'" text="'Basic settings for button'" widthPt="100" align="'center,middle'"/>
-        <Text defaults="'Default,DarkTip'" text="'There are more settings described in docs'" widthPt="100" align="'center,middle'" />
+        <Text defaults="'Dark'" text="'Basic settings for button'" widthPt="100" align="'center,middle'"/>
+        <Text defaults="'DarkTip'" text="'There are more settings described in docs'" widthPt="100" align="'center,middle'" />
         <Widget defaults="'HRLight'" />
 
         <!--Icon on/off -->
         <HBox widthPt="100" align="'middle'">
             <VBox left="10" align="'left,middle'" widthPt="60">
-                <Text defaults="'Default,Dark'" text="'Enable icon'" />
-                <Text defaults="'Default,DarkTip'" text="'It\'s also possible to set separate icon for each state'" />
+                <Text defaults="'Dark'" text="'Enable icon'" />
+                <Text defaults="'DarkTip'" text="'It\'s also possible to set separate icon for each state'" />
             </VBox>
 
             <Switch right="10" selected="false" on-change="
                 var btn = #Button(simpleButton);
 
                 if( $this.selected ){
-                    btn.ico.src = 'ui/android/img/ico/light/star.png';
+                    btn.ico.bitmapData = ru.stablex.ui.themes.android4.Main.getBitmapData('img/ico/light/star.png');
                 }else{
                     btn.ico = null;
                 }
@@ -32,8 +32,8 @@
         <!-- Vertical -->
         <HBox widthPt="100" align="'middle'">
             <VBox left="10" align="'left,middle'" widthPt="60">
-                <Text defaults="'Default,Dark'" text="'Vertical'" />
-                <Text defaults="'Default,DarkTip'" text="'Whether label and icon should be placed top to bottom or left to right'" />
+                <Text defaults="'Dark'" text="'Vertical'" />
+                <Text defaults="'DarkTip'" text="'Whether label and icon should be placed top to bottom or left to right'" />
             </VBox>
 
             <Switch right="10" selected="false" on-change="
@@ -54,7 +54,7 @@
         <!-- Ico position relative to label -->
         <HBox widthPt="100" align="'middle'">
             <VBox left="10" align="'left,middle'" widthPt="60">
-                <Text defaults="'Default,Dark'" text="'Icon before label'" />
+                <Text defaults="'Dark'" text="'Icon before label'" />
             </VBox>
 
             <Switch right="10" on-change="
@@ -75,8 +75,8 @@
         <!-- Apart on/off -->
         <HBox widthPt="100" align="'middle'">
             <VBox left="10" align="'left,middle'" widthPt="60">
-                <Text defaults="'Default,Dark'" text="'Move apart'" />
-                <Text defaults="'Default,DarkTip'" text="'Stick ico and text to opposite borders'" />
+                <Text defaults="'Dark'" text="'Move apart'" />
+                <Text defaults="'DarkTip'" text="'Stick ico and text to opposite borders'" />
             </VBox>
 
             <Switch right="10" selected="false" on-change="

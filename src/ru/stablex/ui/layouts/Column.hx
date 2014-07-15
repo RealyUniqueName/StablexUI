@@ -1,6 +1,7 @@
 package ru.stablex.ui.layouts;
 
 import flash.display.DisplayObject;
+import ru.stablex.ui.misc.SizeTools;
 import ru.stablex.ui.widgets.Widget;
 import ru.stablex.ui.widgets.Box; // To accrss static method _objWidth
 
@@ -67,7 +68,7 @@ class Column extends Layout{
                 }else if( this.cols[i] < 0 ){
                     negParts += acols[i] = this.cols[i];
                 }else if (this.cols[i] == 0){
-                    freeSpace -= acols[i] = Box._objWidth(holder.getChildAt(i));
+                    freeSpace -= acols[i] = SizeTools.width(holder.getChildAt(i));
                 }else{
                     freeSpace -= acols[i] = width * this.cols[i];
                 }

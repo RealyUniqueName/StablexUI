@@ -55,10 +55,11 @@ class Clock extends Text{
     *
     */
     public function run() : Void {
-        if( this._timer == null ){
-            this._timer = new Timer(1000);
+        if( this._timer != null ){
+            this._timer.stop();
         }
 
+        this._timer     = new Timer(1000);
         this._timer.run = this._counter;
     }//function run()
 

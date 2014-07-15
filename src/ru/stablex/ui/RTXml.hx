@@ -5,9 +5,6 @@ import hscript.Interp;
 import hscript.Parser;
 import ru.stablex.ui.widgets.Widget;
 
-#if haxe3
-private typedef Hash<T> = Map<String,T>;
-#end
 
 /**
 * Runtime xml processing
@@ -25,7 +22,12 @@ class RTXml {
     * classes registered for xml
     * @private
     */
-    static public var imports : Hash<Class<Dynamic>>;
+    static public var imports : Map<String, Class<Dynamic>>;
+    /**
+    * registered event types for xml handlers
+    * @private
+    */
+    static public var events : Map<String, String>;
 
     /**
     * xml tag class
@@ -57,11 +59,27 @@ class RTXml {
     * @private
     */
     static public function regClass (cls:Class<Dynamic>) : Void {
-        if( RTXml.imports == null ) RTXml.imports = new Hash();
+        if( RTXml.imports == null ) {
+            RTXml.imports = new Map();
+            //add some of standart classes
+            RTXml.imports.set('Std', Std);
+            RTXml.imports.set('Math', Math);
+            RTXml.imports.set('StringTools', StringTools);
+        }
 
         var clsName : String = Type.getClassName(cls);
         RTXml.imports.set(clsName.substr(clsName.lastIndexOf('.', clsName.length - 1) + 1), cls);
     }//function regClass()
+
+
+    /**
+    * Register event for usage in xml
+    * @private
+    */
+    static public function regEvent (shortcut:String, event:String) : Void {
+        if( RTXml.events == null ) RTXml.events = new Map();
+        RTXml.events.set(shortcut, event);
+    }//function regEvent()
 
 
     /**
@@ -142,13 +160,16 @@ class RTXml {
     public function new (interp:Interp = null) : Void {
         this.data     = [];
         this.children = [];
-        this.interp = (interp == null ? new Interp() : interp);
-        this.interp.variables.set("__ui__UIBuilder", UIBuilder);
 
-        //register imported classes
-        for(cls in RTXml.imports.keys()){
-            this.interp.variables.set("__ui__" + cls, RTXml.imports.get(cls));
+        if( interp == null ){
+            interp = new Interp();
+            //register imported classes
+            for(cls in RTXml.imports.keys()){
+                interp.variables.set("__ui__" + cls, RTXml.imports.get(cls));
+            }
         }
+
+        this.interp = interp;
     }//function new()
 
 
@@ -181,7 +202,7 @@ class RTXml {
         //add children
         if( this.children.length > 0 ){
             for(i in 0...this.children.length){
-                obj.addChild( this.children[i].create() );
+                obj.addChild( this.children[i].create(args) );
             }
         }
 
@@ -233,6 +254,8 @@ class Attribute {
     * @private
     */
     public var value : Expr;
+    /** whether this attibute defines handler */
+    public var isHandler : Bool = false;
 
 /*******************************************************************************
 *       STATIC METHODS
@@ -242,7 +265,7 @@ class Attribute {
     * Replace placeholders with actual code
     * @private
     */
-    static public inline function fillShortcuts (code:String) : String {
+    static public function fillShortcuts (code:String) : String {
         //this
         while( _erThis.match(code) ){
             code = _erThis.replace(code, '$1__ui__this$2');
@@ -291,6 +314,15 @@ class Attribute {
     * @private
     */
     public function new (name:String, expression:String) : Void {
+        this.init(name, expression);
+    }//function new()
+
+
+    /**
+    * Attribute initialization
+    *
+    */
+    public function init (name:String, expression:String) : Void {
         var all   : Array<String> = name.split("-");
         var local : Array<String> = all.shift().split(#if flash "." #else ":" #end);
 
@@ -303,37 +335,51 @@ class Attribute {
 
         //if this is nested property attribute
         if( all.length > 0 ){
-            this._child = new Attribute(all.join("-"), expression);
+            //if this is handler
+            if( this.name == 'on' ){
+                this.isHandler = true;
+                this._child    = new HandlerAttribute(all[0], expression);
+            //ordinary property
+            }else{
+                this._child = new Attribute(all.join("-"), expression);
+            }
         }else{
             this.value = RTXml.parser.parseString( Attribute.fillShortcuts(expression) );
         }
-    }//function new()
+    }//function init()
 
 
     /**
     * Apply attribute value to object
     * @private
     */
-    public function apply (obj:Dynamic, interp) : Void {
+    public function apply (obj:Dynamic, interp:Interp) : Void {
         //if this attribute defines nested property
         if( this._child != null ){
-            var subObj : Dynamic = Reflect.getProperty(obj, this.name);
+            //add event handler
+            if( this.isHandler ){
+                this._child.apply(obj, interp);
 
-            //if this property must be of specified type
-            if( this._instanceof != null && !Std.is(subObj, this._instanceof) ){
-                subObj = Type.createInstance(this._instanceof, []);
-                Reflect.setProperty(obj, this.name, subObj);
+            //set property value
+            }else{
+                var subObj : Dynamic = Reflect.getProperty(obj, this.name);
 
-                //if this is Widget instance, call required methods to finish instance creation
-                if( Std.is(subObj, Widget) ){
-                    var w : Widget = cast(subObj, Widget);
-                    UIBuilder.applyDefaults(w);
-                    w._onInitialize();
-                    w._onCreate();
+                //if this property must be of specified type
+                if( this._instanceof != null && !Std.is(subObj, this._instanceof) ){
+                    subObj = Type.createInstance(this._instanceof, []);
+                    Reflect.setProperty(obj, this.name, subObj);
+
+                    //if this is Widget instance, call required methods to finish instance creation
+                    if( Std.is(subObj, Widget) ){
+                        var w : Widget = cast(subObj, Widget);
+                        UIBuilder.applyDefaults(w);
+                        w._onInitialize();
+                        w._onCreate();
+                    }
                 }
-            }
 
-            this._child.apply(subObj, interp);
+                this._child.apply(subObj, interp);
+            }
 
         //simple attribute
         }else{
@@ -347,3 +393,35 @@ class Attribute {
 *******************************************************************************/
 
 }//class Attribute
+
+
+
+/**
+* Attributes representing handlers
+*
+*/
+class HandlerAttribute extends Attribute{
+
+
+    /**
+    * Attribute initialization
+    */
+    override public function init (type:String, expression:String) : Void {
+        this.name  = type;
+        this.value = RTXml.parser.parseString( Attribute.fillShortcuts(expression) );
+    }//function init()
+
+
+    /**
+    * Apply attribute value to object
+    * @private
+    */
+    override public function apply (obj:Dynamic, interp:Interp) : Void {
+        obj.addEventListener(RTXml.events.get(this.name), function(event:flash.events.Event){
+            interp.variables.set("__ui__this", event.currentTarget);
+            interp.variables.set("event", event);
+            interp.execute(this.value);
+        });
+    }//function apply()
+
+}//class HandlerAttribute

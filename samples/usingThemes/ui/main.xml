@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<VBox w="800" h="600" padding="20" childPadding="20" align="'left,top'">
+
+    <Button text="'Hit me!'" />
+
+    <Checkbox text="'check me!'" />
+
+    <HBox childPadding="20">
+        <Radio group="'radio1'" text="'pick me!'" selected="true"/>
+        <Radio group="'radio1'" text="'no, pick me!'"/>
+    </HBox>
+
+    <Options options="[['apple', 'wow'], ['pancakes', 'yay'], ['peanut butter', 'doh']]" />
+
+    <Progress w="300" on-enterFrame="$this.value += 0.5; if($this.value >= $this.max) $this.value = 0;" />
+
+    <Slider w="300"/>
+
+    <Switch />
+
+</VBox>

@@ -5,13 +5,14 @@
     <app path="./build" file="stablexui" main="com.example.Main" />
 
     <window width="320" height="480" background="0x888888" fps="30"/>
-    <window width="0" height="0" fullscreen="true" fps="30" if="mobile"/>
+    <window width="0" height="0" fullscreen="true" if="mobile"/>
 
     <assets path="ui/android" include="*" exclude="defaults.xml|skins.xml"/>
 
     <source name="../../src/" />
 
     <haxelib name="openfl" />
+    <set name="html5-backend" value="openfl-html5-dom" />
     <haxelib name="actuate" />
 
 </project>

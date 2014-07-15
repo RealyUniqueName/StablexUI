@@ -167,7 +167,7 @@ class ViewStack extends Widget{
         if( this._history.length == 0 || this._history[ this._history.length - 1 ] >= this.numChildren ){
             return null;
         }else{
-            var child : DisplayObject = this.getChildAt( this._history[ this._history.length - 1 ] );
+            var child : DisplayObject = this.getChildAt( this.currentIdx );//this._history[ this._history.length - 1 ] );
             if( child == null ){
                 return null;
             }else{
@@ -182,16 +182,17 @@ class ViewStack extends Widget{
     *
     */
     @:noCompletion private function get_currentIdx() : Int {
-        var idx : Int = this._history[ this._history.length - 1 ];
-        //if idx is out of bounds, get currently visible child index
-        if( idx >= this.numChildren ){
+        var idx : Int = 0;
+        // var idx : Int = this._history[ this._history.length - 1 ];
+        // //if idx is out of bounds, get currently visible child index
+        // if( idx >= this.numChildren ){
             for(i in 0...this.numChildren){
                 if( this.getChildAt(i).visible == true ){
                     this._history[ this._history.length - 1 ] = idx = i;
                     break;
                 }
             }
-        }
+        // }
         return idx;
     }//function get_currentIdx()
 
