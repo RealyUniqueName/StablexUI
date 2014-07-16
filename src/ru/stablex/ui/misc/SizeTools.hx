@@ -16,7 +16,7 @@ class SizeTools {
     * Get object width
     *
     */
-    @:noCompletion static public inline function width (obj:DisplayObject) : Float {
+    static public inline function width (obj:DisplayObject) : Float {
         // #if html5
             if( Std.is(obj, Widget) ){
                 return cast(obj, Widget).w;
@@ -35,7 +35,7 @@ class SizeTools {
     * Get object height
     *
     */
-    @:noCompletion static public inline function height (obj:DisplayObject) : Float {
+    static public inline function height (obj:DisplayObject) : Float {
         // #if html5
             if( Std.is(obj, Widget) ){
                 return cast(obj, Widget).h;

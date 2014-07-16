@@ -107,9 +107,9 @@ function genDoc($fname, $imports = array()){
         }
 
         #comment
-        if( preg_match('/^\s*\/\*\*/', $ln) ){
+        if( preg_match('/^\s*\/\*/', $ln) ){
             $comment .= $ln;
-            if( !preg_match('/^\s*\/\*/', $ln) ){
+            if( !preg_match('/\*\//', $ln) ){
                 $skip    = false;
                 $cnt     = 1;
                 while( $cnt > 0 ){
