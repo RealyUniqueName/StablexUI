@@ -13,9 +13,9 @@ define('DOC_BASE_URL', '/doc/');
 $urls = array(
     'manual'  => DOC_BASE_URL.'##type#.html',
     'ru'      => DOC_BASE_URL.'##type#.html',
-    'openfl'  => DOC_BASE_URL.'#http://nme.io/api/types/#type#.html',
-    'flash'   => DOC_BASE_URL.'#http://nme.io/api/types/#type#.html',
-    'default' => DOC_BASE_URL.'#http://haxe.org/api/#type#'
+    'openfl'  => DOC_BASE_URL.'#http://www.openfl.org/documentation/api/#type#.html',
+    'flash'   => DOC_BASE_URL.'#http://www.openfl.org/documentation/api/#type#.html',
+    'default' => DOC_BASE_URL.'#http://api.haxe.org/#type#.html'
 );
 
 $hide = array("ru.stablex.ui.ClassBuilder");
@@ -265,12 +265,17 @@ function url($classpath){
 
     #hack for actuate
     if( strpos($classpath, 'motion') !== false ){
-        $url = DOC_BASE_URL.'#http://haxe.org/com/libs/actuate';
+        $url = DOC_BASE_URL.'#http://www.openfl.org/documentation/basics/animation/actuate/';
 
     }elseif( isset($urls[ $parts[0] ]) ){
         $url = str_replace('#type#', $url, $urls[$parts[0]]);
     }else{
         $url = str_replace('#type#', $url, $urls['default']);
+    }
+
+    #hack for openfl docs
+    if (strpos($url, '/api/flash/')) {
+        $url = str_replace('/api/flash/', '/api/openfl/', $url);
     }
 
     return $url;

@@ -14,7 +14,7 @@ To enable run time xml processing initialize StablexUI with the second optional 
     ru.stablex.ui.UIBuilder.init("defaults.xml", true);
 </haxe>
 
-You also need to include <a href="http://lib.haxe.org/p/hscript" target="_blank">hscript</a> library in your nmml-file.
+You also need to include <a href="http://lib.haxe.org/p/hscript" target="_blank">hscript</a> library in your project.
 If you're still using Haxe 2.10, you have to replace line 159 in <i>haxelib_path</i>/hscript/2,0/hscript/Parser.hx
 with this:
 
