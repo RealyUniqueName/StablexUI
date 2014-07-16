@@ -2,6 +2,7 @@ package ru.stablex.ui.widgets;
 
 import flash.display.DisplayObject;
 import flash.events.MouseEvent;
+import flash.geom.Point;
 import flash.geom.Rectangle;
 import flash.Lib;
 import ru.stablex.ui.events.WidgetEvent;
@@ -156,9 +157,9 @@ class Options extends Button{
             }
 
             if( this.alignList ){
-                var rect : Rectangle = this.getRect(Lib.current);
-                this.list.left = rect.x + (this.w - this.list.w) / 2;
-                this.list.top  = rect.y + this.h;
+                var p : Point = this._getAlignedListCoordinates();
+                this.list.left = p.x;
+                this.list.top  = p.y;
 
                 //keep the list inside stage bounds{
                     if( this.list.left + this.list.w > Lib.current.stage.stageWidth ){
@@ -254,4 +255,20 @@ class Options extends Button{
         this.list.free();
         super.free(recursive);
     }//function free()
+
+
+    /**
+    * Get coordinates for `list` to use if `alignList` = true
+    *
+    */
+    @:noCompletion private function _getAlignedListCoordinates () : Point {
+        var target = this.list.getRenderTarget();
+        var p : Point = this.localToGlobal(new Point(0, 0));
+        p = target.globalToLocal(p);
+        p.x += (this.w - this.list.w) / 2;
+        p.y += this.h;
+
+        return p;
+    }//function _getAlignedListCoordinates()
+
 }//class Options

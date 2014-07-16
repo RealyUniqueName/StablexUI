@@ -45,24 +45,33 @@ class Gradient extends Rect{
     *
     */
     override public function draw (w:Widget) : Void {
-        //define gradient box {
-            var mx : Matrix = new Matrix();
-            mx.createGradientBox(
-                (this.width < 0 ? w.w : this.width),
-                (this.height < 0 ? w.h : this.height),
-                this.rotation,
-                this.tx,
-                this.ty
-            );
-        //}
+        #if html5
+            //gradient fill is not implemented in html5 target of openfl
+            this._adjustArrays();
+            w.graphics.beginFill(this.colors[0], this.alphas[0]);
+            super.draw(w);
+            w.graphics.endFill();
 
-        this._adjustArrays();
+        #else
+            //define gradient box {
+                var mx : Matrix = new Matrix();
+                mx.createGradientBox(
+                    (this.width < 0 ? w.w : this.width),
+                    (this.height < 0 ? w.h : this.height),
+                    this.rotation,
+                    this.tx,
+                    this.ty
+                );
+            //}
 
-        w.graphics.beginGradientFill((this.type == 'linear' ? GradientType.LINEAR : GradientType.RADIAL), #if flash cast #end this.colors, this.alphas, this.ratios, mx);
+            this._adjustArrays();
 
-        super.draw(w);
+            w.graphics.beginGradientFill((this.type == 'linear' ? GradientType.LINEAR : GradientType.RADIAL), #if flash cast #end this.colors, this.alphas, this.ratios, mx);
 
-        w.graphics.endFill();
+            super.draw(w);
+
+            w.graphics.endFill();
+        #end
     }//function draw()
 
 

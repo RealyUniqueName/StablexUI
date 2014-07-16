@@ -25,9 +25,6 @@ class SizeTools {
             }else{
                 return obj.width;
             }
-        // #else
-        //     return (Std.is(obj, Widget) ? cast(obj, Widget).w : obj.width);
-        // #end
     }//function width()
 
 
@@ -36,17 +33,22 @@ class SizeTools {
     *
     */
     static public inline function height (obj:DisplayObject) : Float {
-        // #if html5
-            if( Std.is(obj, Widget) ){
-                return cast(obj, Widget).h;
-            }else if( Std.is(obj, TextField) ){
+        if( Std.is(obj, Widget) ){
+            return cast(obj, Widget).h;
+        }else if( Std.is(obj, TextField) ){
+            #if html5
+                //hack for wrong textHeight calculations in html5 target of openfl 2.0
+                var tf    = cast(obj, TextField).defaultTextFormat;
+                var lines = cast(obj, TextField).numLines;
+                var h : Float = Std.int(tf.size * 1.185 * lines);
+                h = (Std.int(h) - h + 1) * lines + 1 + (lines - 1) * tf.leading + h;
+                return h + 4;
+            #else
                 return cast(obj, TextField).textHeight + 4;
-            }else{
-                return obj.height;
-            }
-        // #else
-        //     return (Std.is(obj, Widget) ? cast(obj, Widget).h : obj.height);
-        // #end
+            #end
+        }else{
+            return obj.height;
+        }
     }//function height()
 
 

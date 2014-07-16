@@ -24,13 +24,14 @@
                     process('.menu');
 
                     //hide everything below level 5
-                    $('.menu')
-                        .children('ul').children('li')
-                        .children('ul').children('li')
-                        .children('ul').children('li')
-                        .children('ul').children('li')
-                        .children('ul').children('li')
-                    .children('ul').hide();
+                    $('.menu').find('li ul li ul li ul li ul li ul').hide();
+                    // $('.menu')
+                    //     .children('ul').children('li')
+                    //     .children('ul').children('li')
+                    //     .children('ul').children('li')
+                    //     .children('ul').children('li')
+                    //     .children('ul').children('li')
+                    // .children('ul').hide();
                 });
 
                 $('.external').height($(window).height());

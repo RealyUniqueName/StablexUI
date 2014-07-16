@@ -1,5 +1,6 @@
 package ru.stablex.ui.widgets;
 
+import flash.display.DisplayObject;
 import flash.events.Event;
 import flash.Lib;
 
@@ -44,7 +45,7 @@ class Floating extends Box{
                 Lib.current.stage.addEventListener(Event.RESIZE, this._onStageResize);
             }
 
-            if( this.parent == Lib.current ){
+            if( this.parent == Lib.current.stage ){
                 Lib.current.stage.setChildIndex(this, Lib.current.stage.numChildren - 1);
             }else{
                 Lib.current.stage.addChild(this);
@@ -140,6 +141,15 @@ class Floating extends Box{
             }//switch()
         //}
     }//function _onStageResize()
+
+
+    /**
+    * Get DO which this Floating will be rendered to
+    *
+    */
+    public function getRenderTarget () : Null<DisplayObject> {
+        return (this.renderTo == null ? Lib.current.stage : UIBuilder.get(this.renderTo));
+    }//function getRenderTarget()
 
 
     /**

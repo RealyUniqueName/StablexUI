@@ -18,7 +18,7 @@ $urls = array(
     'default' => DOC_BASE_URL.'#http://api.haxe.org/#type#.html'
 );
 
-$hide = array("ru.stablex.ui.ClassBuilder", "ru.stablex.ui.Theme", "ru.stablex.ui.themes");
+$hide = array("ru.stablex.ui.ClassBuilder", "ru.stablex.ui.Theme");
 
 file_put_contents(
     'doc/menu.html',
@@ -66,7 +66,7 @@ function generate($srcPath, $dstPath = 'doc/', $imports = array()){
 
         $skip = false;
         foreach ($hide as $ignore) {
-            if (stripos($import, $ignore) !== false) {
+            if (strpos($import, $ignore) !== false) {
                 $skip = true;
                 break;
             }
