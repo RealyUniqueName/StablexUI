@@ -163,7 +163,7 @@ class Bmp extends Widget{
     * Setter src
     *
     */
-    private inline function set_src(src:String) : String {
+    private function set_src(src:String) : String {
         if( src != null ){
             this._bitmapData = null;
         }
