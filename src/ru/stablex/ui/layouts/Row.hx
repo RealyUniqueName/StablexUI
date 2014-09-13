@@ -24,8 +24,10 @@ class Row extends Layout{
     public var paddingBottom : Float = 0;
     //Distance between children
     public var cellPadding : Float = 0;
-    //Set children widget size according to column size
-    public var fit : Bool = true;
+    //Set children widget size according to row size
+    public var fit(null, set_fit) : Bool;
+    public var fitWidth : Bool = true;
+    public var fitHeight : Bool = true;
     /**
     * Rows sizes.
     *  - positive numbers greater than 1 define row height in pixels;
@@ -98,8 +100,8 @@ class Row extends Layout{
             }
 
             //size
-            if( this.fit && Std.is(child, Widget) ){
-                cast(child, Widget).resize(holder.w - this.paddingLeft - this.paddingRight, arows[i]);
+            if( this.fitHeight && Std.is(child, Widget) ){
+                cast(child, Widget).resize(fitWidth?(holder.w - this.paddingLeft - this.paddingRight):cast(child,Widget).w, arows[i]);
             }
 
             top += arows[i] + this.cellPadding;
@@ -109,6 +111,16 @@ class Row extends Layout{
 /*******************************************************************************
 *       GETTERS / SETTERS
 *******************************************************************************/
+
+    /**
+      * Setter `fit`.
+      *
+      */
+    @:noCompletion private function set_fit (fit:Bool) : Bool {
+      fitWidth = fit;
+      fitHeight = fit;
+      return fit;
+    }//function set_fit
 
     /**
     * Setter `padding`.

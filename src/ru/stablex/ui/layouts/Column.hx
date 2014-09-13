@@ -25,7 +25,9 @@ class Column extends Layout{
     //Distance between children
     public var cellPadding : Float = 0;
     //Set children widget size according to column size
-    public var fit : Bool = true;
+    public var fit(null, set_fit) : Bool;
+    public var fitWidth : Bool = true;
+    public var fitHeight : Bool = true;
     /**
     * Columns sizes.
     *  - positive numbers greater than 1 define column width in pixels;
@@ -99,8 +101,8 @@ class Column extends Layout{
             }
 
             //size
-            if( this.fit && Std.is(child, Widget) ){
-                cast(child, Widget).resize(acols[i], holder.h - this.paddingTop - this.paddingBottom);
+            if( this.fitWidth && Std.is(child, Widget) ){
+                cast(child, Widget).resize(acols[i], fitHeight?(holder.h - this.paddingTop - this.paddingBottom):cast(child,Widget).h);
             }
 
             left += acols[i] + this.cellPadding;
@@ -110,6 +112,16 @@ class Column extends Layout{
 /*******************************************************************************
 *       GETTERS / SETTERS
 *******************************************************************************/
+
+    /**
+      * Setter `fit`.
+      *
+      */
+    @:noCompletion private function set_fit (fit:Bool) : Bool {
+      fitWidth = fit;
+      fitHeight = fit;
+      return fit;
+    }//function set_fit
 
     /**
     * Setter `padding`.
