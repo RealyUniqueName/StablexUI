@@ -60,15 +60,16 @@ class ViewStack extends Widget{
     *
     * @param ignoreHistory - do not write this visit to history log
     * @param cb - callback to call after visible object was hidden
+    * @param reverseTrans - indicates if the transition should be reversed (because we are going back)
     */
-    public function showIdx (idx:Int, cb:Void->Void = null, ignoreHistory:Bool = false) : Void{
+    public function showIdx (idx:Int, cb:Void->Void = null, ignoreHistory:Bool = false, reverseTrans : Bool = false) : Void{
         if( idx < this.numChildren ){
             var toHide : DisplayObject = this.getChildAt(this.currentIdx);
             var toShow : DisplayObject = this.getChildAt(idx);
 
             //should we use transition?
             if( toHide != toShow && this.trans != null ){
-                this.trans.change(this, toHide, toShow, cb);
+                this.trans.change(this, toHide, toShow, cb, reverseTrans);
             }else{
                 toHide.visible = false;
                 toShow.visible = true;
@@ -119,7 +120,7 @@ class ViewStack extends Widget{
     */
     public inline function back(cb:Void->Void = null) : Void {
         if( this._history.length >= 2 ){
-            this.showIdx(this._history[ this._history.length - 2 ], cb, true);
+            this.showIdx(this._history[ this._history.length - 2 ], cb, true, true);
             this._history.pop();
         }
     }//function back()
