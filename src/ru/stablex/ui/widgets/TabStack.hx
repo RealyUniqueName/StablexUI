@@ -5,6 +5,7 @@ import flash.events.MouseEvent;
 import ru.stablex.Err;
 import ru.stablex.ui.widgets.ViewStack;
 import ru.stablex.ui.events.WidgetEvent;
+import ru.stablex.ui.UIBuilder;
 
 
 /**
@@ -21,6 +22,8 @@ class TabStack extends Box{
     public var wrap : Bool = false;
     //group name for tabs' titles
     private var _radioGroupName : String;
+    // how many tabs until a new line is created
+    public var tabsPerLine : Int = 100;
 
 
     /**
@@ -32,13 +35,22 @@ class TabStack extends Box{
 
         this.w = this.h = 100;
 
+        // Create vertical box, into which horizontal list of tabs is added
         this.tabBar = UIBuilder.create(Box, {
             widthPt    : 100,
+            autoHeight : true,
+            vertical   : true,
+            align      : 'left,bottom'
+        });
+        // Create first line of tabs, since we need at least one line
+        var firstLine = UIBuilder.create(Box, {
+          widthPt      : 100,
             autoHeight : true,
             vertical   : false,
             align      : 'left,bottom'
         });
         this.addChild(this.tabBar);
+        this.tabBar.addChild(firstLine);
     }//function new()
 
 
@@ -144,6 +156,17 @@ class TabStack extends Box{
         this.dispatchEvent( new WidgetEvent(WidgetEvent.CHANGE) );
     }//function _onChange()
 
+    /** Helper function testing if a specific title (Radio) is
+      * in one of the tabbar rows.*/
+    private function isTitleInTabBar(title:Radio) : Bool {
+      for (rowIndex in 0 ... this.tabBar.numChildren) {
+        if (title.parent == getTabBarRow(rowIndex)) {
+          return true;
+        }
+      }
+      // Not found
+      return false;
+    }
 
     /**
     * Add child. Only instances of <type>TabPage</type> allowed.
@@ -158,9 +181,10 @@ class TabStack extends Box{
             //add tab's title to `.tabBar`
             var tab : TabPage = cast(child, TabPage);
             tab.visible = false;
-            if( tab.title.parent != this.tabBar ){
+            if( !isTitleInTabBar(tab.title) ){
                 tab.title.group = this._radioGroupName;
-                this.tabBar.addChild(tab.title);
+                getTabBarRow(0).addChild(tab.title);
+                reorganizeTabBar();
             }
 
             //listen for tab selection
@@ -184,9 +208,10 @@ class TabStack extends Box{
             //add tab's title to `.tabBar`
             var tab : TabPage = cast(child, TabPage);
             tab.visible = false;
-            if( tab.title.parent != this.tabBar ){
+            if( !isTitleInTabBar(tab.title) ){
                 tab.title.group = this._radioGroupName;
-                this.tabBar.addChild(tab.title);
+                getTabBarRow(0).addChild(tab.title);
+                reorganizeTabBar();
             }
 
             //listen for tab selection
@@ -195,6 +220,12 @@ class TabStack extends Box{
         return super.addChildAt(child, idx);
     }//function addChildAt()
 
+    /** Helper function, removing title from all rows of the tabbar*/
+    private function removeTitleFromTabBar(title:Radio) {
+      for (rowIndex in 0...this.tabBar.numChildren) {
+        getTabBarRow(rowIndex).removeChild(title);
+      }
+    }
 
     /**
     * Remove child.
@@ -203,7 +234,8 @@ class TabStack extends Box{
     override public function removeChild(child:DisplayObject) : DisplayObject {
         if( Std.is(child, TabPage) ){
             cast(child, TabPage).title.removeEventListener(MouseEvent.CLICK, this._onChange);
-            this.tabBar.removeChild(cast(child, TabPage).title);
+            removeTitleFromTabBar(cast(child, TabPage).title);
+            reorganizeTabBar();
         }
         return super.removeChild(child);
     }//function removeChild()
@@ -218,12 +250,54 @@ class TabStack extends Box{
         if( Std.is(child, TabPage) ){
             cast(child, TabPage).title.removeEventListener(MouseEvent.CLICK, this._onChange);
             if( !this.tabBar.destroyed ){
-                this.tabBar.removeChild(cast(child, TabPage).title);
+                removeTitleFromTabBar(cast(child, TabPage).title);
+                reorganizeTabBar();
             }
         }
         return child;
     }//function removeChildAt()
 
+    /** Helper function to return the n-th row of the tabbar, casted to the proper type.
+      */
+    private function getTabBarRow(idx:Int) : Box {
+      if (this.tabBar.numChildren <= idx) {
+        return null;
+      }
+      return cast this.tabBar.getChildAt(idx);
+    }
+
+    /** Reorganize tabs. Called whenever a tab is added or removed, putting the tabs in the
+      * desired number of lines.
+     */
+    private function reorganizeTabBar() : Void {
+      // Go through all rows, which are the children of the tabBar
+      for (rowIndex in 0...this.tabBar.numChildren) {
+        var row = getTabBarRow(rowIndex);
+
+        while(row.numChildren > tabsPerLine) {
+          if (this.tabBar.numChildren <= rowIndex+1) {
+            // Add a row
+            this.tabBar.addChild(UIBuilder.create(Box, {
+              widthPt      : 100,
+              autoHeight : true,
+              vertical   : false,
+              align      : 'left,bottom'
+            }));
+          }
+          // Move the last child into the next tab
+          getTabBarRow(rowIndex+1).addChild(row.getChildAt(row.numChildren-1));
+        }
+        // Move tabs from next line into this line
+        var nextRow : Box = getTabBarRow(rowIndex+1);
+        while (row.numChildren < tabsPerLine && nextRow != null && nextRow.numChildren > 0) {
+          row.addChild(nextRow.getChildAt(0));
+        }
+      }
+      // Remove empty rows but the first one
+      while(this.tabBar.numChildren > 1 && getTabBarRow(this.tabBar.numChildren-1).numChildren == 0) {
+        getTabBarRow(this.tabBar.numChildren-1).free();
+      }
+    }//function reorganizeTabBar()
 
     /**
     * Show next tab.
