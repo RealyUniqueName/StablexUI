@@ -28,7 +28,7 @@ class Transition {
     *
     * @param cb - callback to call after visible object was hidden
     */
-    public function change (vs:Widget, toHide:DisplayObject, toShow:DisplayObject, cb:Void->Void = null) : Void{
+    public function change (vs:Widget, toHide:DisplayObject, toShow:DisplayObject, cb:Void->Void = null, reverse : Bool = false) : Void{
     }//function change()
 
 

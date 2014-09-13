@@ -28,12 +28,22 @@ class Slide extends Transition{
     *
     * @param cb - callback to call after visible object was hidden
     */
-    override public function change (vs:Widget, toHide:DisplayObject, toShow:DisplayObject, cb:Void->Void = null) : Void{
+    override public function change (vs:Widget, toHide:DisplayObject, toShow:DisplayObject, cb:Void->Void = null, reverse : Bool = false) : Void{
         if(toHide != null){
           _reset_x = toHide.x;
           _reset_y = toHide.y;
         }
-        switch(this.direction){
+        // Correct for reverse
+        var usedDir = this.direction;
+        if (reverse) {
+          usedDir = switch(usedDir) {
+          case 'right': 'left';
+          case 'top': 'bottom';
+          case 'bottom': 'top';
+          case _: 'right';
+          }
+        }
+        switch(usedDir){
             case 'right':   this._slideRight(vs, toHide, toShow, cb);
             case 'top':     this._slideTop(vs, toHide, toShow, cb);
             case 'bottom':  this._slideBottom(vs, toHide, toShow, cb);

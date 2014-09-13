@@ -15,7 +15,7 @@ class Fade extends Transition{
     *
     * @param cb - callback to call after visible object was hidden
     */
-    override public function change (vs:Widget, toHide:DisplayObject, toShow:DisplayObject, cb:Void->Void = null) : Void{
+    override public function change (vs:Widget, toHide:DisplayObject, toShow:DisplayObject, cb:Void->Void = null, reverse : Bool = false) : Void{
         var w : Widget;
 
         //hide
