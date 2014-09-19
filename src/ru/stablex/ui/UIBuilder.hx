@@ -37,6 +37,8 @@ class UIBuilder {
         static private var _erThis    : EReg = ~/(^|[^\$])\$this([^a-z0-9_])/i;
         //checks whether we need to create object of specified class (second matched group) for this attribute (first matched group)
         static private var _erAttrCls : EReg = ~/(([-a-z0-9_]+):([a-z0-9_]+))/i;
+        //for replacing %someThing with customReplace('someThing')
+        static private var _erCustom  : EReg = ~/(^|[^%])%([a-z0-9_]+)/i;
     //}
 
     static private var _events  : Hash<Array<String>> = new Hash();
@@ -540,6 +542,7 @@ class UIBuilder {
         var castId = UIBuilder._erCastId;
         var arg    = UIBuilder._erCodeArg;
         var erThis = UIBuilder._erThis;
+        var erCustom = UIBuilder._erCustom;
 
         //this
         while( erThis.match(code) ){
@@ -572,9 +575,15 @@ class UIBuilder {
             code = arg.replace(code, '$1__ui__arguments.$2');
         }
 
+        // Custom string replace
+        while ( erCustom.match(code) ) {
+          code = erCustom.replace(code, "ru.stablex.ui.UIBuilder.customStringReplace('$2')");
+        }
+
         code = StringTools.replace(code, "##", "#");
         code = StringTools.replace(code, "$$", "$");
         code = StringTools.replace(code, "@@", "@");
+        code = StringTools.replace(code, "%%", "%");
 
         return code;
     }//function fillCodeShortcuts()
@@ -1067,6 +1076,11 @@ class UIBuilder {
 
         }//if()
     }//function skinQueue()
+
+    public static dynamic function customStringReplace(s : String) : String { 
+      return s;
+    }//function customStringReplace(in : String)
+
 
 #end
 }//class UIBuilder
