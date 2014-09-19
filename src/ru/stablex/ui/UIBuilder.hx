@@ -260,6 +260,7 @@ class UIBuilder {
         UIBuilder.registerClass('ru.stablex.ui.skins.Slice9');
         UIBuilder.registerClass('ru.stablex.ui.skins.Layer');
         UIBuilder.registerClass('ru.stablex.ui.skins.Img');
+        UIBuilder.registerClass('ru.stablex.ui.skins.TextFormat');
         UIBuilder.registerClass('ru.stablex.ui.layouts.Column');
         UIBuilder.registerClass('ru.stablex.ui.layouts.Row');
         UIBuilder.registerClass('ru.stablex.ui.transitions.Fade');
