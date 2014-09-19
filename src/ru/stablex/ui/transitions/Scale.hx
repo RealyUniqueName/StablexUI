@@ -20,14 +20,14 @@ class Scale extends Transition{
     *
     * @param cb - callback to call after visible object was hidden
     */
-    override public function change (vs:Widget, toHide:DisplayObject, toShow:DisplayObject, cb:Void->Void = null) : Void{
+    override public function change (vs:Widget, toHide:DisplayObject, toShow:DisplayObject, cb:Void->Void = null, reverse : Bool = false) : Void{
+        var usedScaleUp = scaleUp;
+        if (reverse) {
+          usedScaleUp = !scaleUp;
+        }
+
         if( this.scaleUp ){
-            if (toShow != null) {
-              this._scaleUp(vs, toHide, toShow, cb);
-            } else {
-              // If there is nothing to show, the scaleUp is a scaleDown of the object to hide
-              this._scaleDown(vs, toHide, toShow, cb);
-            }
+          this._scaleUp(vs, toHide, toShow, cb);
         }else{
             this._scaleDown(vs, toHide, toShow, cb);
         }
