@@ -48,6 +48,7 @@ class Floating extends Box{
             if( this.parent == Lib.current.stage ){
                 Lib.current.stage.setChildIndex(this, Lib.current.stage.numChildren - 1);
             }else{
+                if (this.parent != null) this.parent.removeChild(this);
                 Lib.current.stage.addChild(this);
             }
 
@@ -61,6 +62,7 @@ class Floating extends Box{
                 if( this.parent == to ){
                     to.setChildIndex(this, to.numChildren - 1);
                 }else{
+                    if (this.parent != null) this.parent.removeChild(this);
                     to.addChild(this);
                 }
             }
