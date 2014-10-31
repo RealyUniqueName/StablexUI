@@ -799,7 +799,7 @@ class UIBuilder {
 
         //load skins from xml files
         if( xmlFile != null ){
-            var element = Xml.parse( File.getContent(xmlFile) ).firstElement();
+            var element = Xml.parse( File.getContent(Context.resolvePath(xmlFile)) ).firstElement();
 
             var erSkin    : EReg = ~/^([a-z0-9_]+):([a-z0-9_]+)$/i;
             var local     : String = '';
