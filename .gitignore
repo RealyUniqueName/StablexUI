@@ -5,3 +5,4 @@ samples/*/build
 samples/tests/*
 docGen/doc/*
 *.zip
+build.hxml
