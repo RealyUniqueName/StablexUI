@@ -22,6 +22,8 @@ class Img extends Skin{
     private var _bitmapData : BitmapData = null;
     //Smooth bitmap?
     public var smooth : Bool = true;
+    // If set to true, the img is scaled to the size of the widget. If false the widget is scaled to the size of the img.
+    public var scaleImg = false;
 
 
     /**
@@ -40,11 +42,17 @@ class Img extends Skin{
             Err.trigger('Bitmap is not specified');
         }
 
-        if( w.w != bmp.width || w.h != bmp.height ){
+        var matrix = null;
+        if (!scaleImg) {
+          if( w.w != bmp.width || w.h != bmp.height ){
             w.resize(bmp.width, bmp.height);
+          }
+        } else {
+          matrix = new flash.geom.Matrix();
+          matrix.scale(w.w/bmp.width, w.h/bmp.height);
         }
 
-        w.graphics.beginBitmapFill(bmp, null, false, this.smooth);
+        w.graphics.beginBitmapFill(bmp, matrix, false, this.smooth);
         w.graphics.drawRect(0, 0, bmp.width, bmp.height);
         w.graphics.endFill();
     }//function draw()
