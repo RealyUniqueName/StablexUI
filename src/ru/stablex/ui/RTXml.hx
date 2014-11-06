@@ -133,7 +133,8 @@ class RTXml {
         //attributes
         for(attr in node.attributes()){
             if(attr == "defaults"){
-                cache.defaults = node.get(attr);
+                var expression = RTXml.parser.parseString( Attribute.fillShortcuts( node.get(attr) ) );
+                cache.defaults = interp.execute(expression);
             }else{
                 cache.data.push( new Attribute(attr, node.get(attr)) );
             }
