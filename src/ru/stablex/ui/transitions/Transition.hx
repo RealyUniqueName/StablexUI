@@ -13,6 +13,8 @@ class Transition {
 
     //Duration of transition in seconds
     public var duration : Float = 1;
+    //Easing method to use
+    public var easing : String = 'Linear.easeNone';
 
 
     /**

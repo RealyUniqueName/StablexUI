@@ -24,7 +24,7 @@ class Fade extends Transition{
             w.tweenStop("alpha", true, true);
             w.alpha = 1;
             w.top   = w.left = 0;
-            w.tween(this.duration, {alpha:0}).onComplete(this._hide, [toHide, cb]);
+            w.tween(this.duration, {alpha:0}, this.easing).onComplete(this._hide, [toHide, cb]);
             // Ensure callback is not called below
             cb = null;
         }
@@ -36,7 +36,7 @@ class Fade extends Transition{
             w.visible = true;
             w.alpha   = 0;
             w.top     = w.left = 0;
-            w.tween(this.duration, {alpha:1}).onComplete(this._hide, [toHide, cb]);
+            w.tween(this.duration, {alpha:1}, this.easing).onComplete(this._hide, [toHide, cb]);
         }else{
             if (toHide != null) {
               toHide.visible = false;

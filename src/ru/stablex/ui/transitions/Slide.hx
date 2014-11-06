@@ -83,7 +83,7 @@ class Slide extends Transition{
         if( Std.is(toHide, Widget) ){
             w = cast(toHide, Widget);
             w.tweenStop("right", true, true);
-            w.tween(this.duration, {right:vs.w}).onComplete(this._hide,[toHide,cb]);
+            w.tween(this.duration, {right:vs.w}, this.easing).onComplete(this._hide,[toHide,cb]);
             // Set cb to null, so that it is not called bellow
             cb = null;
         } else {
@@ -99,7 +99,7 @@ class Slide extends Transition{
             w.visible = true;
             var leftGoal = w.left;
             w.left    = vs.w;
-            w.tween(this.duration, {left:leftGoal}).onComplete(_callCallback, [cb]);
+            w.tween(this.duration, {left:leftGoal}, this.easing).onComplete(_callCallback, [cb]);
             // Set cb to null, so that it is not called bellow
             cb = null;
         }else{
@@ -122,7 +122,7 @@ class Slide extends Transition{
         if( Std.is(toHide, Widget) ){
             w = cast(toHide, Widget);
             w.tweenStop("left", true, true);
-            w.tween(this.duration, {left:vs.w}).onComplete(this._hide,[toHide,cb]);
+            w.tween(this.duration, {left:vs.w}, this.easing).onComplete(this._hide,[toHide,cb]);
             // Set cb to null, so that it is not called bellow
             cb = null;
         } else {
@@ -138,7 +138,7 @@ class Slide extends Transition{
             w.visible = true;
             var leftGoal = w.left;
             w.right    = vs.w;
-            w.tween(this.duration, {left:leftGoal}).onComplete(_callCallback, [cb]);
+            w.tween(this.duration, {left:leftGoal}, this.easing).onComplete(_callCallback, [cb]);
             // Set cb to null, so that it is not called bellow
             cb = null;
         }else{
@@ -161,7 +161,7 @@ class Slide extends Transition{
         if( Std.is(toHide, Widget) ){
             w = cast(toHide, Widget);
             w.tweenStop("bottom", true, true);
-            w.tween(this.duration, {bottom:vs.h}).onComplete(this._hide,[toHide,cb]);
+            w.tween(this.duration, {bottom:vs.h}, this.easing).onComplete(this._hide,[toHide,cb]);
             // Set cb to null, so that it is not called bellow
             cb = null;
         } else {
@@ -177,7 +177,7 @@ class Slide extends Transition{
             w.visible = true;
             var topGoal = w.top;
             w.top    = vs.h;
-            w.tween(this.duration, {top:topGoal}).onComplete(_callCallback, [cb]);
+            w.tween(this.duration, {top:topGoal}, this.easing).onComplete(_callCallback, [cb]);
             // Set cb to null, so that it is not called bellow
             cb = null;
         }else{
@@ -200,7 +200,7 @@ class Slide extends Transition{
         if( Std.is(toHide, Widget) ){
             w = cast(toHide, Widget);
             w.tweenStop("top", true, true);
-            w.tween(this.duration, {top:vs.h}).onComplete(this._hide,[toHide,cb]);
+            w.tween(this.duration, {top:vs.h}, this.easing).onComplete(this._hide,[toHide,cb]);
             // Set cb to null, so that it is not called bellow
             cb = null;
         } else {
@@ -216,7 +216,7 @@ class Slide extends Transition{
             w.visible = true;
             var topGoal = w.top;
             w.bottom    = vs.h;
-            w.tween(this.duration, {top:topGoal}).onComplete(_callCallback, [cb]);
+            w.tween(this.duration, {top:topGoal}, this.easing).onComplete(_callCallback, [cb]);
             // Set cb to null, so that it is not called bellow
             cb = null;
         }else{
