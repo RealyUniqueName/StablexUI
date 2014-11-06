@@ -100,7 +100,7 @@ class Scale extends Transition{
                 left   : w.left + w.width / 2,
                 scaleX : 0,
                 scaleY : 0
-            }).onComplete(this._hide, [vs, toHide, toShow, swap, {left : w.left, top : w.top, scaleX : w.scaleX, scaleY : w.scaleY}, cb]);
+            }, this.easing).onComplete(this._hide, [vs, toHide, toShow, swap, {left : w.left, top : w.top, scaleX : w.scaleX, scaleY : w.scaleY}, cb]);
         }else{
             if (toHide != null) {
               toHide.visible = false;
@@ -162,7 +162,7 @@ class Scale extends Transition{
                 left   : leftGoal,
                 scaleX : scaleXGoal,
                 scaleY : scaleYGoal
-            }).onComplete(this._hide, [vs, toHide, toShow, swap, null, cb]);
+            }, this.easing).onComplete(this._hide, [vs, toHide, toShow, swap, null, cb]);
         }else{
             if( cb != null ) cb();
         }
