@@ -26,6 +26,8 @@ class Img extends Skin{
     public var scaleImg = false;
     // If set to true and scaleImg is set to true, will maintain the aspect ratio of the image whilst scaling
     public var keepAspect : Bool = false;
+    // If set to true as well as scaleImg and keepAspect the image will be cropped such that it fills the entire widget space
+    public var crop : Bool = false;
 
 
     /**
@@ -53,7 +55,7 @@ class Img extends Skin{
             var scaleX = w.w/bmp.width;
             var scaleY = w.h/bmp.height;
             if(keepAspect){
-                var scale = Math.min(scaleX, scaleY);
+                var scale = crop?Math.max(scaleX, scaleY):Math.min(scaleX, scaleY);
                 matrix.scale(scale, scale);
                 matrix.translate((w.w-bmp.width*scale)*0.5, (w.h-bmp.height*scale)*0.5);
             }else{
