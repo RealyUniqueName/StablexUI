@@ -32,12 +32,13 @@ enum AssetType {
 *
 */
 #if !macro @:autoBuild(ru.stablex.ui.Theme.register()) #end
+@:allow(ru.stablex)
 class Theme {
     /**
     * Replacement for non-alphanumeric characters in class names generated from file names.
     * Using underscore '_' breaks compatibility with HTML5 target
     */
-    static public inline var _NON_ALPHANUM_REPLACEMENT = 'DDOTT';
+    static private inline var _NON_ALPHANUM_REPLACEMENT = 'DDOTT';
 #if !macro
 
 
@@ -137,7 +138,7 @@ class Theme {
     * Get file list in directory. Recursive
     *
     */
-    static public function listFiles (dir:String) : Array<String> {
+    static private function listFiles (dir:String) : Array<String> {
         var inspect : Array<String> = [];
         for(fname in FileSystem.readDirectory(dir)){
             inspect.push(dir + fname);
@@ -180,7 +181,7 @@ class Theme {
     * Path should be relative to calling file.
     *
     */
-    static public function addAssets (fields:Array<Field>, path:String) : Array<Field> {
+    static private function addAssets (fields:Array<Field>, path:String) : Array<Field> {
         if( Context.defined('display') ) return fields;
 
         var pos = Theme._themeClassPos();
@@ -299,7 +300,7 @@ class Theme {
     * Register defaults of currently built theme
     *
     */
-    static public function addDefaults (theme:String) : Void {
+    static private function addDefaults (theme:String) : Void {
         var defDir : String = Theme._themeDirectory.get(theme) + 'defaults';
         var themeDefaults : Map<String,Array<String>> = new Map();
 
@@ -354,7 +355,7 @@ class Theme {
     * Returns Map<skinName,skinType>
     *
     */
-    static public function getSkinList (theme:String) : Map<String,String> {
+    static private function getSkinList (theme:String) : Map<String,String> {
         var skins : Map<String,String> = new Map();
         if( Context.defined('display') ) return skins;
 
@@ -396,7 +397,7 @@ class Theme {
     * Get list of defaults for specified theme
     * Returns Map<WidgetName,Array<DefaultsName>>
     */
-    static public function getDefaultsList (theme:String) : Map<String, Array<String>> {
+    static private function getDefaultsList (theme:String) : Map<String, Array<String>> {
         //make compiler load theme files
         Context.getType(theme + '.Main');
 
@@ -437,7 +438,7 @@ class Theme {
     * Check if theme has entry point defined in main class
     *
     */
-    static public function hasMain (theme:String) : Bool {
+    static private function hasMain (theme:String) : Bool {
         var type : Type = Context.getType('$theme.Main');
         switch(type){
             case TInst(t,_):
@@ -456,7 +457,7 @@ class Theme {
     * Get directory of a file where this method is called
     *
     */
-    macro static public function dir () : ExprOf<String> {
+    macro static private function dir () : ExprOf<String> {
         var dir : String = Theme._dir();
         return macro $v{dir};
     }//function dir()
@@ -466,7 +467,7 @@ class Theme {
     * Register your theme using build macro with this method
     *
     */
-    macro static public function register () : Array<Field> {
+    macro static private function register () : Array<Field> {
         var fields : Array<Field> = Context.getBuildFields();
 
         Theme.addAssets(fields, 'assets');

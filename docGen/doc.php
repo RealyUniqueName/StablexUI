@@ -1,6 +1,7 @@
 #!/usr/bin/php
 <?php
 
+
 /**
 * Custom doc generator.
 *
@@ -233,6 +234,7 @@ function classDef($str, $imports = array()){
     $str = preg_replace('/(@\:[a-zA-Z0-9_]+)/', '<span class="macro">\\1</span>', $str);
     $str = preg_replace('/class(\s+)/', '\\1<span class="class">class</span>\\1', $str);
     $str = preg_replace('/(\s+)([.a-zA-Z0-9_]+)([^=.a-zA-Z0-9_])/', '\\1<span class="type">\\2</span>\\3', $str);
+    $str = preg_replace('/(\s+)(![.a-zA-Z0-9_]+)([^=.a-zA-Z0-9_])/', '\\1\\3\\4', $str);
 
     return "<div class=\"classDef\">". imports($str, $imports) ."</div>\n";
 }
@@ -373,6 +375,7 @@ function haxe($str){
             $ln = preg_replace('/^(\s*\*\/)/', '<i>\\1</i>', $ln);
         $ln = preg_replace('/(?<!\:)(\/\/.*)$/', '<i>\\1</i>', $ln);
         $ln = preg_replace('/(\s|\()(([a-z0-9_]+\.)+[A-Z][a-zA-Z0-9_]*)/', '\\1<type>\\2</type>', $ln);
+        $ln = preg_replace('/(\s+)(!([.a-zA-Z0-9_]+))([^=.a-zA-Z0-9_])/', '\\1\\3\\4', $ln);
         $ln = preg_replace('/([^a-zA-Z0-9_])(this|super)([^a-zA-Z0-9_])/', '\\1<span class="\\2">\\2</span>\\3', $ln);
         $ln = preg_replace('/([^a-zA-Z0-9_])(package|cast|null|false|true|return)([^a-zA-Z0-9_])/', '\\1<span class="\\2">\\2</span>\\3', $ln);
 
