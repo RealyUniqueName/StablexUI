@@ -20,6 +20,7 @@ class Radio {
         check.format.font  = ru.stablex.ui.themes.android4.Main.FONT;//Main.FONT;
         check.format.size  = 14;
         check.format.color = 0xFFFFFF;
+        check.label.embedFonts = true;
 
         check.states.up.ico.bitmapData   = Main.getBitmapData('img/radio.png');
         check.states.down.ico.bitmapData = Main.getBitmapData('img/radioChecked.png');

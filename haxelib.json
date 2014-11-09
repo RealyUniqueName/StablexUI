@@ -4,7 +4,7 @@
     "license"      : "MIT",
     "tags"         : ["cross", "cpp", "flash", "html5", "ui"],
     "description"  : "StablexUI is a crossplatform UI engine.",
-    "version"      : "1.1.0",
+    "version"      : "1.1.1",
     "releasenote"  : "Themes; community improvements",
     "classPath"    : "src",
     "contributors" : ["RealyUniqueName"],

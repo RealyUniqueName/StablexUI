@@ -20,6 +20,7 @@ class Checkbox {
         check.format.font  = Main.FONT;
         check.format.size  = 14;
         check.format.color = 0xFFFFFF;
+        check.label.embedFonts = true;
 
         check.states.up.ico.bitmapData   = Main.getBitmapData('img/checkbox.png');
         check.states.down.ico.bitmapData = Main.getBitmapData('img/checkboxChecked.png');

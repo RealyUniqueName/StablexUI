@@ -23,6 +23,7 @@ class Options {
         opts.format.color     = 0xFFFFFF;
         opts.format.font      = Main.FONT;
         opts.skinName         = 'button';
+        opts.label.embedFonts = true;
         opts.skinHoveredName  = 'buttonHovered';
         opts.skinPressedName  = 'buttonPressed';
         opts.ico.bitmapData   = Main.getBitmapData('img/options.png');
