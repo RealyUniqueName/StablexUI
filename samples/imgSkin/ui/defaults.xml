@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<Defaults>
+    <Text>
+        <Default
+            format-size = "16"
+            format-bold = "true"
+        />
+    </Text>
+</Defaults>

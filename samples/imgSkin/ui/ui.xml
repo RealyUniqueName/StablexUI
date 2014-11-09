@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Floating widthPt="100" heightPt="100" vertical="false" childPadding="20">
+
+    <VBox skin:Rect-border="1">
+        <VBox
+            w = "150"
+            h = "300"
+            skin:Img-src = "'assets/haxe.png'"
+        >
+            <Text text="'scaleImg = false'"/>
+            <Text text="'keepAspect = false'"/>
+            <Text text="'crop = false'"/>
+        </VBox>
+    </VBox>
+
+    <VBox skin:Rect-border="1">
+        <VBox
+            w = "150"
+            h = "300"
+            skin:Img-src = "'assets/haxe.png'"
+            skin:Img-scaleImg = "true"
+        >
+            <Text text="'scaleImg = true'"/>
+            <Text text="'keepAspect = false'"/>
+            <Text text="'crop = false'"/>
+        </VBox>
+    </VBox>
+
+    <VBox skin:Rect-border="1">
+        <VBox
+            w = "150"
+            h = "300"
+            skin:Img-src = "'assets/haxe.png'"
+            skin:Img-scaleImg = "true"
+            skin:Img-keepAspect = "true"
+        >
+            <Text text="'scaleImg = true'"/>
+            <Text text="'keepAspect = true'"/>
+            <Text text="'crop = false'"/>
+        </VBox>
+    </VBox>
+
+    <VBox skin:Rect-border="1">
+        <VBox
+            w = "150"
+            h = "300"
+            skin:Img-src = "'assets/haxe.png'"
+            skin:Img-scaleImg = "true"
+            skin:Img-keepAspect = "true"
+            skin:Img-crop = "true"
+        >
+            <Text text="'scaleImg = true'"/>
+            <Text text="'keepAspect = true'"/>
+            <Text text="'crop = true'"/>
+        </VBox>
+    </VBox>
+
+</Floating>

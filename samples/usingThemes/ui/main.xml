@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 
-<Checkbox text="'check me!'" />
-<!-- <VBox w="800" h="600" padding="20" childPadding="20" align="'left,top'">
+<VBox w="800" h="600" padding="20" childPadding="20" align="'left,top'">
+
+    <Checkbox text="'check me!'" />
 
     <Button text="'Hit me!'" />
 
@@ -21,4 +22,4 @@
 
     <Switch />
 
-</VBox> -->
+</VBox>

@@ -1,5 +1,6 @@
 package ru.stablex.ui.skins;
 
+import flash.geom.Matrix;
 import ru.stablex.Assets;
 import ru.stablex.ui.widgets.Widget;
 import flash.display.BitmapData;
@@ -46,26 +47,40 @@ class Img extends Skin{
             Err.trigger('Bitmap is not specified');
         }
 
-        var matrix = new flash.geom.Matrix();
+        //scale widget to image (default)
         if (!scaleImg) {
             if( w.w != bmp.width || w.h != bmp.height ){
                 w.resize(bmp.width, bmp.height);
             }
+            w.graphics.beginBitmapFill(bmp, null, false, this.smooth);
+            w.graphics.drawRect(0, 0, bmp.width, bmp.height);
+            w.graphics.endFill();
+
+        //scale image to widget
         } else {
-            var scaleX = w.w/bmp.width;
-            var scaleY = w.h/bmp.height;
-            if(keepAspect){
-                var scale = crop?Math.max(scaleX, scaleY):Math.min(scaleX, scaleY);
-                matrix.scale(scale, scale);
-                matrix.translate((w.w-bmp.width*scale)*0.5, (w.h-bmp.height*scale)*0.5);
-            }else{
+            var matrix = new Matrix();
+            var scaleX = w.w / bmp.width;
+            var scaleY = w.h / bmp.height;
+
+            if (keepAspect) {
+                scaleX = scaleY = (this.crop ? Math.max(scaleX, scaleY) : Math.min(scaleX, scaleY));
+                matrix.scale (scaleX, scaleY);
+                matrix.translate(
+                    (w.w - bmp.width * scaleX) * 0.5,
+                    (w.h - bmp.height * scaleY) * 0.5
+                );
+            } else {
                 matrix.scale(scaleX, scaleY);
             }
-        }
 
-        w.graphics.beginBitmapFill(bmp, matrix, false, this.smooth);
-        w.graphics.drawRect(matrix.tx, matrix.ty, bmp.width*matrix.a, bmp.height*matrix.d);
-        w.graphics.endFill();
+            w.graphics.beginBitmapFill(bmp, matrix, false, this.smooth);
+            if (this.crop) {
+                w.graphics.drawRect(0, 0, w.w, w.h);
+            } else {
+                w.graphics.drawRect(matrix.tx, matrix.ty, bmp.width * scaleX, bmp.height * scaleY);
+            }
+            w.graphics.endFill();
+        }
     }//function draw()
 
 
