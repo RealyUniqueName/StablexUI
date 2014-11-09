@@ -31,6 +31,7 @@ enum AssetType {
 * Base class for themes
 *
 */
+#if !macro @:autoBuild(ru.stablex.ui.Theme.register()) #end
 class Theme {
     /**
     * Replacement for non-alphanumeric characters in class names generated from file names.
@@ -58,8 +59,10 @@ class Theme {
     * Get directory of a file for current context
     *
     */
-    static private inline function _dir () : String {
-        var file : String = Context.getPosInfos(Context.currentPos()).file;
+    static private inline function _dir (pos:Position = null) : String {
+        if (pos == null) pos = Context.currentPos();
+        var file : String = Context.resolvePath( Context.getPosInfos(pos).file );
+
         return Theme._erFile.replace(file, '');
     }//function _dir()
 
@@ -161,6 +164,18 @@ class Theme {
 
 
     /**
+    * Get position of theme being built
+    *
+    */
+    static private function _themeClassPos () : Position {
+        return switch (Context.getLocalType()) {
+            case TInst(t,_) : t.get().pos;
+            case _: Context.currentPos();
+        }
+    }//function _themeClassPos()
+
+
+    /**
     * Add resources (images, texts, etc.) from specified directory.
     * Path should be relative to calling file.
     *
@@ -168,7 +183,7 @@ class Theme {
     static public function addAssets (fields:Array<Field>, path:String) : Array<Field> {
         if( Context.defined('display') ) return fields;
 
-        var pos = Context.currentPos();
+        var pos = Theme._themeClassPos();
 
         //cache for bitmaps
         fields.push(Theme._genCacheField('bitmapDataCache', 'flash.display.BitmapData'));
@@ -187,7 +202,7 @@ class Theme {
                 ? path
                 : path + '/'
         ).replace('\\', '/');
-        var dir : String = Theme._dir().replace('\\', '/') + path;
+        var dir : String = Theme._dir(pos).replace('\\', '/') + path;
 
         var name  : String;
         var fname : String;
@@ -459,7 +474,7 @@ class Theme {
 
         var theme : String = Context.getLocalClass().toString();
         theme = theme.substring(0, theme.lastIndexOf('.'));
-        Theme._themeDirectory.set(theme, Theme._dir());
+        Theme._themeDirectory.set(theme, Theme._dir(Theme._themeClassPos()));
 
         return fields;
     }//function register()

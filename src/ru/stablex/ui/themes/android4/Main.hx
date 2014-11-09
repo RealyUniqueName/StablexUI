@@ -6,7 +6,6 @@ package ru.stablex.ui.themes.android4;
 * Main class of a theme
 *
 */
-@:build(ru.stablex.ui.Theme.register())
 class Main extends ru.stablex.ui.Theme{
 
     /** main font name */

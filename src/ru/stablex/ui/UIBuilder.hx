@@ -1078,9 +1078,16 @@ class UIBuilder {
         }//if()
     }//function skinQueue()
 
-    public static dynamic function customStringReplace(s : String) : String { 
+
+    /**
+    * This method is called everytime '%someString' is found in xml.
+    * Such strings will be replaced with `UIBuilder.customStringReplace('someString')`
+    *   So you can use `%` placeholder for localization.
+    *
+    */
+    public static dynamic function customStringReplace(s : String) : String {
       return s;
-    }//function customStringReplace(in : String)
+    }//function customStringReplace()
 
 
 #end

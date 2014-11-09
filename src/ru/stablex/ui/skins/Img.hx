@@ -25,9 +25,9 @@ class Img extends Skin{
     public var smooth : Bool = true;
     // If set to true, the img is scaled to the size of the widget. If false the widget is scaled to the size of the img.
     public var scaleImg = false;
-    // If set to true and scaleImg is set to true, will maintain the aspect ratio of the image whilst scaling
+    // If set to true and `scaleImg` is set to true, will maintain the aspect ratio of the image whilst scaling
     public var keepAspect : Bool = false;
-    // If set to true as well as scaleImg and keepAspect the image will be cropped such that it fills the entire widget space
+    // If set to true as well as `scaleImg` and `keepAspect` the image will be cropped such that it fills the entire widget space
     public var crop : Bool = false;
 
 
