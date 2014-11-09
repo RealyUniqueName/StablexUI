@@ -22,4 +22,19 @@
 
     <Switch />
 
+
+    <TabStack>
+        <TabPage title-text="'Tab1'">
+            <!-- 'BlackGradient1' skin is defined by android4 theme -->
+            <VBox widthPt="100" h="100" skinName="'BlackGradient1'">
+                <Button text="'I am in the first tab'" />
+            </VBox>
+        </TabPage>
+        <TabPage title-text="'Tab2'">
+            <VBox widthPt="100" h="100" skinName="'BlackGradient1'">
+                <Button text="'I am in the second tab'" />
+            </VBox>
+        </TabPage>
+    </TabStack>
+
 </VBox>

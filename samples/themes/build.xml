@@ -4,7 +4,7 @@
     <meta title="StablexUI samples: usingThemes" package="ru.stablex.ui" version="0.0.1" company="R.U.N" />
     <app path="./build" file="usingThemes" main="Main" />
 
-    <window width="800" height="600" background="0x333333" fps="60"/>
+    <window width="800" height="600" background="0x222222" fps="60"/>
 
     <source name="../../src/" />
 
