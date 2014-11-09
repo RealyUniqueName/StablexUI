@@ -157,6 +157,12 @@ class Button {
 That's it! Our theme is ready. Now if we <a href="#manual/14_Using_themes.html">plug it in</a>, we can enjoy it in our UI
 without any additional code:
 
+<haxe>
+    //somewhere in your app initialization code
+    ru.stablex.ui.UIBuilder.setTheme('rainbow');
+    ru.stablex.ui.UIBuilder.init();
+</haxe>
+
 <xml>
 <VBox childPadding="10">
     <!-- Boring one color buttons -->
