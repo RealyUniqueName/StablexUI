@@ -26,7 +26,7 @@ class Scale extends Transition{
           usedScaleUp = !scaleUp;
         }
 
-        if( this.scaleUp ){
+        if( usedScaleUp ){
           this._scaleUp(vs, toHide, toShow, cb);
         }else{
             this._scaleDown(vs, toHide, toShow, cb);
