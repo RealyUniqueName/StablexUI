@@ -13,6 +13,9 @@ class Scale extends Transition{
 
     //Scale "0 to 1" (true) or "1 to 0" (false) ?
     public var scaleUp : Bool = true;
+    //The origin from which the element should scaled from/too. -1.0 means not set
+    public var scaleOriginX : Float = -1.0;
+    public var scaleOriginY : Float = -1.0;
 
 
     /**
@@ -26,7 +29,7 @@ class Scale extends Transition{
           usedScaleUp = !scaleUp;
         }
 
-        if( this.scaleUp ){
+        if( usedScaleUp ){
           this._scaleUp(vs, toHide, toShow, cb);
         }else{
             this._scaleDown(vs, toHide, toShow, cb);
@@ -95,9 +98,11 @@ class Scale extends Transition{
                 vs.swapChildren(toHide, toShow);
             }
 
+            var top = (scaleOriginY<0.0)?(w.top + w.height)/2.0:scaleOriginY;
+            var left = (scaleOriginX<0.0)?(w.left + w.width)/2.0:scaleOriginX;
             w.tween(this.duration, {
-                top    : w.top + w.height / 2,
-                left   : w.left + w.width / 2,
+                top    : top,
+                left   : left,
                 scaleX : 0,
                 scaleY : 0
             }, this.easing).onComplete(this._hide, [vs, toHide, toShow, swap, {left : w.left, top : w.top, scaleX : w.scaleX, scaleY : w.scaleY}, cb]);
@@ -154,9 +159,9 @@ class Scale extends Transition{
             var leftGoal = w.left;
             var scaleXGoal = w.scaleX;
             var scaleYGoal = w.scaleY;
-            w.top  = w.top  + w.height / 2;
-            w.left = w.left + w.width / 2;
-            w.scaleX = w.scaleY = 0;
+            w.top  = (scaleOriginY<0.0)?(w.top  + w.height / 2):scaleOriginY;
+            w.left = (scaleOriginX<0.0)?(w.left + w.width / 2):scaleOriginX;
+            w.scaleX = w.scaleY = 0.0;
             w.tween(this.duration, {
                 top    : topGoal,
                 left   : leftGoal,
