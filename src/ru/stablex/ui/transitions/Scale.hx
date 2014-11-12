@@ -93,7 +93,7 @@ class Scale extends Transition{
             w.tweenStop(["scaleX", "scaleY", "left", "top"], true, true);
 
             //swap objects if needed
-            if( vs.getChildIndex(toHide) < vs.getChildIndex(toShow) ){
+            if( toHide != null && toShow != null && vs.getChildIndex(toHide) < vs.getChildIndex(toShow) ){
                 swap = true;
                 vs.swapChildren(toHide, toShow);
             }
@@ -150,7 +150,7 @@ class Scale extends Transition{
             w.tweenStop(["scaleX", "scaleY", "left", "top"], true, true);
 
             //swap objects if needed
-            if( vs.getChildIndex(toHide) > vs.getChildIndex(toShow) ){
+            if( toHide != null && toShow != null && vs.getChildIndex(toHide) > vs.getChildIndex(toShow) ){
                 swap = true;
                 vs.swapChildren(toHide, toShow);
             }
