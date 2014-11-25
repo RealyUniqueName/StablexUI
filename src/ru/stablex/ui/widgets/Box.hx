@@ -165,7 +165,7 @@ class Box extends Widget{
 
 
     /**
-    * Set width based on content width
+    * Set height based on content height
     *
     */
     @:noCompletion private function _calcHeight () : Float {
