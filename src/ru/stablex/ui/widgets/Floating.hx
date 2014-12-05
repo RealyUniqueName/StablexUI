@@ -18,6 +18,8 @@ class Floating extends Box{
     public var shown (default,null) : Bool = false;
     //Id of widget to render to. By default it's rendered on top of stage.
     public var renderTo : String = null;
+    /** adjust scaling of this widget and its content. Usefull when Floating is rendered to stage */
+    public var scaleContent (default,set) : Float = 1;
 
 
     /**
@@ -105,8 +107,9 @@ class Floating extends Box{
     private function _onStageResize (e:Event = null) : Void{
         if( this.parent != Lib.current.stage ) return;
 
-        var width  : Float = Lib.current.stage.stageWidth;
-        var height : Float = Lib.current.stage.stageHeight;
+        var scale  : Float = (this.scaleContent == 0 ? 0.001 : this.scaleContent);
+        var width  : Float = Lib.current.stage.stageWidth / scale;
+        var height : Float = Lib.current.stage.stageHeight / scale;
 
         //size {
             //if width and height in %
@@ -162,5 +165,21 @@ class Floating extends Box{
         Lib.current.stage.removeEventListener(Event.RESIZE, this._onStageResize);
         super.free(recursive);
     }//function free()
+
+
+    /**
+    * Setter `scaleContent`.
+    *
+    */
+    private function set_scaleContent (scaleContent:Float) : Float {
+        this.scaleX = this.scaleY = scaleContent;
+        this.scaleContent = scaleContent;
+
+        if (this.renderTo == null && this.created && this.parent != null) {
+            this._onStageResize();
+        }
+
+        return scaleContent;
+    }//function set_scaleContent
 
 }//class Floating

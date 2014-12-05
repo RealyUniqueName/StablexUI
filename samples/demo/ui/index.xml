@@ -3,14 +3,16 @@
 <!-- root element for our UI -->
 <Floating id="'root'" widthPt="100" heightPt="100" skin:Paint-color="0x000000"
     on-resize="
+        $this.scaleContent = $Lib.current.stage.stageWidth / 480;
         #screens.h = $this.h - #bottomMenu.h - #topMenu.h;
-
+        /*
         if( $Lib.current.stage.stageWidth < 320 || $Lib.current.stage.stageHeight < 480 ){
             var popup = $Main.alert({
                 msg:'This app is designed for at least 320x480 screens. You may proceed but some things may go wrong.'
             });
             popup.show();
         }
+        */
     "
 >
 
