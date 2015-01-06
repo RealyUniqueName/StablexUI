@@ -132,7 +132,7 @@ class TweenSprite extends Sprite{
     * Parameter `easing` should be like this: 'Quad.easeInOut' or 'Back.easeIn' etc. By default it is 'Linear.easeNone'
     *
     */
-    public function tween (duration:Float, properties:Dynamic, easing:String = 'Linear.easeNone', overwrite:Bool = true, customActuator:Class<GenericActuator> = null) {
+    public function tween (duration:Float, properties:Dynamic, easing:String = 'Linear.easeNone', overwrite:Bool = true, customActuator = null) {
         switch(easing){
             case 'Quad.easeInOut'    : return Actuate.tween(this, duration, properties, overwrite, customActuator).ease(Quad.easeInOut);
             case 'Quad.easeOut'      : return Actuate.tween(this, duration, properties, overwrite, customActuator).ease(Quad.easeOut);
