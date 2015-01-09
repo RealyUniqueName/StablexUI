@@ -4,6 +4,7 @@ import haxe.macro.Compiler;
 import haxe.macro.Context;
 import haxe.macro.Expr;
 #if macro
+import haxe.PosInfos;
 import sys.FileSystem;
 import sys.io.File;
 #else
@@ -87,7 +88,21 @@ class UIBuilder {
 
     //list of widgets waiting for skin applying
     static private var _skinQueue : List<Widget> = new List();
+
+    //dirty hacks for new openfl
+    static public var frameTime : Int = 0;
 #end
+
+
+    /**
+    * For debugging purposes.
+    * Returns 'className:lineNumber' of the place where this method was called
+    *
+    */
+    static public function pos (?pos:haxe.PosInfos) : String {
+        return pos.className + ':' + pos.lineNumber;
+    }//function pos()
+
 
     /**
     * Set directory to save generated code to. Should be called before .init()
@@ -1063,6 +1078,10 @@ class UIBuilder {
     * @private
     */
     @:noCompletion static public function skinQueue (e:flash.events.Event = null) : Void {
+        #if openfl
+        UIBuilder.frameTime = openfl.Lib.getTimer();
+        #end
+
         //if there is something to render in queue
         if( UIBuilder._skinQueue.length > 0 ){
             //get list we're going to process

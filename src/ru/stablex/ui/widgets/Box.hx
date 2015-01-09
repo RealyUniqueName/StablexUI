@@ -4,6 +4,7 @@ import flash.display.DisplayObject;
 import ru.stablex.Err;
 import ru.stablex.ui.events.WidgetEvent;
 import ru.stablex.ui.misc.SizeTools;
+import ru.stablex.ui.UIBuilder;
 
 
 /**
@@ -41,6 +42,8 @@ class Box extends Widget{
     public var unifyChildren : Bool = false;
     /** should children' positions be convertent to int numbers? Use this to workaround problem of blurry images */
     public var intPositions : Bool = false;
+    /** dirty hack for new openfl */
+    private var lastUnifyFrame : Int = -1;
 
 /*******************************************************************************
 *       STATIC METHODS
@@ -241,6 +244,13 @@ class Box extends Widget{
     *
     */
     @:noCompletion private function _unifyChildren () : Void {
+        #if (openfl && !flash)
+            if (UIBuilder.frameTime == this.lastUnifyFrame) {
+                return;
+            }
+            this.lastUnifyFrame = UIBuilder.frameTime;
+        #end
+
         var visibleChildren : Int = 0;
         for(i in 0...this.numChildren){
             if( this.getChildAt(i).visible ){
