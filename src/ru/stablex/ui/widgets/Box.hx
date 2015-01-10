@@ -43,7 +43,9 @@ class Box extends Widget{
     /** should children' positions be convertent to int numbers? Use this to workaround problem of blurry images */
     public var intPositions : Bool = false;
     /** dirty hack for new openfl */
-    private var lastUnifyFrame : Int = -1;
+    private var lastUnifyFrame    : Int = -1;
+    private var lastUnifyChildren : Int = -1;
+    private var lastUnifyCount    : Int = 0;
 
 /*******************************************************************************
 *       STATIC METHODS
@@ -245,10 +247,16 @@ class Box extends Widget{
     */
     @:noCompletion private function _unifyChildren () : Void {
         #if (openfl && !flash)
-            if (UIBuilder.frameTime == this.lastUnifyFrame) {
+            if (UIBuilder.frameTime == this.lastUnifyFrame && this.numChildren == this.lastUnifyChildren && this.lastUnifyCount > 1) {
                 return;
             }
-            this.lastUnifyFrame = UIBuilder.frameTime;
+            if (this.lastUnifyFrame != UIBuilder.frameTime || this.numChildren != this.lastUnifyChildren) {
+                this.lastUnifyCount = 1;
+            } else {
+                this.lastUnifyCount ++;
+            }
+            this.lastUnifyFrame    = UIBuilder.frameTime;
+            this.lastUnifyChildren = this.numChildren;
         #end
 
         var visibleChildren : Int = 0;
