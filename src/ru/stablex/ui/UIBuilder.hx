@@ -273,6 +273,7 @@ class UIBuilder {
         UIBuilder.registerClass('ru.stablex.ui.skins.Tile');
         UIBuilder.registerClass('ru.stablex.ui.skins.Slice3');
         UIBuilder.registerClass('ru.stablex.ui.skins.Slice9');
+        UIBuilder.registerClass('ru.stablex.ui.skins.TiledSlice9');
         UIBuilder.registerClass('ru.stablex.ui.skins.Layer');
         UIBuilder.registerClass('ru.stablex.ui.skins.Img');
         UIBuilder.registerClass('ru.stablex.ui.skins.TextFormat');
