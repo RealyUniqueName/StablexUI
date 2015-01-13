@@ -1079,7 +1079,7 @@ class UIBuilder {
     * @private
     */
     @:noCompletion static public function skinQueue (e:flash.events.Event = null) : Void {
-        #if openfl
+        #if (openfl >= '2.0.0')
         UIBuilder.frameTime = openfl.Lib.getTimer();
         #end
 

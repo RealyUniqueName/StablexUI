@@ -246,7 +246,7 @@ class Box extends Widget{
     *
     */
     @:noCompletion private function _unifyChildren () : Void {
-        #if (openfl && !flash)
+        #if ((openfl >= '2.0.0') && (!flash))
             if (UIBuilder.frameTime == this.lastUnifyFrame && this.numChildren == this.lastUnifyChildren && this.lastUnifyCount > 1) {
                 return;
             }
