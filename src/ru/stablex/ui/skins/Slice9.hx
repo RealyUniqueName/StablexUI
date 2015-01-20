@@ -30,11 +30,13 @@ class Slice9 extends Slice3{
             Err.trigger(this.src == null ? 'Bitmap is not specified' : 'Bitmap data not found: ' + this.src);
         }
 
+        var drawRect = new flash.geom.Rectangle(paddingLeft, paddingTop, w.w - paddingLeft - paddingRight, w.h - paddingTop - paddingBottom);
+
         var src : Rectangle = new Rectangle();
         var dst : Rectangle = new Rectangle();
 
-        var scaleX : Float = (w.w >= bmp.width ? 1 : w.w / bmp.width);
-        var scaleY : Float = (w.h >= bmp.height ? 1 : w.h / bmp.height);
+        var scaleX : Float = (drawRect.width >= bmp.width ? 1 : drawRect.width / bmp.width);
+        var scaleY : Float = (drawRect.height >= bmp.height ? 1 : drawRect.height / bmp.height);
         //do not draw nothing
         if( scaleX <= 0 || scaleY <= 0 ){
             return;
@@ -46,8 +48,8 @@ class Slice9 extends Slice3{
             src.width  = _sliceSize(this.slice[0], bmp.width);
             src.height = _sliceSize(this.slice[2], bmp.height);
 
-            dst.x      = 0;
-            dst.y      = 0;
+            dst.x      = drawRect.x;
+            dst.y      = drawRect.y;
             dst.width  = _sliceSize(this.slice[0], bmp.width) * scaleX;
             dst.height = _sliceSize(this.slice[2], bmp.height) * scaleY;
 
@@ -60,9 +62,9 @@ class Slice9 extends Slice3{
             src.width  = _sliceSize(this.slice[1] - this.slice[0], bmp.width);
             src.height = _sliceSize(this.slice[2], bmp.height);
 
-            dst.x      = _sliceSize(this.slice[0], bmp.width) * scaleX;
-            dst.y      = 0;
-            dst.width  = w.w - (_sliceSize(this.slice[0], bmp.width) + (bmp.width - _sliceSize(this.slice[1], bmp.width))) * scaleX;
+            dst.x      = drawRect.x + _sliceSize(this.slice[0], bmp.width) * scaleX;
+            dst.y      = drawRect.y;
+            dst.width  = drawRect.width - (_sliceSize(this.slice[0], bmp.width) + (bmp.width - _sliceSize(this.slice[1], bmp.width))) * scaleX;
             dst.height = _sliceSize(this.slice[2], bmp.height) * scaleY;
 
             this._skinDrawSlice(w, bmp, src, dst);
@@ -74,8 +76,8 @@ class Slice9 extends Slice3{
             src.width  = bmp.width - _sliceSize(this.slice[1], bmp.width);
             src.height = _sliceSize(this.slice[2], bmp.height);
 
-            dst.x      = w.w - src.width * scaleX;
-            dst.y      = 0;
+            dst.x      = drawRect.x + drawRect.width - src.width * scaleX;
+            dst.y      = drawRect.y;
             dst.width  = src.width * scaleX;
             dst.height = _sliceSize(this.slice[2], bmp.height) * scaleY;
 
@@ -88,10 +90,10 @@ class Slice9 extends Slice3{
             src.width  = _sliceSize(this.slice[0], bmp.width);
             src.height = _sliceSize(this.slice[3] - this.slice[2], bmp.height);
 
-            dst.x      = 0;
-            dst.y      = _sliceSize(this.slice[2], bmp.height) * scaleY;
+            dst.x      = drawRect.x;
+            dst.y      = drawRect.y + _sliceSize(this.slice[2], bmp.height) * scaleY;
             dst.width  = _sliceSize(this.slice[0], bmp.width) * scaleX;
-            dst.height = w.h - (_sliceSize(this.slice[2], bmp.height) + (bmp.height - _sliceSize(this.slice[3], bmp.height))) * scaleY;
+            dst.height = drawRect.height - (_sliceSize(this.slice[2], bmp.height) + (bmp.height - _sliceSize(this.slice[3], bmp.height))) * scaleY;
 
             this._skinDrawSlice(w, bmp, src, dst);
         //}
@@ -102,10 +104,10 @@ class Slice9 extends Slice3{
             src.width  = _sliceSize(this.slice[1] - this.slice[0], bmp.width);
             src.height = _sliceSize(this.slice[3] - this.slice[2], bmp.height);
 
-            dst.x      = _sliceSize(this.slice[0], bmp.width) * scaleX;
-            dst.y      = _sliceSize(this.slice[2], bmp.height) * scaleY;
-            dst.width  = w.w - (_sliceSize(this.slice[0], bmp.width) + (bmp.width - _sliceSize(this.slice[1], bmp.width))) * scaleX;
-            dst.height = w.h - (_sliceSize(this.slice[2], bmp.height) + (bmp.height - _sliceSize(this.slice[3], bmp.height))) * scaleY;
+            dst.x      = drawRect.x + _sliceSize(this.slice[0], bmp.width) * scaleX;
+            dst.y      = drawRect.y + _sliceSize(this.slice[2], bmp.height) * scaleY;
+            dst.width  = drawRect.width - (_sliceSize(this.slice[0], bmp.width) + (bmp.width - _sliceSize(this.slice[1], bmp.width))) * scaleX;
+            dst.height = drawRect.height - (_sliceSize(this.slice[2], bmp.height) + (bmp.height - _sliceSize(this.slice[3], bmp.height))) * scaleY;
 
             this._skinDrawSlice(w, bmp, src, dst);
         //}
@@ -116,10 +118,10 @@ class Slice9 extends Slice3{
             src.width  = bmp.width - _sliceSize(this.slice[1], bmp.width);
             src.height = _sliceSize(this.slice[3] - this.slice[2], bmp.height);
 
-            dst.x      = w.w - src.width * scaleX;
-            dst.y      = _sliceSize(this.slice[2], bmp.height) * scaleY;
+            dst.x      = drawRect.x + drawRect.width - src.width * scaleX;
+            dst.y      = drawRect.y + _sliceSize(this.slice[2], bmp.height) * scaleY;
             dst.width  = src.width * scaleX;
-            dst.height = w.h - (_sliceSize(this.slice[2], bmp.height) + (bmp.height - _sliceSize(this.slice[3], bmp.height))) * scaleY;
+            dst.height = drawRect.height - (_sliceSize(this.slice[2], bmp.height) + (bmp.height - _sliceSize(this.slice[3], bmp.height))) * scaleY;
 
             this._skinDrawSlice(w, bmp, src, dst);
         //}
@@ -130,8 +132,8 @@ class Slice9 extends Slice3{
             src.width  = _sliceSize(this.slice[0], bmp.width);
             src.height = bmp.height - _sliceSize(this.slice[3], bmp.height);
 
-            dst.x      = 0;
-            dst.y      = w.h - src.height * scaleY;
+            dst.x      = drawRect.x;
+            dst.y      = drawRect.y + drawRect.height - src.height * scaleY;
             dst.width  = _sliceSize(this.slice[0], bmp.width) * scaleX;
             dst.height = src.height * scaleY;
 
@@ -144,9 +146,9 @@ class Slice9 extends Slice3{
             src.width  = _sliceSize(this.slice[1] - this.slice[0], bmp.width);
             src.height = bmp.height - _sliceSize(this.slice[3], bmp.height);
 
-            dst.x      = _sliceSize(this.slice[0], bmp.width) * scaleX;
-            dst.y      = w.h - src.height * scaleY;
-            dst.width  = w.w - (_sliceSize(this.slice[0], bmp.width) + (bmp.width - _sliceSize(this.slice[1], bmp.width))) * scaleX;
+            dst.x      = drawRect.x + _sliceSize(this.slice[0], bmp.width) * scaleX;
+            dst.y      = drawRect.y + drawRect.height - src.height * scaleY;
+            dst.width  = drawRect.width - (_sliceSize(this.slice[0], bmp.width) + (bmp.width - _sliceSize(this.slice[1], bmp.width))) * scaleX;
             dst.height = src.height * scaleY;
 
             this._skinDrawSlice(w, bmp, src, dst);
@@ -158,8 +160,8 @@ class Slice9 extends Slice3{
             src.width  = bmp.width - _sliceSize(this.slice[1], bmp.width);
             src.height = bmp.height - _sliceSize(this.slice[3], bmp.height);
 
-            dst.x      = w.w - src.width * scaleX;
-            dst.y      = w.h - src.height * scaleY;
+            dst.x      = drawRect.x + drawRect.width - src.width * scaleX;
+            dst.y      = drawRect.y + drawRect.height - src.height * scaleY;
             dst.width  = src.width * scaleX;
             dst.height = src.height * scaleY;
 

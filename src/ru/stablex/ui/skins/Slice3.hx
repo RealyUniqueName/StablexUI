@@ -28,6 +28,27 @@ class Slice3 extends Skin{
     public var smooth : Bool = true;
     //should we stretch skin to fit widget's height?
     public var stretch : Bool = true;
+
+    //padding for top border
+    public var paddingTop : Float = 0;
+    //padding for right border
+    public var paddingRight : Float = 0;
+    //padding for bottom border
+    public var paddingBottom : Float = 0;
+    //padding for left border
+    public var paddingLeft : Float = 0;
+    //set equal padding for all borders
+    public var padding(never,set_padding) : Float;
+
+    /**
+    * Setter for padding
+    *
+    */
+    @:noCompletion private function set_padding (p:Float) : Float {
+        this.paddingTop = this.paddingBottom = this.paddingRight = this.paddingLeft = p;
+        return p;
+    }//function set_padding()
+
     /**
     * Where to slice skin bitmap.
     * This array should contain zero, one or two floats.
@@ -75,7 +96,9 @@ class Slice3 extends Skin{
         var w1 : Int = 0;
         var w2 : Int = 0;
 
-        var scaleX : Float = (w.w >= bmp.width ? 1 : w.w / bmp.width);
+        var drawRect = new flash.geom.Rectangle(paddingLeft, paddingTop, w.w - paddingLeft - paddingRight, w.h - paddingTop - paddingBottom);
+
+        var scaleX : Float = (drawRect.width >= bmp.width ? 1 : drawRect.width / bmp.width);
         //do not draw nothing
         if( scaleX <= 0 ){
             return;
@@ -104,10 +127,10 @@ class Slice3 extends Skin{
             src.width  = w1;
             src.height = bmp.height;
 
-            dst.x      = 0;
-            dst.y      = 0;
+            dst.x      = drawRect.x;
+            dst.y      = drawRect.y;
             dst.width  = w1 * scaleX;
-            dst.height = (this.stretch ? w.h : bmp.height);
+            dst.height = (this.stretch ? drawRect.height : bmp.height);
 
             this._skinDrawSlice(w, bmp, src, dst);
         //}
@@ -120,8 +143,8 @@ class Slice3 extends Skin{
 
             dst.x      = w1 * scaleX;
             dst.y      = 0;
-            dst.width  = w.w - (w1 + (bmp.width - w2)) * scaleX;
-            dst.height = (this.stretch ? w.h : bmp.height);
+            dst.width  = drawRect.width - (w1 + (bmp.width - w2)) * scaleX;
+            dst.height = (this.stretch ? drawRect.height : bmp.height);
 
             this._skinDrawSlice(w, bmp, src, dst);
         //}
@@ -132,10 +155,10 @@ class Slice3 extends Skin{
             src.width  = bmp.width - w2;
             src.height = bmp.height;
 
-            dst.x      = w.w - src.width * scaleX;
+            dst.x      = drawRect.width - src.width * scaleX;
             dst.y      = 0;
             dst.width  = src.width * scaleX;
-            dst.height = (this.stretch ? w.h : bmp.height);
+            dst.height = (this.stretch ? drawRect.height : bmp.height);
 
             this._skinDrawSlice(w, bmp, src, dst);
         //}
