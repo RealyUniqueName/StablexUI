@@ -6,3 +6,4 @@ samples/tests/*
 docGen/doc/*
 *.zip
 build.hxml
+.idea/*
