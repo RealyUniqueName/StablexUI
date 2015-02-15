@@ -449,6 +449,12 @@ class UIBuilder {
         while( attributes.hasNext() ){
             attr = attributes.next();
 
+            //filtering out XML namespace attributes ('xmlns' or 'xmlns:')
+            if (attr == 'xmlns' || attr.indexOf('xmlns:') == 0) continue;
+
+            //filtering out XSI schema attributes ('xsi' or 'xsi:')
+            if (attr == 'xsi' || attr.indexOf('xsi:') == 0) continue;
+
             //if this attribute defines class casting, leave it for the end
             if( attr.indexOf(':') != -1 ){
                 post.push(attr);
