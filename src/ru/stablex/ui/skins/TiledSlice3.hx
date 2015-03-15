@@ -21,6 +21,7 @@ class TiledSlice3 extends Slice3{
     */
     override public function draw (w:Widget) : Void {
         var bmp : BitmapData = this._getBmp();
+        var srcRect : Rectangle = this.get_srcRect();
 
         if( bmp == null ){
             Err.trigger(this.src == null ? 'Bitmap is not specified' : 'Bitmap data not found: ' + this.src);
@@ -30,14 +31,14 @@ class TiledSlice3 extends Slice3{
         var dst : Rectangle = new Rectangle();
 
         // Find out the scaling (determined from the widgets height)
-        var scaling : Float = w.h / bmp.height;
+        var scaling : Float = w.h / srcRect.height;
         var scaleY = scaling;
 
         var hSizes  : Array<Int> = [0,0,0];
         // Find out the number of tiles
-        hSizes[0] = _sliceSize(this.slice[0], bmp.width);
-        hSizes[2] = bmp.width - _sliceSize(this.slice[1], bmp.width);
-        hSizes[1] = bmp.width - hSizes[0] - hSizes[2];
+        hSizes[0] = _sliceSize(this.slice[0], Std.int(srcRect.width));
+        hSizes[2] = Std.int(srcRect.width) - _sliceSize(this.slice[1], Std.int(srcRect.width));
+        hSizes[1] = Std.int(srcRect.width) - hSizes[0] - hSizes[2];
         // Now found the closest number of horizontal tiles, that filles the width of the widget (using the scaling from the height)
         var hTileCount : Int = Math.round((w.w/scaling - hSizes[0] - hSizes[2]) / hSizes[1]);
         // The scaling X is now such, that it fits exactly
@@ -61,10 +62,10 @@ class TiledSlice3 extends Slice3{
         for (x in 0...(hTileCount+2)) {
           // Set the src rect
           var hSizeIndex = if (x == 0) {0;} else {if (x == hTileCount +1) {2;} else {1;}};
-          src.x = sum(hSizes.slice(0,hSizeIndex));
-          src.y = 0;
+          src.x = srcRect.x + sum(hSizes.slice(0,hSizeIndex));
+          src.y = srcRect.y;
           src.width = hSizes[hSizeIndex];
-          src.height = bmp.height;
+          src.height = srcRect.height;
 
           // Set the distination width, based on the source width
           dst.width  = src.width  * scaleX;

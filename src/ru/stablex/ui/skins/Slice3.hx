@@ -50,6 +50,13 @@ class Slice3 extends Skin{
     }//function set_padding()
 
     /**
+    * Source rectangle for the bitmap. Not the whole bitmap, but only this part of it is used.
+    * This is usefull when using e.g. spritesheets for the bitmap.
+    */
+    public var srcRect(get,set) : Rectangle;
+    private var _srcRect : Rectangle = null;
+
+    /**
     * Where to slice skin bitmap.
     * This array should contain zero, one or two floats.
     * If the floats are less than one they indicate a percentage of the picture where it 
@@ -83,13 +90,13 @@ class Slice3 extends Skin{
         return bmp;
     }//function _getBmp()
 
-
     /**
     * Draw skin on widget
     *
     */
     override public function draw (w:Widget) : Void {
         var bmp : BitmapData = this._getBmp();
+        var srcRect : Rectangle = this.get_srcRect();
 
         w.graphics.clear();
 
@@ -98,7 +105,7 @@ class Slice3 extends Skin{
 
         var drawRect = new flash.geom.Rectangle(paddingLeft, paddingTop, w.w - paddingLeft - paddingRight, w.h - paddingTop - paddingBottom);
 
-        var scaleX : Float = (drawRect.width >= bmp.width ? 1 : drawRect.width / bmp.width);
+        var scaleX : Float = (drawRect.width >= srcRect.width ? 1 : drawRect.width / srcRect.width);
         //do not draw nothing
         if( scaleX <= 0 ){
             return;
@@ -106,59 +113,59 @@ class Slice3 extends Skin{
 
         //slice two equal size parts
         if( this.slice == null || this.slice.length == 0 ){
-            w1 = Std.int(bmp.width / 2);
+            w1 = Std.int(srcRect.width / 2);
             w2 = w1 + 1;
         //two different size parts
         }else if( this.slice.length == 1 ){
-            w1 = _sliceSize(this.slice[0], bmp.width);
+            w1 = _sliceSize(this.slice[0], Std.int(srcRect.width));
             w2 = w1 + 1;
         //slice three parts
         }else{
-            w1 = _sliceSize(this.slice[0], bmp.width);
-            w2 = _sliceSize(this.slice[1], bmp.width);
+            w1 = _sliceSize(this.slice[0], Std.int(srcRect.width));
+            w2 = _sliceSize(this.slice[1], Std.int(srcRect.width));
         }
 
         var src : Rectangle = new Rectangle();
         var dst : Rectangle = new Rectangle();
 
         //left{
-            src.x      = 0;
-            src.y      = 0;
+            src.x      = srcRect.x;
+            src.y      = srcRect.y;
             src.width  = w1;
-            src.height = bmp.height;
+            src.height = srcRect.height;
 
             dst.x      = drawRect.x;
             dst.y      = drawRect.y;
             dst.width  = w1 * scaleX;
-            dst.height = (this.stretch ? drawRect.height : bmp.height);
+            dst.height = (this.stretch ? drawRect.height : srcRect.height);
 
             this._skinDrawSlice(w, bmp, src, dst);
         //}
 
         //middle{
-            src.x      = w1;
-            src.y      = 0;
+            src.x      = srcRect.x + w1;
+            src.y      = srcRect.y;
             src.width  = w2 - w1;
-            src.height = bmp.height;
+            src.height = srcRect.height;
 
             dst.x      = w1 * scaleX;
             dst.y      = 0;
-            dst.width  = drawRect.width - (w1 + (bmp.width - w2)) * scaleX;
-            dst.height = (this.stretch ? drawRect.height : bmp.height);
+            dst.width  = drawRect.width - (w1 + (srcRect.width - w2)) * scaleX;
+            dst.height = (this.stretch ? drawRect.height : srcRect.height);
 
             this._skinDrawSlice(w, bmp, src, dst);
         //}
 
         //right{
-            src.x      = w2;
-            src.y      = 0;
-            src.width  = bmp.width - w2;
-            src.height = bmp.height;
+            src.x      = srcRect.x + w2;
+            src.y      = srcRect.y;
+            src.width  = srcRect.width - w2;
+            src.height = srcRect.height;
 
             dst.x      = drawRect.width - src.width * scaleX;
             dst.y      = 0;
             dst.width  = src.width * scaleX;
-            dst.height = (this.stretch ? drawRect.height : bmp.height);
+            dst.height = (this.stretch ? drawRect.height : srcRect.height);
 
             this._skinDrawSlice(w, bmp, src, dst);
         //}
@@ -239,5 +246,29 @@ class Slice3 extends Skin{
         }
         return this._bitmapData = bitmapData;
     }//function set_bitmapData()
+
+    /**
+    * Getter srcRect
+    *
+    */
+    private inline function get_srcRect() : Rectangle {
+        if (this._srcRect == null) {
+            var bmp = _getBmp();
+            if (bmp != null) {
+              return new Rectangle(0,0,bmp.width,bmp.height);
+            }
+            return null;
+        }
+        return _srcRect;
+    }//function get_srcRect()
+
+
+/**
+    * Setter srcRect
+    *
+    */
+    private inline function set_srcRect(rect:Rectangle) : Rectangle {
+        return this._srcRect = rect;
+    }//function set_srcRect()
 
 }//class Slice3
