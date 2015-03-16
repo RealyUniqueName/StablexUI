@@ -348,7 +348,7 @@ class Box extends Widget{
             height += (visibleChildren - 1) * this.childPadding;
 
             //arrange elements
-            var lastY : Float = (this.h - height) / 2;
+            var lastY : Float = (this.h - paddingTop - paddingBottom - height) / 2 + paddingTop;
 
             for(i in 0...this.numChildren){
                 child   = this.getChildAt(i);
@@ -362,7 +362,7 @@ class Box extends Widget{
             var child : DisplayObject;
             for(i in 0...this.numChildren){
                 child   = this.getChildAt(i);
-                this._setObjY(child, (this.h - this._objHeight(child)) / 2);
+                this._setObjY(child, (this.h - paddingTop - paddingBottom - this._objHeight(child)) / 2 + paddingTop);
             }
         }
     }//function _vAlignMiddle()
@@ -460,7 +460,7 @@ class Box extends Widget{
             var child : DisplayObject;
             for(i in 0...this.numChildren){
                 child   = this.getChildAt(i);
-                this._setObjX(child, (this.w - this._objWidth(child)) / 2);
+                this._setObjX(child, (this.w - paddingLeft - paddingRight - this._objWidth(child)) / 2 + paddingLeft);
             }
 
         //horizontal box
@@ -481,7 +481,7 @@ class Box extends Widget{
             width += (visibleChildren - 1) * this.childPadding;
 
             //arrange elements
-            var lastX : Float = (this.w - width) / 2;
+            var lastX : Float = (this.w -paddingLeft - paddingRight - width) / 2 + paddingLeft;
 
             for(i in 0...this.numChildren){
                 child   = this.getChildAt(i);
