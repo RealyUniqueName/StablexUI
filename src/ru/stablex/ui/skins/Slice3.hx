@@ -13,7 +13,7 @@ import ru.stablex.ui.widgets.Widget;
 * 3-slice-scaling
 *
 */
-class Slice3 extends Skin{
+class Slice3 extends Skin {
     //Asset ID or path to bitmap
     public var src (get_src,set_src): String;
     public var _src : String = null;
@@ -59,7 +59,7 @@ class Slice3 extends Skin{
     /**
     * Where to slice skin bitmap.
     * This array should contain zero, one or two floats.
-    * If the floats are less than one they indicate a percentage of the picture where it 
+    * If the floats are less than one they indicate a percentage of the picture where it
     * should be cut.
     * If they are larger than or equal to one they are pixels and should be integer values.
     * Zero - 3 slice scaling (horizontal). Bitmap is divided into two equal sized bitmaps.
@@ -179,7 +179,7 @@ class Slice3 extends Skin{
     private function _skinDrawSlice(w:Widget, bmp:BitmapData, src:Rectangle, dst:Rectangle) : Void {
 
         var mx : Matrix = new Matrix();
-		mx.translate(-src.x, -src.y);
+        mx.translate(-src.x, -src.y);
         mx.scale(dst.width / src.width, dst.height / src.height);
         mx.translate(dst.x, dst.y);
 
@@ -190,7 +190,7 @@ class Slice3 extends Skin{
 
 
     /**
-    * Returns the correct slice value, depending on if the slice value is less 
+    * Returns the correct slice value, depending on if the slice value is less
     * than one or not.
     * If it's less than one we return a part of the total value passed.
     * If it's larger or equal to one we return the slice value rounded.
@@ -255,15 +255,17 @@ class Slice3 extends Skin{
         if (this._srcRect == null) {
             var bmp = _getBmp();
             if (bmp != null) {
-              return new Rectangle(0,0,bmp.width,bmp.height);
+                return new Rectangle(0, 0, bmp.width, bmp.height);
             }
+
             return null;
         }
+
         return _srcRect;
     }//function get_srcRect()
 
 
-/**
+    /**
     * Setter srcRect
     *
     */

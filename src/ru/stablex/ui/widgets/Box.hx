@@ -212,17 +212,33 @@ class Box extends Widget{
         }
     }//function _calcHeight()
 
-    override private function resizeWithPercent(parent : Widget) {
-        var newWidth  = this._widthUsePercent ? parent.contentWidth * this._widthPercent / 100 : this._width;
-        var newHeight = this._heightUsePercent ? parent.contentHeight * this._heightPercent / 100 : this._height;
-        if (minWidthByContent) {
-          newWidth = Math.max(newWidth, _calcWidth());
+
+    /**
+    * Set widget size based on % of parent's size (if width or height is defined in %)
+    *
+    */
+    override private function _resizeWithPercent(parent : Widget) {
+        var newWidth  = (
+            this._widthUsePercent
+                ? parent.contentWidth * this._widthPercent / 100
+                : this._width
+        );
+        var newHeight = (
+            this._heightUsePercent
+                ? parent.contentHeight * this._heightPercent / 100
+                : this._height
+        );
+
+        if (this.minWidthByContent) {
+            newWidth = Math.max(newWidth, this._calcWidth());
         }
-        if (minHeightByContent) {
-          newHeight = Math.max(newHeight, _calcHeight());
+        if (this.minHeightByContent) {
+            newHeight = Math.max(newHeight, this._calcHeight());
         }
-        this.resize(newWidth,newHeight,true);
-    }
+
+        this.resize(newWidth, newHeight, true);
+    }//function _resizeWithPercent
+
 
     /**
     * Align elements according to this.align
@@ -589,20 +605,24 @@ class Box extends Widget{
 /*******************************************************************************
 *       GETTERS / SETTERS
 *******************************************************************************/
+
     /**
-      * Get the height of the content
-      */
+    * Get the height of the content
+    *
+    */
     @:noCompletion override private function get_contentHeight() : Float {
       return h - paddingTop - paddingBottom;
     }//function get_content Height
 
-    /**
-      * Get the width of the content
-      */
 
+    /**
+    * Get the width of the content
+    *
+    */
     @:noCompletion override private function get_contentWidth() : Float {
       return w - paddingLeft - paddingRight;
     }//function get_contentWidth()
+
 
     /**
     * Setter for autoSize

@@ -51,9 +51,9 @@ class Widget extends TweenSprite{
     @:noCompletion private var _widthPercent            : Float = 0;
     @:noCompletion private var _widthUsePercent         : Bool = false;
 
-    // When _widthUsePercent is true, and this is true, the widget will not shrink below its contentSize
+    //When widget width is set as % of parent's width and `minWidthByContent` is true, the widget will not shrink below its contentSize
     public var minWidthByContent = false;
-    // When _heightUsePercent is true, and this is true, the widget will not shrink below its contentSize
+    //When widget height is set as % of parent's height and `minHeightByContent` is true, the widget will not shrink below its contentSize
     public var minHeightByContent = false;
 
     //Widget height height in pixels
@@ -257,17 +257,33 @@ class Widget extends TweenSprite{
         if( newParent != this.parent) this.onNewParent(newParent);
     }//function _newParent()
 
-    private function resizeWithPercent(parent:Widget) {
-      var newWidth  = this._widthUsePercent ? parent.contentWidth * this._widthPercent / 100 : this._width;
-      var newHeight = this._heightUsePercent ? parent.contentHeight * this._heightPercent / 100 : this._height;
-      if (minWidthByContent && contentWidth < newWidth) {
-        newWidth = contentWidth;
-      }
-      if (minHeightByContent && contentHeight < newHeight) {
-        newHeight = contentHeight;
-      }
-      this.resize(newWidth,newHeight,true);
-    }
+
+    /**
+    * Set widget size based on % of parent's size (if width or height is defined in %)
+    *
+    */
+    private function _resizeWithPercent(parent:Widget) {
+        var newWidth  = (
+            this._widthUsePercent
+                ? parent.contentWidth * this._widthPercent / 100
+                : this._width
+        );
+        var newHeight = (
+            this._heightUsePercent
+                ? parent.contentHeight * this._heightPercent / 100
+                : this._height
+        );
+
+        if (this.minWidthByContent && contentWidth < newWidth) {
+            newWidth = contentWidth;
+        }
+        if (this.minHeightByContent && contentHeight < newHeight) {
+            newHeight = contentHeight;
+        }
+
+        this.resize(newWidth, newHeight, true);
+    }//function _resizeWithPercent()
+
 
     /**
     * Called before adding to new widget display list
@@ -276,7 +292,7 @@ class Widget extends TweenSprite{
     public function onNewParent(newParent:Widget) : Void {
         //Resize if our size is defined in percents
         if( this._widthUsePercent || this._heightUsePercent ){
-            resizeWithPercent(newParent);
+            this._resizeWithPercent(newParent);
         }
 
         //positioning {
@@ -313,7 +329,7 @@ class Widget extends TweenSprite{
 
         //Resize if our size is defined in percents
         if( this._widthUsePercent || this._heightUsePercent ){
-            resizeWithPercent(parent);
+            this._resizeWithPercent(parent);
         }
 
         //positioning {
@@ -901,20 +917,24 @@ class Widget extends TweenSprite{
         return this._height;
     }//function get_h()
 
+
     /**
-      * Get the height of the content
-      */
+    * Get the height of the content
+    *
+    */
     @:noCompletion private function get_contentHeight() : Float {
-      return h;
+        return h;
     }//function get_content Height
 
-    /**
-      * Get the width of the content
-      */
 
+    /**
+    * Get the width of the content
+    *
+    */
     @:noCompletion private function get_contentWidth() : Float {
-      return w;
+        return w;
     }//function get_contentWidth()
+
 
     /**
     * Width percent setter
