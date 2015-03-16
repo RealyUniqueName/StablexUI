@@ -252,6 +252,13 @@ class Widget extends TweenSprite{
         if( newParent != this.parent) this.onNewParent(newParent);
     }//function _newParent()
 
+    private function resizeWithPercent() {
+      this.resize(
+        (this._widthUsePercent ? newParent.contentWidth * this._widthPercent / 100 : this._width),
+        (this._heightUsePercent ? newParent.contentHeight * this._heightPercent / 100 : this._height),
+        true
+      );
+    }
 
     /**
     * Called before adding to new widget display list
@@ -260,11 +267,7 @@ class Widget extends TweenSprite{
     public function onNewParent(newParent:Widget) : Void {
         //Resize if our size is defined in percents
         if( this._widthUsePercent || this._heightUsePercent ){
-            this.resize(
-                (this._widthUsePercent ? newParent.contentWidth * this._widthPercent / 100 : this._width),
-                (this._heightUsePercent ? newParent.contentHeight * this._heightPercent / 100 : this._height),
-                true
-            );
+            resizeWithPercent();
         }
 
         //positioning {
@@ -301,11 +304,7 @@ class Widget extends TweenSprite{
 
         //Resize if our size is defined in percents
         if( this._widthUsePercent || this._heightUsePercent ){
-            this.resize(
-                (this._widthUsePercent ? parent.contentWidth * this._widthPercent / 100 : this._width),
-                (this._heightUsePercent ? parent.contentHeight * this._heightPercent / 100 : this._height),
-                true
-            );
+            resizeWithPercent();
         }
 
         //positioning {
