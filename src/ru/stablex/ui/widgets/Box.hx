@@ -596,7 +596,11 @@ class Box extends Widget{
                     this.refresh();
                 }
             }else{
-                this.alignElements();
+                if (this.layout == null) {
+                    this.alignElements();
+                } else {
+                    this.applyLayout();
+                }
             }
         }
     }//function _onChildResize()
