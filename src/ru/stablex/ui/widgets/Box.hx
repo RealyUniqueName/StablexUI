@@ -212,6 +212,17 @@ class Box extends Widget{
         }
     }//function _calcHeight()
 
+    override private function resizeWithPercent(parent : Widget) {
+        var newWidth  = this._widthUsePercent ? parent.contentWidth * this._widthPercent / 100 : this._width;
+        var newHeight = this._heightUsePercent ? parent.contentHeight * this._heightPercent / 100 : this._height;
+        if (minWidthByContent) {
+          newWidth = Math.max(newWidth, _calcWidth());
+        }
+        if (minHeightByContent) {
+          newHeight = Math.max(newHeight, _calcHeight());
+        }
+        this.resize(newWidth,newHeight,true);
+    }
 
     /**
     * Align elements according to this.align

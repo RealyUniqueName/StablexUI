@@ -51,6 +51,11 @@ class Widget extends TweenSprite{
     @:noCompletion private var _widthPercent            : Float = 0;
     @:noCompletion private var _widthUsePercent         : Bool = false;
 
+    // When _widthUsePercent is true, and this is true, the widget will not shrink below its contentSize
+    public var minWidthByContent = false;
+    // When _heightUsePercent is true, and this is true, the widget will not shrink below its contentSize
+    public var minHeightByContent = false;
+
     //Widget height height in pixels
     public var h (get_h,set_h)  : Float;
     //Height of content area
@@ -252,6 +257,17 @@ class Widget extends TweenSprite{
         if( newParent != this.parent) this.onNewParent(newParent);
     }//function _newParent()
 
+    private function resizeWithPercent(parent:Widget) {
+      var newWidth  = this._widthUsePercent ? parent.contentWidth * this._widthPercent / 100 : this._width;
+      var newHeight = this._heightUsePercent ? parent.contentHeight * this._heightPercent / 100 : this._height;
+      if (minWidthByContent && contentWidth < newWidth) {
+        newWidth = contentWidth;
+      }
+      if (minHeightByContent && contentHeight < newHeight) {
+        newHeight = contentHeight;
+      }
+      this.resize(newWidth,newHeight,true);
+    }
 
     /**
     * Called before adding to new widget display list
@@ -260,11 +276,7 @@ class Widget extends TweenSprite{
     public function onNewParent(newParent:Widget) : Void {
         //Resize if our size is defined in percents
         if( this._widthUsePercent || this._heightUsePercent ){
-            this.resize(
-                (this._widthUsePercent ? newParent.contentWidth * this._widthPercent / 100 : this._width),
-                (this._heightUsePercent ? newParent.contentHeight * this._heightPercent / 100 : this._height),
-                true
-            );
+            resizeWithPercent(newParent);
         }
 
         //positioning {
@@ -301,11 +313,7 @@ class Widget extends TweenSprite{
 
         //Resize if our size is defined in percents
         if( this._widthUsePercent || this._heightUsePercent ){
-            this.resize(
-                (this._widthUsePercent ? parent.contentWidth * this._widthPercent / 100 : this._width),
-                (this._heightUsePercent ? parent.contentHeight * this._heightPercent / 100 : this._height),
-                true
-            );
+            resizeWithPercent(parent);
         }
 
         //positioning {
