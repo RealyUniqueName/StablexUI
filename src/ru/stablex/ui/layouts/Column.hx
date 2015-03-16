@@ -28,6 +28,8 @@ class Column extends Layout{
     public var fit(null, set_fit) : Bool;
     public var fitWidth : Bool = true;
     public var fitHeight : Bool = true;
+    // Vertical alignment (middle,bottom,top)
+    public var vAlign : String = "top";
     /**
     * Columns sizes.
     *  - positive numbers greater than 1 define column width in pixels;
@@ -94,10 +96,18 @@ class Column extends Layout{
             //position
             if( Std.is(child, Widget) ){
                 cast(child, Widget).left = left;
-                cast(child, Widget).top = this.paddingTop;
+                switch(vAlign) {
+                    case "top":    cast(child, Widget).top    = paddingTop;
+                    case "bottom": cast(child, Widget).bottom = paddingBottom;
+                    case "middle": cast(child, Widget).top    = paddingTop + (holder.h - paddingTop - paddingBottom - cast(child,Widget).h)/2.0;
+                }
             }else{
                 child.x = left;
-                child.y = this.paddingTop;
+                switch(vAlign) {
+                    case "top":    child.y = paddingTop;
+                    case "bottom": child.y = paddingBottom - child.height;
+                    case "middle": child.y = paddingTop + (holder.h - paddingTop - paddingBottom - child.height)/2.0;
+              }
             }
 
             //size

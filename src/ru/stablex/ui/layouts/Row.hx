@@ -28,6 +28,9 @@ class Row extends Layout{
     public var fit(null, set_fit) : Bool;
     public var fitWidth : Bool = true;
     public var fitHeight : Bool = true;
+    // Horizontal alignment (center,left,right)
+    public var hAlign : String = "left";
+
     /**
     * Rows sizes.
     *  - positive numbers greater than 1 define row height in pixels;
@@ -93,10 +96,18 @@ class Row extends Layout{
             //position
             if( Std.is(child, Widget) ){
                 cast(child, Widget).top = top;
-                cast(child, Widget).left = this.paddingLeft;
+                switch(hAlign) {
+                    case "left":   cast(child, Widget).left  = paddingLeft;
+                    case "right":  cast(child, Widget).right = paddingRight;
+                    case "center": cast(child, Widget).left  = paddingLeft + (holder.w - paddingLeft - paddingRight - cast(child,Widget).w)/2.0;
+                }
             }else{
                 child.x = this.paddingLeft;
-                child.y = top;
+                switch(hAlign) {
+                    case "left":   child.y  = paddingLeft;
+                    case "right":  child.y  = paddingRight - child.width;
+                    case "center": child.y  = paddingLeft + (holder.w - paddingLeft - paddingRight - child.width)/2.0;
+                }
             }
 
             //size
