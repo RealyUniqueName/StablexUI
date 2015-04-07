@@ -62,8 +62,11 @@ class Theme {
     */
     static private inline function _dir (pos:Position = null) : String {
         if (pos == null) pos = Context.currentPos();
-        var file : String = Context.resolvePath( Context.getPosInfos(pos).file );
-
+        var filePath = Context.getPosInfos(pos).file;
+        var file : String = Context.getPosInfos(pos).file;
+        if (!sys.FileSystem.exists(filePath)) {
+            file = Context.resolvePath (filePath);
+        }
         return Theme._erFile.replace(file, '');
     }//function _dir()
 
