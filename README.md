@@ -11,17 +11,9 @@ Demo with android-4.x-like theme (written completely in xml):
 * flash: http://ui.stablex.ru/demo/demo_flash/
 * html5: http://ui.stablex.ru/demo/demo_html5/
 
-Games prototypes:
-* Coder: all objects in this game are StablexUI widgets - play on [newgrounds](http://www.newgrounds.com/portal/view/616444); [sources](https://github.com/RealyUniqueName/LD26-Coder)
-* The Tale of Ladybird: all objects in this game are StablexUI widgets - http://stablex.ru/ladybird
-* Untwist: simple game with simple ui and screen transitions - http://ui.stablex.ru/demo/untwist/
+[Projects using StablexUI](https://github.com/RealyUniqueName/Projects-using-StablexUI/blob/master/README.md)
 
-Another example:
-* flash: http://ui.stablex.ru/demo/handlers.swf
-* html5: http://ui.stablex.ru/demo/handlers/
-
-More simple demoes: http://ui.stablex.ru/demo
-
+Simple demos: http://ui.stablex.ru/demo
 
 
 Features:

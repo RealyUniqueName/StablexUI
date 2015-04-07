@@ -28,7 +28,7 @@ class Box extends Widget{
     public var childPadding : Float = 0;
     /**
     * This should be like 'left,top' or 'bottom' or 'center,middle' etc.
-    * Vertical: left, right, center. Horizontal: top, bottom, middle.
+    * Horizontal: left, right, center. Vertical: top, bottom, middle.
     * Use any other value to cancel alignment
     */
     public var align : String = 'center,middle';
