@@ -221,7 +221,7 @@ class Scroll extends Widget{
             this.vBar.min = (this.h - this.box.h < 0 ? this.h - this.box.h : 0);
             this.vBar.max = 0;
             var k : Float = this.vBar.h / this.box.h;
-            if( k > 1 ) k = 1;
+            if( k > 1 || this.box.h == 0) k = 1;
             this.vBar.slider.h = this.h * k;
             this.vBar.refresh();
             this.vBar.addUniqueListener(WidgetEvent.CHANGE, this._onVBarChange);
@@ -233,7 +233,7 @@ class Scroll extends Widget{
             this.hBar.max = -(this.w - this.box.w < 0 ? this.w - this.box.w : 0);
             this.hBar.min = 0;
             var k : Float = this.hBar.w / this.box.w;
-            if( k > 1 ) k = 1;
+            if( k > 1 || this.box.w ==0) k = 1;
             this.hBar.slider.w = this.hBar.w * k;
             this.hBar.refresh();
             this.hBar.addUniqueListener(WidgetEvent.CHANGE, this._onHBarChange);
