@@ -275,7 +275,7 @@ class ClassBuilder {
         }
 
         //call .onInitialize method to notify widget that it is initialized
-        code += '\n'+ widget + '._onInitialize();';
+        code += UIBuilder.callIfWidget(widget, '_onInitialize()');
 
         //if we have nested widgets, generate code for them
         for(node in element.elements()){
@@ -294,7 +294,7 @@ class ClassBuilder {
         }
 
         //call .onCreate method to notify widget that it is created
-        code += '\n'+ widget + '._onCreate();';
+        code += UIBuilder.callIfWidget(widget, '_onCreate()');
 
         //add to parent's display list
         code += '\n'+ parent + '.addChild('+ widget + ');';
