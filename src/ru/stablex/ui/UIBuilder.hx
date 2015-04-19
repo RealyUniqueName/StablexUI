@@ -414,7 +414,7 @@ class UIBuilder {
 
         //call .onInitialize method to notify widget that it is initialized
         if( zeroElementCls == null ){
-            code += '\n'+ wname + n + '._onInitialize();';
+            code += UIBuilder.callIfWidget(wname + n, '_onInitialize()');
         }
 
         //if we have nested widgets, generate code for them
@@ -435,7 +435,7 @@ class UIBuilder {
 
         //call .onCreate method to notify widget that it is created
         if( zeroElementCls == null ){
-            code += '\n'+ wname + n + '._onCreate();';
+            code += UIBuilder.callIfWidget(wname + n, '_onCreate()');
         }
 
         //add to parent's display list
@@ -446,6 +446,17 @@ class UIBuilder {
         return code;
     }//function construct()
 
+    /**
+    * Generate haxe code that check if Std.is(maybeWidget, Widget) then call maybeWidget.field
+    *
+    * @private
+    */
+    @:noCompletion public static function callIfWidget(maybeWidget: String, field: String): String {
+        return
+            '\nif( Std.is($maybeWidget, ru.stablex.ui.widgets.Widget) ){' +
+            '\n    cast($maybeWidget, ru.stablex.ui.widgets.Widget).$field;' +
+            '\n}';
+    }
 
     /**
     * Generate haxe code based on `element` attributes as properties of `obj`
@@ -523,15 +534,8 @@ class UIBuilder {
                         props.set(prop, true);
                         code += '\nif( !Std.is(' + prop + ', ' + cls + ') ){';
                         code += '\n     ' + prop + ' = new ' + cls + '();';
-
                         //if this is a widget, we should do all necessary stuff
-                        code += '\n     if( Std.is(' + prop + ', ru.stablex.ui.widgets.Widget) ){';
-                        code += '\n         var __tmp__ : ru.stablex.ui.widgets.Widget = cast(' + prop + ', ru.stablex.ui.widgets.Widget);';
-                        code += '\n         ru.stablex.ui.UIBuilder.applyDefaults(__tmp__);';
-                        code += '\n         __tmp__._onInitialize();';
-                        code += '\n         __tmp__._onCreate();';
-                        code += '\n     }';
-
+                        code += '\n     ru.stablex.ui.UIBuilder.initCreatedWidget($prop);';
                         code += '\n}';
                     }
 
@@ -997,7 +1001,9 @@ class UIBuilder {
     * Apply defaults specified by obj.defaults
     *
     */
-    static inline public function applyDefaults(obj:Widget) : Void {
+    static inline public function applyDefaults(_obj:Dynamic) : Void {
+        if (! Std.is(_obj, Widget)) { return; }
+        var obj = cast(_obj, Widget);
         var clsName : String = Type.getClassName(Type.getClass(obj));
         var widgetDefaults : Hash<Widget->Void> = UIBuilder.defaults.get( clsName.substr(clsName.lastIndexOf('.', clsName.length - 1) + 1) );
 
@@ -1012,7 +1018,14 @@ class UIBuilder {
         }
     }//function applyDefaults()
 
-
+    public static function initCreatedWidget(maybeWidget: Dynamic): Void {
+        if( Std.is(maybeWidget, Widget) ){
+            var widget = cast(maybeWidget, Widget);
+            applyDefaults(widget);
+            widget._onInitialize();
+            widget._onCreate();
+        }
+    }
 
     /**
     * Get registered skin
