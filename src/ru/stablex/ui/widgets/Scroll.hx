@@ -220,7 +220,7 @@ class Scroll extends Widget{
             if( this.vBar.parent == null ) this.addChildAt(this.vBar, 1);
             this.vBar.min = (this.h - this.box.h < 0 ? this.h - this.box.h : 0);
             this.vBar.max = 0;
-            var k : Float = (this.box.h != 0 ? this.hBar.h / this.box.h : 1);
+            var k : Float = (this.box.h != 0 ? this.vBar.h / this.box.h : 1);
             if( k > 1) k = 1;
             this.vBar.slider.h = this.h * k;
             this.vBar.refresh();
