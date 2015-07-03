@@ -90,7 +90,9 @@ class UIBuilder {
     static private var _skinQueue : List<Widget> = new List();
 
     //dirty hacks for new openfl
+    #if ((openfl >= '2.0.0') && (openfl < '3.0.0'))
     static public var frameTime : Int = 0;
+    #end
 #end
 
 
@@ -1099,7 +1101,7 @@ class UIBuilder {
     * @private
     */
     @:noCompletion static public function skinQueue (e:flash.events.Event = null) : Void {
-        #if (openfl >= '2.0.0')
+        #if ((openfl >= '2.0.0') && (openfl < '3.0.0'))
         UIBuilder.frameTime = openfl.Lib.getTimer();
         #end
 
