@@ -109,6 +109,8 @@ class Text extends Box{
         }
 
         super.refresh();
+
+        this.html5TextFieldSizeWorkaround();
     }//function refresh()
 
 
@@ -146,17 +148,7 @@ class Text extends Box{
     @:noCompletion private function set_text(txt:String) : String {
         this.label.text = txt;
 
-        //workaround: TextField.autoSize does not work in html5
-        #if html5
-            switch (this.label.autoSize) {
-                case LEFT|RIGHT|CENTER:
-                    this.label.height = SizeTools.height(this.label);
-                    if (!this.label.wordWrap) {
-                        this.label.width = SizeTools.width(this.label);
-                    }
-                case NONE:
-            }
-        #end
+        this.html5TextFieldSizeWorkaround();
 
         //if widget needs to be resized to fit new string size
         if( this.autoWidth || this.autoHeight ){
@@ -169,6 +161,23 @@ class Text extends Box{
         return txt;
     }//function set_text()
 
+
+    /**
+    * On html5 target OpenFL does not calculate properly TextField.width & TextField.height sometimes.
+    *
+    */
+    private inline function html5TextFieldSizeWorkaround () : Void {
+        #if html5
+            switch (this.label.autoSize) {
+                case LEFT|RIGHT|CENTER:
+                    this.label.height = SizeTools.height(this.label);
+                    if (!this.label.wordWrap) {
+                        this.label.width = SizeTools.width(this.label);
+                    }
+                case NONE:
+            }
+        #end
+    }//function html5TextFieldSizeWorkaround()
 
 
 }//class Text
