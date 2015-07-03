@@ -1,8 +1,10 @@
 package ru.stablex.ui.widgets;
 
 import flash.text.TextField;
+import flash.text.TextFieldAutoSize;
 import flash.text.TextFormat;
 import ru.stablex.Err;
+import ru.stablex.ui.misc.SizeTools;
 import ru.stablex.ui.UIBuilder;
 
 
@@ -31,7 +33,7 @@ class Text extends Box{
         super();
 
         this.label = cast(this.addChild(new TextField()), TextField);
-        this.label.autoSize   = flash.text.TextFieldAutoSize.LEFT;
+        this.label.autoSize   = TextFieldAutoSize.LEFT;
         this.label.multiline  = true;
         // this.label.embedFonts = true;
 
@@ -143,6 +145,18 @@ class Text extends Box{
     */
     @:noCompletion private function set_text(txt:String) : String {
         this.label.text = txt;
+
+        //workaround: TextField.autoSize does not work in html5
+        #if html5
+            switch (this.label.autoSize) {
+                case LEFT|RIGHT|CENTER:
+                    this.label.height = SizeTools.height(this.label);
+                    if (!this.label.wordWrap) {
+                        this.label.width = SizeTools.width(this.label);
+                    }
+                case NONE:
+            }
+        #end
 
         //if widget needs to be resized to fit new string size
         if( this.autoWidth || this.autoHeight ){
