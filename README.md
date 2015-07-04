@@ -7,9 +7,7 @@ Supported targets: cpp (iOS, Android, Blackberry, webOS, Windows, Linux, MacOS),
 
 Online docs for API and basic features: http://ui.stablex.ru/doc
 
-Demo with android-4.x-like theme (written completely in xml):
-* flash: http://ui.stablex.ru/demo/demo_flash/
-* html5: http://ui.stablex.ru/demo/demo_html5/
+Demo with android-4.x-like theme (written completely in xml): http://ui.stablex.ru/demo/demo_flash/
 
 [Projects using StablexUI](https://github.com/RealyUniqueName/Projects-using-StablexUI/blob/master/README.md)
 
