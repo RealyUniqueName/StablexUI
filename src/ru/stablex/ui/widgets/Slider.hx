@@ -77,28 +77,28 @@ class Slider extends Widget{
     }//function set_value()
 
     @:noCompletion private function get_step () : Float {
-		return this._step;
-	}//function get_step()
-	@:noCompletion private function set_step (v:Float) : Float {
-		this._step = v;
-		var oldValue:Float = this._value;
-		this._updateValueByStep();
-		this._updateSliderPos();
-		
-		if (this.created && oldValue != this._value) {
-			this.dispatchEvent(new WidgetEvent(WidgetEvent.CHANGE));
-		}
-		
-		return v;
-	}//function set_step()
+	return this._step;
+    }//function get_step()
+    @:noCompletion private function set_step (v:Float) : Float {
+	this._step = v;
+	var oldValue:Float = this._value;
+	this._updateValueByStep();
+	this._updateSliderPos();
 	
-	/**
-	 * Update slider value according to `.step` value
-	 * 
-	 */
-	private inline function _updateValueByStep():Void {
-		if (this.step != 0) this._value = Math.round(this._value / this.step) * this.step;
-	}//function _updateValueByStep()
+	if (this.created && oldValue != this._value) {
+		this.dispatchEvent(new WidgetEvent(WidgetEvent.CHANGE));
+	}
+	
+	return v;
+    }//function set_step()
+	
+    /**
+     * Update slider value according to `.step` value
+     * 
+     */
+    private inline function _updateValueByStep():Void {
+    	if (this.step != 0) this._value = Math.round(this._value / this.step) * this.step;
+    }//function _updateValueByStep()
 
     /**
     * Update slider position according to `.value`
