@@ -19,6 +19,9 @@ class Slider extends Widget{
     //Current value
     public var value (get_value,set_value) : Float;
     private var _value : Float = 0;
+    //Step change in the value
+	public var step (get_step,set_step) : Float;
+	private var _step : Float = 0;
     //Slider element
     public var slider : Widget;
     //Whether this slider is vertical or horizontal
@@ -63,6 +66,7 @@ class Slider extends Widget{
     */
     @:noCompletion private function set_value (v:Float) : Float {
         this._value = v;
+        this._updateValueByStep();
         this._updateSliderPos();
 
         if( this.created ){
@@ -72,6 +76,29 @@ class Slider extends Widget{
         return v;
     }//function set_value()
 
+    @:noCompletion private function get_step () : Float {
+	return this._step;
+    }//function get_step()
+    @:noCompletion private function set_step (v:Float) : Float {
+	this._step = v;
+	var oldValue:Float = this._value;
+	this._updateValueByStep();
+	this._updateSliderPos();
+	
+	if (this.created && oldValue != this._value) {
+		this.dispatchEvent(new WidgetEvent(WidgetEvent.CHANGE));
+	}
+	
+	return v;
+    }//function set_step()
+	
+    /**
+     * Update slider value according to `.step` value
+     * 
+     */
+    private inline function _updateValueByStep():Void {
+    	if (this.step != 0) this._value = Math.round(this._value / this.step) * this.step;
+    }//function _updateValueByStep()
 
     /**
     * Update slider position according to `.value`
@@ -143,7 +170,7 @@ class Slider extends Widget{
 
                 this._value = x / (this._width - this.slider._width) * (this.max - this.min) + this.min;
             }
-
+            this._updateValueByStep();
             this.dispatchEvent(new WidgetEvent(WidgetEvent.CHANGE));
         }//if()
     }//function _set()
@@ -183,6 +210,7 @@ class Slider extends Widget{
             if( y != this.slider.top ){
                 this.slider.top = y;
                 this._value = (1 - y / (this._height - this.slider._height)) * (this.max - this.min) + this.min;
+                this._updateValueByStep();
                 this.dispatchEvent(new WidgetEvent(WidgetEvent.CHANGE));
             }
         };
@@ -221,6 +249,7 @@ class Slider extends Widget{
             if( x != this.slider.left ){
                 this.slider.left = x;
                 this._value = x / (this._width - this.slider._width) * (this.max - this.min) + this.min;
+                this._updateValueByStep();
                 this.dispatchEvent(new WidgetEvent(WidgetEvent.CHANGE));
             }
         };
