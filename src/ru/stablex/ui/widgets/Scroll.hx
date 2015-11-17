@@ -34,13 +34,8 @@ class Scroll extends Widget{
     public var hScroll : Bool = true;
     //allow scrolling by mouse wheel
     public var wheelScroll : Bool = true;
-    
     //hide bar if it larger then box
     public var hideBarIfLarger:Bool = true;
-    //always hide hBar
-    public var hideHBar:Bool = false;
-    //always hide vBar
-    public var hideVBar:Bool = false;
     
     /**
     * Modifier to scroll horizontally instead of vertically, when using mouse wheel
@@ -267,14 +262,14 @@ class Scroll extends Widget{
     }//function onResize()
 
     /**
-    * Update HBar & VBar visible if `hideBarIfLarger` == true
+    * Update HBar & VBar visible according to hideBarIfLarger, hScroll, vScroll
     * 
     */
     private function _updateBarVisible():Void {
 	this.hBar.visible = this.vBar.visible = true;
-	if (hideHBar == true || (hideBarIfLarger == true && this.box.w < this.hBar.w))
+	if (this.hScroll == false || (hideBarIfLarger == true && this.box.w < this.hBar.w))
 	    this.hBar.visible = false;
-	if (hideVBar == true || (hideBarIfLarger == true && this.box.h < this.vBar.h))
+	if (this.vScroll == false || (hideBarIfLarger == true && this.box.h < this.vBar.h))
 	    this.vBar.visible = false;
     }//function _updateBarsVisible()
 	
