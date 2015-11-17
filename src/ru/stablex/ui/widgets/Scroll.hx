@@ -34,8 +34,14 @@ class Scroll extends Widget{
     public var hScroll : Bool = true;
     //allow scrolling by mouse wheel
     public var wheelScroll : Bool = true;
+    
     //hide bar if it larger then box
     public var hideBarIfLarger:Bool = true;
+    //always hide hBar
+    public var hideHBar:Bool = false;
+    //always hide vBar
+    public var hideVBar:Bool = false;
+    
     /**
     * Modifier to scroll horizontally instead of vertically, when using mouse wheel
     * Possible values: shift, alt, ctrl
@@ -92,7 +98,10 @@ class Scroll extends Widget{
             h        : 10,
             slider   : {heightPt : 100}
         });
-
+        
+	this.hBar.addUniqueListener(WidgetEvent.RESIZE, this._update);
+	this.vBar.addUniqueListener(WidgetEvent.RESIZE, this._update);
+        
         this.addUniqueListener(MouseEvent.MOUSE_WHEEL, this._beforeScroll);
         this.addUniqueListener(MouseEvent.MOUSE_DOWN, this._beforeScroll);
     }//function new()
@@ -250,26 +259,23 @@ class Scroll extends Widget{
            scrollX = this.w - this.box.w;
         }
         
-        //call _updateBarsVisible after 10 ms to obtain correct w & h
-	if (this.hideBarIfLarger)
-	    Timer.delay(this._updateBarVisible, 10);
+       this._updateBarVisible();
     }//function _update()
+    
+    override public function onResize() : Void {
+	this._updateBarVisible();
+    }//function onResize()
 
     /**
     * Update HBar & VBar visible if `hideBarIfLarger` == true
     * 
     */
     private function _updateBarVisible():Void {
-	if (hideBarIfLarger == true) {
-	    if (this.box.w > this.hBar.w)
-		this.hBar.visible = true;
-	    else
-		this.hBar.visible = false;
-	    if (this.box.h > this.vBar.h)
-		this.vBar.visible = true;
-	    else
-		this.vBar.visible = false;
-	}
+	this.hBar.visible = this.vBar.visible = true;
+	if (hideHBar == true || (hideBarIfLarger == true && this.box.w < this.hBar.w))
+	    this.hBar.visible = false;
+	if (hideVBar == true || (hideBarIfLarger == true && this.box.h < this.vBar.h))
+	    this.vBar.visible = false;
     }//function _updateBarsVisible()
 	
     /**
