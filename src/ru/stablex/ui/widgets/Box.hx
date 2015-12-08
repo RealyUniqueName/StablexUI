@@ -113,11 +113,7 @@ class Box extends Widget{
             var h : Float = (this.autoHeight ? this._calcHeight() : this._height);
 
             if( this._width != w || this._height != h ){
-
-                this._width = w;
-                this._height = h;
-
-                this.dispatchEvent(new WidgetEvent(WidgetEvent.RESIZE));
+                this.resize(w, h, true);
             }
         }//if( autoSize )
 
