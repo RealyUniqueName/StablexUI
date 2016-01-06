@@ -12,7 +12,7 @@
     <source name="../../src/" />
 
     <haxelib name="openfl" />
-    <set name="html5-backend" value="openfl-html5-dom" />
+    <!-- <set name="html5-backend" value="openfl-html5-dom" /> -->
     <haxelib name="actuate" />
 
 </project>

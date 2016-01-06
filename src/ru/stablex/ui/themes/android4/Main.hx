@@ -18,8 +18,7 @@ class Main extends ru.stablex.ui.Theme{
     *
     */
     static public function main () : Void {
-        //due to bug in openfl-html5 we need to set font name manually
-        FONT = #if html5 'Roboto Regular' #else Main.getFontName('fonts/regular.ttf') #end;
+        FONT = 'Roboto Regular';
     }//function main()
 
 }//class Main
