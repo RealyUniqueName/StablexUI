@@ -374,6 +374,7 @@ class Theme {
             case TInst(t,[]):
                 //check if static fields describe skins
                 for(field in t.get().statics.get()){
+                    if (!field.isPublic) continue;
                     switch(field.kind){
                         case FMethod(_):
                             switch(field.type){
