@@ -139,7 +139,6 @@ class Box extends Widget{
 
             for(i in 0...this.numChildren){
                 child = this.getChildAt(i);
-                child = this.getChildAt(i);
                 if( child.visible ){
                     childW = this._objWidth(child);
                     if( childW > w ){

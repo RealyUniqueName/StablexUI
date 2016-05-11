@@ -21,9 +21,6 @@ class SizeTools {
             if( Std.is(obj, Widget) ){
                 return cast(obj, Widget).w;
             }else if( Std.is(obj, TextField) ){
-        if (obj.name == 'test') {
-            trace(cast(obj, TextField).textWidth);
-        }
                 return cast(obj, TextField).textWidth + 4;
             }else{
                 return obj.width;
