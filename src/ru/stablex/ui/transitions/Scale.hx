@@ -6,15 +6,16 @@ import motion.Actuate;
 
 
 /**
-* This transition method manipulates `.alpha` of changing a widgets children
+* Switches displayed widgets by scaling them up and down
 *
 */
 class Scale extends Transition{
 
     //Scale "0 to 1" (true) or "1 to 0" (false) ?
     public var scaleUp : Bool = true;
-    //The origin from which the element should scaled from/too. -1.0 means not set
+    //The origin from which the element should scaled along X axis from/too. -1.0 means not set
     public var scaleOriginX : Float = -1.0;
+    //The origin from which the element should scaled along Y axis from/too. -1.0 means not set
     public var scaleOriginY : Float = -1.0;
 
 
