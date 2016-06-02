@@ -924,9 +924,9 @@ class UIBuilder {
     * @throw <type>Dynamic</type> if corresponding properties of `cls` and `properties` have different types
     * @throw <type>String</type> if `cls` is not of <type>Class</type>&lt;<type>ru.stblex.ui.widgets.Widget</type>&gt;
     */
-    static public function create<T:Widget>(cls:Class<T>, properties:Dynamic = null) : Null<T>{
+    static public function create<T:Widget>(cls:Class<T>, properties:Dynamic = null, args : Array<Dynamic> = null) : Null<T>{
         //create widget instance
-        var obj : Widget = Type.createInstance(cls, []);
+        var obj : Widget = Type.createInstance(cls, args == null ? [] : args);
 
         //apply defaults  {
             obj.defaults = Reflect.field(properties, 'defaults');
