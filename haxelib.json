@@ -5,7 +5,7 @@
     "tags"         : ["cross", "cpp", "flash", "html5", "ui"],
     "description"  : "StablexUI is a crossplatform UI engine.",
     "version"      : "1.2.0",
-    "releasenote"  : "Changed UIBuilder.create() to accept widget constructor arguments as third parameter.",
+    "releasenote"  : "see CHANGELOG.md",
     "classPath"    : "src",
     "contributors" : ["RealyUniqueName"],
     "dependencies" : {
