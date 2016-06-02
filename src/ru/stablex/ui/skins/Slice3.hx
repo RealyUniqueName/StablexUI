@@ -40,7 +40,6 @@ class Slice3 extends Skin {
     //set equal padding for all borders
     public var padding(never,set_padding) : Float;
 
-	public var vertical : Bool = false;
     /**
     * Setter for padding
     *
@@ -70,6 +69,8 @@ class Slice3 extends Skin {
     * Two - 3 slice scaling (horizontal). Floats: left and right guidelines for slicing
     */
     public var slice : Array<Float>;
+    //If this is `true` then `slice` indicates Y coordinates for slicing and `stretch` is applied to width instead of height.
+    public var vertical : Bool = false;
 
 
     /**
@@ -90,6 +91,7 @@ class Slice3 extends Skin {
 
         return bmp;
     }//function _getBmp()
+
 
     /**
     * Draw skin on widget
@@ -132,89 +134,90 @@ class Slice3 extends Skin {
 
 		if (vertical) {
 			//top{
-            src.x      = srcRect.x;
-            src.y      = srcRect.y;
-            src.height  = w1;
-            src.width = srcRect.width;
+                src.x      = srcRect.x;
+                src.y      = srcRect.y;
+                src.height  = w1;
+                src.width = srcRect.width;
 
-            dst.x      = drawRect.x;
-            dst.y      = drawRect.y;
-            dst.height  = w1 * scaleY;
-            dst.width = (this.stretch ? drawRect.width : srcRect.width);
+                dst.x      = drawRect.x;
+                dst.y      = drawRect.y;
+                dst.height  = w1 * scaleY;
+                dst.width = (this.stretch ? drawRect.width : srcRect.width);
 
-            this._skinDrawSlice(w, bmp, src, dst);
-        //}
+                this._skinDrawSlice(w, bmp, src, dst);
+            //}
 
-        //middle{
-            src.x      = srcRect.x;
-            src.y      = srcRect.y + w1;
-            src.height  = w2 - w1;
-            src.width = srcRect.width;
+            //middle{
+                src.x      = srcRect.x;
+                src.y      = srcRect.y + w1;
+                src.height  = w2 - w1;
+                src.width = srcRect.width;
 
-            dst.y      = w1 * scaleY;
-            dst.x      = 0;
-            dst.height  = drawRect.height - (w1 + (srcRect.height - w2)) * scaleY;
-            dst.width = (this.stretch ? drawRect.width : srcRect.width);
+                dst.y      = w1 * scaleY;
+                dst.x      = 0;
+                dst.height  = drawRect.height - (w1 + (srcRect.height - w2)) * scaleY;
+                dst.width = (this.stretch ? drawRect.width : srcRect.width);
 
-            this._skinDrawSlice(w, bmp, src, dst);
-        //}
+                this._skinDrawSlice(w, bmp, src, dst);
+            //}
 
-        //bottom{
-            src.x      = srcRect.x;
-            src.y      = srcRect.y + w2;
-            src.height  = srcRect.height - w2;
-            src.width = srcRect.width;
+            //bottom{
+                src.x      = srcRect.x;
+                src.y      = srcRect.y + w2;
+                src.height  = srcRect.height - w2;
+                src.width = srcRect.width;
 
-            dst.y      = drawRect.height - src.height * scaleY;
-            dst.x      = 0;
-            dst.height  = src.height * scaleY;
-            dst.width = (this.stretch ? drawRect.width : srcRect.height);
+                dst.y      = drawRect.height - src.height * scaleY;
+                dst.x      = 0;
+                dst.height  = src.height * scaleY;
+                dst.width = (this.stretch ? drawRect.width : srcRect.height);
 
-            this._skinDrawSlice(w, bmp, src, dst);
-        //}
+                this._skinDrawSlice(w, bmp, src, dst);
+            //}
+
+        //horizontal (default)
 		} else {
+            //left{
+                src.x      = srcRect.x;
+                src.y      = srcRect.y;
+                src.width  = w1;
+                src.height = srcRect.height;
 
-        //left{
-            src.x      = srcRect.x;
-            src.y      = srcRect.y;
-            src.width  = w1;
-            src.height = srcRect.height;
+                dst.x      = drawRect.x;
+                dst.y      = drawRect.y;
+                dst.width  = w1 * scaleX;
+                dst.height = (this.stretch ? drawRect.height : srcRect.height);
 
-            dst.x      = drawRect.x;
-            dst.y      = drawRect.y;
-            dst.width  = w1 * scaleX;
-            dst.height = (this.stretch ? drawRect.height : srcRect.height);
+                this._skinDrawSlice(w, bmp, src, dst);
+            //}
 
-            this._skinDrawSlice(w, bmp, src, dst);
-        //}
+            //middle{
+                src.x      = srcRect.x + w1;
+                src.y      = srcRect.y;
+                src.width  = w2 - w1;
+                src.height = srcRect.height;
 
-        //middle{
-            src.x      = srcRect.x + w1;
-            src.y      = srcRect.y;
-            src.width  = w2 - w1;
-            src.height = srcRect.height;
+                dst.x      = w1 * scaleX;
+                dst.y      = 0;
+                dst.width  = drawRect.width - (w1 + (srcRect.width - w2)) * scaleX;
+                dst.height = (this.stretch ? drawRect.height : srcRect.height);
 
-            dst.x      = w1 * scaleX;
-            dst.y      = 0;
-            dst.width  = drawRect.width - (w1 + (srcRect.width - w2)) * scaleX;
-            dst.height = (this.stretch ? drawRect.height : srcRect.height);
+                this._skinDrawSlice(w, bmp, src, dst);
+            //}
 
-            this._skinDrawSlice(w, bmp, src, dst);
-        //}
+            //right{
+                src.x      = srcRect.x + w2;
+                src.y      = srcRect.y;
+                src.width  = srcRect.width - w2;
+                src.height = srcRect.height;
 
-        //right{
-            src.x      = srcRect.x + w2;
-            src.y      = srcRect.y;
-            src.width  = srcRect.width - w2;
-            src.height = srcRect.height;
+                dst.x      = drawRect.width - src.width * scaleX;
+                dst.y      = 0;
+                dst.width  = src.width * scaleX;
+                dst.height = (this.stretch ? drawRect.height : srcRect.height);
 
-            dst.x      = drawRect.width - src.width * scaleX;
-            dst.y      = 0;
-            dst.width  = src.width * scaleX;
-            dst.height = (this.stretch ? drawRect.height : srcRect.height);
-
-            this._skinDrawSlice(w, bmp, src, dst);
-        //}
+                this._skinDrawSlice(w, bmp, src, dst);
+            //}
 		}
     }//function draw()
 
