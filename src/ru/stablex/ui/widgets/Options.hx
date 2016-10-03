@@ -38,6 +38,8 @@ class Options extends Button{
 
     //if `rebuildList` is true, options list will be rebuilt before next show
     public var rebuildList : Bool = true;
+    //if `true` then next assignment to `options` or `value` will not trigger `WidgetEvent.CHANGE`
+    private var _skipNextChangeEvent : Bool = false;
     //currently selected option index in `.options`
     private var _selectedIdx (default,set__selectedIdx) : Int = 0;
 
@@ -71,10 +73,24 @@ class Options extends Button{
             this.rebuildList = true;
             this._selectedIdx = idx;
             this.text = this.options[idx][0];
-            this.dispatchEvent(new WidgetEvent(WidgetEvent.CHANGE));
+            if (this._skipNextChangeEvent) {
+                this._skipNextChangeEvent = false;
+            } else {
+                this.dispatchEvent(new WidgetEvent(WidgetEvent.CHANGE));
+            }
         }
         return idx;
     }//function set__selectedIdx()
+
+
+    /**
+    * Change `this.options` without dispatching `WidgetEvent.CHANGE`
+    *
+    */
+    public function setOptionsSilently(options:Array<Array<Dynamic>>) : Void {
+        this._skipNextChangeEvent = true;
+        this.options = options;
+    }
 
 
     /**
