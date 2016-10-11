@@ -7,3 +7,5 @@ docGen/doc/*
 *.zip
 build.hxml
 .idea/*
+.vscode/*
+dev.hxml

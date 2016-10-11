@@ -64,23 +64,14 @@ class Rect extends Skin{
                 height
             );
         }else if( this.corners.length > 0 ){
-            #if html5
-                w.graphics.drawRect(
-                    this.paddingLeft,
-                    this.paddingTop,
-                    width,
-                    height
-                );
-            #else
-                w.graphics.drawRoundRect(
-                    this.paddingLeft,
-                    this.paddingTop,
-                    width,
-                    height,
-                    this.corners[0],
-                    (this.corners.length > 1 ? this.corners[1] : this.corners[0])
-                );
-            #end
+            w.graphics.drawRoundRect(
+                this.paddingLeft,
+                this.paddingTop,
+                width,
+                height,
+                this.corners[0],
+                (this.corners.length > 1 ? this.corners[1] : this.corners[0])
+            );
         }
     }//function draw()
 

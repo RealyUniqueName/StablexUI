@@ -920,13 +920,14 @@ class UIBuilder {
     *
     * @param cls - create widget of this class;
     * @param properties - read description of .apply() method below.
+    * @param constructorArguments - pass these values to `cls` class constructor.
     *
     * @throw <type>Dynamic</type> if corresponding properties of `cls` and `properties` have different types
     * @throw <type>String</type> if `cls` is not of <type>Class</type>&lt;<type>ru.stblex.ui.widgets.Widget</type>&gt;
     */
-    static public function create<T:Widget>(cls:Class<T>, properties:Dynamic = null) : Null<T>{
+    static public function create<T:Widget>(cls:Class<T>, properties:Dynamic = null, constructorArguments : Array<Dynamic> = null) : Null<T>{
         //create widget instance
-        var obj : Widget = Type.createInstance(cls, []);
+        var obj : Widget = Type.createInstance(cls, constructorArguments == null ? [] : constructorArguments);
 
         //apply defaults  {
             obj.defaults = Reflect.field(properties, 'defaults');

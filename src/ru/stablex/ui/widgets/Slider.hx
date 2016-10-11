@@ -76,35 +76,51 @@ class Slider extends Widget{
         return v;
     }//function set_value()
 
+
+    /**
+    * Getter for `.step`
+    *
+    */
     @:noCompletion private function get_step () : Float {
-	return this._step;
+	   return this._step;
     }//function get_step()
+
+
+    /**
+    * Setter for `.step`
+    *
+    */
     @:noCompletion private function set_step (v:Float) : Float {
-	this._step = v;
-	var oldValue:Float = this._value;
-	this._updateValueByStep();
-	this._updateSliderPos();
-	
-	if (this.created && oldValue != this._value) {
-		this.dispatchEvent(new WidgetEvent(WidgetEvent.CHANGE));
-	}
-	
-	return v;
+    	this._step = v;
+    	var oldValue:Float = this._value;
+    	this._updateValueByStep();
+    	this._updateSliderPos();
+
+    	if (this.created && oldValue != this._value) {
+    		this.dispatchEvent(new WidgetEvent(WidgetEvent.CHANGE));
+    	}
+
+    	return v;
     }//function set_step()
-	
+
+
     /**
      * Update slider value according to `.step` value
-     * 
+     *
      */
     private inline function _updateValueByStep():Void {
-    	if (this.step != 0) this._value = Math.round(this._value / this.step) * this.step;
+    	if (this.step != 0) {
+            this._value = Math.round(this._value / this.step) * this.step;
+
+        }
     }//function _updateValueByStep()
+
 
     /**
     * Update slider position according to `.value`
     *
     */
-    private inline function _updateSliderPos() : Void {
+    private inline function _updateSliderPos(tween:Bool = false) : Void {
         var pt : Float = (this._value - this.min) / (this.max - this.min);
 
         if( pt < 0 ){
@@ -114,9 +130,19 @@ class Slider extends Widget{
         }
 
         if( this.vertical ){
-            this.slider.top = (this._height - this.slider._height) * (1 - pt);
+            var top = (this._height - this.slider._height) * (1 - pt);
+            if (tween) {
+                this.slider.tween(0.25, {top:top}, 'Quad.easeOut');
+            } else {
+                this.slider.top = top;
+            }
         }else{
-            this.slider.left = (this._width - this.slider._width) * pt;
+            var left = (this._width - this.slider._width) * pt;
+            if (tween) {
+                this.slider.tween(0.25, {left:left}, 'Quad.easeOut');
+            } else {
+                this.slider.left = left;
+            }
         }
     }//function _updateSliderPos()
 
@@ -151,7 +177,6 @@ class Slider extends Widget{
                                 : this.mouseY - this.slider._height / 2
                         )
                 );
-                this.slider.tween(0.25, {top:y}, 'Quad.easeOut');
 
                 this._value = (1 - y / (this._height - this.slider._height)) * (this.max - this.min) + this.min;
 
@@ -166,11 +191,11 @@ class Slider extends Widget{
                                 : this.mouseX - this.slider._width / 2
                         )
                 );
-                this.slider.tween(0.25, {left:x}, 'Quad.easeOut');
 
                 this._value = x / (this._width - this.slider._width) * (this.max - this.min) + this.min;
             }
             this._updateValueByStep();
+            this._updateSliderPos(true);
             this.dispatchEvent(new WidgetEvent(WidgetEvent.CHANGE));
         }//if()
     }//function _set()
@@ -208,9 +233,9 @@ class Slider extends Widget{
                     )
             );
             if( y != this.slider.top ){
-                this.slider.top = y;
                 this._value = (1 - y / (this._height - this.slider._height)) * (this.max - this.min) + this.min;
                 this._updateValueByStep();
+                this._updateSliderPos();
                 this.dispatchEvent(new WidgetEvent(WidgetEvent.CHANGE));
             }
         };
@@ -247,9 +272,9 @@ class Slider extends Widget{
                     )
             );
             if( x != this.slider.left ){
-                this.slider.left = x;
                 this._value = x / (this._width - this.slider._width) * (this.max - this.min) + this.min;
                 this._updateValueByStep();
+                this._updateSliderPos();
                 this.dispatchEvent(new WidgetEvent(WidgetEvent.CHANGE));
             }
         };

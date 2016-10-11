@@ -3,6 +3,7 @@ package ru.stablex.ui;
 import hscript.Expr;
 import hscript.Interp;
 import hscript.Parser;
+import ru.stablex.TweenSprite;
 import ru.stablex.ui.widgets.Widget;
 
 
@@ -418,7 +419,7 @@ class HandlerAttribute extends Attribute{
     * @private
     */
     override public function apply (obj:Dynamic, interp:Interp) : Void {
-        obj.addEventListener(RTXml.events.get(this.name), function(event:flash.events.Event){
+        (obj:TweenSprite).addEventListener(RTXml.events.get(this.name), function(event:flash.events.Event){
             interp.variables.set("__ui__this", event.currentTarget);
             interp.variables.set("event", event);
             interp.execute(this.value);
