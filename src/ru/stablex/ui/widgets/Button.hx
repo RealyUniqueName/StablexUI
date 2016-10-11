@@ -4,7 +4,6 @@ import flash.display.DisplayObject;
 import ru.stablex.ui.skins.Skin;
 import ru.stablex.ui.UIBuilder;
 import flash.events.MouseEvent;
-import flash.events.MouseEvent;
 
 
 /**
@@ -18,8 +17,12 @@ class Button extends Text{
     public var hovered (default,null) : Bool = false;
     //whether button is currently disabled
     public var disabled (default,set_disabled) : Bool = false;
+    //this.format.color value wiil be set when this.disabled set to true
+    public var disabledFormatColor : UInt = 0x000000;
     /** this.mouseChildren value before this.disabled was set to true */
     private var _mouseChildrenBeforeDisabled : Bool = false;
+    //this.fromat.color value before this.disabled was set tot true
+    private var _formatColorBeforeDisabled : UInt;
     //default icon for button
     public var ico (get_ico,set_ico): Bmp;
     private var _ico : Bmp;
@@ -51,7 +54,6 @@ class Button extends Text{
     public var skinDisabled : Skin;
     //stick ico and text to opposite borders
     public var apart : Bool = false;
-
 
     /**
     * We use wrappers so if we assign another functions to instance methods like .onPress, we don't need to reaply eventListeners
@@ -247,19 +249,22 @@ class Button extends Text{
         if (disabled) {   //switch icon
             if (!this.disabled) {
                 this._mouseChildrenBeforeDisabled = this.mouseChildren;
+                this._formatColorBeforeDisabled = this.format.color;
             }
             this.mouseEnabled = false;
+            this.format.color = disabledFormatColor;
             this._switchIco(this._icoDisabled);
             this._switchSkin(this.skinDisabled);
         } else {
             if (this.disabled) {
                 this.mouseChildren = this._mouseChildrenBeforeDisabled;
+                this.format.color = this._formatColorBeforeDisabled;
             }
             this.mouseEnabled = true;
             this._switchIco(this._ico);
             this._switchSkin(this.skin);
         }
-
+        this.refresh();
         return this.disabled = disabled;
     }//function set_disabled()
 
