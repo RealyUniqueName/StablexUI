@@ -3,6 +3,7 @@ package ru.stablex.ui;
 import hscript.Expr;
 import hscript.Interp;
 import hscript.Parser;
+import ru.stablex.DynamicList;
 import ru.stablex.TweenSprite;
 import ru.stablex.ui.widgets.Widget;
 
@@ -365,6 +366,9 @@ class Attribute {
             //set property value
             }else{
                 var subObj : Dynamic = Reflect.getProperty(obj, this.name);
+                if( subObj == null && Std.is(obj, DynamicList) ) {
+                    subObj = cast(obj, DynamicList<Dynamic>).get(this.name);
+                }
 
                 //if this property must be of specified type
                 if( this._instanceof != null && !Std.is(subObj, this._instanceof) ){
