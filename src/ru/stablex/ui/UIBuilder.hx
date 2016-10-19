@@ -607,7 +607,7 @@ class UIBuilder {
 
         // Custom string replace
         while ( erCustom.match(code) ) {
-          code = erCustom.replace(code, "ru.stablex.ui.UIBuilder.customStringReplace('$2')");
+          code = erCustom.replace(code, "$1ru.stablex.ui.UIBuilder.customStringReplace('$2')");
         }
 
         code = StringTools.replace(code, "##", "#");
