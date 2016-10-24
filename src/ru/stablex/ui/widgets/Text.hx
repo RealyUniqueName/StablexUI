@@ -146,7 +146,7 @@ class Text extends Box{
     *
     */
     @:noCompletion private function set_text(txt:String) : String {
-        this.label.text = txt;
+        this.label.text = '$txt';//quotes are required to fix #243
 
         this.html5TextFieldSizeWorkaround();
 
