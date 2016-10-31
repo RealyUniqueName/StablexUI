@@ -4,6 +4,7 @@ import flash.display.DisplayObject;
 import ru.stablex.ui.skins.Skin;
 import ru.stablex.ui.UIBuilder;
 import flash.events.MouseEvent;
+import flash.events.MouseEvent;
 
 
 /**
@@ -264,7 +265,7 @@ class Button extends Text{
             this._switchIco(this._ico);
             this._switchSkin(this.skin);
         }
-        this.refresh();
+        setLabelTextFormat();
         return this.disabled = disabled;
     }//function set_disabled()
 
