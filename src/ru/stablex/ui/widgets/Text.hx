@@ -92,6 +92,22 @@ class Text extends Box{
     *
     */
     override public function refresh() : Void {
+        setLabelTextFormat();
+
+        if( !this.autoWidth && this.label.wordWrap ){
+            this.label.width = this._width;
+        }
+
+        super.refresh();
+
+        this.html5TextFieldSizeWorkaround();
+    }//function refresh()
+
+    /**
+    * Apply format to text
+    *
+    */
+    function setLabelTextFormat() {
         if( this.highlighted ){
             this.label.defaultTextFormat = this.highlightFormat;
             if( this.label.text.length > 0 ){
@@ -103,16 +119,7 @@ class Text extends Box{
                 this.label.setTextFormat(this.format #if cpp , 0 , this.text.length #end);
             }
         }
-
-        if( !this.autoWidth && this.label.wordWrap ){
-            this.label.width = this._width;
-        }
-
-        super.refresh();
-
-        this.html5TextFieldSizeWorkaround();
-    }//function refresh()
-
+    }//function setLabelTextFormat()
 
     /**
      *  Highlight the text by applying `.highlightFormat`
