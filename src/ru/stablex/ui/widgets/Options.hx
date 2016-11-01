@@ -249,7 +249,7 @@ class Options extends Button{
     private function _onClickStage (e:MouseEvent) : Void {
         if( !this.list.shown ) return;
 
-        var obj : DisplayObject = e.target;
+        var obj : DisplayObject = (Std.is(e.target, DisplayObject) ? cast e.target : null);
         while( obj != null ){
             //clicked this widget
             if( obj == this || obj == this.list ){
