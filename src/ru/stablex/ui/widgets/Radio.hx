@@ -70,7 +70,7 @@ class Radio extends Checkbox{
             if( lst != null ){
 
                 for(option in lst){
-                    if( option != this ){
+                    if( option != this && option.selected){
                         option.selected = false;
                     }
                 }
