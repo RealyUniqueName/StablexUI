@@ -1013,7 +1013,7 @@ class UIBuilder {
         if( widgetDefaults != null ){
             var defs : Array<String> = obj.defaults.split(',');
             for(i in 0...defs.length){
-                var defaultsFn : Widget->Void = widgetDefaults.get(defs[i]);
+                var defaultsFn : Widget->Void = widgetDefaults.get(StringTools.trim(defs[i]));
                 if( defaultsFn != null ){
                     defaultsFn(obj);
                 }
