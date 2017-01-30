@@ -379,7 +379,7 @@ class ClassBuilder {
                 }
                 code += "\nru.stablex.ui.UIBuilder.applyDefaults(" + widget + ");";
             //}
-            code += UIBuilder.attr2Haxe(element, widget);
+            code += UIBuilder.attr2Haxe(element, widget, cls);
         }
 
         //call .onInitialize method to notify widget that it is initialized
