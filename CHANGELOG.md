@@ -1,6 +1,6 @@
 x.x.x
 ---
-* Changing `Text.text` now fires `WidgetEvent.CHANGE` event.
+* Changing `Text.text` now fires `WidgetEvent.TEXT_CHANGE` event.
 * Allow spaces between words in `Widget.defaults` property.
 
 1.2.0
