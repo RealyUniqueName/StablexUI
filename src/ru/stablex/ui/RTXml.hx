@@ -131,7 +131,7 @@ class RTXml {
     static public function processXml (node:Xml, interp:Interp = null) : RTXml {
         var cache : RTXml = new RTXml(interp);
         cache.cls = RTXml.getImportedClass(node.nodeName);
-trace(1);
+
         //attributes
         for(attr in node.attributes()){
             if(attr == "defaults"){
@@ -141,12 +141,11 @@ trace(1);
                 cache.data.push( new Attribute(attr, node.get(attr)) );
             }
         }
-trace(2);
         //children
         for(child in node.elements()){
             cache.children.push( RTXml.processXml(child, cache.interp) );
         }
-trace(3);
+
         return cache;
     }//function processXml()
 
