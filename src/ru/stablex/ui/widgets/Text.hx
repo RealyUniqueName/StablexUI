@@ -11,7 +11,7 @@ import ru.stablex.ui.UIBuilder;
 
 /**
 * Text field
-* @dispatch <type>ru.stablex.ui.events.WidgetEvent</type>.CHANGE - on change text
+* @dispatch <type>ru.stablex.ui.events.WidgetEvent</type>.TEXT_CHANGE - on change text
 */
 class Text extends Box{
     //<type>flash.display.TextField</type> used to render text
@@ -168,7 +168,7 @@ class Text extends Box{
         }
 
         if( this.created ) {
-            this.dispatchEvent(new WidgetEvent(WidgetEvent.CHANGE));
+            this.dispatchEvent(new WidgetEvent(WidgetEvent.TEXT_CHANGE));
         }
 
         return txt;
