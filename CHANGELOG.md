@@ -1,7 +1,8 @@
-x.x.x
+1.2.1
 ---
 * Changing `Text.text` now fires `WidgetEvent.TEXT_CHANGE` event.
 * Allow spaces between words in `Widget.defaults` property.
+* Compatibility with latest Haxe and OpenFL.
 
 1.2.0
 ---
