@@ -17,7 +17,7 @@ class Button extends Text{
     //Wether mouse pointer is currently over this button
     public var hovered (default,null) : Bool = false;
     //whether button is currently disabled
-    public var disabled (default,set_disabled) : Bool = false;
+    public var disabled (default,set) : Bool = false;
     //this.format.color value wiil be set when this.disabled set to true
     public var disabledFormatColor : UInt = 0x000000;
     /** this.mouseChildren value before this.disabled was set to true */
@@ -25,32 +25,32 @@ class Button extends Text{
     //this.fromat.color value before this.disabled was set tot true
     private var _formatColorBeforeDisabled : UInt;
     //default icon for button
-    public var ico (get_ico,set_ico): Bmp;
+    public var ico (get,set): Bmp;
     private var _ico : Bmp;
     //icon for hovered state
-    public var icoHovered (get_icoHovered,set_icoHovered) : Bmp;
+    public var icoHovered (get,set) : Bmp;
     private var _icoHovered : Bmp;
     //icon for pressed state
-    public var icoPressed (get_icoPressed,set_icoPressed) : Bmp;
+    public var icoPressed (get,set) : Bmp;
     private var _icoPressed : Bmp;
     //icon for disabled state
-    public var icoDisabled (get_icoDisabled,set_icoDisabled) : Bmp;
+    public var icoDisabled (get,set) : Bmp;
     private var _icoDisabled : Bmp;
     /**
     * Whether icon should appear before text (on left or on top of text), set to false to move icon to the right (or below) text
     * If you want icon to appear on top of label (or below) you also need to set button.vertical = true.
     */
-    public var icoBeforeLabel (default,set_icoBeforeLabel) : Bool = true;
+    public var icoBeforeLabel (default,set) : Bool = true;
     //skin name for hovered state (skin must be registered with <type>UIBuilder</type>.regSkins() )
-    public var skinHoveredName (default,set_skinHoveredName) : String;
+    public var skinHoveredName (default,set) : String;
     //skin for hovered state
     public var skinHovered : Skin;
     //skin name for pressed state (skin must be registered with <type>UIBuilder</type>.regSkins() )
-    public var skinPressedName (default,set_skinPressedName) : String;
+    public var skinPressedName (default,set) : String;
     //skin for pressed state
     public var skinPressed : Skin;
     //skin name for disabled state (skin must be registered with <type>UIBuilder</type>.regSkins() )
-    public var skinDisabledName (default,set_skinDisabledName) : String;
+    public var skinDisabledName (default,set) : String;
     //skin for disabled state
     public var skinDisabled : Skin;
     //stick ico and text to opposite borders

@@ -17,9 +17,9 @@ class ViewStack extends Widget{
     private var _history : Array<Int>;
 
     //getter for .name of currently visible child
-    public var current (get_current,never)       : String;
+    public var current (get,never)       : String;
     //child index of currently visible child
-    public var currentIdx (get_currentIdx,never) : Int;
+    public var currentIdx (get,never) : Int;
     // wrap the stack list or not (for `.next()` calls)
     public var wrap : Bool = false;
     //transition for changing children

@@ -786,12 +786,13 @@ class UIBuilder {
     *
     * @throw <type>String</type> if this shortcut is already used
     */
-    macro static public function regEvent (shortcut:String, eventType:String, eventClass:String = 'flash.events.Event') : Expr{
+#if macro
+    static public function regEvent (shortcut:String, eventType:String, eventClass:String = 'flash.events.Event') : Expr{
         if( UIBuilder._events.exists(shortcut) ) Err.trigger('Event is already registered: ' + shortcut);
         UIBuilder._events.set(shortcut, [eventType, eventClass]);
         return Context.parse('true', Context.currentPos());
     }//function register()
-
+#end
 
     /**
     * Register class to use it in xml code.

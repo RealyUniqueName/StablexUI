@@ -13,7 +13,7 @@ import ru.stablex.Err;
 
 class Bmp extends Widget{
     //Asset ID or path to bitmap
-    public var src (get_src,set_src): String;
+    public var src (get,set): String;
     @:noCompletion public var _src : String = null;
     //Should we use smoothing?
     public var smooth : Bool = true;
@@ -22,7 +22,7 @@ class Bmp extends Widget{
     /** keep aspect ratio if `.stretch` is set to true? */
     public var keepAspect : Bool = false;
     //set size depending on bitmap size
-    public var autoSize (never,set_autoSize) : Bool;
+    public var autoSize (never,set) : Bool;
     //set width depending on bitmap width
     public var autoWidth : Bool = true;
     //set height depending on bitmap height
@@ -32,7 +32,7 @@ class Bmp extends Widget{
     * `.bitmapData` will be set to null automatically, if you set `.src`.
     * `.src` will be set to null automatically, if you set `.bitmapData`
     */
-    public var bitmapData (get_bitmapData,set_bitmapData) : BitmapData;
+    public var bitmapData (get,set) : BitmapData;
     @:noCompletion private var _bitmapData : BitmapData = null;
     /**
     * If you want to draw just a portion of the bitmap. Specify top/left corner of
@@ -41,9 +41,9 @@ class Bmp extends Widget{
     * width and height will be taken from `.xOffset` and `.yOffset` to bitmap right border
     * and bottom border respectively
     */
-    public var xOffset (default, set_xOffset) : Int = 0;
+    public var xOffset (default, set) : Int = 0;
     // y offset for drawing a portion of the bitmap
-    public var yOffset (default, set_yOffset) : Int = 0;
+    public var yOffset (default, set) : Int = 0;
     /**
     * When `.xOffset` or `.yOffset` is set, this property is changed to true.
     * To draw full image on next refresh set this property to false again.

@@ -46,19 +46,19 @@ class Scroll extends Widget{
     * Container for content. Content is scrolled by moving this container.
     * This is always the first child of Scroll widget
     */
-    public var box (get_box,never) : Widget;
+    public var box (get,never) : Widget;
 
     //determine how far mouse wheel deltas will scroll the content
     public var wheelScrollSpeed : Float = 10;
 
     //scroll position along x axes
-    public var scrollX (get_scrollX,set_scrollX) : Float;
+    public var scrollX (get,set) : Float;
     //scroll position along y axes
-    public var scrollY (get_scrollY,set_scrollY) : Float;
+    public var scrollY (get,set) : Float;
     //vertical scroll bar
-    public var vBar (default,set_vBar) : Slider;
+    public var vBar (default,set) : Slider;
     //horizontal scroll bar
-    public var hBar (default,set_hBar) : Slider;
+    public var hBar (default,set) : Slider;
     /**
     * For neko and html5 targets onMouseDown dispatched several times (depends on display list depth)
     * We want to process it only once

@@ -42,11 +42,11 @@ class Widget extends TweenSprite{
     public var destroyed : Bool = false;
 
     //Widget width in pixels
-    public var w (get_w,set_w)   : Float;
+    public var w (get,set)   : Float;
     //Width of content area
-    public var contentWidth (get_contentWidth, null) : Float;
+    public var contentWidth (get, null) : Float;
     //Widget width in % of parent's width
-    public var widthPt (get_widthPt,set_widthPt) : Float;
+    public var widthPt (get,set) : Float;
     @:noCompletion private var _width                   : Float = 0;
     @:noCompletion private var _widthPercent            : Float = 0;
     @:noCompletion private var _widthUsePercent         : Bool = false;
@@ -57,11 +57,11 @@ class Widget extends TweenSprite{
     public var minHeightByContent = false;
 
     //Widget height height in pixels
-    public var h (get_h,set_h)  : Float;
+    public var h (get,set)  : Float;
     //Height of content area
-    public var contentHeight (get_contentHeight, null) : Float;
+    public var contentHeight (get, null) : Float;
     //Widget height in % of parent's height
-    public var heightPt (get_heightPt,set_heightPt) : Float;
+    public var heightPt (get,set) : Float;
     @:noCompletion private var _height                   : Float = 0;
     @:noCompletion private var _heightPercent            : Float = 0;
     @:noCompletion private var _heightUsePercent         : Bool = false;
@@ -72,19 +72,19 @@ class Widget extends TweenSprite{
     @:noCompletion private var _resizing : Bool = false;
 
     //Widget id (unique)
-    public var id (default, set_id) : String;
+    public var id (default, set) : String;
 
     //position this widget by left border in pixels
-    public var left (get_left,set_left) : Float;
+    public var left (get,set) : Float;
     //position this widget by left border in % of parent's width
-    public var leftPt (get_leftPt,set_leftPt) : Float;
+    public var leftPt (get,set) : Float;
     @:noCompletion private var _left                   : Float = 0;
     @:noCompletion private var _leftPercent            : Float = 0;
 
     //position this widget by right border in pixels
-    public var right (get_right,set_right) : Float;
+    public var right (get,set) : Float;
     //position this widget by right border in % of parent's width
-    public var rightPt (get_rightPt,set_rightPt)   : Float;
+    public var rightPt (get,set)   : Float;
     @:noCompletion private var _right                     : Float = 0;
     @:noCompletion private var _rightPercent              : Float = 0;
 
@@ -93,19 +93,19 @@ class Widget extends TweenSprite{
     @:noCompletion private var _yUse : Int = _Y_USE_TOP;
 
     //Get parent if it is widget, returns null otherwise
-    public var wparent (get_wparent,never) : Widget;
+    public var wparent (get,never) : Widget;
 
     //position this widget by top border in pixels
-    public var top (get_top,set_top)   : Float;
+    public var top (get,set)   : Float;
     //position this widget by top border in % of parent's height
-    public var topPt (get_topPt,set_topPt) : Float;
+    public var topPt (get,set) : Float;
     @:noCompletion private var _top                   : Float = 0;
     @:noCompletion private var _topPercent            : Float = 0;
 
     //position this widget by bottom border in pixels
-    public var bottom (get_bottom,set_bottom) : Float;
+    public var bottom (get,set) : Float;
     //position this widget by bottom border in % of parent's height
-    public var bottomPt (get_bottomPt,set_bottomPt)     : Float;
+    public var bottomPt (get,set)     : Float;
     @:noCompletion private var _bottom                       : Float = 0;
     @:noCompletion private var _bottomPercent                : Float = 0;
 
@@ -119,12 +119,12 @@ class Widget extends TweenSprite{
     */
     @:noCompletion public var _skinQueued : Bool = false;
     //skin name to use. One of registered with <type>ru.stablex.ui.UIBuilder</type>.regSkins()
-    public var skinName (default,set_skinName) : String;
+    public var skinName (default,set) : String;
     //whether widget content out of widgt bounds is visible
-    public var overflow (default,set_overflow) : Bool = true;
+    public var overflow (default,set) : Bool = true;
 
     //Tooltip for this widget. See <type>Tip</type> to know how to use it.
-    public var tip (default,set_tip) : Tip;
+    public var tip (default,set) : Tip;
 
     //layout manager
     public var layout : Layout;

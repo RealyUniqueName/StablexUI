@@ -15,7 +15,7 @@ class Box extends Widget{
     //Should we arrange children vertically (true) or horizontally (false). True by default.
     public var vertical : Bool = true;
     //Setter for padding left, right, top, bottom.
-    public var padding (never,set_padding) : Float;
+    public var padding (never,set) : Float;
     //padding left
     public var paddingLeft   : Float = 0;
     //padding right
@@ -33,7 +33,7 @@ class Box extends Widget{
     */
     public var align : String = 'center,middle';
     //set size depending on content size
-    public var autoSize (never,set_autoSize) : Bool;
+    public var autoSize (never,set) : Bool;
     //set width depending on content width
     public var autoWidth                     : Bool = true;
     //set height depending on content height
