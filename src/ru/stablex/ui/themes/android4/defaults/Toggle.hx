@@ -22,8 +22,8 @@ class Toggle {
         //the same as StateButton
         StateButton.Default(btn);
 
-        btn.states.up.skinName   = 'button';
-        btn.states.down.skinName = 'buttonPressed';
+        btn.states.resolve("up").skinName   = 'button';
+        btn.states.resolve("down").skinName = 'buttonPressed';
     }//function Default()
 
 }//class Toggle
