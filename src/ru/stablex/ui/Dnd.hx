@@ -1,5 +1,6 @@
 package ru.stablex.ui;
 
+import flash.events.IEventDispatcher;
 import flash.display.DisplayObjectContainer;
 import flash.events.MouseEvent;
 import flash.geom.Point;
@@ -91,7 +92,7 @@ class Dnd {
             var receive = Dnd.current.cloneWithType(DndEvent.RECEIVE);
 
             Dnd.current.obj.dispatchEvent( drop );
-            e.target.dispatchEvent( receive );
+            cast (e.target, IEventDispatcher).dispatchEvent( receive );
         }
     }//function _onDrop()
 
