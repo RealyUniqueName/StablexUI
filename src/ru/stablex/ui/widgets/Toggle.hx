@@ -11,7 +11,7 @@ class Toggle extends StateButton{
     //should we `.highlight()` the text when button is toggled?
     public var highlightOnSelect : Bool = false;
     //whether button is in down/selected state
-    public var selected (get_selected,set_selected) : Bool;
+    public var selected (get,set) : Bool;
 
 
     /**

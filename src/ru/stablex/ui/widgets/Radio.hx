@@ -20,7 +20,7 @@ class Radio extends Checkbox{
 
 
     //group name for this control
-    public var group (default,set_group) : String;
+    public var group (default,set) : String;
 
 
     /**

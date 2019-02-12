@@ -15,7 +15,7 @@ class Clock extends Text{
     //Count seconds forward or backward (to zero)
     public var forward : Bool = true;
     //current amount of seconds
-    public var value (default,set_value) : Int = 0;
+    public var value (default,set) : Int = 0;
     //use leading zero for numbers less than 10
     public var leadingZero : Bool = true;
     //timer object
@@ -25,7 +25,7 @@ class Clock extends Text{
     * %h, %m, %s - hours, minutes, seconds respectively, without leading zeroes
     * %H, %M, %S - with leading zeroes
     */
-    public var timeFormat (default,set_timeFormat) : String = "%H:%M:%S";
+    public var timeFormat (default,set) : String = "%H:%M:%S";
     private var _hrsIdx : Int = 0;
     private var _minIdx : Int = 3;
     private var _secIdx : Int = 6;

@@ -20,7 +20,7 @@ class Switch extends Widget{
     //Slider element
     public var slider : Widget;
     //Indicates switch state. `true` for `on`-state, `false` for `off`-state. `true` by default
-    public var selected (get_selected,set_selected) : Bool;
+    public var selected (get,set) : Bool;
     private var _selected : Bool = true;
     //if user is pushing `.slider`
     private var _sliding : Bool = false;

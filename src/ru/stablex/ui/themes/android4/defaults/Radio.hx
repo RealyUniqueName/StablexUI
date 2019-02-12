@@ -22,8 +22,8 @@ class Radio {
         check.format.color = 0xFFFFFF;
         check.label.embedFonts = true;
 
-        check.states.up.ico.bitmapData   = Main.getBitmapData('img/radio.png');
-        check.states.down.ico.bitmapData = Main.getBitmapData('img/radioChecked.png');
+        check.states.resolve("up").ico.bitmapData   = Main.getBitmapData('img/radio.png');
+        check.states.resolve("down").ico.bitmapData = Main.getBitmapData('img/radioChecked.png');
     }//function Default()
 
 }//class Radio

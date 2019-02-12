@@ -18,7 +18,7 @@
                         for(i in 0...ts.numChildren){
                             tab = ( Std.is(ts.getChildAt(i), $TabPage) ? cast(ts.getChildAt(i), $TabPage) : null);
                             if( tab != null ){
-                                tab.title.states.down.skinName = 'tabBottomActive';
+                                tab.title.states.resolve('down').skinName = 'tabBottomActive';
                                 tab.title.skinPressedName = 'tabBottomPressed';
                                 tab.title.updateState();
                             }
@@ -37,7 +37,7 @@
                         for(i in 0...ts.numChildren){
                             tab = ( Std.is(ts.getChildAt(i), $TabPage) ? cast(ts.getChildAt(i), $TabPage) : null);
                             if( tab != null ){
-                                tab.title.states.down.skinName = 'tabActive';
+                                tab.title.states.resolve('down').skinName = 'tabActive';
                                 tab.title.skinPressedName = 'tabPressed';
                                 tab.title.updateState();
                             }

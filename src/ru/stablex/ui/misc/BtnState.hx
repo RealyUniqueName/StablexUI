@@ -12,10 +12,10 @@ class BtnState {
     //button label for this state
     public var text : String;
     //icon for this state
-    public var ico (get_ico,set_ico): Bmp;
+    public var ico (get,set): Bmp;
     public var _ico : Bmp;
     //skin name for this state (skin must be registered with <type>UIBuilder</type>.regSkins() )
-    public var skinName (default,set_skinName) : String;
+    public var skinName (default,set) : String;
     //skin for this state
     public var skin : Skin;
 

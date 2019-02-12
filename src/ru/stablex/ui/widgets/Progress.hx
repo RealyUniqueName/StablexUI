@@ -15,9 +15,9 @@ import ru.stablex.ui.events.WidgetEvent;
 */
 class Progress extends Widget{
     //Maximum value.
-    public var max (default,set_max) : Float = 100;
+    public var max (default,set) : Float = 100;
     //current value
-    public var value (get_value,set_value) : Float;
+    public var value (get,set) : Float;
     private var _value : Float = 0;
     //bar
     public var bar : Widget;
@@ -26,7 +26,7 @@ class Progress extends Widget{
     /** distance from right border of background to right border of bar */
     public var paddingRight : Float = 0;
     //Whether user can click/tap/slide progress bar to change value
-    public var interactive (default,set_interactive) : Bool = false;
+    public var interactive (default,set) : Bool = false;
     //Visualize progress bar changes smoothly
     public var smoothChange : Bool = false;
     /**

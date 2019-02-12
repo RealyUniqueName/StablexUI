@@ -337,10 +337,14 @@ class Theme {
                         if( !field.isPublic ) continue;
 
                         var type = TypeTools.toString(field.type);
+                        var tprim = type;
                         type = type.substring(type.indexOf(':') + 1, type.length).trim();
+                        type = StringTools.replace(type, ")", "");
 
                         if( type == 'ru.stablex.ui.widgets.Widget -> Void' ){
                             defaults.push(field.name);
+                        } else {
+                            throw '${cls}.${field.name}() should be Widget -> Void'  +  " \n but it is " + tprim;
                         }
                     }
                 case _: throw cls + ' must be a class without type parameters';

@@ -17,10 +17,10 @@ class Slider extends Widget{
     //Maximum value
     public var max : Float = 100;
     //Current value
-    public var value (get_value,set_value) : Float;
+    public var value (get,set) : Float;
     private var _value : Float = 0;
     //Step change in the value
-	public var step (get_step,set_step) : Float;
+	public var step (get,set) : Float;
 	private var _step : Float = 0;
     //Slider element
     public var slider : Widget;

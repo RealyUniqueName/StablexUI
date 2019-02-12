@@ -13,7 +13,7 @@ import ru.stablex.ui.widgets.Box; // To acces static method _objHeight
 */
 class Row extends Layout{
     //Setter for padding left, right, top, bottom.
-    public var padding (never,set_padding) : Float;
+    public var padding (never,set) : Float;
     //padding left
     public var paddingLeft   : Float = 0;
     //padding right
@@ -25,7 +25,7 @@ class Row extends Layout{
     //Distance between children
     public var cellPadding : Float = 0;
     //Set children widget size according to row size
-    public var fit(null, set_fit) : Bool;
+    public var fit(null, set) : Bool;
     public var fitWidth : Bool = true;
     public var fitHeight : Bool = true;
     // Horizontal alignment (center,left,right)

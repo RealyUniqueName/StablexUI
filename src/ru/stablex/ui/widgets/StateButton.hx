@@ -17,15 +17,15 @@ import ru.stablex.ui.skins.Skin;
 class StateButton extends Button{
 
     //change states on click
-    public var cycleStates(default,set_cycleStates) : Bool;
+    public var cycleStates(default,set) : Bool;
     //object to define button states
     public var states : DynamicList<BtnState>;
     //defines states order. Only states defined in this array will apear on button clicking
     public var order : Array<String>;
     //current state
-    public var state(get_state,set_state) : String;
+    public var state(get,set) : String;
     //current state index in this.order array
-    private var _currentIdx (default,set__currentIdx) : Int = 0;
+    private var _currentIdx (default,set) : Int = 0;
 
 
     /**

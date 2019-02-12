@@ -503,11 +503,15 @@ class UIBuilder {
 
             //just apply attribute value to appropriate widget property
             }else{
-                //change '-' to '.', so 'someProp-nestedProp' becomes 'someProp.nestedProp'
-                attr  = StringTools.replace(attr, '-', '.');
                 //required code replacements
                 value = UIBuilder.fillCodeShortcuts(obj, value);
+                #if haxe4
+                var path = "[" + attr.split("-").map(function(s) return '"$s", ').join("") + "]";
+                code += 'ru.stablex.ui.UIBuilder.recurSet($obj, $path, $value);\n';
+                #else
+                attr  = StringTools.replace(attr, '-', '.');
                 code += '\n' + obj + '.' + attr + ' = ' + value + ';';
+                #end
             }
         }//while( attributes.length )
 
@@ -786,12 +790,13 @@ class UIBuilder {
     *
     * @throw <type>String</type> if this shortcut is already used
     */
-    macro static public function regEvent (shortcut:String, eventType:String, eventClass:String = 'flash.events.Event') : Expr{
+#if macro
+    static public function regEvent (shortcut:String, eventType:String, eventClass:String = 'flash.events.Event') : Expr{
         if( UIBuilder._events.exists(shortcut) ) Err.trigger('Event is already registered: ' + shortcut);
         UIBuilder._events.set(shortcut, [eventType, eventClass]);
         return Context.parse('true', Context.currentPos());
     }//function register()
-
+#end
 
     /**
     * Register class to use it in xml code.
@@ -1134,4 +1139,20 @@ class UIBuilder {
 
 
 #end
+
+    public static function recurSet(trg:Dynamic, path:Array<String>, value:Dynamic) {
+        var key = path.shift();
+        if (path.length == 0) {
+            Reflect.setProperty(trg, key, value);
+            return;
+        }
+        var hasClassfield = Type.getInstanceFields(Type.getClass(trg)).filter(function(s){return s == key || s == "set_" + key;}).length > 0;
+        var newTrg =
+        if (Reflect.hasField(trg, key) || hasClassfield) {
+            Reflect.getProperty(trg, key);
+        } else {
+             untyped trg.resolve(key);
+        };
+        recurSet(newTrg, path, value);
+    }//function recurSet()
 }//class UIBuilder

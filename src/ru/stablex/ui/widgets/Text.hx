@@ -19,12 +19,12 @@ class Text extends Box{
     //Text format wich will be aplied to label on refresh
     public var format : TextFormat;
     //Text format for higlight mode
-    public var highlightFormat (get_highlightFormat,set_highlightFormat) : TextFormat;
+    public var highlightFormat (get,set) : TextFormat;
     private var _hightlightFormat : TextFormat;
     //indicates highlighting state
     public var highlighted (default,null) : Bool = false;
     //Getter-setter for text.
-    public var text (get_text,set_text) : String;
+    public var text (get,set) : String;
 
 
     /**
