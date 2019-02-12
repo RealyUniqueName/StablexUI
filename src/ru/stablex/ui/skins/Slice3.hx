@@ -15,14 +15,14 @@ import ru.stablex.ui.widgets.Widget;
 */
 class Slice3 extends Skin {
     //Asset ID or path to bitmap
-    public var src (get_src,set_src): String;
+    public var src (get,set): String;
     public var _src : String = null;
     /**
     * Use this property instead of `.src`, if you need to directly assign BitmapData instance.
     * `.bitmapData` will be set to null automatically, if you set `.src`.
     * `.src` will be set to null automatically, if you set `.bitmapData`
     */
-    public var bitmapData (get_bitmapData,set_bitmapData) : BitmapData;
+    public var bitmapData (get,set) : BitmapData;
     private var _bitmapData : BitmapData = null;
     //should we use smoothing?
     public var smooth : Bool = true;
@@ -38,7 +38,7 @@ class Slice3 extends Skin {
     //padding for left border
     public var paddingLeft : Float = 0;
     //set equal padding for all borders
-    public var padding(never,set_padding) : Float;
+    public var padding(never,set) : Float;
 
     /**
     * Setter for padding

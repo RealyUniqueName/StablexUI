@@ -34,7 +34,7 @@ class Aswing extends Skin {
     //padding for left border
     public var paddingLeft : Float = 0;
     //set equal padding for all borders
-    public var padding(never,set_padding) : Float;
+    public var padding(never,set) : Float;
     //gradient type (linear or radial)
     public var type : String = 'linear';
 
