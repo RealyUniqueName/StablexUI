@@ -168,6 +168,7 @@ class RTXml {
             //register imported classes
             for(cls in RTXml.imports.keys()){
                 interp.variables.set("__ui__" + cls, RTXml.imports.get(cls));
+                interp.variables.set(cls, RTXml.imports.get(cls));
             }
         }
 
