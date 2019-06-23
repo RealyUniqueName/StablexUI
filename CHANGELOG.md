@@ -1,3 +1,7 @@
+1.2.2
+---
+* Fixed access to registered classes in xml attributes for RTXml ([#47]https://github.com/RealyUniqueName/StablexUI/issues/47)
+
 1.2.1
 ---
 * Changing `Text.text` now fires `WidgetEvent.TEXT_CHANGE` event.
