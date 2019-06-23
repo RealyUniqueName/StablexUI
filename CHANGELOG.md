@@ -1,6 +1,10 @@
-1.2.2
+1.2.3
 ---
 * Fixed access to registered classes in xml attributes for RTXml ([#47]https://github.com/RealyUniqueName/StablexUI/issues/47)
+
+1.2.2
+---
+* Haxe 4 compatibility
 
 1.2.1
 ---
