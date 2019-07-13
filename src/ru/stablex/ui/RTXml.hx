@@ -131,6 +131,9 @@ class RTXml {
     static public function processXml (node:Xml, interp:Interp = null) : RTXml {
         var cache : RTXml = new RTXml(interp);
         cache.cls = RTXml.getImportedClass(node.nodeName);
+        if(interp == null) {
+            interp = cache.interp;
+        }
 
         //attributes
         for(attr in node.attributes()){
