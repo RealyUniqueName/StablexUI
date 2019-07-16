@@ -1,3 +1,7 @@
+1.2.4
+---
+* Fix RTXml when the root node has `defaults` attribute ([#283]https://github.com/RealyUniqueName/StablexUI/issues/283)
+
 1.2.3
 ---
 * Fixed access to registered classes in xml attributes for RTXml ([#47]https://github.com/RealyUniqueName/StablexUI/issues/47)
