@@ -498,7 +498,7 @@ class UIBuilder {
                 var event : Array<String> = UIBuilder._events.get( UIBuilder._erEvent.matched(1) );
                 if( event == null ) Err.trigger('Event is not registered: ' + UIBuilder._erEvent.matched(1));
                 //required code replacements
-                value = UIBuilder.fillCodeShortcuts("event.currentTarget", value, thisClass);
+                value = UIBuilder.fillCodeShortcuts("(event.currentTarget:Dynamic)", value, thisClass);
                 code += '\n' + obj + '.addEventListener('+ event[0] +', function(event:' + event[1] + '){' + value + '});';
 
             //just apply attribute value to appropriate widget property
